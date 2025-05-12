@@ -30,6 +30,10 @@
       {
         "command": "stack-monitor.log",
         "title": "StackMonitor: Create log"
+      },
+      {
+        "command": "stack-monitor.log-with-name",
+        "title": "StackMonitor: Create log with variable name"
       }
     ],
     "keybindings": [
@@ -37,6 +41,12 @@
         "command": "stack-monitor.log",
         "key": "ctrl+k l",
         "mac": "cmd+k l",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "stack-monitor.log-with-name",
+        "key": "ctrl+k i",
+        "mac": "cmd+k i",
         "when": "editorTextFocus"
       }
     ],
