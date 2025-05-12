@@ -99,7 +99,7 @@ async function enableSorting() {
 async function addNewDoc() {
   const {data: _tree} = await axios.post('/documentation/tree', {
     key: v4(),
-    serviceId: props.service?.label,
+    serviceId: props.service?.label || '',
     label: 'New doc...',
     position: tree.value.length
   })

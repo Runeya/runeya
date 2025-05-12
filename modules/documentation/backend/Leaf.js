@@ -54,10 +54,7 @@ class Leaf {
     const set = dbLeafTree.buildUpdateQuery(storage)
     await leafExists
       ? dbLeafTree.write(`update ${dbLeafTree.table} set ${set} where id='${this.id}'`)
-      : dbLeafTree.write(`insert into ${dbLeafTree.table} values ${JSON.stringify({
-        ...this.toStorage(),
-        id: this.id,
-      })}`)
+      : dbLeafTree.write(`insert into ${dbLeafTree.table} (id, docId, position, serviceId, label, text, parentId) values ('${this.id}', '${this.docId}', ${this.position}, '${this.serviceId}', '${this.label.replace(/'/g, "''")}', '${this.text.replace(/'/g, "''")}', '${this.parentId}')`)
     return this
   }
 
