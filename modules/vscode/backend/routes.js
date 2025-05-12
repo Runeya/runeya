@@ -86,6 +86,12 @@ const routes = (stackMonitor) => {
     }
     return null;
   });
+
+  router.get('/vscode/download', (req, res) => {
+    const vsixPath = pathfs.resolve(__dirname, './stack-monitor.vsix');
+    res.download(vsixPath, 'stack-monitor.vsix');
+  });
+
   return router;
 };
 
