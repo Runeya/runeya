@@ -11,7 +11,7 @@ const { fdir } = require('fdir');
 const PromiseB = require('bluebird');
 const { sockets } = require('@clabroche/common-socket-server');
 const args = require('./args');
-const { encrypt, decrypt } = require('./crypto');
+const { encrypt, decrypt, decryptFile } = require('./crypto');
 const alasql = require('alasql');
 
 module.exports = new class {
@@ -61,12 +61,26 @@ module.exports = new class {
       const additionnalNonce = path.split('.stackmonitor').pop();
       let db = readFileSync(path, 'utf-8');
       if (encrypted) {
-        db = await decrypt(db, { additionnalNonce })
-          .catch((err) => {
-            console.error(path, err);
-            sockets.emit('system:wrongKey');
-            throw err;
-          });
+        try {
+          if (typeof db === 'string' && (
+            db.includes('<<<<<<< HEAD') || 
+            db.includes('=======') || 
+            db.includes('>>>>>>>'))
+          ) {
+            db = await decryptFile(db, { additionnalNonce }, path);
+          } else {
+            db = await decrypt(db, { additionnalNonce })
+              .catch((err) => {
+                console.error(path, err);
+                sockets.emit('system:wrongKey');
+                throw err;
+              });
+          }
+        } catch (err) {
+          console.error(path, err);
+          sockets.emit('system:wrongKey');
+          throw err;
+        }
       }
       this.cache[id] = JSON.parse(db);
       if (!alasql.tables[table]){

@@ -21,6 +21,7 @@
   <Finder/>
   <notif-history/>
   <notifications/>
+  <GitConflictModal ref="gitConflictModalRef" />
 
 </template>
 
@@ -29,7 +30,7 @@ import Stack from './models/stack'
 import sidebarVue from './components/sidebar.vue'
 import Socket from './helpers/Socket'
 import githubIssue from './helpers/githubIssue'
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, onBeforeUnmount } from 'vue'
 import system from './models/system'
 import notif from './helpers/notification'
 import Notifications from "./components/Notifications.vue"
@@ -37,6 +38,7 @@ import './helpers/ServiceError'
 import NotifHistory from './components/NotifHistory.vue'
 import SidebarViewMode from './components/SidebarViewMode.vue'
 import EnvironmentsChooser from './components/EnvironmentsChooser.vue'
+import GitConflictModal from './components/GitConflictModal.vue'
 import { useRouter } from 'vue-router';
 import Theme from './helpers/Theme'
 import plugins from '@clabroche/modules-plugins-loader-front/src/views';
@@ -52,6 +54,7 @@ export default {
     NotifHistory,
     SidebarViewMode,
     EnvironmentsChooser,
+    GitConflictModal,
     ...componentsToLoad
   },
   setup() {
@@ -65,6 +68,21 @@ export default {
     })()
     const router = useRouter(); 
     const connected = ref(true)
+    
+    /**
+     * @typedef {Object} GitConflictMethods
+     * @property {(conflict: any) => void} addConflict - Add a conflict to the queue
+     * @property {() => Promise<void>} fetchPendingConflicts - Fetch pending conflicts from the server
+     */
+    /** @type {import('vue').Ref<GitConflictMethods | null>} */
+    const gitConflictModalRef = ref(null)
+    
+    /**
+     * @type {import('vue').Ref<Array<Object>>}
+     * Un stockage temporaire pour les conflits détectés avant que le composant ne soit prêt
+     */
+    const pendingGitConflicts = ref([]);
+    
     const redirect = async () => {
       connected.value = Socket.socket.connected
       if(!connected.value) Stack.services.value = []
@@ -77,15 +95,73 @@ export default {
       const shouldSetup = await Stack.shouldSetup()
       if(shouldSetup) router.push({name: 'settings', params: {setting: 'crypto'}, query: { wrongKey: 'true' }})
     }
-    onMounted(async ()=> {
-      Socket.on('connect',  redirect);
+    
+    onMounted(async () => {
+      Socket.on('connect', redirect);
       Socket.on('disconnect', redirect);
       Socket.on('forceReload', () => {
         window.location.reload()
       });
       Socket.on('system:wrongKey', () => router.push({name: 'settings', params: {setting: 'crypto'}, query: { wrongKey: 'true' }}))
+      
+      // Handle git conflicts in encrypted files
+      Socket.on('crypto:conflict', handleGitConflict);
+      
       await redirect()
+      
+      // Fetch pending conflicts after connection is established
+      // Attendre un peu pour s'assurer que le composant est monté avant d'appeler ses méthodes
+      setTimeout(() => {
+        if (gitConflictModalRef.value && typeof gitConflictModalRef.value.fetchPendingConflicts === 'function') {
+          gitConflictModalRef.value.fetchPendingConflicts();
+          
+          // Traiter les conflits qui auraient été mis en attente pendant le chargement
+          if (pendingGitConflicts.value.length > 0) {
+            console.log(`Traitement de ${pendingGitConflicts.value.length} conflits en attente...`);
+            pendingGitConflicts.value.forEach(conflict => {
+              if (gitConflictModalRef.value && typeof gitConflictModalRef.value.addConflict === 'function') {
+                gitConflictModalRef.value.addConflict(conflict);
+              }
+            });
+            // Vider la file d'attente 
+            pendingGitConflicts.value = [];
+          }
+        } else {
+          console.warn('GitConflictModal n\'est pas correctement initialisé, impossible de récupérer les conflits en attente.');
+        }
+      }, 500);
     })
+    
+    onBeforeUnmount(() => {
+      Socket.off('crypto:conflict', handleGitConflict);
+    })
+    
+    /**
+     * Handle git conflict data from socket
+     * @param {Object} conflictData - The conflict data
+     */
+    function handleGitConflict(conflictData) {
+      // Tentative immédiate
+      if (gitConflictModalRef.value && typeof gitConflictModalRef.value.addConflict === 'function') {
+        gitConflictModalRef.value.addConflict(conflictData);
+        notif.next('error', 'Conflit Git détecté dans un fichier chiffré', 'Conflit Git');
+        return;
+      }
+
+      // Si la référence n'est pas prête, réessayer après un court délai
+      console.log('GitConflictModal n\'est pas encore prêt, nouvelle tentative dans 500ms...');
+      setTimeout(() => {
+        if (gitConflictModalRef.value && typeof gitConflictModalRef.value.addConflict === 'function') {
+          gitConflictModalRef.value.addConflict(conflictData);
+          notif.next('error', 'Conflit Git détecté dans un fichier chiffré', 'Conflit Git');
+        } else {
+          console.error('Impossible d\'ajouter le conflit Git: le composant GitConflictModal n\'est pas correctement initialisé.');
+          // Sauvegarder le conflit temporairement pour permettre un traitement ultérieur
+          pendingGitConflicts.value.push(conflictData);
+          notif.next('error', 'Conflit Git détecté mais l\'interface n\'est pas prête. Rechargez la page pour le résoudre.', 'Conflit Git');
+        }
+      }, 500);
+    }
 
     // Check versions
     /** @type {import('vue').Ref<{local: string,remote: string,hasUpdate: boolean} | null>} */
@@ -102,6 +178,7 @@ export default {
       connected,
       githubIssue,
       versions,
+      gitConflictModalRef,
     }
   }
 }

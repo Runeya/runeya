@@ -6,6 +6,7 @@ const pidusageTree = require('pidusage-tree');
 const os = require('os');
 const Stack = require('../models/stack');
 const { execAsync } = require('../helpers/exec');
+const args = require('../helpers/args');
 
 router.get('/:service/infos', async (req, res) => {
   try {
@@ -39,6 +40,21 @@ router.get('/:service/infos', async (req, res) => {
 router.get('/disconnect', async () => {
   process.exit(0);
 });
+
+router.get('/restart', async (req, res) => {
+  res.json({ success: true, message: 'Restart in progress...' });
+  
+  setTimeout(() => {
+    console.log('Restarting application...');
+    require("child_process").spawn(process.argv[0], process.argv.slice(1), {
+      cwd: args.initialCwd || process.cwd(),
+      detached: true,
+      stdio: "inherit"
+    }).unref();
+    process.exit(0);
+  }, 500);
+});
+
 router.get('/proxy-img', async (req, res) => {
   axios({
     method: 'get',

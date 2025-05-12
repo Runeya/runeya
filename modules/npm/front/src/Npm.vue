@@ -34,7 +34,7 @@
         <h2 class="dep-header">{{categ.charAt(0).toUpperCase() + categ.slice(1)}}</h2>
         <div class="dependecies">
           <table>
-            <caption>{{categ}} Table</caption>
+            <!-- <caption>{{categ}} Table</caption> -->
             <tr>
               <th scope="name">name</th>
               <th class="version" scope="version">version</th>

@@ -160,6 +160,17 @@ router.get('/services', (req, res) => {
   res.json(Stack.getServices().map((s) => s.exportInApi()));
 });
 
+router.get('/restart-all', async (req, res) => {
+  try {
+    await Stack.restart();
+    res.send({ success: true });
+  } catch (/** @type {unknown} */ error) {
+    console.error('Error during restart all:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    res.status(500).send({ success: false, error: errorMessage });
+  }
+});
+
 router.get('/:service', (req, res) => {
   const service = findService(req.params.service);
   res.send(service.exportInApi());

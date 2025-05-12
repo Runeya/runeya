@@ -65,6 +65,7 @@
     "@types/http-proxy": "^1",
     "@types/libsodium-wrappers": "^0",
     "http-proxy": "^1.18.1",
+    "http-proxy-middleware": "^3.0.5",
     "nodemon": "^3.0.3",
     "supertest": "^6.3.4",
     "tsup": "^8.3.5",

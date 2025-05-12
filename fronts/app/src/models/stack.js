@@ -107,6 +107,30 @@ Stack.prototype.getService = async function (label) {
   return this.services.value.filter((service) => service.label === label).pop();
 };
 
+/**
+ * Restart all enabled services
+ * @returns {Promise<void>}
+ */
+Stack.prototype.restartAllServices = async function () {
+  await axios.get('/stack/restart-all');
+  return this.loadServices();
+};
+
+/**
+ * Restart the complete Stack Monitor application
+ * @returns {Promise<void>}
+ */
+Stack.prototype.restartApplication = async function () {
+  try {
+    await axios.get('/system/restart');
+    // Note: The connection will probably be cut here as the server terminates
+    console.log('Application restarting...');
+  } catch (error) {
+    console.error('Error while restarting the application:', error);
+    throw error;
+  }
+};
+
 Stack.prototype.getAvailableEditors = async function () {
   const { data: editors } = await axios.get('/editors/available-editors');
   return editors;
