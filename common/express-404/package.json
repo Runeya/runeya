@@ -1,9 +1,9 @@
 {
-  "name": "@clabroche/common-express-404",
-  "version": "2.0.5",
+  "name": "@runeya/common-express-404",
+  "version": "1.0.0",
   "private": true,
   "description": "",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",
   "types": "src/index.js",
   "scripts": {
@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
+    "@runeya/common-retrigger-all-build": "workspace:*",
     "jest-sonar-reporter": "^2.0.0"
   }
 }

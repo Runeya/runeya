@@ -117,7 +117,7 @@ Stack.prototype.restartAllServices = async function () {
 };
 
 /**
- * Restart the complete Stack Monitor application
+ * Restart the complete Runeya application
  * @returns {Promise<void>}
  */
 Stack.prototype.restartApplication = async function () {

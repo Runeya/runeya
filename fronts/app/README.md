@@ -1,16 +1,16 @@
-# Stack Monitor
+# Runeya
 
 [![DeepScan grade](https://deepscan.io/api/teams/10201/projects/12903/branches/207230/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=10201&pid=12903&bid=207230)
 
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=clabroche_stack-monitor&metric=alert_status)](https://sonarcloud.io/dashboard?id=clabroche_stack-monitor)
-[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=clabroche_stack-monitor&metric=code_smells)](https://sonarcloud.io/dashboard?id=clabroche_stack-monitor)
-[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=clabroche_stack-monitor&metric=bugs)](https://sonarcloud.io/dashboard?id=clabroche_stack-monitor)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=clabroche_stack-monitor&metric=sqale_index)](https://sonarcloud.io/dashboard?id=clabroche_stack-monitor)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=runeya_runeya&metric=alert_status)](https://sonarcloud.io/dashboard?id=runeya_runeya)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=runeya_runeya&metric=code_smells)](https://sonarcloud.io/dashboard?id=runeya_runeya)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=runeya_runeya&metric=bugs)](https://sonarcloud.io/dashboard?id=runeya_runeya)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=runeya_runeya&metric=sqale_index)](https://sonarcloud.io/dashboard?id=runeya_runeya)
 
 Launch multiples command at once. You can monitor projects.(like npm projects, git projects ...)
 
 ## Install
-``` npm i -g @iryu54/stack-monitor ```
+``` npm i -g @runeya/runeya ```
 
 ## Features
 #### Command:
@@ -54,10 +54,10 @@ Create a config file
 
 Then, in a terminal, type:
 ``` bash
-stack-monitor <path/to/my/config>
+runeya <path/to/my/config>
 ```
 
-You can type only ```stack-monitor``` and choose your config file later.
+You can type only ```runeya``` and choose your config file later.
 
 If you change a variable in conf after execution, the corresponding service restart.
 
@@ -65,18 +65,18 @@ If you change a variable in conf after execution, the corresponding service rest
 
 Add this in your vscode to print easily variables in debug output of service:
 ``` json
-	"Print to stack-monitor": {
+	"Print to runeya": {
 		"prefix": "log",
 		"body": [
-			"console.log(JSON.stringify(['stack-monitor', $1]));",
+			"console.log(JSON.stringify(['runeya', $1]));",
 			"$2"
 		],
-		"description": "Print to stack-monitor"
+		"description": "Print to runeya"
 	}
 ```
 Type ```log``` in vs code, it should produce something like that:
 ``` javascript 
-console.log(JSON.stringify(['stack-monitor', <what you want>, <and others>]));
+console.log(JSON.stringify(['runeya', <what you want>, <and others>]));
 ```
 
 Example:
@@ -84,7 +84,7 @@ Example:
 if you type this somewhere in server service: 
 
 ```javascript
-console.log(JSON.stringify(['stack-monitor', "debug:", {port} ]));
+console.log(JSON.stringify(['runeya', "debug:", {port} ]));
 ```
 
 Output should appeart in debug section of logs

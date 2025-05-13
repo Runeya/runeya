@@ -1,4 +1,4 @@
-const { express } = require('@clabroche/common-express');
+const { express } = require('@runeya/common-express');
 const { availableEditors, getCommandLine } = require('../models/editors');
 const { replaceEnvs } = require('../helpers/stringTransformer.helper');
 const Stack = require('../models/stack');

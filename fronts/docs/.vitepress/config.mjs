@@ -1,14 +1,14 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  title: "Stack Monitor",
+  title: "Runeya",
   vite: {
     server: {
       port: process.env.PORT
     } 
   },
   description: "Configure, share, launch and monitor all yours services in the same place for your development team",
-  base: '/stack-monitor/',
+  base: '/runeya/',
   locales: {
     root: {
       label: 'English',
@@ -34,7 +34,7 @@ export default defineConfig({
       {
         text: 'Introduction',
         items: [
-          { text: 'What is Stack Monitor', link: '/introduction/what-is' },
+          { text: 'What is Runeya', link: '/introduction/what-is' },
           { text: 'Getting started', link: '/introduction/getting-started' },
         ]
       }, {
@@ -62,7 +62,7 @@ export default defineConfig({
     ],
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/clabroche/stack-monitor' }
+      { icon: 'github', link: 'https://github.com/runeya/runeya' }
     ]
   }
 })

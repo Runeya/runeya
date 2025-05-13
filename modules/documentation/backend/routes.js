@@ -4,9 +4,9 @@ const PromiseB = require('bluebird')
 
 const router = express.Router();
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
-  const { findService } = stackMonitor;
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
+  const { findService } = runeya;
 
   router.get('/documentation/tree', async (req, res) => {
     const service = findService(req.query.serviceId?.toString() || '');

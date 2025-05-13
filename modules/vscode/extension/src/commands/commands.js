@@ -4,8 +4,8 @@ const { connect } = require('../helpers/initialize');
 
 module.exports = {
   async registerCommands(context) {
-    const disposable = vscode.commands.registerCommand('stack-monitor.connect', () => connect(context));
-    const disposableSnippet = vscode.commands.registerCommand('stack-monitor.log', async () => {
+    const disposable = vscode.commands.registerCommand('runeya.connect', () => connect(context));
+    const disposableSnippet = vscode.commands.registerCommand('runeya.log', async () => {
       const editor = vscode.window.activeTextEditor;
       const highlighted = editor.selections.map((selection) => {
         const selectionRange = new vscode.Range(
@@ -18,12 +18,12 @@ module.exports = {
       }).filter((f) => f);
 
       const languages = {
-        javascript: `console.log(JSON.stringify(['stack-monitor', ${highlighted?.length ? highlighted.join(', ') : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
-        typescript: `console.log(JSON.stringify(['stack-monitor', ${highlighted?.length ? highlighted.join(', ') : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
-        typescriptreact: `console.log(JSON.stringify(['stack-monitor', ${highlighted?.length ? highlighted.join(', ') : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
-        json: '// cannot print into stack monitor from json. You can print only with dynamic language that print into shell console.',
-        html: '// cannot print into stack monitor from html. You can print only with dynamic language that print into shell console.',
-        css: '// cannot print into stack monitor from css. You can print only with dynamic language that print into shell console.',
+        javascript: `console.log(JSON.stringify(['runeya', ${highlighted?.length ? highlighted.join(', ') : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
+        typescript: `console.log(JSON.stringify(['runeya', ${highlighted?.length ? highlighted.join(', ') : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
+        typescriptreact: `console.log(JSON.stringify(['runeya', ${highlighted?.length ? highlighted.join(', ') : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
+        json: '// cannot print into runeya from json. You can print only with dynamic language that print into shell console.',
+        html: '// cannot print into runeya from html. You can print only with dynamic language that print into shell console.',
+        css: '// cannot print into runeya from css. You can print only with dynamic language that print into shell console.',
         unknown: `// ${editor.document.languageId} language not supported for moment`,
       };
       const lastSelection = editor.selections
@@ -42,7 +42,7 @@ module.exports = {
       );
     });
     
-    const disposableSnippetWithName = vscode.commands.registerCommand('stack-monitor.log-with-name', async () => {
+    const disposableSnippetWithName = vscode.commands.registerCommand('runeya.log-with-name', async () => {
       const editor = vscode.window.activeTextEditor;
 
       const highlighted = editor.selections.map((selection) => {
@@ -56,12 +56,12 @@ module.exports = {
       }).filter((f) => f);
 
       const languages = {
-        javascript: `console.log(JSON.stringify(['stack-monitor', ${highlighted?.length ? `'${highlighted[0]}', ${highlighted[0]}` : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
-        typescript: `console.log(JSON.stringify(['stack-monitor', ${highlighted?.length ? `'${highlighted[0]}', ${highlighted[0]}` : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
-        typescriptreact: `console.log(JSON.stringify(['stack-monitor', ${highlighted?.length ? `'${highlighted[0]}', ${highlighted[0]}` : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
-        json: '// cannot print into stack monitor from json. You can print only with dynamic language that print into shell console.',
-        html: '// cannot print into stack monitor from html. You can print only with dynamic language that print into shell console.',
-        css: '// cannot print into stack monitor from css. You can print only with dynamic language that print into shell console.',
+        javascript: `console.log(JSON.stringify(['runeya', ${highlighted?.length ? `'${highlighted[0]}', ${highlighted[0]}` : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
+        typescript: `console.log(JSON.stringify(['runeya', ${highlighted?.length ? `'${highlighted[0]}', ${highlighted[0]}` : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
+        typescriptreact: `console.log(JSON.stringify(['runeya', ${highlighted?.length ? `'${highlighted[0]}', ${highlighted[0]}` : '$1'}],(_, v) => (typeof v === 'function' ? \`[func]\` : v)));`,
+        json: '// cannot print into runeya from json. You can print only with dynamic language that print into shell console.',
+        html: '// cannot print into runeya from html. You can print only with dynamic language that print into shell console.',
+        css: '// cannot print into runeya from css. You can print only with dynamic language that print into shell console.',
         unknown: `// ${editor.document.languageId} language not supported for moment`,
       };
       const lastSelection = editor.selections

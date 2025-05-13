@@ -1,11 +1,11 @@
 const { existsSync } = require('fs');
 const pathfs = require('path');
 const { execAsync, execAsyncWithoutErr } = require('../../../servers/server/helpers/exec');
-const HTTPError = require('@clabroche/common-express-http-error');
+const HTTPError = require('@runeya/common-express-http-error');
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-const Git = (stackMonitor) => {
-  const { findService } = stackMonitor;
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+const Git = (runeya) => {
+  const { findService } = runeya;
   const searchGit = (path) => {
     if (existsSync(pathfs.resolve(path, '.git'))) return path;
     const parentPath = pathfs.resolve(path, '..');

@@ -2,7 +2,7 @@
 layout: home
 
 hero:
-  name: "Stack Monitor"
+  name: "Runeya"
   text: ""
   tagline: Configure, share, launch and monitor all yours services in the same place for your development team
   image:
@@ -14,11 +14,11 @@ hero:
       link: /introduction/getting-started
     - theme: alt
       text: View on GitHub
-      link: https://github.com/clabroche/stack-monitor
+      link: https://github.com/runeya/runeya
 
 features:
   - title: Configure
-    details: Agnostic language platform. Just define all your services with all your environments and launch them. If they are launchable from commandline, they are compatible with Stack Monitor
+    details: Agnostic language platform. Just define all your services with all your environments and launch them. If they are launchable from commandline, they are compatible with Runeya
   - title: Share
     details: Version your environments config files to let different members of your teams to fetch them and launch services in seconds
   - title: Monitor

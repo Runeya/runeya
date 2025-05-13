@@ -9,7 +9,7 @@ const nativeParsers = {
 };
 class Parser {
   /**
-   * @param {import('@clabroche/common-typings').NonFunctionProperties<Parser>} parser
+   * @param {import('@runeya/common-typings').NonFunctionProperties<Parser>} parser
    */
   constructor(parser) {
     /** @type {string} */

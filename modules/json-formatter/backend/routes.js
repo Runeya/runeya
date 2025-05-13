@@ -4,10 +4,10 @@ const JSONFormatter = require('./JSONFormatter');
 
 /**
  * Route handler for JSON formatter enhanced features
- * @param {import('../../../../servers/server/models/stack')} stackMonitor - Stack monitor instance
+ * @param {import('../../../../servers/server/models/stack')} runeya - Runeya instance
  * @returns {import('express').Router} Express router
  */
-module.exports = function(stackMonitor) {
+module.exports = function(runeya) {
   // Validate JSON schema
   router.post('/JSONFormatterEnhanced/validate', (req, res) => {
     try {

@@ -1,9 +1,9 @@
 ---
 outline: deep
 ---
-# What is Stack Monitor?
+# What is Runeya?
 
-Stack monitor is an application for developers to simplify the launch of services and provide tools to manage them.
+Runeya is an application for developers to simplify the launch of services and provide tools to manage them.
 
 <div class="tip custom-block" style="padding-top: 8px">
 

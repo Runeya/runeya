@@ -3,14 +3,14 @@ const { v4 } = require('uuid');
 
 const router = express.Router();
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
-  const history = stackMonitor.getSave('history.json', {
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
+  const history = runeya.getSave('history.json', {
     /** @type {History[]} */
     history: [],
   });
 
-  const { findService, Socket } = stackMonitor;
+  const { findService, Socket } = runeya;
   router.get('/logs/:service/logs', (req, res) => {
     const service = findService(req.params.service);
     res.send(service ? service.store : []);

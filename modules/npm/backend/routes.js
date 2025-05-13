@@ -3,9 +3,9 @@ const express = require('express');
 const router = express.Router();
 const Npm = require('./Npm');
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
-  const { findService } = stackMonitor;
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
+  const { findService } = runeya;
 
   router.get('/npm/:service', async (req, res) => {
     const service = findService(req.params.service);

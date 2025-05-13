@@ -41,7 +41,7 @@ import EnvironmentsChooser from './components/EnvironmentsChooser.vue'
 import GitConflictModal from './components/GitConflictModal.vue'
 import { useRouter } from 'vue-router';
 import Theme from './helpers/Theme'
-import plugins from '@clabroche/modules-plugins-loader-front/src/views';
+import plugins from '@runeya/modules-plugins-loader-front/src/views';
 
 const componentsToLoad = plugins.filter(p => p.load).reduce((agg, {cmp, name}) => {
   agg[name] = cmp

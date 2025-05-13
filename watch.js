@@ -78,7 +78,7 @@ async function runMainProcess() {
       process.kill(pid, 'SIGKILL');
     } catch (error) {}
   }
-  const port = +(process.env.PORT || process.env.STACK_MONITOR_HTTP_PORT || '');
+  const port = +(process.env.PORT || process.env.RUNEYA_HTTP_PORT || '');
   if (port && !Number.isNaN(port)) {
     await new Promise((resolve) => {
       setTimeout(resolve, 100);
@@ -112,7 +112,7 @@ function watchDeps(watchableDeps, cb = (
       .filter((f) => {
         if (!watchableDeps.find((w) => w.name === f)) return false;
         const changedPath = path.replace(`${__dirname}/`, '').replaceAll('/', '-');
-        const packageName = f.replace('@clabroche/', '').replace('@iryu54/', '');
+        const packageName = f.replace('@runeya/', '').replace('@iryu54/', '');
         return changedPath.startsWith(packageName);
       }).pop();
     if (packageChanged) {
@@ -125,9 +125,9 @@ function getWatchableDeps(path) {
   const currentPackage = getPackageInfoFromPath(path);
   if (currentPackage) {
     const ignoreDependencies = [];
-    if (currentPackage.name === '@clabroche/servers-server') {
-      ignoreDependencies.push('@clabroche/fronts-app');
-      ignoreDependencies.push('@clabroche/modules-plugins-loader-front');
+    if (currentPackage.name === '@runeya/servers-server') {
+      ignoreDependencies.push('@runeya/fronts-app');
+      ignoreDependencies.push('@runeya/modules-plugins-loader-front');
       ignoreDependencies.push((name) => name.endsWith('-front'));
     }
     const depsName = getDependencies(currentPackage?.name, ignoreDependencies);
@@ -143,7 +143,7 @@ function getDependencies(packageName, ignoreDependencies = [], recursiveAggr = [
   const deps = [
     ...Object.keys(dependencies),
     ...Object.keys(devDependencies),
-  ].filter((f) => (f.startsWith('@clabroche') || f.startsWith('@iryu54')) && (dependencies[f] === 'workspace:*' || devDependencies[f] === 'workspace:*'));
+  ].filter((f) => (f.startsWith('@runeya') || f.startsWith('@iryu54')) && (dependencies[f] === 'workspace:*' || devDependencies[f] === 'workspace:*'));
   deps.forEach((f) => {
     const isIgnored = !ignoreDependencies.some((ignoreCondition) => (
       typeof ignoreCondition === 'function'
@@ -163,7 +163,7 @@ function getPackageInfoFromPath(path) {
   return Object.values(packagesInfos)
     .filter((f) => {
       const packageName = path.replace(`${__dirname}/`, '').replaceAll('/', '-');
-      return packageName.startsWith(f.name.replace('@clabroche/', ''))
+      return packageName.startsWith(f.name.replace('@runeya/', ''))
         || packageName.startsWith(f.name.replace('@iryu54/', ''));
     }).pop();
 }

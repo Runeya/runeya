@@ -76,7 +76,7 @@
     <div class="container" v-else>
       <div>
         To use this module you need to provide a valid apikey from github in the
-        STACK_MONITOR_GH_APIKEY environment variable.
+        RUNEYA_GH_APIKEY environment variable.
         <a href="https://github.com/settings/tokens/new" target="_blank">See here.</a>
       </div>
     </div>

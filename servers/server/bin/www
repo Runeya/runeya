@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-process.title = 'stack-monitor';
+process.title = 'runeya';
 const args = require('../helpers/args');
 
 

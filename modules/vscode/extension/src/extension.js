@@ -10,7 +10,7 @@ let interval;
  * @param {import('vscode').ExtensionContext} context
  */
 async function activate(context) {
-  console.log('Congratulations, your extension "stack-monitor" is now active!');
+  console.log('Congratulations, your extension "runeya" is now active!');
   await registerCommands(context);
   dependencies.initialize(context);
   editor.initialize(context);

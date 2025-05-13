@@ -22,7 +22,7 @@ const MAX_EXECUTION_TIME = 30000; // 30 seconds
 const MAX_MEMORY = 512 * 1024 * 1024; // 512MB
 const ALLOWED_MODULES = ['fs', 'path', 'os', 'util', 'crypto', 'buffer', 'stream', 'events'];
 
-const confDir = pathfs.resolve(homedir, '.stack-monitor');
+const confDir = pathfs.resolve(homedir, '.runeya');
 if (!existsSync(confDir)) mkdirSync(confDir);
 const confPath = pathfs.resolve(confDir, 'node-repl');
 if (!existsSync(confPath)) writeFileSync(confPath, '{}', 'utf-8');
@@ -103,9 +103,9 @@ async function checkNpmAvailable() {
   }
 }
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
-  const { Socket } = stackMonitor;
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
+  const { Socket } = runeya;
 
   // Nettoyage des fichiers temporaires au démarrage
   cleanupTempFiles().catch(console.error);

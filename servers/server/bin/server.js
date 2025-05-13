@@ -1,4 +1,4 @@
-const { launch } = require('@clabroche/common-express');
+const { launch } = require('@runeya/common-express');
 const pathfs = require('path');
 const ports = require('../models/ports');
 const table = require('../helpers/console.table');
@@ -7,7 +7,7 @@ const args = require('../helpers/args');
 module.exports = {
   async launch() {
     await launch({
-      port: process.env.STACK_MONITOR_HTTP_PORT || 0,
+      port: process.env.RUNEYA_HTTP_PORT || 0,
       controllers: () => require('../app'),
       socket: true,
       apiPrefix: '/',
@@ -20,7 +20,7 @@ module.exports = {
         contentSecurityPolicy: {
           directives: {
             upgradeInsecureRequests: null,
-            'frame-src': ["'self'", 'clabroche.github.io', 'jsoncrack.com'],
+            'frame-src': ["'self'", 'runeya.github.io', 'jsoncrack.com'],
           },
           useDefaults: true,
         },
@@ -38,7 +38,7 @@ module.exports = {
         (() => {
           table([
             { '': 'Version', Value: require('../helpers/version').version, 'Overrided By': '-' },
-            { '': 'Port', Value: ports.http, 'Overrided By': 'STACK_MONITOR_HTTP_PORT' },
+            { '': 'Port', Value: ports.http, 'Overrided By': 'RUNEYA_HTTP_PORT' },
             { '': 'Url', Value: `http://localhost:${ports.http}`, 'Overrided By': '-' },
             ...args.ss.length
               ? [{ '': 'Services', Value: args.ss.join(', '), 'Overrided By': '-' }]

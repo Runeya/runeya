@@ -1,11 +1,11 @@
 const pathfs = require('path');
-const { execAsync } = require('@clabroche/servers-server/helpers/exec');
+const { execAsync } = require('@runeya/servers-server/helpers/exec');
 const { readFile } = require('fs/promises');
 const { replaceEnvs } = require('../../../servers/server/helpers/stringTransformer.helper');
 const { existsSync } = require('fs');
 
 class Npm {
-  /** @param {import('@clabroche/servers-server/models/Service')} service */
+  /** @param {import('@runeya/servers-server/models/Service')} service */
   constructor(service) {
     this.service = service;
   }

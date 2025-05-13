@@ -9,7 +9,7 @@ const {
 } = require('fs/promises');
 const { fdir } = require('fdir');
 const PromiseB = require('bluebird');
-const { sockets } = require('@clabroche/common-socket-server');
+const { sockets } = require('@runeya/common-socket-server');
 const args = require('./args');
 const { encrypt, decrypt, decryptFile } = require('./crypto');
 const alasql = require('alasql');
@@ -18,7 +18,7 @@ module.exports = new class {
   cache = {};
 
   getRootPath() {
-    const rootPath = pathfs.resolve(args.rootPath, '.stackmonitor/dbs');
+    const rootPath = pathfs.resolve(args.rootPath, '.runeya/dbs');
     if (!existsSync(rootPath)) mkdirSync(rootPath, { recursive: true });
     return rootPath;
   }
@@ -35,7 +35,7 @@ module.exports = new class {
       .crawl(this.getRootPath());
     await PromiseB.map(api.withPromise(), async (file) => {
       const fileEncrypted = await readFile(file, 'utf-8');
-      const additionnalNonce = file.split('.stackmonitor').pop();
+      const additionnalNonce = file.split('.runeya').pop();
       const fileDecrypted = await decrypt(fileEncrypted, { additionnalNonce, encryptionKey: oldKey });
       const fileReEncrypted = await encrypt(fileDecrypted, { additionnalNonce, encryptionKey: newKey });
       await writeFile(file, fileReEncrypted, 'utf-8');
@@ -48,7 +48,7 @@ module.exports = new class {
       if (!existsSync(pathfs.dirname(persistencePath))) await mkdirSync(pathfs.dirname(persistencePath), { recursive: true });
       if (!existsSync(persistencePath)) {
         let defaultDB = JSON.stringify(defaultData || [], null, 2);
-        if (encrypted) defaultDB = await encrypt(defaultDB, { additionnalNonce: persistencePath.split('.stackmonitor').pop() });
+        if (encrypted) defaultDB = await encrypt(defaultDB, { additionnalNonce: persistencePath.split('.runeya').pop() });
         await writeFile(persistencePath, defaultDB, 'utf-8');
         this.cache[id] = defaultDB;
       }
@@ -58,7 +58,7 @@ module.exports = new class {
     const read = async () => {
       if (this.cache[id]) return this.cache[id];
       const path = await getPath();
-      const additionnalNonce = path.split('.stackmonitor').pop();
+      const additionnalNonce = path.split('.runeya').pop();
       let db = readFileSync(path, 'utf-8');
       if (encrypted) {
         try {
@@ -92,7 +92,7 @@ module.exports = new class {
     const write = async (data) => {
       let db = JSON.stringify(data, null, 2);
       const path = await getPath();
-      const additionnalNonce = path.split('.stackmonitor').pop();
+      const additionnalNonce = path.split('.runeya').pop();
       if (encrypted) db = await encrypt(db, { additionnalNonce });
       writeFileSync(path, db, 'utf-8');
       this.cache[id] = data;

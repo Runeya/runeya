@@ -44,7 +44,7 @@
           context: .
           file: {{LOCATION}}/Dockerfile
           tags: | 
-            ghcr.io/clabroche/monorepo/{{NAME_ROUTE}}:${{ github.ref_name }} 
+            ghcr.io/runeya/monorepo/{{NAME_ROUTE}}:${{ github.ref_name }} 
           push: true
           build-args: |
             NPM_TOKEN=${{secrets.NPM_TOKEN}}
@@ -60,8 +60,8 @@
           context: .
           file: {{LOCATION}}/Dockerfile
           tags: | 
-            ghcr.io/clabroche/monorepo/{{NAME_ROUTE}}:latest
-            ghcr.io/clabroche/monorepo/{{NAME_ROUTE}}:${{fromJson(steps.package-json.outputs.packageJson).version}}
+            ghcr.io/runeya/monorepo/{{NAME_ROUTE}}:latest
+            ghcr.io/runeya/monorepo/{{NAME_ROUTE}}:${{fromJson(steps.package-json.outputs.packageJson).version}}
           push: true
           build-args: |
             NPM_TOKEN=${{secrets.NPM_TOKEN}}

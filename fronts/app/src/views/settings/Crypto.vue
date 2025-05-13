@@ -62,7 +62,7 @@
       Wrong key
     </template>
     <template #body>
-      It appears that Stack Monitor is already configured with an encryption key.
+      It appears that Runeya is already configured with an encryption key.
       <br>
       Please replace the existing key with the correct one to unlock the encrypted files.
     </template>

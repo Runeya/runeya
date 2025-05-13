@@ -8,14 +8,14 @@ const { execAsync } = require('../../../servers/server/helpers/exec');
 
 const router = express.Router();
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-const routes = (stackMonitor) => {
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+const routes = (runeya) => {
   router.post('/vscode/install', async (req, res) => {
-    await execAsync('code --install-extension ./stack-monitor.vsix', { cwd: __dirname });
+    await execAsync('code --install-extension ./runeya.vsix', { cwd: __dirname });
     res.send('ok');
   });
   router.delete('/vscode/uninstall', async (req, res) => {
-    await execAsync('code --uninstall-extension clabroche.stack-monitor', { cwd: __dirname });
+    await execAsync('code --uninstall-extension runeya.runeya', { cwd: __dirname });
     res.send('ok');
   });
 
@@ -40,7 +40,7 @@ const routes = (stackMonitor) => {
         const dependents = [
           ...(dependentsMap.get(packageJSON.name) || []),
         ];
-        const services = stackMonitor.getServices().filter((service) => {
+        const services = runeya.getServices().filter((service) => {
           const servicePackageNames = [
             service.getRootPath(),
             ...service.commands.map((cmd) => cmd.spawnOptions?.env),
@@ -65,7 +65,7 @@ const routes = (stackMonitor) => {
         } catch (error) { projectRoot = packageRoot; }
         if (!packageRoot) return res.status(400).send('no package found');
         if (!projectRoot) return res.status(400).send('no package found');
-        const services = stackMonitor.getServices().filter((service) => {
+        const services = runeya.getServices().filter((service) => {
           const servicePaths = [
             service.getRootPath(),
             ...service.commands.map((cmd) => cmd.spawnOptions?.env),
@@ -88,8 +88,8 @@ const routes = (stackMonitor) => {
   });
 
   router.get('/vscode/download', (req, res) => {
-    const vsixPath = pathfs.resolve(__dirname, './stack-monitor.vsix');
-    res.download(vsixPath, 'stack-monitor.vsix');
+    const vsixPath = pathfs.resolve(__dirname, './runeya.vsix');
+    res.download(vsixPath, 'runeya.vsix');
   });
 
   return router;

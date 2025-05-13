@@ -1,11 +1,11 @@
-const { express } = require('@clabroche/common-express');
+const { express } = require('@runeya/common-express');
 const { exec } = require('child_process');
 const open = require('open');
 const commandExists = require('command-exists').sync;
 const { Octokit } = require('fix-esm').require('@octokit/core');
 const { restEndpointMethods } = require('fix-esm').require('@octokit/plugin-rest-endpoint-methods');
 
-const { sockets } = require('@clabroche/common-socket-server');
+const { sockets } = require('@runeya/common-socket-server');
 const Stack = require('../models/stack');
 const myConfs = require('../models/myConfs');
 
@@ -67,8 +67,8 @@ router.delete('/:service', async (req, res) => {
 router.get('/has-update', async (req, res) => {
   try {
     const localVersion = `v${require('../helpers/version').version}`;
-    const octokit = new MyOctokit({ auth: process.env.STACK_MONITOR_GH_APIKEY });
-    const { data: tags } = await octokit.rest.repos.listTags({ owner: 'clabroche', repo: 'stack-monitor' });
+    const octokit = new MyOctokit({ auth: process.env.RUNEYA_GH_APIKEY });
+    const { data: tags } = await octokit.rest.repos.listTags({ owner: 'runeya', repo: 'runeya' });
     const remoteVersion = tags[0]?.name;
     return res.json({
       local: localVersion,

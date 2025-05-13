@@ -6,7 +6,7 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     var node = this;
     node.on('input', async function (msg) {
-      const { stack } = RED.settings.functionGlobalContext.stackmonitor
+      const { stack } = RED.settings.functionGlobalContext.runeya
 
       if (!msg.payload) msg.payload = {}
       const service = await askUiFor('selector', {

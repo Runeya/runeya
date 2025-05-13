@@ -1,4 +1,4 @@
-import { Socket } from '@clabroche/common-socket-front';
+import { Socket } from '@runeya/common-socket-front';
 
 export default {
   /** @type {Awaited<Socket>} */

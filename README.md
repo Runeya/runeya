@@ -1,6 +1,6 @@
-# 🚀 Stack Monitor
+# 🚀 Runeya
 
-Stack Monitor is an all-in-one development tool that simplifies microservice management and provides a complete suite of developer utilities.
+Runeya is an all-in-one development tool that simplifies microservice management and provides a complete suite of developer utilities.
 
 
 ## ✨ Features
@@ -21,10 +21,10 @@ Stack Monitor is an all-in-one development tool that simplifies microservice man
 
 ```bash
 # NPM
-npm install -D @iryu54/stack-monitor
+npm install -D @runeya/runeya
 
 # Yarn
-yarn add -D @iryu54/stack-monitor
+yarn add -D @runeya/runeya
 ```
 
 ### Launch
@@ -32,16 +32,16 @@ yarn add -D @iryu54/stack-monitor
 ```bash
 # In your package.json
 "scripts": {
-  "serve": "stack-monitor ./src/stack.js"
+  "serve": "runeya ./src/stack.js"
 }
 
 # Or directly
-stack-monitor <config-directory>
+runeya <config-directory>
 ```
 
 ## 🌍 Environment Management
 
-Stack Monitor provides a powerful environment variable management system:
+Runeya provides a powerful environment variable management system:
 
 - **Environment-specific variables** - Configure different values for development, staging, production
 - **Global variables** - Share common configurations across all environments
@@ -52,7 +52,7 @@ This feature helps teams work seamlessly with consistent configurations across a
 
 ## 🏗️ Architecture
 
-Stack Monitor uses a modular architecture built with:
+Runeya uses a modular architecture built with:
 - Vue.js frontend
 - Express backend
 - Extensible plugin system
@@ -61,7 +61,7 @@ Stack Monitor uses a modular architecture built with:
 
 ```bash
 # Clone the repository
-git clone https://github.com/clabroche/stack-monitor.git
+git clone https://github.com/runeya/runeya.git
 
 # Install dependencies
 yarn install
@@ -76,4 +76,4 @@ ISC License
 
 ---
 
-📚 [Complete Documentation](https://clabroche.github.io/stack-monitor/) | 👤 [Corentin Labroche](mailto:corentinlabroche@gmail.com) 
+📚 [Complete Documentation](https://runeya.github.io/runeya/) | 👤 [Corentin Labroche](mailto:corentinlabroche@gmail.com) 

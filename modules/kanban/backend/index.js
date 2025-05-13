@@ -1,6 +1,6 @@
 const Kanban = require('./Kanban');
 
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./Kanban')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./Kanban')>} */
 const plugin = {
   enabled: true,
   name: 'kanban',
@@ -16,15 +16,15 @@ const plugin = {
       active: 'kanban',
     },
   ],
-  finder: (/** @type {*} */search, /** @type {*} */stackMonitor) => {
-    const boards = Kanban(stackMonitor).Board.all().filter((board) => (
-      stackMonitor.helpers.searchString(board?.name || '', search)
+  finder: (/** @type {*} */search, /** @type {*} */runeya) => {
+    const boards = Kanban(runeya).Board.all().filter((board) => (
+      runeya.helpers.searchString(board?.name || '', search)
     ));
-    const cards = Kanban(stackMonitor).Board.all()
+    const cards = Kanban(runeya).Board.all()
       .flatMap((b) => b?.getColumns())
       ?.flatMap((c) => c?.getCards())
       ?.filter((board) => (
-        stackMonitor.helpers.searchString(board?.name || '', search)
+        runeya.helpers.searchString(board?.name || '', search)
       ));
     return [
       ...boards.map((board) => ({

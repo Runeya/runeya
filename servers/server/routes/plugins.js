@@ -1,4 +1,4 @@
-const { express } = require('@clabroche/common-express');
+const { express } = require('@runeya/common-express');
 
 const router = express.Router();
 const PromiseB = require('bluebird');
@@ -17,7 +17,7 @@ router.get('/services', async (req, res) => {
   res.send(services);
 });
 router.get('/:type', async (req, res) => {
-  /** @type {import("@clabroche/modules-plugins-loader-front/src/views").PluginSM<null>[]} */
+  /** @type {import("@runeya/modules-plugins-loader-front/src/views").PluginSM<null>[]} */
   // @ts-ignore
   const services = await PromiseB.filter(plugins[req.params.type], async (plugin) => (plugin.hidden ? !(await plugin.hidden(null, Stack, req.params.type)) : true));
   services.sort((a, b) => (a.order || 1000) - (b.order || 1000));

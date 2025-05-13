@@ -21,7 +21,7 @@ async function findPackageDepsFromInternalPackages(packageName) {
     const packageJSON = JSON.parse(await readFile(path.resolve(rootPath, workspacePath.location, 'package.json'), 'utf-8'))
     if(packageJSON.dependencies) {
       const deps = await PromiseB.map(Object.keys(packageJSON.dependencies), (packageNameDep) => {
-        if (/@clabroche\/*/.test(packageNameDep)) {
+        if (/@runeya\/*/.test(packageNameDep)) {
           return findPackageDepsFromInternalPackages(packageNameDep)
         }
         return {name: packageNameDep, version: packageJSON.dependencies[packageNameDep], from: packageName}
@@ -37,7 +37,7 @@ const makeAllPackagesExternalPlugin = {
     await rm(distPath, {recursive: true, force: true})
     build.onResolve({ filter: /.*/ }, async (args) => {
       if (!/^(#|\/|\.\/|\.\.\/)/.test(args.path)) {
-        if (/@clabroche\/*/.test(args.path)) {
+        if (/@runeya\/*/.test(args.path)) {
           return { external: false };
         }
         return { external: true };
@@ -68,7 +68,7 @@ const syncPackageJSON = {
     delete packageJSON.devDependencies
     packageJSON.bin = 'www.js'
     packageJSON.main = 'stack.js'
-    packageJSON.name = '@iryu54/stack-monitor'
+    packageJSON.name = '@runeya/runeya'
     await writeFile(path.resolve(distPath, 'package.json'), JSON.stringify(packageJSON, null, 2), 'utf-8')
   },
 };
@@ -90,12 +90,12 @@ const integrateWebApp = {
     build.onEnd(async () => {
       console.log('integrateWebApp')
       if(!existsSync(distPath)) await mkdir(distPath)
-      execSync('yarn turbo build --filter=@clabroche/fronts-app', {cwd: path.resolve(__dirname, '../..'), stdio: 'inherit'})
+      execSync('yarn turbo build --filter=@runeya/fronts-app', {cwd: path.resolve(__dirname, '../..'), stdio: 'inherit'})
       if(existsSync(publicPath)) await rm(publicPath, {recursive: true, force: true})
       await cp(path.resolve(__dirname, '../../fronts/app/dist'), publicPath, {recursive: true})
       console.log('integrate extension')
-      execSync('yarn turbo build --filter=@clabroche/modules-vscode-extension', {cwd: path.resolve(__dirname, '../..'), stdio: 'inherit'})
-      await cp(path.resolve(__dirname, '../../modules/vscode/extension/out/stack-monitor.vsix'), path.resolve(distPath, 'stack-monitor.vsix'), {recursive: true})
+      execSync('yarn turbo build --filter=@runeya/modules-vscode-extension', {cwd: path.resolve(__dirname, '../..'), stdio: 'inherit'})
+      await cp(path.resolve(__dirname, '../../modules/vscode/extension/out/runeya.vsix'), path.resolve(distPath, 'runeya.vsix'), {recursive: true})
       const modulePath = path.resolve(__dirname, '../../modules/workflows/backend/nodes')
       const packageJSON = JSON.parse(await readFile(path.resolve(modulePath, 'package.json'), 'utf-8'))
       await compressing.tar.compressDir(
@@ -120,7 +120,7 @@ export default defineConfig({
     syncPackageJSON,
   ],
   noExternal: [
-    /@clabroche\/.*/,
+    /@runeya\/.*/,
   ],
   sourcemap: true,
 });

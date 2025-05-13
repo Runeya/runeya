@@ -5,7 +5,7 @@ const PromiseB = require('bluebird');
 
 /**
  *
- * @param {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<any>} plugin
+ * @param {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<any>} plugin
  */
 function pluginToUrl(plugin) {
   for (let i = 0; i < plugin.placements.length; i += 1) {
@@ -24,12 +24,12 @@ function pluginToUrl(plugin) {
   return '';
 }
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-const routes = (stackMonitor) => {
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+const routes = (runeya) => {
   const {
     getServices,
     helpers: { searchString },
-  } = stackMonitor;
+  } = runeya;
   router.get('/finder/search', async (req, res) => {
     const search = req.query.q?.toString()?.toUpperCase() || '';
     /** @type {FinderChoice[]} */
@@ -42,11 +42,11 @@ const routes = (stackMonitor) => {
         url: `/stack-single/${service.label}`,
       }));
 
-    const { plugins } = stackMonitor;
+    const { plugins } = runeya;
     const _plugins = (await PromiseB
       .map(Object.keys(plugins), (/** @type {keyof typeof plugins} */key) => plugins[key])
       .map(async (plugin) => [
-        ...(await plugin?.finder?.(search, stackMonitor)?.catch?.(() => ([])) || []),
+        ...(await plugin?.finder?.(search, runeya)?.catch?.(() => ([])) || []),
         ...(searchString(plugin.name, search) ? [{
           title: plugin.displayName || plugin.name,
           description: plugin.description,

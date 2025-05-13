@@ -4,7 +4,7 @@ const {
   existsSync, mkdirSync, writeFileSync, readFileSync,
 } = require('fs');
 
-const persistencePath = pathfs.resolve(os.homedir(), '.stack-monitor');
+const persistencePath = pathfs.resolve(os.homedir(), '.runeya');
 
 if (!existsSync(persistencePath)) mkdirSync(persistencePath, { recursive: true });
 const confsPath = pathfs.resolve(persistencePath, 'confs');

@@ -63,3 +63,4 @@ dist
 bin/public
 *.vsix
 public
+.runeya

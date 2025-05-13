@@ -1,5 +1,5 @@
-const { express, getServer } = require('@clabroche/common-express');
-const { sockets } = require('@clabroche/common-socket-server');
+const { express, getServer } = require('@runeya/common-express');
+const { sockets } = require('@runeya/common-socket-server');
 var RED = require("node-red");
 const compressing = require('compressing')
 
@@ -7,13 +7,13 @@ const router = express.Router();
 const pathfs = require('path');
 const { existsSync } = require('fs');
 const { rm, readFile, writeFile, mkdir, readdir } = require('fs/promises');
-const ports = require('@clabroche/servers-server/models/ports');
-const { execAsync } = require('@clabroche/servers-server/helpers/exec');
-const EncryptionKey = require('@clabroche/servers-server/models/EncryptionKey');
+const ports = require('@runeya/servers-server/models/ports');
+const { execAsync } = require('@runeya/servers-server/helpers/exec');
+const EncryptionKey = require('@runeya/servers-server/models/EncryptionKey');
 const PromiseB = require('bluebird')
 const { v4 } = require('uuid');
 
-/** @param {import('@clabroche/common-typings').StackMonitor} Stack */
+/** @param {import('@runeya/common-typings').Runeya} Stack */
 module.exports = (Stack) => {
   getServer().then(async (server) => {
     const userDir = pathfs.resolve(Stack.getRootPath(), 'nodered')
@@ -25,12 +25,12 @@ module.exports = (Stack) => {
       credentialSecret: EncryptionKey.encryptionKey,
       functionGlobalContext: {},
       flowFile: 'flow.json',
-      paletteCategories: ['Stack Monitor'],
+      paletteCategories: ['Runeya'],
     }
-    settings.functionGlobalContext.stackmonitor = {
+    settings.functionGlobalContext.runeya = {
       sockets,
       url: `http://localhost:${ports.http}`,
-      stack: require('@clabroche/servers-server/models/stack')
+      stack: require('@runeya/servers-server/models/stack')
     }
     
     RED.init(server, {
@@ -39,19 +39,26 @@ module.exports = (Stack) => {
     router.use(settings.httpAdminRoot, RED.httpAdmin);
     router.use(settings.httpNodeRoot, RED.httpNode);
 
-    const moduleName = 'node-red-contrib-stack-monitor'
+    const moduleName = 'node-red-contrib-runeya'
+    const moduleNameLegacy = 'node-red-contrib-stack-monitor'
     const modulePath = pathfs.resolve(userDir, 'node_modules', moduleName);
     const localNodeModuleTarPath = pathfs.resolve(__dirname, `${moduleName}.tar`)
     const packageJSONPath = pathfs.resolve(userDir, 'package.json')
 
-    if (existsSync(modulePath)) {
-      console.log(moduleName, 'found, delete it before start nodered')
-      await rm(modulePath, { recursive: true, force: true })
+    // Remove legacy module
+    if(existsSync(pathfs.resolve(userDir, 'node_modules', moduleNameLegacy))) {
+      await rm(pathfs.resolve(userDir, 'node_modules', moduleNameLegacy), { recursive: true, force: true })
       await execAsync('npm uninstall node-red-contrib-stack-monitor', { cwd: userDir })
     }
 
+    if (existsSync(modulePath)) {
+      console.log(moduleName, 'found, delete it before start nodered')
+      await rm(modulePath, { recursive: true, force: true })
+      await execAsync('npm uninstall node-red-contrib-runeya', { cwd: userDir })
+    }
+
     await PromiseB.map(await readdir(userDir), async file => {
-      if(file.startsWith(`node-red-contrib-stack-monitor-`) && file.endsWith('.tgz')) {
+      if(file.startsWith(`node-red-contrib-runeya-`) && file.endsWith('.tgz')) {
         await rm(pathfs.resolve(userDir, file))
       }
     })

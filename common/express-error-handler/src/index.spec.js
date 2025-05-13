@@ -1,4 +1,4 @@
-jest.mock('@clabroche/common-express-logger', () => {
+jest.mock('@runeya/common-express-logger', () => {
   const mockError = {
     errorId: 'errorId',
     date: new Date(),
@@ -7,7 +7,7 @@ jest.mock('@clabroche/common-express-logger', () => {
     error: jest.fn().mockImplementation(() => mockError),
   };
 });
-const HTTPError = require('@clabroche/common-express-http-error');
+const HTTPError = require('@runeya/common-express-http-error');
 const ErrorHandler = require('./index');
 
 const mockRes = {

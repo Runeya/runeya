@@ -7,18 +7,18 @@ outline: deep
 
 Add this in your vscode to print variables easily in debug output of service:
 ``` json
-"Print to stack-monitor": {
+"Print to runeya": {
   "prefix": "log",
   "body": [
-    "console.log(JSON.stringify(['stack-monitor', $1]));",
+    "console.log(JSON.stringify(['runeya', $1]));",
     "$2"
   ],
-  "description": "Print to stack-monitor"
+  "description": "Print to runeya"
 }
 ```
 
 Type ```log``` in vs code, it should produce something like that:
 
 ``` javascript 
-console.log(JSON.stringify(['stack-monitor', <what you want>, <and others>]));
+console.log(JSON.stringify(['runeya', <what you want>, <and others>]));
 ```

@@ -1,8 +1,8 @@
 {
-  "name": "@clabroche/modules-sql-beautifier-front",
-  "version": "2.2.0",
+  "name": "@runeya/modules-sql-beautifier-front",
+  "version": "1.0.0",
   "description": "SQL Beautifier module frontend",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "main": "src/SQLBeautifier.vue",
   "private": true,
   "scripts": {
@@ -13,7 +13,7 @@
     "debounce": "^2.0.0"
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
+    "@runeya/common-retrigger-all-build": "workspace:*",
     "@types/node": "^20.11.19",
     "typescript": "^5.3.3"
   }

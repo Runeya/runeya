@@ -22,7 +22,7 @@
         <div class="section-header">
           <i class="fas fa-folder mr-2"></i>
           <span>Root path</span>
-          <i v-tooltip="'The path on which all commands will be executed. This is the base path of commands. If stack monitor was launched with environments variables, you can reference them in the path. Example: $EXTERNAL_PATH_TO_SERVICES/platform'" class="fas fa-question-circle ml-2 hint-icon"></i>
+          <i v-tooltip="'The path on which all commands will be executed. This is the base path of commands. If runeya was launched with environments variables, you can reference them in the path. Example: $EXTERNAL_PATH_TO_SERVICES/platform'" class="fas fa-question-circle ml-2 hint-icon"></i>
         </div>
         <div class="section-content">
           <EditableField

@@ -5,9 +5,9 @@ const globalScripts = [];
 /** @type {Record<string, TrackStep>} */
 const currentScriptsByCommunicationId = {};
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-const GlobalScripts = (stackMonitor) => {
-  const { Socket } = stackMonitor;
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+const GlobalScripts = (runeya) => {
+  const { Socket } = runeya;
   return {
     /** @param {GlobalScript} script */
     addScript(script) {
@@ -16,7 +16,7 @@ const GlobalScripts = (stackMonitor) => {
         globalScripts.splice(index, 1);
       }
       globalScripts.push(script);
-      stackMonitor.Socket.emit('reloadScripts');
+      runeya.Socket.emit('reloadScripts');
     },
     getScripts() {
       return globalScripts;

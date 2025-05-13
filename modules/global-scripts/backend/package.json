@@ -1,14 +1,14 @@
 {
-  "name": "@clabroche/modules-global-scripts-backend",
-  "version": "2.2.1",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "name": "@runeya/modules-global-scripts-backend",
+  "version": "1.0.0",
+  "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {
     "test": ""
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
-    "@clabroche/modules-plugins-loader-front": "workspace:*",
+    "@runeya/common-retrigger-all-build": "workspace:*",
+    "@runeya/modules-plugins-loader-front": "workspace:*",
     "@types/express": "^4.17.21",
     "@types/uuid": "^9.0.8"
   },

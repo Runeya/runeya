@@ -135,7 +135,7 @@
                   </div>
                   <div class="hint-text">
                     <i class="fas fa-info-circle"></i>
-                    <span>It's the concatenation of the rootpath and this one. If stack monitor was launched with environments variables, you can reference them in the path.</span>
+                    <span>It's the concatenation of the rootpath and this one. If runeya was launched with environments variables, you can reference them in the path.</span>
                   </div>
                 </div>
               </TabPanel>

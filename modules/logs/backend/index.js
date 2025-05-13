@@ -1,6 +1,6 @@
 const dayjs = require('dayjs');
 
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<null>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<null>} */
 const plugin = {
   enabled: true,
   name: 'Logs',
@@ -12,12 +12,12 @@ const plugin = {
   order: 1,
   /**
    * @param {*} search
-   * @param {import('@clabroche/common-typings').StackMonitor} stackMonitor
+   * @param {import('@runeya/common-typings').Runeya} runeya
    */
-  finder: (search, stackMonitor) => {
-    const services = stackMonitor.getServices()
+  finder: (search, runeya) => {
+    const services = runeya.getServices()
       ?.flatMap((s) => (s.store?.slice(-300).reverse().map((line) => ({ log: line, service: s }))))
-      ?.filter(({ log }) => stackMonitor.helpers.searchString(log.raw, search));
+      ?.filter(({ log }) => runeya.helpers.searchString(log.raw, search));
     return [
       ...services.map((service) => ({
         icon: 'fas fa-terminal',

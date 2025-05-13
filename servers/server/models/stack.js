@@ -1,17 +1,18 @@
 /* eslint-disable func-names */
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { sockets } = require('@clabroche/common-socket-server');
+const { sockets } = require('@runeya/common-socket-server');
 // eslint-disable-next-line import/no-extraneous-dependencies
-const plugins = require('@clabroche/modules-plugins-loader-backend');
+const plugins = require('@runeya/modules-plugins-loader-backend');
 const PromiseB = require('bluebird');
 const Service = require('./Service');
 const ports = require('./ports');
 const dbs = require('../helpers/dbs');
 const EnvironmentModel = require('./Environment');
 const EncryptionKey = require('./EncryptionKey');
-const CustomObservable = require('@clabroche/common-socket-server/src/CustomObservable');
+const CustomObservable = require('@runeya/common-socket-server/src/CustomObservable');
 const args = require('../helpers/args');
-const { existsSync, mkdirSync } = require('fs');
+const { existsSync, mkdirSync  } = require('fs');
+const { rename } = require('fs/promises');
 const pathfs = require('path');
 const { default: axios } = require('axios');
 
@@ -104,7 +105,7 @@ Stack.prototype.toStorage = function () {
 };
 
 Stack.getRootPath = () => {
-  const rootPath = pathfs.resolve(args.rootPath, '.stackmonitor');
+  const rootPath = pathfs.resolve(args.rootPath, '.runeya');
   if (!existsSync(rootPath)) mkdirSync(rootPath, { recursive: true });
   return rootPath;
 }
@@ -191,19 +192,32 @@ Stack.prototype.findService = function (serviceLabel) {
 };
 
 Stack.selectConf = async function () {
+  const localLegacyPath = pathfs.resolve(require('./stack').getRootPath(), '../.stackmonitor')
+  const localNewPath = pathfs.resolve(require('./stack').getRootPath(), '.runeya')
+  if(existsSync(localLegacyPath) && !existsSync(localNewPath)) {
+    console.log('Legacy path found, move to new path')
+    await rename(localLegacyPath, localNewPath)
+  }
+
+  const globalLegacyPath = pathfs.resolve(require('os').homedir(), '.stackmonitor')
+  const globalNewPath = pathfs.resolve(require('os').homedir(), '.runeya-global')
+  if(existsSync(globalLegacyPath) && !existsSync(globalNewPath)) {
+    console.log('Legacy path found, move to new path')
+    await rename(globalLegacyPath, globalNewPath)
+  }
   await EncryptionKey.init();
   if (!EncryptionKey.encryptionKey) {
     await EncryptionKey.saveKey(await EncryptionKey.generateKey());
   }
   Stack.currentStack = await this.parse();
-  Stack.currentEnvironment = (args.e || process.env.STACK_MONITOR_DEFAULT_ENVIRONMENT)
+  Stack.currentEnvironment = (args.e || process.env.RUNEYA_DEFAULT_ENVIRONMENT)
     ? Stack.currentStack.environments.find((env) => (
       env.label === args.e?.toString() ||
-      env.label === process.env.STACK_MONITOR_DEFAULT_ENVIRONMENT
+      env.label === process.env.RUNEYA_DEFAULT_ENVIRONMENT
     )) || null
     : Stack.currentStack.environments.find((env) => env.default) || null;
-  if (process.env.STACK_MONITOR_SERVICES) {
-    process.env.STACK_MONITOR_SERVICES.split(',').forEach((serviceLabel) => {
+  if (process.env.RUNEYA_SERVICES) {
+    process.env.RUNEYA_SERVICES.split(',').forEach((serviceLabel) => {
       const service = Stack.findService(serviceLabel)
       if(service) service.enable()
     })
@@ -258,7 +272,7 @@ module.exports = /** @type {StackWithPlugins} */(Object.assign(Stack, pluginsToL
  */
 
 /**
- * @typedef {Omit<import('@clabroche/common-typings').NonFunctionProperties<Service>, 'pids' | 'store' | 'enabled'>[]} StackArray
+ * @typedef {Omit<import('@runeya/common-typings').NonFunctionProperties<Service>, 'pids' | 'store' | 'enabled'>[]} StackArray
  */
 
 /**
@@ -272,7 +286,7 @@ module.exports = /** @type {StackWithPlugins} */(Object.assign(Stack, pluginsToL
  */
 
 /**
- * @typedef {(stackMonitor: StackWithPlugins) => StackObject | Promise<StackObject>} StackFunction
+ * @typedef {(runeya: StackWithPlugins) => StackObject | Promise<StackObject>} StackFunction
  */
 
 /**

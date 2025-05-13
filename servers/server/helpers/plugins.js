@@ -1,4 +1,4 @@
-const plugins = require('@clabroche/modules-plugins-loader-backend');
+const plugins = require('@runeya/modules-plugins-loader-backend');
 const Stack = require('../models/stack');
 
 /** @type {import('express').Router[]} */
@@ -38,5 +38,5 @@ module.exports = {
 };
 
 /**
- * @typedef {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<unknown>} PluginSM
+ * @typedef {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<unknown>} PluginSM
  */

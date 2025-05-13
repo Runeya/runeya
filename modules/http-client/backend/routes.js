@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const HttpClient = require('./HttpClient');
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
-  const httpClient = HttpClient(stackMonitor);
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
+  const httpClient = HttpClient(runeya);
   
   router.post('/http-client/request', async (req, res) => {
     try {

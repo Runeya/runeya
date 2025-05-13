@@ -1,5 +1,5 @@
 <template>
-  <iframe src="https://clabroche.github.io/stack-monitor/" width="100%" height="100%"></iframe>
+  <iframe src="https://runeya.github.io/runeya/" width="100%" height="100%"></iframe>
 </template>
 
 <script setup>

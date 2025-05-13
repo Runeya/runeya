@@ -5,7 +5,7 @@ const db = dbs.getDb(`documentations`)
 const dbDocumentationTree = dbs.getDb(`documentations-tree`, {encrypted: true, defaultData: []}).alasql
 class Documentation {
   /**
-   * @param {import('@clabroche/common-typings').NonFunctionProperties<Documentation>} documentation
+   * @param {import('@runeya/common-typings').NonFunctionProperties<Documentation>} documentation
    */
   constructor(documentation) {
     /** @type {string} */

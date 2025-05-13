@@ -1,7 +1,7 @@
 {
-  "name": "@clabroche/modules-openapi-backend",
-  "version": "2.2.1",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "name": "@runeya/modules-openapi-backend",
+  "version": "1.0.0",
+  "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {
     "test": ""
@@ -11,7 +11,7 @@
     "express": "^4.18.2"
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*",
+    "@runeya/modules-plugins-loader-front": "workspace:*"
   }
 }

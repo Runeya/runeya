@@ -2,7 +2,7 @@ const express = require('express');
 
 const router = express.Router();
 
-/** @param {import('@clabroche/common-typings').StackMonitor} Stack */
+/** @param {import('@runeya/common-typings').Runeya} Stack */
 module.exports = (Stack) => {
   const { globalScripts } = Stack;
   router.get('/global-scripts/', async (req, res) => {

@@ -1,13 +1,13 @@
 {
-  "name": "@clabroche/modules-regex-front",
-  "version": "2.2.1",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "name": "@runeya/modules-regex-front",
+  "version": "1.0.0",
+  "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {
     "test": ""
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
+    "@runeya/common-retrigger-all-build": "workspace:*",
     "json-tree-view-vue3": "^1.0.1",
     "monaco-editor": "^0.46.0",
     "vue": "^3.5.13",

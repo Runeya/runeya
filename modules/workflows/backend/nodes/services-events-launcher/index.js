@@ -3,7 +3,7 @@ module.exports = function (RED) {
   const controller = function (config) {
     RED.nodes.createNode(this, config);
     const node = this;
-    const { sockets, stack } = RED.settings.functionGlobalContext.stackmonitor
+    const { sockets, stack } = RED.settings.functionGlobalContext.runeya
     const filteredEvents = (config.events?.split(',') || []).filter(c => c)
     const filteredServices = (config.services?.split(',') || []).filter(c => c)
     ;[

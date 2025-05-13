@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 
 module.exports.askUiFor = async function(label, data, RED) {
-  const {sockets} = RED.settings.functionGlobalContext.stackmonitor
+  const {sockets} = RED.settings.functionGlobalContext.runeya
   return new Promise(resolve => {
     const uuid = crypto.randomUUID();
     sockets.emit('node-red-' + label, {

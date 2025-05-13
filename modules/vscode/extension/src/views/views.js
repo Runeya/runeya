@@ -36,7 +36,7 @@ module.exports = {
           treeDataProvider: new ServicesProvider(context),
         });
         tree.onDidChangeSelection(async (item) => {
-          /** @type {{data: import('@clabroche/servers-server/models/Service'), type: string}} */
+          /** @type {{data: import('@runeya/servers-server/models/Service'), type: string}} */
           const { data, type } = item.selection[0] || {};
           if (type === 'start-service') await start(data.label, context);
           if (type === 'stop-service') await stop(data.label, context);

@@ -1,4 +1,4 @@
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./SQLBeautifier')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./SQLBeautifier')>} */
 const plugin = {
   enabled: true,
   name: 'sqlbeautifier',

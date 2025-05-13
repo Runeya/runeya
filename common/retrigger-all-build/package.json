@@ -1,9 +1,9 @@
 {
-  "name": "@clabroche/common-retrigger-all-build",
+  "name": "@runeya/common-retrigger-all-build",
   "private": true,
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"No test specified\""

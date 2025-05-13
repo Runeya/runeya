@@ -61,17 +61,17 @@ module.exports = {
       if (!port) return;
     }
 
-    context.globalState.setKeysForSync(['stackMonitorPort']);
-    context.globalState.update('stackMonitorPort', port);
+    context.globalState.setKeysForSync(['runeyaPort']);
+    context.globalState.update('runeyaPort', port);
     await getAxios(context).get('/version')
       .then(async ({ data: version }) => {
         await module.exports.initSocket(context);
-        context.globalState.update('stackMonitorAvailable', true);
-        vscode.window.showInformationMessage(`Successfully connected to stack-monitor v${version}`);
+        context.globalState.update('runeyaAvailable', true);
+        vscode.window.showInformationMessage(`Successfully connected to runeya v${version}`);
       })
       .catch(() => {
-        vscode.window.showInformationMessage('Can\'t connect to stack-monitor. Retry...');
-        context.globalState.update('stackMonitorAvailable', false);
+        vscode.window.showInformationMessage('Can\'t connect to runeya. Retry...');
+        context.globalState.update('runeyaAvailable', false);
         module.exports.connect(context);
       })
       .finally(() => {
@@ -79,7 +79,7 @@ module.exports = {
       });
   },
   initSocket: async (context) => {
-    await Socket.init(`http://localhost:${context.globalState.get('stackMonitorPort')}/socket`);
+    await Socket.init(`http://localhost:${context.globalState.get('runeyaPort')}/socket`);
     services.update();
     editor.update(true);
     Socket.on('service:crash', async ({ label }) => {

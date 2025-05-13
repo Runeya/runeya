@@ -1,9 +1,9 @@
 {
-  "name": "@clabroche/common-socket-front",
+  "name": "@runeya/common-socket-front",
   "private": true,
-  "version": "2.1.0",
+  "version": "1.0.0",
   "description": "",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",
   "scripts": {
     "test": ""
@@ -14,6 +14,6 @@
     "vue": "^3.2.45"
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
   }
 }

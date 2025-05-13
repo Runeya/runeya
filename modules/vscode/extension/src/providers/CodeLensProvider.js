@@ -40,7 +40,7 @@ module.exports = class CodelensProvider {
     codeLens.command = {
       title: this.message,
       tooltip: 'Tooltip provided by sample extension',
-      command: 'codelens-stackmonitor.codelensAction',
+      command: 'codelens-runeya.codelensAction',
       arguments: ['Argument 1', false],
     };
     return codeLens;

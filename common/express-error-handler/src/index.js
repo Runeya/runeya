@@ -1,4 +1,4 @@
-const HTTPError = require('@clabroche/common-express-http-error');
+const HTTPError = require('@runeya/common-express-http-error');
 const errorCodes = require('./errorCodes');
 
 module.exports = () => (err, req, res, next) => {

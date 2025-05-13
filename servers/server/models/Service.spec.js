@@ -8,12 +8,12 @@ const Environment = require('./Environment');
 
 beforeAll(async () => {
   args.rootPath = path.resolve(__dirname)
-  rmSync(path.resolve(args.rootPath, '.stackmonitor'), { force: true, recursive: true })
+  rmSync(path.resolve(args.rootPath, '.runeya'), { force: true, recursive: true })
   const key = await EncryptionKey.generateKey()
   await EncryptionKey.saveKey(key, {noReload: true})
 })
 afterAll(async() => {
-  rmSync(path.resolve(args.rootPath, '.stackmonitor'), { force: true, recursive: true })
+  rmSync(path.resolve(args.rootPath, '.runeya'), { force: true, recursive: true })
 })
 function getService(spawnOptions) {
   return {
@@ -30,7 +30,7 @@ describe('Service', () => {
         sameValue: 'sameValueForLocal',
         localValue: 'localValue',
         localValueOverride: 'localValueOverride',
-        localValueOverride_STACK_MONITOR_OVERRIDE: 'localValueOverride_STACK_MONITOR_OVERRIDE',
+        localValueOverride_RUNEYA_OVERRIDE: 'localValueOverride_RUNEYA_OVERRIDE',
       },
     }).save()
     await new Environment({
@@ -49,8 +49,8 @@ describe('Service', () => {
             { key: 'sameValue', value: '{{sameValue}}' },
             { key: 'rawOverride', value: 'rawValue', override: 'rawOverride' },
             { key: 'localValue', value: '{{localValue}}' },
-            { key: 'localValueOverride', value: '{{localValueOverride}}', override: '{{localValueOverride_STACK_MONITOR_OVERRIDE}}', },
-            { key: 'localValueOverrideWithPrefixSuffix', value: '{{localValueOverride}}', override: '{{localValueOverride_STACK_MONITOR_OVERRIDE}}', prefix: 'prefix/', suffix: '/suffix' },
+            { key: 'localValueOverride', value: '{{localValueOverride}}', override: '{{localValueOverride_RUNEYA_OVERRIDE}}', },
+            { key: 'localValueOverrideWithPrefixSuffix', value: '{{localValueOverride}}', override: '{{localValueOverride_RUNEYA_OVERRIDE}}', prefix: 'prefix/', suffix: '/suffix' },
             { key: 'localValueWithPrefixSuffix', value: '{{localValue}}', prefix: 'prefix/', suffix:'/suffix' },
             { key: 'devValue', value: '{{devValue}}' },
           ], extends: []
@@ -70,17 +70,17 @@ describe('Service', () => {
     expect(resForLocal.rawValue).toEqual('rawValue')
     expect(resForLocal.rawOverride).toEqual('rawOverride')
     expect(resForLocal.localValue).toEqual('localValue')
-    expect(resForLocal.localValueOverride).toEqual('localValueOverride_STACK_MONITOR_OVERRIDE')
+    expect(resForLocal.localValueOverride).toEqual('localValueOverride_RUNEYA_OVERRIDE')
     expect(resForLocal.devValue).toEqual(undefined)
     expect(resForLocal.localValueWithPrefixSuffix).toEqual('prefix/localValue/suffix')
-    expect(resForLocal.localValueOverrideWithPrefixSuffix).toEqual('prefix/localValueOverride_STACK_MONITOR_OVERRIDE/suffix')
+    expect(resForLocal.localValueOverrideWithPrefixSuffix).toEqual('prefix/localValueOverride_RUNEYA_OVERRIDE/suffix')
     expect(resForLocal.sameValue).toEqual('sameValueForLocal')
 
     expect(resForDev.rawValue).toEqual('rawValueForDev')
     expect(resForDev.devValue).toEqual('devValue')
     expect(resForDev.localValue).toEqual('localValue') // Not exists in dev but herits from local
     expect(resForDev.localValueWithPrefixSuffix).toEqual('prefix/localValue/suffix') // Not exists in dev but herits from local
-    expect(resForDev.localValueOverrideWithPrefixSuffix).toEqual('prefix/localValueOverride_STACK_MONITOR_OVERRIDE/suffix') // Not exists in dev but herits from local
+    expect(resForDev.localValueOverrideWithPrefixSuffix).toEqual('prefix/localValueOverride_RUNEYA_OVERRIDE/suffix') // Not exists in dev but herits from local
     expect(resForDev.sameValue).toEqual('sameValueForDev')
     service.stopQueue = true
   })

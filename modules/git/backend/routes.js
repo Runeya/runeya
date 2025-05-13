@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
-  const { git } = stackMonitor;
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
+  const { git } = runeya;
   router.get('/git/:service/graph', async (req, res) => {
     const graph = await git.getGraph(req.params.service, { graphOnAll: req.query.graphOnAll === 'true' });
     res.json(graph);

@@ -2,9 +2,9 @@ const express = require('express');
 const router = express.Router();
 const Base64 = require('./Base64');
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
-  const base64 = Base64(stackMonitor);
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
+  const base64 = Base64(runeya);
   
   router.post('/base64/encode', (req, res) => {
     try {

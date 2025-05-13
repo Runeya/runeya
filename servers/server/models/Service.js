@@ -1,5 +1,5 @@
 /* eslint-disable func-names */
-/// <reference path="@clabroche/common-typings.d.ts">
+/// <reference path="@runeya/common-typings.d.ts">
 const os = require('os');
 const { spawn } = require('child_process');
 const killport = require('kill-port');
@@ -14,7 +14,7 @@ const axios = require('axios').default;
 const pathfs = require('path');
 const net = require('net');
 // eslint-disable-next-line import/no-extraneous-dependencies
-const { sockets } = require('@clabroche/common-socket-server');
+const { sockets } = require('@runeya/common-socket-server');
 const { mkdir, writeFile } = require('fs/promises');
 const { cloneDeep, over } = require('lodash');
 const CreateInterface = require('../helpers/readline');
@@ -36,7 +36,7 @@ const alias = {
 };
 
 /**
- * @param {import('@clabroche/common-typings').NonFunctionProperties<Service>} service
+ * @param {import('@runeya/common-typings').NonFunctionProperties<Service>} service
  * @param {import('./stack')} Stack
  */
 function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
@@ -76,9 +76,9 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
     this.groups = service.groups || [];
     /** @type {string[]} */
     this.parsers = service.parsers || [
-      'stack-monitor-parser-debug',
-      'stack-monitor-parser-jsons',
-      'stack-monitor-parser-links',
+      'runeya-parser-debug',
+      'runeya-parser-jsons',
+      'runeya-parser-links',
     ];
     /** @type {boolean} */
     this.enabled = service.enabled || false;
@@ -107,7 +107,7 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
       if (!this.container.volumes?.length) this.container.volumes = [];
       if (!this.container.build) this.container.build = '';
       this.container.ports = this.container.ports || [];
-      this.container.sharedVolume = this.container.sharedVolume || '~/.stack-monitor';
+      this.container.sharedVolume = this.container.sharedVolume || '~/.runeya';
       this.container.ignoreVolumes = this.container.ignoreVolumes?.length
         ? this.container.ignoreVolumes.filter((f) => !f.startsWith(this.container?.sharedVolume || ''))
         : [];
@@ -178,7 +178,7 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
         Object.keys(envs).forEach((key) => {
           const env = envs[key]
           const tag = extractTag(env.value);
-          if (tag) envs[key].override = `{{${tag}_STACK_MONITOR_OVERRIDE}}`;
+          if (tag) envs[key].override = `{{${tag}_RUNEYA_OVERRIDE}}`;
           const override = overrides[environment.label]?.[key];
           if (!env || !override) return
           envs[key].override = override
@@ -255,7 +255,7 @@ Service.prototype.exportInApi = function () {
   delete res.Stack;
   return res;
 };
-/** @return {Partial<import('@clabroche/common-typings').NonFunctionProperties<Service>>} */
+/** @return {Partial<import('@runeya/common-typings').NonFunctionProperties<Service>>} */
 Service.prototype.toStorage = function () {
   const service = cloneDeep({
     label: this.label,
@@ -397,7 +397,7 @@ Service.prototype.add = async function (data, logMessageOverride, {
   }
   this.lastDatePrinted = Date.now();
 
-  if (line.msg.length > 100000 && !line.msg.startsWith('["stack-monitor"')) line.msg = line.msg.slice(0, 10000);
+  if (line.msg.length > 100000 && !line.msg.startsWith('["runeya"')) line.msg = line.msg.slice(0, 10000);
   this.store.push(line);
   this.queue.push(line);
 };

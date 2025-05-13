@@ -1,8 +1,8 @@
 {
-  "name": "@clabroche/modules-json-formatter-backend",
-  "version": "2.2.0",
+  "name": "@runeya/modules-json-formatter-backend",
+  "version": "1.0.0",
   "description": "JSON Formatter Enhanced Backend Module",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "main": "index.js",
   "private": true,
   "scripts": {
@@ -15,7 +15,7 @@
     "xml-js": "^1.6.11"
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
   },
   "author": "",
   "license": "ISC"

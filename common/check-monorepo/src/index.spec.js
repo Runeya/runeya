@@ -38,7 +38,7 @@ describe('Dependencies', () => {
     const retriggerAllPackage = workspaces.find((w) => w.packageJSON.name.includes('retrigger-all-build'));
     if (!retriggerAllPackage) return;
     workspaces
-      .filter((workspace) => ![retriggerAllPackage.packageJSON.name, '@clabroche/modules-vscode-extension'].includes(workspace.packageJSON.name))
+      .filter((workspace) => ![retriggerAllPackage.packageJSON.name, '@runeya/modules-vscode-extension'].includes(workspace.packageJSON.name))
       .forEach((workspace) => {
         it(`${workspace.packageJSON.name} should have a devDependencies section`, () => {
           if (!fse.readdirSync(workspace.path).includes('.independant')) {
@@ -98,9 +98,9 @@ describe('Publish config', () => {
     });
     it(`${workspace.packageJSON.name} should have a repository field`, () => {
       if (!workspace.packageJSON.repository) {
-        expect(undefined).toBe('"repository": "https://github.com/clabroche/stack-monitor",');
+        expect(undefined).toBe('"repository": "https://github.com/runeya/runeya",');
       }
-      expect(workspace.packageJSON.repository).toBe('https://github.com/clabroche/stack-monitor');
+      expect(workspace.packageJSON.repository).toBe('https://github.com/runeya/runeya');
     });
   });
 });

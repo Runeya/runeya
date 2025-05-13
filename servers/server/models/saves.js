@@ -4,7 +4,7 @@ const {
   existsSync, mkdirSync, writeFileSync, readFileSync,
 } = require('fs');
 
-const confDir = pathfs.resolve(homedir, '.stack-monitor');
+const confDir = pathfs.resolve(homedir, '.runeya');
 
 /**
  * @param {string} file

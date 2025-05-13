@@ -1930,1047 +1930,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@clabroche/common-check-monorepo@workspace:common/check-monorepo":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-check-monorepo@workspace:common/check-monorepo"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@swc/core": "npm:^1.10.2"
-    "@swc/jest": "npm:^0.2.37"
-    jest: "npm:^29.7.0"
-    jest-sonar-reporter: "npm:^2.0.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-express-404@workspace:*, @clabroche/common-express-404@workspace:common/express-404":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-express-404@workspace:common/express-404"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    jest-sonar-reporter: "npm:^2.0.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-express-error-handler@workspace:*, @clabroche/common-express-error-handler@workspace:common/express-error-handler":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-express-error-handler@workspace:common/express-error-handler"
-  dependencies:
-    "@clabroche/common-express-http-error": "workspace:*"
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    jest-sonar-reporter: "npm:^2.0.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-express-health-check@workspace:*, @clabroche/common-express-health-check@workspace:common/express-health-check":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-express-health-check@workspace:common/express-health-check"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    express: "npm:^4.18.2"
-    jest-sonar-reporter: "npm:^2.0.0"
-    supertest: "npm:^6.3.4"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-express-http-error@workspace:*, @clabroche/common-express-http-error@workspace:common/express-http-error":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-express-http-error@workspace:common/express-http-error"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    dayjs: "npm:^1.11.10"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-express@workspace:*, @clabroche/common-express@workspace:common/express":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-express@workspace:common/express"
-  dependencies:
-    "@clabroche/common-express-404": "workspace:*"
-    "@clabroche/common-express-error-handler": "workspace:*"
-    "@clabroche/common-express-health-check": "workspace:*"
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/common-socket-server": "workspace:*"
-    "@types/http-proxy": "npm:^1"
-    compression: "npm:^1.7.4"
-    cookie-parser: "npm:^1.4.6"
-    cors: "npm:^2.8.5"
-    express: "npm:^4.18.2"
-    express-async-errors: "npm:^3.1.1"
-    helmet: "npm:^5.0.2"
-    http-proxy: "npm:^1.18.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-retrigger-all-build@workspace:*, @clabroche/common-retrigger-all-build@workspace:common/retrigger-all-build":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-retrigger-all-build@workspace:common/retrigger-all-build"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-socket-front@workspace:*, @clabroche/common-socket-front@workspace:common/socket-front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-socket-front@workspace:common/socket-front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-  peerDependencies:
-    vue: ^3.2.45
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-socket-server@workspace:*, @clabroche/common-socket-server@workspace:common/socket-server":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-socket-server@workspace:common/socket-server"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@types/express": "npm:^4"
-    "@types/ws": "npm:^8"
-    ws: "npm:^8.18.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-typings@workspace:*, @clabroche/common-typings@workspace:^, @clabroche/common-typings@workspace:common/typings":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-typings@workspace:common/typings"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/common-workflows@workspace:common/workflows":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/common-workflows@workspace:common/workflows"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    bluebird: "npm:^3.7.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/fronts-app@workspace:fronts/app":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/fronts-app@workspace:fronts/app"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/common-socket-front": "workspace:*"
-    "@clabroche/common-typings": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@fortawesome/fontawesome-free": "npm:^6.5.1"
-    "@primevue/themes": "npm:^4.2.5"
-    "@shopify/draggable": "npm:^1.1.3"
-    "@vitejs/plugin-vue": "npm:^5.2.4"
-    autoprefixer: "npm:^10.4.20"
-    axios: "npm:^1.7.9"
-    bluebird: "npm:^3.7.2"
-    dayjs: "npm:^1.11.10"
-    debounce: "npm:^2.0.0"
-    dot-object: "npm:^2.1.4"
-    fast-sort: "npm:^3.4.0"
-    highlight.js: "npm:^11.9.0"
-    json-tree-view-vue3: "npm:^1.0.2"
-    lodash-es: "npm:^4.17.21"
-    markdown-it: "npm:^14.0.0"
-    monaco-editor: "npm:^0.46.0"
-    new-github-issue-url: "npm:^1.0.0"
-    postcss: "npm:^8.4.35"
-    primevue: "npm:^4.3.3"
-    sass: "npm:^1.70.0"
-    swagger-ui: "npm:^5.11.7"
-    tailwindcss: "npm:^3.4.16"
-    tippy.js: "npm:^6.3.7"
-    uuid: "npm:^9.0.1"
-    vite: "npm:^6.3.5"
-    vite-plugin-html: "npm:^3.2.2"
-    vue: "npm:^3.5.13"
-    vue-router: "npm:^4.5.1"
-    vuedraggable: "npm:^4.1.0"
-  bin:
-    fronts-app: server/bin/www
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/fronts-docs@workspace:fronts/docs":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/fronts-docs@workspace:fronts/docs"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vitepress: "npm:^1.5.0"
-  bin:
-    fronts-docs: server/bin/www
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-base64-backend@workspace:*, @clabroche/modules-base64-backend@workspace:modules/base64/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-base64-backend@workspace:modules/base64/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    express: "npm:^4.18.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-base64-front@workspace:*, @clabroche/modules-base64-front@workspace:modules/base64/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-base64-front@workspace:modules/base64/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    axios: "npm:^1.4.0"
-    primevue: "npm:^4.3.3"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-bugs-backend@workspace:*, @clabroche/modules-bugs-backend@workspace:modules/bugs/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-bugs-backend@workspace:modules/bugs/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    express: "npm:^4.18.2"
-    typescript: "npm:^5.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-bugs-front@workspace:*, @clabroche/modules-bugs-front@workspace:modules/bugs/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-bugs-front@workspace:modules/bugs/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-configuration-backend@workspace:*, @clabroche/modules-configuration-backend@workspace:modules/configuration/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-configuration-backend@workspace:modules/configuration/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-configuration-front@workspace:*, @clabroche/modules-configuration-front@workspace:modules/configuration/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-configuration-front@workspace:modules/configuration/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@primevue/forms": "npm:^4.2.5"
-    fast-sort: "npm:^3.4.0"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-dev-ops-backend@workspace:*, @clabroche/modules-dev-ops-backend@workspace:modules/dev-ops/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-dev-ops-backend@workspace:modules/dev-ops/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-dev-ops-front@workspace:*, @clabroche/modules-dev-ops-front@workspace:modules/dev-ops/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-dev-ops-front@workspace:modules/dev-ops/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-diff-backend@workspace:*, @clabroche/modules-diff-backend@workspace:modules/diff/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-diff-backend@workspace:modules/diff/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    express: "npm:^4.18.2"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-diff-front@workspace:*, @clabroche/modules-diff-front@workspace:modules/diff/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-diff-front@workspace:modules/diff/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-docker-backend@workspace:*, @clabroche/modules-docker-backend@workspace:modules/docker/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-docker-backend@workspace:modules/docker/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    express: "npm:^4.18.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-docker-front@workspace:*, @clabroche/modules-docker-front@workspace:modules/docker/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-docker-front@workspace:modules/docker/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-documentation-backend@workspace:*, @clabroche/modules-documentation-backend@workspace:modules/documentation/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-documentation-backend@workspace:modules/documentation/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/bluebird": "npm:^3.5.38"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    bluebird: "npm:^3.7.2"
-    express: "npm:^4.18.2"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-documentation-front@workspace:*, @clabroche/modules-documentation-front@workspace:modules/documentation/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-documentation-front@workspace:modules/documentation/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-finder-backend@workspace:*, @clabroche/modules-finder-backend@workspace:modules/finder/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-finder-backend@workspace:modules/finder/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/bluebird": "npm:^3.5.38"
-    "@types/command-exists": "npm:^1.2.3"
-    "@types/express": "npm:^4.17.21"
-    bluebird: "npm:^3.7.2"
-    command-exists: "npm:^1.2.9"
-    express: "npm:^4.18.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-finder-front@workspace:*, @clabroche/modules-finder-front@workspace:modules/finder/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-finder-front@workspace:modules/finder/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-git-backend@workspace:*, @clabroche/modules-git-backend@workspace:modules/git/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-git-backend@workspace:modules/git/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/command-exists": "npm:^1.2.3"
-    "@types/express": "npm:^4.17.21"
-    command-exists: "npm:^1.2.9"
-    express: "npm:^4.18.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-git-front@workspace:*, @clabroche/modules-git-front@workspace:modules/git/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-git-front@workspace:modules/git/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-    xterm: "npm:^5.3.0"
-    xterm-addon-canvas: "npm:^0.5.0"
-    xterm-addon-fit: "npm:^0.8.0"
-    xterm-addon-search: "npm:^0.13.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-github-backend@workspace:*, @clabroche/modules-github-backend@workspace:modules/github/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-github-backend@workspace:modules/github/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    express: "npm:^4.18.2"
-    fix-esm: "npm:^1.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-github-front@workspace:*, @clabroche/modules-github-front@workspace:modules/github/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-github-front@workspace:modules/github/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-global-scripts-backend@workspace:*, @clabroche/modules-global-scripts-backend@workspace:modules/global-scripts/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-global-scripts-backend@workspace:modules/global-scripts/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    express: "npm:^4.18.2"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-global-scripts-front@workspace:*, @clabroche/modules-global-scripts-front@workspace:modules/global-scripts/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-global-scripts-front@workspace:modules/global-scripts/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-help-backend@workspace:*, @clabroche/modules-help-backend@workspace:modules/help/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-help-backend@workspace:modules/help/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-help-front@workspace:*, @clabroche/modules-help-front@workspace:modules/help/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-help-front@workspace:modules/help/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-http-client-backend@workspace:*, @clabroche/modules-http-client-backend@workspace:modules/http-client/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-http-client-backend@workspace:modules/http-client/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    axios: "npm:^1.6.0"
-    express: "npm:^4.18.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-http-client-front@workspace:*, @clabroche/modules-http-client-front@workspace:modules/http-client/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-http-client-front@workspace:modules/http-client/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    primevue: "npm:^4.3.3"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-json-formatter-backend@workspace:*, @clabroche/modules-json-formatter-backend@workspace:modules/json-formatter/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-json-formatter-backend@workspace:modules/json-formatter/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    ajv: "npm:^8.12.0"
-    express: "npm:^4.18.2"
-    js-yaml: "npm:^4.1.0"
-    xml-js: "npm:^1.6.11"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-json-formatter-front@workspace:*, @clabroche/modules-json-formatter-front@workspace:modules/json-formatter/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-json-formatter-front@workspace:modules/json-formatter/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    axios: "npm:^1.5.0"
-    jsonrepair: "npm:^3.2.0"
-    primeflex: "npm:^3.3.1"
-    primeicons: "npm:^6.0.1"
-    primevue: "npm:^4.3.3"
-    vue: "npm:^3.5.13"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-jwt-backend@workspace:*, @clabroche/modules-jwt-backend@workspace:modules/jwt/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-jwt-backend@workspace:modules/jwt/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/jsonwebtoken": "npm:^9.0.5"
-    express: "npm:^4.18.2"
-    jsonwebtoken: "npm:^9.0.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-jwt-front@workspace:*, @clabroche/modules-jwt-front@workspace:modules/jwt/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-jwt-front@workspace:modules/jwt/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    json-tree-view-vue3: "npm:^1.0.1"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-kanban-backend@workspace:*, @clabroche/modules-kanban-backend@workspace:modules/kanban/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-kanban-backend@workspace:modules/kanban/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    express: "npm:^4.18.2"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-kanban-front@workspace:*, @clabroche/modules-kanban-front@workspace:modules/kanban/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-kanban-front@workspace:modules/kanban/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-    vuedraggable: "npm:^4.1.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-logs-backend@workspace:*, @clabroche/modules-logs-backend@workspace:modules/logs/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-logs-backend@workspace:modules/logs/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    dayjs: "npm:^1.11.10"
-    express: "npm:^4.18.2"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-logs-front@workspace:*, @clabroche/modules-logs-front@workspace:modules/logs/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-logs-front@workspace:modules/logs/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    dayjs: "npm:^1.11.10"
-    json-tree-view-vue3: "npm:^1.0.1"
-    jsonpath: "npm:^1.1.1"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    xterm: "npm:^5.3.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-mongo-backend@workspace:*, @clabroche/modules-mongo-backend@workspace:modules/mongo/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-mongo-backend@workspace:modules/mongo/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    express: "npm:^4.18.2"
-    mongodb: "npm:^6.3.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-mongo-front@workspace:*, @clabroche/modules-mongo-front@workspace:modules/mongo/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-mongo-front@workspace:modules/mongo/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    dayjs: "npm:^1.11.10"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-node-repl-backend@workspace:*, @clabroche/modules-node-repl-backend@workspace:modules/node-repl/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-node-repl-backend@workspace:modules/node-repl/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/common-typings": "workspace:*"
-    express: "npm:^4.18.2"
-    prettier: "npm:^3.1.0"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-node-repl-front@workspace:*, @clabroche/modules-node-repl-front@workspace:modules/node-repl/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-node-repl-front@workspace:modules/node-repl/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@vueuse/core": "npm:^10.7.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-npm-backend@workspace:*, @clabroche/modules-npm-backend@workspace:modules/npm/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-npm-backend@workspace:modules/npm/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    express: "npm:^4.18.2"
-  peerDependencies:
-    "@clabroche/servers-server": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-npm-front@workspace:*, @clabroche/modules-npm-front@workspace:modules/npm/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-npm-front@workspace:modules/npm/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-openai-backend@workspace:*, @clabroche/modules-openai-backend@workspace:modules/openai/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-openai-backend@workspace:modules/openai/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    axios: "npm:^1.7.9"
-    bluebird: "npm:^3.7.2"
-    express: "npm:^4.18.2"
-    gpt-3-encoder: "npm:^1.1.4"
-    openai: "npm:^4.26.1"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-openai-front@workspace:*, @clabroche/modules-openai-front@workspace:modules/openai/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-openai-front@workspace:modules/openai/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    dayjs: "npm:^1.11.10"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-openapi-backend@workspace:*, @clabroche/modules-openapi-backend@workspace:modules/openapi/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-openapi-backend@workspace:modules/openapi/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    axios: "npm:^1.7.9"
-    express: "npm:^4.18.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-openapi-front@workspace:*, @clabroche/modules-openapi-front@workspace:modules/openapi/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-openapi-front@workspace:modules/openapi/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-plugins-loader-backend@workspace:*, @clabroche/modules-plugins-loader-backend@workspace:modules/plugins-loader/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-plugins-loader-backend@workspace:modules/plugins-loader/backend"
-  dependencies:
-    "@clabroche/common-express": "workspace:*"
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-base64-backend": "workspace:*"
-    "@clabroche/modules-bugs-backend": "workspace:*"
-    "@clabroche/modules-configuration-backend": "workspace:*"
-    "@clabroche/modules-dev-ops-backend": "workspace:*"
-    "@clabroche/modules-diff-backend": "workspace:*"
-    "@clabroche/modules-docker-backend": "workspace:*"
-    "@clabroche/modules-documentation-backend": "workspace:*"
-    "@clabroche/modules-finder-backend": "workspace:*"
-    "@clabroche/modules-git-backend": "workspace:*"
-    "@clabroche/modules-github-backend": "workspace:*"
-    "@clabroche/modules-global-scripts-backend": "workspace:*"
-    "@clabroche/modules-help-backend": "workspace:*"
-    "@clabroche/modules-http-client-backend": "workspace:*"
-    "@clabroche/modules-json-formatter-backend": "workspace:*"
-    "@clabroche/modules-jwt-backend": "workspace:*"
-    "@clabroche/modules-kanban-backend": "workspace:*"
-    "@clabroche/modules-logs-backend": "workspace:*"
-    "@clabroche/modules-mongo-backend": "workspace:*"
-    "@clabroche/modules-node-repl-backend": "workspace:*"
-    "@clabroche/modules-npm-backend": "workspace:*"
-    "@clabroche/modules-openai-backend": "workspace:*"
-    "@clabroche/modules-openapi-backend": "workspace:*"
-    "@clabroche/modules-regex-backend": "workspace:*"
-    "@clabroche/modules-sql-beautifier-backend": "workspace:*"
-    "@clabroche/modules-toolbox-backend": "workspace:*"
-    "@clabroche/modules-uuid-backend": "workspace:*"
-    "@clabroche/modules-vscode-backend": "workspace:*"
-    "@clabroche/modules-workflows-backend": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-plugins-loader-front@workspace:*, @clabroche/modules-plugins-loader-front@workspace:modules/plugins-loader/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-plugins-loader-front@workspace:modules/plugins-loader/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/common-typings": "workspace:*"
-    "@clabroche/modules-base64-front": "workspace:*"
-    "@clabroche/modules-bugs-front": "workspace:*"
-    "@clabroche/modules-configuration-front": "workspace:*"
-    "@clabroche/modules-dev-ops-front": "workspace:*"
-    "@clabroche/modules-diff-front": "workspace:*"
-    "@clabroche/modules-docker-front": "workspace:*"
-    "@clabroche/modules-documentation-front": "workspace:*"
-    "@clabroche/modules-finder-front": "workspace:*"
-    "@clabroche/modules-git-front": "workspace:*"
-    "@clabroche/modules-github-front": "workspace:*"
-    "@clabroche/modules-global-scripts-front": "workspace:*"
-    "@clabroche/modules-help-front": "workspace:*"
-    "@clabroche/modules-http-client-front": "workspace:*"
-    "@clabroche/modules-json-formatter-front": "workspace:*"
-    "@clabroche/modules-jwt-front": "workspace:*"
-    "@clabroche/modules-kanban-front": "workspace:*"
-    "@clabroche/modules-logs-front": "workspace:*"
-    "@clabroche/modules-mongo-front": "workspace:*"
-    "@clabroche/modules-node-repl-front": "workspace:*"
-    "@clabroche/modules-npm-front": "workspace:*"
-    "@clabroche/modules-openai-front": "workspace:*"
-    "@clabroche/modules-openapi-front": "workspace:*"
-    "@clabroche/modules-regex-front": "workspace:*"
-    "@clabroche/modules-sql-beautifier-front": "workspace:*"
-    "@clabroche/modules-toolbox-front": "workspace:*"
-    "@clabroche/modules-uuid-front": "workspace:*"
-    "@clabroche/modules-vscode-front": "workspace:*"
-    "@clabroche/modules-workflows-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    express: "npm:^4.18.2"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-regex-backend@workspace:*, @clabroche/modules-regex-backend@workspace:modules/regex/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-regex-backend@workspace:modules/regex/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-regex-front@workspace:*, @clabroche/modules-regex-front@workspace:modules/regex/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-regex-front@workspace:modules/regex/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    json-tree-view-vue3: "npm:^1.0.1"
-    monaco-editor: "npm:^0.46.0"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-sql-beautifier-backend@workspace:*, @clabroche/modules-sql-beautifier-backend@workspace:modules/sql-beautifier/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-sql-beautifier-backend@workspace:modules/sql-beautifier/backend"
-  dependencies:
-    "@clabroche/common-express": "workspace:*"
-    "@clabroche/common-express-error-handler": "workspace:*"
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/node": "npm:^20.11.19"
-    express: "npm:^4.18.2"
-    node-sql-parser: "npm:^4.12.0"
-    sql-formatter: "npm:^12.0.0"
-    typescript: "npm:^5.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-sql-beautifier-front@workspace:*, @clabroche/modules-sql-beautifier-front@workspace:modules/sql-beautifier/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-sql-beautifier-front@workspace:modules/sql-beautifier/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@types/node": "npm:^20.11.19"
-    axios: "npm:^1.6.7"
-    debounce: "npm:^2.0.0"
-    typescript: "npm:^5.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-toolbox-backend@workspace:*, @clabroche/modules-toolbox-backend@workspace:modules/toolbox/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-toolbox-backend@workspace:modules/toolbox/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-toolbox-front@workspace:*, @clabroche/modules-toolbox-front@workspace:modules/toolbox/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-toolbox-front@workspace:modules/toolbox/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-uuid-backend@workspace:*, @clabroche/modules-uuid-backend@workspace:modules/uuid/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-uuid-backend@workspace:modules/uuid/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    express: "npm:^4.18.2"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-uuid-front@workspace:*, @clabroche/modules-uuid-front@workspace:modules/uuid/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-uuid-front@workspace:modules/uuid/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-vscode-backend@workspace:*, @clabroche/modules-vscode-backend@workspace:modules/vscode/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-vscode-backend@workspace:modules/vscode/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/bluebird": "npm:^3.5.38"
-    "@types/express": "npm:^4.17.21"
-    bluebird: "npm:^3.7.2"
-    command-exists: "npm:^1.2.9"
-    express: "npm:^4.18.2"
-    open: "npm:^8"
-    vue-router: "npm:^4.5.1"
-    workspace-tools: "npm:^0.36.4"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-vscode-extension@workspace:*, @clabroche/modules-vscode-extension@workspace:modules/vscode/extension":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-vscode-extension@workspace:modules/vscode/extension"
-  dependencies:
-    "@types/command-exists": "npm:^1.2.3"
-    "@types/mocha": "npm:^10.0.6"
-    "@types/node": "npm:18.x"
-    "@types/vscode": "npm:^1.86.0"
-    "@types/ws": "npm:^8"
-    "@vscode/test-cli": "npm:^0.0.6"
-    "@vscode/test-electron": "npm:^2.3.9"
-    "@vscode/vsce": "npm:^3.2.1"
-    axios: "npm:^1.7.9"
-    bluebird: "npm:^3.7.2"
-    command-exists: "npm:^1.2.9"
-    esbuild: "npm:^0.20.1"
-    typescript: "npm:^5.3.3"
-    ws: "npm:^8.18.0"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-vscode-front@workspace:*, @clabroche/modules-vscode-front@workspace:modules/vscode/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-vscode-front@workspace:modules/vscode/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-workflows-backend@workspace:*, @clabroche/modules-workflows-backend@workspace:modules/workflows/backend":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-workflows-backend@workspace:modules/workflows/backend"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    compressing: "npm:^1.10.1"
-    express: "npm:^4.18.2"
-    node-red: "npm:^4.0.8"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/modules-workflows-front@workspace:*, @clabroche/modules-workflows-front@workspace:modules/workflows/front":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/modules-workflows-front@workspace:modules/workflows/front"
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    primevue: "npm:^4.3.3"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/servers-server@workspace:servers/server":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/servers-server@workspace:servers/server"
-  dependencies:
-    "@babel/preset-env": "npm:^7.26.0"
-    "@babel/preset-typescript": "npm:^7.26.0"
-    "@clabroche/common-express": "workspace:*"
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/common-socket-server": "workspace:*"
-    "@clabroche/modules-plugins-loader-backend": "workspace:*"
-    "@clabroche/modules-plugins-loader-front": "workspace:*"
-    "@clabroche/modules-vscode-extension": "workspace:*"
-    "@octokit/core": "npm:^6.1.2"
-    "@octokit/plugin-rest-endpoint-methods": "npm:^13.2.6"
-    "@types/babel__preset-env": "npm:^7"
-    "@types/http-proxy": "npm:^1"
-    "@types/libsodium-wrappers": "npm:^0"
-    alasql: "npm:^4.6.2"
-    ansi-to-html: "npm:^0.7.2"
-    axios: "npm:^1.7.9"
-    bluebird: "npm:^3.7.2"
-    command-exists: "npm:^1.2.9"
-    dayjs: "npm:^1.11.10"
-    debounce: "npm:^2.0.0"
-    dot-object: "npm:^2.1.4"
-    dotenv: "npm:^16.4.2"
-    express: "npm:^4.18.2"
-    express-async-errors: "npm:^3.1.1"
-    express-http-proxy: "npm:^2.1.1"
-    fast-sort: "npm:^3.4.0"
-    fdir: "npm:^6.4.2"
-    http-proxy: "npm:^1.18.1"
-    http-proxy-middleware: "npm:^3.0.5"
-    kill-port: "npm:^2.0.1"
-    libsodium-wrappers: "npm:^0.7.15"
-    lodash: "npm:^4.17.21"
-    nodemon: "npm:^3.0.3"
-    open: "npm:^8"
-    os-utils: "npm:0.0.14"
-    pidusage-tree: "npm:^2.0.5"
-    slugify: "npm:^1.6.6"
-    supertest: "npm:^6.3.4"
-    tree-kill: "npm:^1.2.2"
-    tsup: "npm:^8.3.5"
-    uuid: "npm:^9.0.1"
-    xlsx: "npm:^0.18.5"
-    yargs: "npm:^17.7.2"
-  bin:
-    servers-server: bin/www
-  languageName: unknown
-  linkType: soft
-
-"@clabroche/stack-monitor@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@clabroche/stack-monitor@workspace:."
-  dependencies:
-    "@clabroche/common-retrigger-all-build": "workspace:*"
-    "@clabroche/common-typings": "workspace:^"
-    "@commitlint/cli": "npm:^17.6.7"
-    "@commitlint/config-conventional": "npm:^17.6.7"
-    "@eslint/eslintrc": "npm:^3.2.0"
-    "@eslint/js": "npm:^9.17.0"
-    "@iryu54/stack-monitor": "npm:^2.1.4"
-    "@lerna-lite/changed": "npm:^2.5.0"
-    "@lerna-lite/cli": "npm:^2.5.0"
-    "@lerna-lite/diff": "npm:^2.5.0"
-    "@lerna-lite/exec": "npm:^2.5.0"
-    "@lerna-lite/list": "npm:^2.5.0"
-    "@lerna-lite/publish": "npm:^2.5.0"
-    "@lerna-lite/version": "npm:^2.5.0"
-    "@octokit/core": "npm:^6.1.2"
-    "@octokit/plugin-rest-endpoint-methods": "npm:^13.2.6"
-    "@types/bluebird": "npm:^3.5.38"
-    "@types/debounce": "npm:^1"
-    "@types/kill-port": "npm:^2"
-    "@types/lodash": "npm:^4.14.201"
-    "@types/node": "npm:^20.8.9"
-    "@typescript-eslint/eslint-plugin": "npm:^8.18.2"
-    "@typescript-eslint/parser": "npm:^8.18.2"
-    bluebird: "npm:^3.7.2"
-    check-dependency-version-consistency: "npm:^4.1.0"
-    chokidar: "npm:^3.5.3"
-    cross-env: "npm:^7.0.3"
-    debounce: "npm:^2.0.0"
-    dotenv: "npm:^16.4.2"
-    eslint: "npm:^9.17.0"
-    eslint-config-airbnb: "npm:^19.0.4"
-    eslint-plugin-import: "npm:^2.29.0"
-    eslint-plugin-jest: "npm:^27.6.0"
-    eslint-plugin-jsx-a11y: "npm:^6.8.0"
-    eslint-plugin-react: "npm:^7.33.2"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
-    eslint-plugin-vue: "npm:^9.32.0"
-    fix-esm: "npm:^1.0.1"
-    globals: "npm:^15.14.0"
-    husky: "npm:^8.0.3"
-    kill-port: "npm:^2.0.1"
-    knip: "npm:^5.41.1"
-    primevue: "npm:^4.3.3"
-    quill: "npm:^2.0.3"
-    tsup: "npm:^8.0.1"
-    turbo: "npm:^2.3.3 "
-    typescript: "npm:^5.3.3"
-    workspace-tools: "npm:^0.36.3"
-  languageName: unknown
-  linkType: soft
-
 "@commitlint/cli@npm:^17.6.7":
   version: 17.8.1
   resolution: "@commitlint/cli@npm:17.8.1"
@@ -4234,57 +3193,6 @@ __metadata:
   version: 2.0.0
   resolution: "@iconify/types@npm:2.0.0"
   checksum: 10/1b3425ecbc0eef44f23d3f27355ae7ef306d5119c566f013ef1849995b016e1fdcc5af6b74c3bc0554485d70cf5179cb9c1095b14d662a55abcae1148e1a13c9
-  languageName: node
-  linkType: hard
-
-"@iryu54/stack-monitor@npm:^2.1.4":
-  version: 2.1.4
-  resolution: "@iryu54/stack-monitor@npm:2.1.4"
-  dependencies:
-    "@babel/preset-env": "npm:^7.26.0"
-    "@octokit/core": "npm:^6.1.2"
-    "@octokit/plugin-rest-endpoint-methods": "npm:^13.2.6"
-    alasql: "npm:^4.6.2"
-    ansi-to-html: "npm:^0.7.2"
-    axios: "npm:^1.7.9"
-    bluebird: "npm:^3.7.2"
-    command-exists: "npm:^1.2.9"
-    compressing: "npm:^1.10.1"
-    compression: "npm:^1.7.4"
-    cookie-parser: "npm:^1.4.6"
-    cors: "npm:^2.8.5"
-    dayjs: "npm:^1.11.10"
-    debounce: "npm:^2.0.0"
-    dot-object: "npm:^2.1.4"
-    dotenv: "npm:^16.4.2"
-    express: "npm:^4.18.2"
-    express-async-errors: "npm:^3.1.1"
-    express-http-proxy: "npm:^2.1.1"
-    fast-sort: "npm:^3.4.0"
-    fdir: "npm:^6.4.2"
-    fix-esm: "npm:^1.0.1"
-    gpt-3-encoder: "npm:^1.1.4"
-    helmet: "npm:^5.0.2"
-    http-proxy: "npm:^1.18.1"
-    jsonwebtoken: "npm:^9.0.2"
-    kill-port: "npm:^2.0.1"
-    libsodium-wrappers: "npm:^0.7.15"
-    lodash: "npm:^4.17.21"
-    mongodb: "npm:^6.3.0"
-    node-red: "npm:^4.0.8"
-    open: "npm:^8"
-    openai: "npm:^4.26.1"
-    os-utils: "npm:0.0.14"
-    pidusage-tree: "npm:^2.0.5"
-    slugify: "npm:^1.6.6"
-    tree-kill: "npm:^1.2.2"
-    uuid: "npm:^9.0.1"
-    workspace-tools: "npm:^0.36.4"
-    ws: "npm:^8.18.0"
-    yargs: "npm:^17.7.2"
-  bin:
-    stack-monitor: www.js
-  checksum: 10/0c2b28f0a9866a855696fe49638039c711827b581f7e13c2aaeed8859747b5d8bb3d01fb7828f807e2208f0e08906dfffab4e8f7de1b55b9a60a181aa771e253
   languageName: node
   linkType: hard
 
@@ -6280,6 +5188,1046 @@ __metadata:
   conditions: os=win32 & cpu=x64
   languageName: node
   linkType: hard
+
+"@runeya/common-check-monorepo@workspace:common/check-monorepo":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-check-monorepo@workspace:common/check-monorepo"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@swc/core": "npm:^1.10.2"
+    "@swc/jest": "npm:^0.2.37"
+    jest: "npm:^29.7.0"
+    jest-sonar-reporter: "npm:^2.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-express-404@workspace:*, @runeya/common-express-404@workspace:common/express-404":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-express-404@workspace:common/express-404"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    jest-sonar-reporter: "npm:^2.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-express-error-handler@workspace:*, @runeya/common-express-error-handler@workspace:common/express-error-handler":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-express-error-handler@workspace:common/express-error-handler"
+  dependencies:
+    "@runeya/common-express-http-error": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    jest-sonar-reporter: "npm:^2.0.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-express-health-check@workspace:*, @runeya/common-express-health-check@workspace:common/express-health-check":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-express-health-check@workspace:common/express-health-check"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    express: "npm:^4.18.2"
+    jest-sonar-reporter: "npm:^2.0.0"
+    supertest: "npm:^6.3.4"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-express-http-error@workspace:*, @runeya/common-express-http-error@workspace:common/express-http-error":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-express-http-error@workspace:common/express-http-error"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    dayjs: "npm:^1.11.10"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-express@workspace:*, @runeya/common-express@workspace:common/express":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-express@workspace:common/express"
+  dependencies:
+    "@runeya/common-express-404": "workspace:*"
+    "@runeya/common-express-error-handler": "workspace:*"
+    "@runeya/common-express-health-check": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-socket-server": "workspace:*"
+    "@types/http-proxy": "npm:^1"
+    compression: "npm:^1.7.4"
+    cookie-parser: "npm:^1.4.6"
+    cors: "npm:^2.8.5"
+    express: "npm:^4.18.2"
+    express-async-errors: "npm:^3.1.1"
+    helmet: "npm:^5.0.2"
+    http-proxy: "npm:^1.18.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-retrigger-all-build@workspace:*, @runeya/common-retrigger-all-build@workspace:common/retrigger-all-build":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-retrigger-all-build@workspace:common/retrigger-all-build"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-socket-front@workspace:*, @runeya/common-socket-front@workspace:common/socket-front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-socket-front@workspace:common/socket-front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+  peerDependencies:
+    vue: ^3.2.45
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-socket-server@workspace:*, @runeya/common-socket-server@workspace:common/socket-server":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-socket-server@workspace:common/socket-server"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@types/express": "npm:^4"
+    "@types/ws": "npm:^8"
+    ws: "npm:^8.18.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-typings@workspace:*, @runeya/common-typings@workspace:^, @runeya/common-typings@workspace:common/typings":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-typings@workspace:common/typings"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/common-workflows@workspace:common/workflows":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-workflows@workspace:common/workflows"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    bluebird: "npm:^3.7.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/fronts-app@workspace:fronts/app":
+  version: 0.0.0-use.local
+  resolution: "@runeya/fronts-app@workspace:fronts/app"
+  dependencies:
+    "@fortawesome/fontawesome-free": "npm:^6.5.1"
+    "@primevue/themes": "npm:^4.2.5"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-socket-front": "workspace:*"
+    "@runeya/common-typings": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@shopify/draggable": "npm:^1.1.3"
+    "@vitejs/plugin-vue": "npm:^5.2.4"
+    autoprefixer: "npm:^10.4.20"
+    axios: "npm:^1.7.9"
+    bluebird: "npm:^3.7.2"
+    dayjs: "npm:^1.11.10"
+    debounce: "npm:^2.0.0"
+    dot-object: "npm:^2.1.4"
+    fast-sort: "npm:^3.4.0"
+    highlight.js: "npm:^11.9.0"
+    json-tree-view-vue3: "npm:^1.0.2"
+    lodash-es: "npm:^4.17.21"
+    markdown-it: "npm:^14.0.0"
+    monaco-editor: "npm:^0.46.0"
+    new-github-issue-url: "npm:^1.0.0"
+    postcss: "npm:^8.4.35"
+    primevue: "npm:^4.3.3"
+    sass: "npm:^1.70.0"
+    swagger-ui: "npm:^5.11.7"
+    tailwindcss: "npm:^3.4.16"
+    tippy.js: "npm:^6.3.7"
+    uuid: "npm:^9.0.1"
+    vite: "npm:^6.3.5"
+    vite-plugin-html: "npm:^3.2.2"
+    vue: "npm:^3.5.13"
+    vue-router: "npm:^4.5.1"
+    vuedraggable: "npm:^4.1.0"
+  bin:
+    fronts-app: server/bin/www
+  languageName: unknown
+  linkType: soft
+
+"@runeya/fronts-docs@workspace:fronts/docs":
+  version: 0.0.0-use.local
+  resolution: "@runeya/fronts-docs@workspace:fronts/docs"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vitepress: "npm:^1.5.0"
+  bin:
+    fronts-docs: server/bin/www
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-base64-backend@workspace:*, @runeya/modules-base64-backend@workspace:modules/base64/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-base64-backend@workspace:modules/base64/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    express: "npm:^4.18.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-base64-front@workspace:*, @runeya/modules-base64-front@workspace:modules/base64/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-base64-front@workspace:modules/base64/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    axios: "npm:^1.4.0"
+    primevue: "npm:^4.3.3"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-bugs-backend@workspace:*, @runeya/modules-bugs-backend@workspace:modules/bugs/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-bugs-backend@workspace:modules/bugs/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    express: "npm:^4.18.2"
+    typescript: "npm:^5.3.3"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-bugs-front@workspace:*, @runeya/modules-bugs-front@workspace:modules/bugs/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-bugs-front@workspace:modules/bugs/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-configuration-backend@workspace:*, @runeya/modules-configuration-backend@workspace:modules/configuration/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-configuration-backend@workspace:modules/configuration/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-configuration-front@workspace:*, @runeya/modules-configuration-front@workspace:modules/configuration/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-configuration-front@workspace:modules/configuration/front"
+  dependencies:
+    "@primevue/forms": "npm:^4.2.5"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    fast-sort: "npm:^3.4.0"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-dev-ops-backend@workspace:*, @runeya/modules-dev-ops-backend@workspace:modules/dev-ops/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-dev-ops-backend@workspace:modules/dev-ops/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-dev-ops-front@workspace:*, @runeya/modules-dev-ops-front@workspace:modules/dev-ops/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-dev-ops-front@workspace:modules/dev-ops/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-diff-backend@workspace:*, @runeya/modules-diff-backend@workspace:modules/diff/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-diff-backend@workspace:modules/diff/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    "@types/uuid": "npm:^9.0.8"
+    express: "npm:^4.18.2"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-diff-front@workspace:*, @runeya/modules-diff-front@workspace:modules/diff/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-diff-front@workspace:modules/diff/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-docker-backend@workspace:*, @runeya/modules-docker-backend@workspace:modules/docker/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-docker-backend@workspace:modules/docker/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    express: "npm:^4.18.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-docker-front@workspace:*, @runeya/modules-docker-front@workspace:modules/docker/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-docker-front@workspace:modules/docker/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-documentation-backend@workspace:*, @runeya/modules-documentation-backend@workspace:modules/documentation/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-documentation-backend@workspace:modules/documentation/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/bluebird": "npm:^3.5.38"
+    "@types/express": "npm:^4.17.21"
+    "@types/uuid": "npm:^9.0.8"
+    bluebird: "npm:^3.7.2"
+    express: "npm:^4.18.2"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-documentation-front@workspace:*, @runeya/modules-documentation-front@workspace:modules/documentation/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-documentation-front@workspace:modules/documentation/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-finder-backend@workspace:*, @runeya/modules-finder-backend@workspace:modules/finder/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-finder-backend@workspace:modules/finder/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/bluebird": "npm:^3.5.38"
+    "@types/command-exists": "npm:^1.2.3"
+    "@types/express": "npm:^4.17.21"
+    bluebird: "npm:^3.7.2"
+    command-exists: "npm:^1.2.9"
+    express: "npm:^4.18.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-finder-front@workspace:*, @runeya/modules-finder-front@workspace:modules/finder/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-finder-front@workspace:modules/finder/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-git-backend@workspace:*, @runeya/modules-git-backend@workspace:modules/git/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-git-backend@workspace:modules/git/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/command-exists": "npm:^1.2.3"
+    "@types/express": "npm:^4.17.21"
+    command-exists: "npm:^1.2.9"
+    express: "npm:^4.18.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-git-front@workspace:*, @runeya/modules-git-front@workspace:modules/git/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-git-front@workspace:modules/git/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+    xterm: "npm:^5.3.0"
+    xterm-addon-canvas: "npm:^0.5.0"
+    xterm-addon-fit: "npm:^0.8.0"
+    xterm-addon-search: "npm:^0.13.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-github-backend@workspace:*, @runeya/modules-github-backend@workspace:modules/github/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-github-backend@workspace:modules/github/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    express: "npm:^4.18.2"
+    fix-esm: "npm:^1.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-github-front@workspace:*, @runeya/modules-github-front@workspace:modules/github/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-github-front@workspace:modules/github/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-global-scripts-backend@workspace:*, @runeya/modules-global-scripts-backend@workspace:modules/global-scripts/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-global-scripts-backend@workspace:modules/global-scripts/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    "@types/uuid": "npm:^9.0.8"
+    express: "npm:^4.18.2"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-global-scripts-front@workspace:*, @runeya/modules-global-scripts-front@workspace:modules/global-scripts/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-global-scripts-front@workspace:modules/global-scripts/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-help-backend@workspace:*, @runeya/modules-help-backend@workspace:modules/help/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-help-backend@workspace:modules/help/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-help-front@workspace:*, @runeya/modules-help-front@workspace:modules/help/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-help-front@workspace:modules/help/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-http-client-backend@workspace:*, @runeya/modules-http-client-backend@workspace:modules/http-client/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-http-client-backend@workspace:modules/http-client/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    axios: "npm:^1.6.0"
+    express: "npm:^4.18.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-http-client-front@workspace:*, @runeya/modules-http-client-front@workspace:modules/http-client/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-http-client-front@workspace:modules/http-client/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    primevue: "npm:^4.3.3"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-json-formatter-backend@workspace:*, @runeya/modules-json-formatter-backend@workspace:modules/json-formatter/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-json-formatter-backend@workspace:modules/json-formatter/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    ajv: "npm:^8.12.0"
+    express: "npm:^4.18.2"
+    js-yaml: "npm:^4.1.0"
+    xml-js: "npm:^1.6.11"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-json-formatter-front@workspace:*, @runeya/modules-json-formatter-front@workspace:modules/json-formatter/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-json-formatter-front@workspace:modules/json-formatter/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    axios: "npm:^1.5.0"
+    jsonrepair: "npm:^3.2.0"
+    primeflex: "npm:^3.3.1"
+    primeicons: "npm:^6.0.1"
+    primevue: "npm:^4.3.3"
+    vue: "npm:^3.5.13"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-jwt-backend@workspace:*, @runeya/modules-jwt-backend@workspace:modules/jwt/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-jwt-backend@workspace:modules/jwt/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    "@types/jsonwebtoken": "npm:^9.0.5"
+    express: "npm:^4.18.2"
+    jsonwebtoken: "npm:^9.0.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-jwt-front@workspace:*, @runeya/modules-jwt-front@workspace:modules/jwt/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-jwt-front@workspace:modules/jwt/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    json-tree-view-vue3: "npm:^1.0.1"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-kanban-backend@workspace:*, @runeya/modules-kanban-backend@workspace:modules/kanban/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-kanban-backend@workspace:modules/kanban/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    "@types/uuid": "npm:^9.0.8"
+    express: "npm:^4.18.2"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-kanban-front@workspace:*, @runeya/modules-kanban-front@workspace:modules/kanban/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-kanban-front@workspace:modules/kanban/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+    vuedraggable: "npm:^4.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-logs-backend@workspace:*, @runeya/modules-logs-backend@workspace:modules/logs/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-logs-backend@workspace:modules/logs/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    "@types/uuid": "npm:^9.0.8"
+    dayjs: "npm:^1.11.10"
+    express: "npm:^4.18.2"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-logs-front@workspace:*, @runeya/modules-logs-front@workspace:modules/logs/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-logs-front@workspace:modules/logs/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    dayjs: "npm:^1.11.10"
+    json-tree-view-vue3: "npm:^1.0.1"
+    jsonpath: "npm:^1.1.1"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    xterm: "npm:^5.3.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-mongo-backend@workspace:*, @runeya/modules-mongo-backend@workspace:modules/mongo/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-mongo-backend@workspace:modules/mongo/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    express: "npm:^4.18.2"
+    mongodb: "npm:^6.3.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-mongo-front@workspace:*, @runeya/modules-mongo-front@workspace:modules/mongo/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-mongo-front@workspace:modules/mongo/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    dayjs: "npm:^1.11.10"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-node-repl-backend@workspace:*, @runeya/modules-node-repl-backend@workspace:modules/node-repl/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-node-repl-backend@workspace:modules/node-repl/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-typings": "workspace:*"
+    express: "npm:^4.18.2"
+    prettier: "npm:^3.1.0"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-node-repl-front@workspace:*, @runeya/modules-node-repl-front@workspace:modules/node-repl/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-node-repl-front@workspace:modules/node-repl/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@vueuse/core": "npm:^10.7.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-npm-backend@workspace:*, @runeya/modules-npm-backend@workspace:modules/npm/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-npm-backend@workspace:modules/npm/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    express: "npm:^4.18.2"
+  peerDependencies:
+    "@runeya/servers-server": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-npm-front@workspace:*, @runeya/modules-npm-front@workspace:modules/npm/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-npm-front@workspace:modules/npm/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-openai-backend@workspace:*, @runeya/modules-openai-backend@workspace:modules/openai/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-openai-backend@workspace:modules/openai/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    "@types/uuid": "npm:^9.0.8"
+    axios: "npm:^1.7.9"
+    bluebird: "npm:^3.7.2"
+    express: "npm:^4.18.2"
+    gpt-3-encoder: "npm:^1.1.4"
+    openai: "npm:^4.26.1"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-openai-front@workspace:*, @runeya/modules-openai-front@workspace:modules/openai/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-openai-front@workspace:modules/openai/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    dayjs: "npm:^1.11.10"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-openapi-backend@workspace:*, @runeya/modules-openapi-backend@workspace:modules/openapi/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-openapi-backend@workspace:modules/openapi/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    axios: "npm:^1.7.9"
+    express: "npm:^4.18.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-openapi-front@workspace:*, @runeya/modules-openapi-front@workspace:modules/openapi/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-openapi-front@workspace:modules/openapi/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-plugins-loader-backend@workspace:*, @runeya/modules-plugins-loader-backend@workspace:modules/plugins-loader/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-plugins-loader-backend@workspace:modules/plugins-loader/backend"
+  dependencies:
+    "@runeya/common-express": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-base64-backend": "workspace:*"
+    "@runeya/modules-bugs-backend": "workspace:*"
+    "@runeya/modules-configuration-backend": "workspace:*"
+    "@runeya/modules-dev-ops-backend": "workspace:*"
+    "@runeya/modules-diff-backend": "workspace:*"
+    "@runeya/modules-docker-backend": "workspace:*"
+    "@runeya/modules-documentation-backend": "workspace:*"
+    "@runeya/modules-finder-backend": "workspace:*"
+    "@runeya/modules-git-backend": "workspace:*"
+    "@runeya/modules-github-backend": "workspace:*"
+    "@runeya/modules-global-scripts-backend": "workspace:*"
+    "@runeya/modules-help-backend": "workspace:*"
+    "@runeya/modules-http-client-backend": "workspace:*"
+    "@runeya/modules-json-formatter-backend": "workspace:*"
+    "@runeya/modules-jwt-backend": "workspace:*"
+    "@runeya/modules-kanban-backend": "workspace:*"
+    "@runeya/modules-logs-backend": "workspace:*"
+    "@runeya/modules-mongo-backend": "workspace:*"
+    "@runeya/modules-node-repl-backend": "workspace:*"
+    "@runeya/modules-npm-backend": "workspace:*"
+    "@runeya/modules-openai-backend": "workspace:*"
+    "@runeya/modules-openapi-backend": "workspace:*"
+    "@runeya/modules-regex-backend": "workspace:*"
+    "@runeya/modules-sql-beautifier-backend": "workspace:*"
+    "@runeya/modules-toolbox-backend": "workspace:*"
+    "@runeya/modules-uuid-backend": "workspace:*"
+    "@runeya/modules-vscode-backend": "workspace:*"
+    "@runeya/modules-workflows-backend": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-plugins-loader-front@workspace:*, @runeya/modules-plugins-loader-front@workspace:modules/plugins-loader/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-plugins-loader-front@workspace:modules/plugins-loader/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-typings": "workspace:*"
+    "@runeya/modules-base64-front": "workspace:*"
+    "@runeya/modules-bugs-front": "workspace:*"
+    "@runeya/modules-configuration-front": "workspace:*"
+    "@runeya/modules-dev-ops-front": "workspace:*"
+    "@runeya/modules-diff-front": "workspace:*"
+    "@runeya/modules-docker-front": "workspace:*"
+    "@runeya/modules-documentation-front": "workspace:*"
+    "@runeya/modules-finder-front": "workspace:*"
+    "@runeya/modules-git-front": "workspace:*"
+    "@runeya/modules-github-front": "workspace:*"
+    "@runeya/modules-global-scripts-front": "workspace:*"
+    "@runeya/modules-help-front": "workspace:*"
+    "@runeya/modules-http-client-front": "workspace:*"
+    "@runeya/modules-json-formatter-front": "workspace:*"
+    "@runeya/modules-jwt-front": "workspace:*"
+    "@runeya/modules-kanban-front": "workspace:*"
+    "@runeya/modules-logs-front": "workspace:*"
+    "@runeya/modules-mongo-front": "workspace:*"
+    "@runeya/modules-node-repl-front": "workspace:*"
+    "@runeya/modules-npm-front": "workspace:*"
+    "@runeya/modules-openai-front": "workspace:*"
+    "@runeya/modules-openapi-front": "workspace:*"
+    "@runeya/modules-regex-front": "workspace:*"
+    "@runeya/modules-sql-beautifier-front": "workspace:*"
+    "@runeya/modules-toolbox-front": "workspace:*"
+    "@runeya/modules-uuid-front": "workspace:*"
+    "@runeya/modules-vscode-front": "workspace:*"
+    "@runeya/modules-workflows-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    express: "npm:^4.18.2"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-regex-backend@workspace:*, @runeya/modules-regex-backend@workspace:modules/regex/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-regex-backend@workspace:modules/regex/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-regex-front@workspace:*, @runeya/modules-regex-front@workspace:modules/regex/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-regex-front@workspace:modules/regex/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    json-tree-view-vue3: "npm:^1.0.1"
+    monaco-editor: "npm:^0.46.0"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-sql-beautifier-backend@workspace:*, @runeya/modules-sql-beautifier-backend@workspace:modules/sql-beautifier/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-sql-beautifier-backend@workspace:modules/sql-beautifier/backend"
+  dependencies:
+    "@runeya/common-express": "workspace:*"
+    "@runeya/common-express-error-handler": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    "@types/node": "npm:^20.11.19"
+    express: "npm:^4.18.2"
+    node-sql-parser: "npm:^4.12.0"
+    sql-formatter: "npm:^12.0.0"
+    typescript: "npm:^5.3.3"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-sql-beautifier-front@workspace:*, @runeya/modules-sql-beautifier-front@workspace:modules/sql-beautifier/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-sql-beautifier-front@workspace:modules/sql-beautifier/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@types/node": "npm:^20.11.19"
+    axios: "npm:^1.6.7"
+    debounce: "npm:^2.0.0"
+    typescript: "npm:^5.3.3"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-toolbox-backend@workspace:*, @runeya/modules-toolbox-backend@workspace:modules/toolbox/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-toolbox-backend@workspace:modules/toolbox/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-toolbox-front@workspace:*, @runeya/modules-toolbox-front@workspace:modules/toolbox/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-toolbox-front@workspace:modules/toolbox/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-uuid-backend@workspace:*, @runeya/modules-uuid-backend@workspace:modules/uuid/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-uuid-backend@workspace:modules/uuid/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    "@types/uuid": "npm:^9.0.8"
+    express: "npm:^4.18.2"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-uuid-front@workspace:*, @runeya/modules-uuid-front@workspace:modules/uuid/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-uuid-front@workspace:modules/uuid/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-vscode-backend@workspace:*, @runeya/modules-vscode-backend@workspace:modules/vscode/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-vscode-backend@workspace:modules/vscode/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/bluebird": "npm:^3.5.38"
+    "@types/express": "npm:^4.17.21"
+    bluebird: "npm:^3.7.2"
+    command-exists: "npm:^1.2.9"
+    express: "npm:^4.18.2"
+    open: "npm:^8"
+    vue-router: "npm:^4.5.1"
+    workspace-tools: "npm:^0.36.4"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-vscode-extension@workspace:*, @runeya/modules-vscode-extension@workspace:modules/vscode/extension":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-vscode-extension@workspace:modules/vscode/extension"
+  dependencies:
+    "@types/command-exists": "npm:^1.2.3"
+    "@types/mocha": "npm:^10.0.6"
+    "@types/node": "npm:18.x"
+    "@types/vscode": "npm:^1.86.0"
+    "@types/ws": "npm:^8"
+    "@vscode/test-cli": "npm:^0.0.6"
+    "@vscode/test-electron": "npm:^2.3.9"
+    "@vscode/vsce": "npm:^3.2.1"
+    axios: "npm:^1.7.9"
+    bluebird: "npm:^3.7.2"
+    command-exists: "npm:^1.2.9"
+    esbuild: "npm:^0.20.1"
+    typescript: "npm:^5.3.3"
+    ws: "npm:^8.18.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-vscode-front@workspace:*, @runeya/modules-vscode-front@workspace:modules/vscode/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-vscode-front@workspace:modules/vscode/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-workflows-backend@workspace:*, @runeya/modules-workflows-backend@workspace:modules/workflows/backend":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-workflows-backend@workspace:modules/workflows/backend"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@types/express": "npm:^4.17.21"
+    "@types/uuid": "npm:^9.0.8"
+    compressing: "npm:^1.10.1"
+    express: "npm:^4.18.2"
+    node-red: "npm:^4.0.8"
+    uuid: "npm:^9.0.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/modules-workflows-front@workspace:*, @runeya/modules-workflows-front@workspace:modules/workflows/front":
+  version: 0.0.0-use.local
+  resolution: "@runeya/modules-workflows-front@workspace:modules/workflows/front"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    primevue: "npm:^4.3.3"
+    vue: "npm:^3.5.13"
+    vue-eslint-parser: "npm:^9.4.2"
+    vue-router: "npm:^4.5.1"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/runeya@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "@runeya/runeya@workspace:."
+  dependencies:
+    "@commitlint/cli": "npm:^17.6.7"
+    "@commitlint/config-conventional": "npm:^17.6.7"
+    "@eslint/eslintrc": "npm:^3.2.0"
+    "@eslint/js": "npm:^9.17.0"
+    "@lerna-lite/changed": "npm:^2.5.0"
+    "@lerna-lite/cli": "npm:^2.5.0"
+    "@lerna-lite/diff": "npm:^2.5.0"
+    "@lerna-lite/exec": "npm:^2.5.0"
+    "@lerna-lite/list": "npm:^2.5.0"
+    "@lerna-lite/publish": "npm:^2.5.0"
+    "@lerna-lite/version": "npm:^2.5.0"
+    "@octokit/core": "npm:^6.1.2"
+    "@octokit/plugin-rest-endpoint-methods": "npm:^13.2.6"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-typings": "workspace:^"
+    "@types/bluebird": "npm:^3.5.38"
+    "@types/debounce": "npm:^1"
+    "@types/kill-port": "npm:^2"
+    "@types/lodash": "npm:^4.14.201"
+    "@types/node": "npm:^20.8.9"
+    "@typescript-eslint/eslint-plugin": "npm:^8.18.2"
+    "@typescript-eslint/parser": "npm:^8.18.2"
+    bluebird: "npm:^3.7.2"
+    check-dependency-version-consistency: "npm:^4.1.0"
+    chokidar: "npm:^3.5.3"
+    cross-env: "npm:^7.0.3"
+    debounce: "npm:^2.0.0"
+    dotenv: "npm:^16.4.2"
+    eslint: "npm:^9.17.0"
+    eslint-config-airbnb: "npm:^19.0.4"
+    eslint-plugin-import: "npm:^2.29.0"
+    eslint-plugin-jest: "npm:^27.6.0"
+    eslint-plugin-jsx-a11y: "npm:^6.8.0"
+    eslint-plugin-react: "npm:^7.33.2"
+    eslint-plugin-react-hooks: "npm:^4.6.0"
+    eslint-plugin-vue: "npm:^9.32.0"
+    fix-esm: "npm:^1.0.1"
+    globals: "npm:^15.14.0"
+    husky: "npm:^8.0.3"
+    kill-port: "npm:^2.0.1"
+    knip: "npm:^5.41.1"
+    primevue: "npm:^4.3.3"
+    quill: "npm:^2.0.3"
+    tsup: "npm:^8.0.1"
+    turbo: "npm:^2.3.3 "
+    typescript: "npm:^5.3.3"
+    workspace-tools: "npm:^0.36.3"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/servers-server@workspace:servers/server":
+  version: 0.0.0-use.local
+  resolution: "@runeya/servers-server@workspace:servers/server"
+  dependencies:
+    "@babel/preset-env": "npm:^7.26.0"
+    "@babel/preset-typescript": "npm:^7.26.0"
+    "@octokit/core": "npm:^6.1.2"
+    "@octokit/plugin-rest-endpoint-methods": "npm:^13.2.6"
+    "@runeya/common-express": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-socket-server": "workspace:*"
+    "@runeya/modules-plugins-loader-backend": "workspace:*"
+    "@runeya/modules-plugins-loader-front": "workspace:*"
+    "@runeya/modules-vscode-extension": "workspace:*"
+    "@types/babel__preset-env": "npm:^7"
+    "@types/http-proxy": "npm:^1"
+    "@types/libsodium-wrappers": "npm:^0"
+    alasql: "npm:^4.6.2"
+    ansi-to-html: "npm:^0.7.2"
+    axios: "npm:^1.7.9"
+    bluebird: "npm:^3.7.2"
+    command-exists: "npm:^1.2.9"
+    dayjs: "npm:^1.11.10"
+    debounce: "npm:^2.0.0"
+    dot-object: "npm:^2.1.4"
+    dotenv: "npm:^16.4.2"
+    express: "npm:^4.18.2"
+    express-async-errors: "npm:^3.1.1"
+    express-http-proxy: "npm:^2.1.1"
+    fast-sort: "npm:^3.4.0"
+    fdir: "npm:^6.4.2"
+    http-proxy: "npm:^1.18.1"
+    http-proxy-middleware: "npm:^3.0.5"
+    kill-port: "npm:^2.0.1"
+    libsodium-wrappers: "npm:^0.7.15"
+    lodash: "npm:^4.17.21"
+    nodemon: "npm:^3.0.3"
+    open: "npm:^8"
+    os-utils: "npm:0.0.14"
+    pidusage-tree: "npm:^2.0.5"
+    slugify: "npm:^1.6.6"
+    supertest: "npm:^6.3.4"
+    tree-kill: "npm:^1.2.2"
+    tsup: "npm:^8.3.5"
+    uuid: "npm:^9.0.1"
+    xlsx: "npm:^0.18.5"
+    yargs: "npm:^17.7.2"
+  bin:
+    servers-server: bin/www
+  languageName: unknown
+  linkType: soft
 
 "@shikijs/core@npm:1.26.1, @shikijs/core@npm:^1.22.2":
   version: 1.26.1

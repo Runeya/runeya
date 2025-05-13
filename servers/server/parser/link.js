@@ -2,7 +2,7 @@ const urlRegex = /(http|ftp|https):\/\/([\w_-]+(?:(?:\.[\w_-]+)+))([\w.,@?^=%&:/
 
 /** @type {import("../models/Service").Parser} */
 const parser = {
-  id: 'stack-monitor-parser-links',
+  id: 'runeya-parser-links',
   label: 'Parse links',
   readonly: true,
   transform: (line) => {

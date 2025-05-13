@@ -1,6 +1,6 @@
 const _sodium = require('libsodium-wrappers');
 const crypto = require('crypto');
-const { sockets } = require('@clabroche/common-socket-server');
+const { sockets } = require('@runeya/common-socket-server');
 const conflictStorage = require('./conflictStorage');
 const path = require('path');
 

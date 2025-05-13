@@ -1,5 +1,5 @@
 {
-  "name": "node-red-contrib-stack-monitor",
+  "name": "node-red-contrib-runeya",
     "node-red": {
     "nodes": {
       "services-events-launcher": "services-events-launcher/index.js",

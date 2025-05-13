@@ -2,7 +2,7 @@
 <div class="left">
   <div class="logo">
     <img src="@/assets/rocket.png" alt="">
-    Stack Monitor
+    Runeya
   </div>
 </div>
 </template>

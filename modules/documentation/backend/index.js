@@ -3,7 +3,7 @@ const PromiseB = require('bluebird');
 const pathfs = require('path');
 const Documentation = require('./Documentation');
 
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./Documentation')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./Documentation')>} */
 const plugin = {
   enabled: true,
   name: 'Documentation',
@@ -14,16 +14,16 @@ const plugin = {
   placements: ['service'],
   order: 6,
   routes: require('./routes'),
-  finder: async (search, stackMonitor) => {
-    // const services = stackMonitor.getServices()?.filter((/** @type {any} */s) => s.documentation);
+  finder: async (search, runeya) => {
+    // const services = runeya.getServices()?.filter((/** @type {any} */s) => s.documentation);
     // const servicesFiles = (await PromiseB.map(services, async (service) => {
-    //   const files = await stackMonitor.documentation.getFlatFiles('.', service.documentation);
+    //   const files = await runeya.documentation.getFlatFiles('.', service.documentation);
     //   return PromiseB.filter(files, (leaf) => !leaf.isDir)?.map(async (path) => {
     //     const content = path.path && await readFile(pathfs.resolve(service.documentation, path.path), { encoding: 'utf-8' }).catch(console.error);
     //     return { service, path, content };
     //   }) || [];
     // })).flat()
-    //   .filter((file) => stackMonitor.helpers.searchString(file.path?.name || '', search) || stackMonitor.helpers.searchString(file.content || '', search));
+    //   .filter((file) => runeya.helpers.searchString(file.path?.name || '', search) || runeya.helpers.searchString(file.content || '', search));
     // return [
     //   ...servicesFiles.map((file) => ({
     //     icon: 'fas fa-book',

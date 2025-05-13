@@ -8,21 +8,21 @@ outline: deep
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) version 16 or higher.
-- Terminal for launching Stack Monitor (CLI).
+- Terminal for launching Runeya (CLI).
 - Git to enable git capabilities.
 
 To install in a git project:
 ::: code-group
 ```sh [npm]
-$ npm install -D @iryu54/stack-monitor
+$ npm install -D @runeya/runeya
 ```
 
 ```sh [pnpm]
-$ pnpm add -D @iryu54/stack-monitor
+$ pnpm add -D @runeya/runeya
 ```
 
 ```sh [yarn]
-$ yarn add -D @iryu54/stack-monitor
+$ yarn add -D @runeya/runeya
 ```
 :::
 
@@ -30,11 +30,11 @@ To install in global:
 ::: code-group
 
 ```sh [npm]
-$ npm install -g @iryu54/stack-monitor
+$ npm install -g @runeya/runeya
 ```
 
 ```sh [yarn]
-$ yarn global add @iryu54/stack-monitor
+$ yarn global add @runeya/runeya
 ```
 :::
 
@@ -52,14 +52,14 @@ In project installation, you can launch it by adding a script to your package.js
   "license": "...",
   "author": "...",
   "scripts": {
-    "serve": "cross-env STACK_MONITOR_HTTP_PORT=6872 stack-monitor ./src/stack.js"
+    "serve": "cross-env RUNEYA_HTTP_PORT=6872 runeya ./src/stack.js"
   }
 }
 ```
-Stack Monitor ships with a command line. After global installation, start it by running:
+Runeya ships with a command line. After global installation, start it by running:
 
 ```sh [bash]
-$ stack-monitor <config-directory>
+$ runeya <config-directory>
 ```
 
 It will launch a web interface to write and monitor all your services

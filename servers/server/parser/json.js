@@ -1,6 +1,6 @@
 /** @type {import("../models/Service").Parser} */
 const parser = {
-  id: 'stack-monitor-parser-jsons',
+  id: 'runeya-parser-jsons',
   label: 'Parse jsons',
   readonly: true,
   transform: (line) => {

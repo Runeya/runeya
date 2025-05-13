@@ -1,11 +1,11 @@
 {
-  "name": "@clabroche/fronts-app",
-  "version": "2.2.1",
+  "name": "@runeya/fronts-app",
+  "version": "1.0.0",
   "private": true,
   "description": "Monitor processes as a stack",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "author": {
-    "name": "clabroche",
+    "name": "runeya",
     "email": "corentinlabroche@gmail.com",
     "url": "https://corentinlabroche.fr/"
   },
@@ -25,12 +25,12 @@
   "typings": "./typings/export.d.ts",
   "types": "./typings/export.d.ts",
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
-    "@clabroche/common-socket-front": "workspace:*",
-    "@clabroche/common-typings": "workspace:*",
-    "@clabroche/modules-plugins-loader-front": "workspace:*",
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@primevue/themes": "^4.2.5",
+    "@runeya/common-retrigger-all-build": "workspace:*",
+    "@runeya/common-socket-front": "workspace:*",
+    "@runeya/common-typings": "workspace:*",
+    "@runeya/modules-plugins-loader-front": "workspace:*",
     "@shopify/draggable": "^1.1.3",
     "@vitejs/plugin-vue": "^5.2.4",
     "autoprefixer": "^10.4.20",
@@ -69,7 +69,7 @@
   ],
   "bin": "server/bin/www",
   "keywords": [
-    "stack-monitor",
+    "runeya",
     "stack",
     "microservices",
     "git",

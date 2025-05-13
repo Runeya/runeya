@@ -1,6 +1,6 @@
 const Workflows = require('./Workflows');
 
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<Workflows>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<Workflows>} */
 const plugin = {
   enabled: true,
   name: 'Workflows',
@@ -18,7 +18,7 @@ const plugin = {
       active: 'Workflows',
     },
   ],
-  finder: (search, stackMonitor) => {
+  finder: (search, runeya) => {
     return []
   },
   routes: require('./routes'),

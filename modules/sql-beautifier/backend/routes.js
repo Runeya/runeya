@@ -2,10 +2,10 @@ const express = require('express');
 const beautifier = require('./SQLBeautifier');
 
 /**
- * @param {import('../../../../servers/server/models/stack')} stackMonitor
+ * @param {import('../../../../servers/server/models/stack')} runeya
  * @returns {import('express').Router}
  */
-function routes(stackMonitor) {
+function routes(runeya) {
   const router = express.Router();
 
   /**

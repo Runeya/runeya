@@ -34,7 +34,7 @@ class EncryptionKey {
 
   async update() {
 
-    console.log(JSON.stringify(['stack-monitor', 'update'],(_, v) => (typeof v === 'function' ? `[func]` : v)));
+    console.log(JSON.stringify(['runeya', 'update'],(_, v) => (typeof v === 'function' ? `[func]` : v)));
     return this.#getDb().write(this.toStorage());
   }
 

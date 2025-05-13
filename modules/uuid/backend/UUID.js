@@ -1,8 +1,8 @@
 const { v4 } = require('uuid');
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
+/** @param {import('@runeya/common-typings').Runeya} runeya */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const UUID = (stackMonitor) => ({
+const UUID = (runeya) => ({
   generate: ({ count = 1, noDash = false, uppercase = false } = {}) => {
     const uuids = Array(count).fill().map(() => {
       let uuid = v4();

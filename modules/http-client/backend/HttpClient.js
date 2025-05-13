@@ -1,8 +1,8 @@
 const axios = require('axios').default;
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
+/** @param {import('@runeya/common-typings').Runeya} runeya */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const HttpClient = (stackMonitor) => ({
+const HttpClient = (runeya) => ({
   /**
    * Send HTTP request
    * @param {Object} options - Request options

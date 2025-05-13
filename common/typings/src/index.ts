@@ -114,7 +114,7 @@ import type {
 
 //= ==== Plugins ==========
 import type {
-  PluginSM as _StackMonitorPlugin,
+  PluginSM as _RuneyaPlugin,
 } from '../../../modules/plugins-loader/front/src/views';
 
 //= ==== Leaf ==========
@@ -144,7 +144,7 @@ export type {
   StackObject,
   StackFunction,
   Environment,
-  StackWithPlugins as StackMonitor,
+  StackWithPlugins as Runeya,
 } from '../../../servers/server/models/stack.js';
 
 export type {
@@ -159,7 +159,7 @@ export namespace GlobalScripts {
   export type TrackStep = _TrackStep
 }
 export namespace Plugins {
-  export type StackMonitorPlugin<T> = _StackMonitorPlugin<T>
+  export type RuneyaPlugin<T> = _RuneyaPlugin<T>
 }
 export namespace Documentation {
   export type Leaf = _Leaf

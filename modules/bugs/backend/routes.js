@@ -4,10 +4,10 @@ const router = express.Router();
 const pathfs = require('path');
 const { fork } = require('child_process');
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
   router.get('/bugs/:service', async (req, res) => {
-    const service = stackMonitor.findService(req.params.service);
+    const service = runeya.findService(req.params.service);
     if (!service) return res.status(404).send('SERVICE_NOT_FOUND');
     const ts = fork(pathfs.resolve(__dirname, 'checkJsFork'));
     ts.on('message', (results) => {

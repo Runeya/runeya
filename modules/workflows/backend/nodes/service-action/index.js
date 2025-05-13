@@ -5,7 +5,7 @@ module.exports = function (RED) {
     const node = this;
     if (!config.action) config.action = 'start'
     if (!config.service) config.service = 'STACK_LOAD_FROM_INPUT'
-    const { sockets, stack } = RED.settings.functionGlobalContext.stackmonitor
+    const { sockets, stack } = RED.settings.functionGlobalContext.runeya
     node.on('input', async function (msg) {
       const service = stack.getServices().find(s => {
         if (config.service === 'STACK_LOAD_FROM_INPUT') return s.label === (msg?.payload?.service?.label || msg?.service?.label)

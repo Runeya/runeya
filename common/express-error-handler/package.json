@@ -1,8 +1,8 @@
 {
-  "name": "@clabroche/common-express-error-handler",
-  "version": "2.0.5",
+  "name": "@runeya/common-express-error-handler",
+  "version": "1.0.0",
   "description": "",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "private": true,
   "main": "src/index.js",
   "types": "src/index.js",
@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@clabroche/common-express-http-error": "workspace:*"
+    "@runeya/common-express-http-error": "workspace:*"
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
+    "@runeya/common-retrigger-all-build": "workspace:*",
     "jest-sonar-reporter": "^2.0.0"
   }
 }

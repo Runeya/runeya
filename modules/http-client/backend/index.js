@@ -1,4 +1,4 @@
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./HttpClient')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./HttpClient')>} */
 const plugin = {
   enabled: true,
   name: 'HttpClient',

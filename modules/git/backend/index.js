@@ -1,6 +1,6 @@
 const commandExists = require('command-exists');
 
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./Git')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./Git')>} */
 const plugin = {
   enabled: true,
   name: 'Git',

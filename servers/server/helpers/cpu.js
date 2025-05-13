@@ -1,7 +1,7 @@
 const os = require('os');
 const { fork } = require('node:child_process');
 const path = require('path');
-const { sockets } = require('@clabroche/common-socket-server');
+const { sockets } = require('@runeya/common-socket-server');
 
 const nbCpus = os.cpus().length;
 

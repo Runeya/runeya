@@ -7,13 +7,13 @@ const router = express.Router();
 const MyOctokit = Octokit.plugin(restEndpointMethods);
 
 /** @type {Octokit & import('@octokit/plugin-rest-endpoint-methods').Api | null} */
-let octokit = process.env.STACK_MONITOR_GH_APIKEY
-  ? new MyOctokit({ auth: process.env.STACK_MONITOR_GH_APIKEY })
+let octokit = process.env.RUNEYA_GH_APIKEY
+  ? new MyOctokit({ auth: process.env.RUNEYA_GH_APIKEY })
   : null;
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
-  const { findService } = stackMonitor;
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
+  const { findService } = runeya;
 
   router.get('/github/service/:label/ready', async (req, res) => {
     requirements();
@@ -52,9 +52,9 @@ module.exports = (stackMonitor) => {
 };
 
 function requirements() {
-  if (!octokit && !process.env.STACK_MONITOR_GH_APIKEY) {
+  if (!octokit && !process.env.RUNEYA_GH_APIKEY) {
     throw new Error('github api is not initialized');
   } else if (!octokit) {
-    octokit = new MyOctokit({ auth: process.env.STACK_MONITOR_GH_APIKEY });
+    octokit = new MyOctokit({ auth: process.env.RUNEYA_GH_APIKEY });
   }
 }

@@ -2,9 +2,9 @@ const express = require('express');
 
 const router = express.Router();
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
-  const { Board } = require('./Kanban')(stackMonitor);
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
+  const { Board } = require('./Kanban')(runeya);
 
   router.get('/kanban/boards', async (req, res) => {
     res.json(Board.all());

@@ -1,6 +1,6 @@
 // @ts-ignore
 require('express-async-errors');
-const { express } = require('@clabroche/common-express');
+const { express } = require('@runeya/common-express');
 const indexRouter = require('./routes/index');
 const { stopCpu } = require('./helpers/cpu');
 const { stopWatchers } = require('./models/stack');

@@ -129,9 +129,9 @@ export default {
   },
   setup() {
     const router = useRouter(); 
-    /** @type {import('vue').Ref<import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<null>[]>} */
+    /** @type {import('vue').Ref<import('@runeya/modules-plugins-loader-front/src/views').PluginSM<null>[]>} */
     const plugins = ref([])
-    /** @type {import('vue').Ref<import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<null>[]>} */
+    /** @type {import('vue').Ref<import('@runeya/modules-plugins-loader-front/src/views').PluginSM<null>[]>} */
     const pluginsTop = ref([])
     const cpu = ref(0)
     const mem = ref(0)

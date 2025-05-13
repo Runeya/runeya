@@ -10,7 +10,7 @@ It will be composed from a backend and a frontend in vue. To make a toolbox modu
 
 Le fichier d'entrée du plugin ressemble a ca:
 
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./UUID')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./UUID')>} */
 const plugin = {
   enabled: true, // si le plugin est actif
   name: 'UUID', // Le nom interne 
@@ -51,7 +51,7 @@ router.post('/UUID/generate') alors dans le front axios devra acceder a /UUID/ge
 N'ecrit jamais en typescript meme dans vue
 
 
-Dans le module front fait appelle directement aux imports avec des chemins relatif. clabroche/front-app ferait une dependance cyclique 
+Dans le module front fait appelle directement aux imports avec des chemins relatif. runeya/front-app ferait une dependance cyclique 
 
 
 

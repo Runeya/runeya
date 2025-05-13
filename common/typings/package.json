@@ -1,9 +1,9 @@
 {
-  "name": "@clabroche/common-typings",
+  "name": "@runeya/common-typings",
   "private": true,
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "types": "src/index.ts",
   "main": "src/index.ts",
   "scripts": {
@@ -12,6 +12,6 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
   }
 }

@@ -1,9 +1,9 @@
 {
-  "name": "@clabroche/common-workflows",
-  "version": "2.1.1",
+  "name": "@runeya/common-workflows",
+  "version": "1.0.0",
   "private": true,
   "description": "",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",
   "scripts": {
     "test": "echo \"No test specified\""
@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
   },
   "dependencies": {
     "bluebird": "^3.7.2"

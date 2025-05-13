@@ -1,7 +1,7 @@
 import axios from '../helpers/axios';
 
 class Service {
-  /** @param {import('@clabroche/common-typings').NonFunctionProperties<Service>} service */
+  /** @param {import('@runeya/common-typings').NonFunctionProperties<Service>} service */
   constructor(service) {
     /** @type {string} */
     this.label = service.label || ''
@@ -15,7 +15,7 @@ class Service {
   }
 
   /**
-   * @param {import('@clabroche/common-typings').NonFunctionProperties<Service>} service
+   * @param {import('@runeya/common-typings').NonFunctionProperties<Service>} service
    */
   updateFields(service) {
     if (!service.label) throw new Error('A service should have a label');

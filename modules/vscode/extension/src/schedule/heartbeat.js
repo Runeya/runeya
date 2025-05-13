@@ -10,11 +10,11 @@ module.exports = {
   async heartBeat() {
     const { context } = module.exports;
     if (!isConnectInProgress() && !await isAvailable(context)) {
-      vscode.commands.executeCommand('setContext', 'stackMonitorAvailable', false);
+      vscode.commands.executeCommand('setContext', 'runeyaAvailable', false);
     } else if (isConnectInProgress() && !await isAvailable(context)) {
-      vscode.commands.executeCommand('setContext', 'stackMonitorAvailable', false);
+      vscode.commands.executeCommand('setContext', 'runeyaAvailable', false);
     } else {
-      vscode.commands.executeCommand('setContext', 'stackMonitorAvailable', true);
+      vscode.commands.executeCommand('setContext', 'runeyaAvailable', true);
       editor.update();
     }
   },

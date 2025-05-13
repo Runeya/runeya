@@ -1,13 +1,13 @@
 {
-  "name": "@clabroche/modules-global-scripts-front",
-  "version": "2.2.1",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "name": "@runeya/modules-global-scripts-front",
+  "version": "1.0.0",
+  "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {
     "test": ""
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
+    "@runeya/common-retrigger-all-build": "workspace:*",
     "vue": "^3.5.13",
     "vue-eslint-parser": "^9.4.2",
     "vue-router": "^4.5.1"

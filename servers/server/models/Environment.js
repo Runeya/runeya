@@ -5,7 +5,7 @@ const { existsSync } = require('fs');
 
 class Environment {
   /**
-   * @param {import('@clabroche/common-typings').NonFunctionProperties<Environment>} environment
+   * @param {import('@runeya/common-typings').NonFunctionProperties<Environment>} environment
    */
   constructor(environment) {
     /** @type {string} */
@@ -79,7 +79,7 @@ class Environment {
     const dbToWrite = this.toStorage();
     const overrideDbToWrite = { envs: {} };
     Object.keys(dbToWrite.envs).forEach((key) => {
-      if (key.endsWith('_STACK_MONITOR_OVERRIDE')) {
+      if (key.endsWith('_RUNEYA_OVERRIDE')) {
         overrideDbToWrite.envs[key] = dbToWrite.envs[key];
         delete dbToWrite.envs[key];
       }

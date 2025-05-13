@@ -1,6 +1,6 @@
 const Npm = require('./Npm');
 
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./Npm')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./Npm')>} */
 const plugin = {
   enabled: true,
   name: 'Npm',

@@ -1,9 +1,9 @@
 {
-  "name": "@clabroche/common-express-http-error",
-  "version": "2.0.0",
+  "name": "@runeya/common-express-http-error",
+  "version": "1.0.0",
   "description": "",
   "private": true,
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",
   "types": "src/index.js",
   "scripts": {
@@ -16,6 +16,6 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
   }
 }

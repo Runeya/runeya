@@ -1,8 +1,8 @@
 {
-  "name": "@clabroche/modules-node-repl-backend",
-  "version": "2.2.0",
+  "name": "@runeya/modules-node-repl-backend",
+  "version": "1.0.0",
   "description": "",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "main": "index.js",
   "private": true,
   "scripts": {
@@ -12,12 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@clabroche/common-typings": "workspace:*",
+    "@runeya/common-typings": "workspace:*",
     "express": "^4.18.2",
     "prettier": "^3.1.0",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
   }
 }

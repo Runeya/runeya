@@ -94,7 +94,7 @@
               }
             }">
               <template #body="{ data, field }">
-                <InputText v-model="environment.envs[data.key + '_STACK_MONITOR_OVERRIDE']" @blur="saveEnvironment(environment)" fluid>
+                <InputText v-model="environment.envs[data.key + '_RUNEYA_OVERRIDE']" @blur="saveEnvironment(environment)" fluid>
                 </InputText>
               </template>
             </Column>
@@ -162,7 +162,7 @@ function parseCode(environment) {
 }
 
 function parseRawEnvs(envs) {
-  return Object.keys(envs).map((key) => ({ key, value: envs[key] })).filter(({ key }) => !key.endsWith('_STACK_MONITOR_OVERRIDE'));
+  return Object.keys(envs).map((key) => ({ key, value: envs[key] })).filter(({ key }) => !key.endsWith('_RUNEYA_OVERRIDE'));
 }
 const envModalRefs = ref({})
 /** @type {import('vue').Ref<Record<string, import('../../../../servers/server/models/stack').Environment>[]>} */

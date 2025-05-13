@@ -1,6 +1,6 @@
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-const NodeRed = (stackMonitor) => {
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+const NodeRed = (runeya) => {
   
 }
 

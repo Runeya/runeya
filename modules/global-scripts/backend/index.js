@@ -1,6 +1,6 @@
 const GlobalScripts = require('./GlobalScripts');
 
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<GlobalScripts>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<GlobalScripts>} */
 const plugin = {
   enabled: true,
   name: 'Global scripts',
@@ -17,8 +17,8 @@ const plugin = {
       active: 'GlobalScripts',
     },
   ],
-  finder: (search, stackMonitor) => {
-    const scripts = stackMonitor.globalScripts.getScripts()
+  finder: (search, runeya) => {
+    const scripts = runeya.globalScripts.getScripts()
       .filter((/** @type {*} */script) => script.label.toUpperCase()?.includes(search?.toUpperCase()));
     return [
       ...scripts.map((/** @type {*} */script) => ({

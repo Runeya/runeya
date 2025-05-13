@@ -3,13 +3,13 @@ const express = require('express');
 const cors = require('cors');
 const pathfs = require('path');
 const fs = require('fs');
-const healthCheck = require('@clabroche/common-express-health-check');
+const healthCheck = require('@runeya/common-express-health-check');
 const helmet = require('helmet').default;
 const cookieParser = require('cookie-parser');
 const compression = require('compression');
 const http = require('http');
-const Socket = require('@clabroche/common-socket-server');
-const CustomObservable = require('@clabroche/common-socket-server/src/CustomObservable');
+const Socket = require('@runeya/common-socket-server');
+const CustomObservable = require('@runeya/common-socket-server/src/CustomObservable');
 
 const onServerLaunch = new CustomObservable()
 let _server
@@ -70,7 +70,7 @@ module.exports = {
     const appVersion = pkgJSON.version;
     const appName = pkgJSON.name;
 
-    console.log(`<h2 style="background: linear-gradient(90deg, rgba(52,70,91,1) 0%, rgba(28,92,227,1) 100%);color:white;border-radius:10px;padding:10px;width: max-content">${appName.replace('@clabroche/', '')}</h2>`);
+    console.log(`<h2 style="background: linear-gradient(90deg, rgba(52,70,91,1) 0%, rgba(28,92,227,1) 100%);color:white;border-radius:10px;padding:10px;width: max-content">${appName.replace('@runeya/', '')}</h2>`);
     console.log(`v${appVersion} started, listening on port ${port}.`);
 
     const app = express();
@@ -129,7 +129,6 @@ module.exports = {
         target: 'http://127.0.0.1:5173',
         changeOrigin: false,
         ws: true,
-        logger: console,
       }));
       server.on('upgrade', (req, res) => {
         if (req.url === '/') {
@@ -140,10 +139,10 @@ module.exports = {
       });
     }
     console.log('Enable error handling...');
-    app.use(require('@clabroche/common-express-error-handler')());
+    app.use(require('@runeya/common-express-error-handler')());
 
     console.log('Enable 404 handling...');
-    app.use(require('@clabroche/common-express-404'));
+    app.use(require('@runeya/common-express-404'));
 
     console.log('Apply additional tasks before launch...');
     await beforeAll({ app, server });

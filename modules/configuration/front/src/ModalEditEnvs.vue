@@ -230,7 +230,7 @@ const search = (event) => {
   if (!currentEnvironment.value || !currentEnvironment.value.envs) return;
   
   items.value = Object.keys(currentEnvironment.value.envs)
-    .filter((key) => key.toUpperCase().includes(query.toUpperCase()) && !key.toUpperCase().includes('STACK_MONITOR_OVERRIDE'))
+    .filter((key) => key.toUpperCase().includes(query.toUpperCase()) && !key.toUpperCase().includes('RUNEYA_OVERRIDE'))
     .map((key) => `{{${key}}}`);
 };
 
@@ -324,7 +324,7 @@ function setOverrideIfNeeded({key, value}) {
     data.prefix = res?.[1] || data.prefix || '';
     data.suffix = res?.[2] || data.suffix || '';
     data.value = `{{${tag}}}`;
-    data.override = `{{${tag}_STACK_MONITOR_OVERRIDE}}`;
+    data.override = `{{${tag}_RUNEYA_OVERRIDE}}`;
   }
   else if (extractTag(data.override)) {
     data.override = '';

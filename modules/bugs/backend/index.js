@@ -1,7 +1,7 @@
 const { existsSync } = require('fs');
 const pathfs = require('path');
 
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<null>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<null>} */
 const plugin = {
   enabled: true,
   name: 'Bugs',

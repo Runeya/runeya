@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "node-red-contrib-runeya": "file:node-red-contrib-runeya.tgz",
     "node-red-contrib-stack-monitor": "file:node-red-contrib-stack-monitor.tgz"
   }
 }

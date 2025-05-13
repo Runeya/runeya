@@ -15,7 +15,7 @@ const PromiseB = require('bluebird');
 const ports = require('../../../servers/server/models/ports');
 
 const router = express.Router();
-const confDir = pathfs.resolve(homedir, '.stack-monitor');
+const confDir = pathfs.resolve(homedir, '.runeya');
 
 if (!existsSync(confDir)) mkdirSync(confDir);
 const openaiConfPath = pathfs.resolve(confDir, 'openaiconf.json');
@@ -24,8 +24,8 @@ const openaiStoragePath = pathfs.resolve(confDir, 'storage');
 if (!existsSync(openaiStoragePath)) mkdirSync(openaiStoragePath);
 const openaiconf = JSON.parse(readFileSync(openaiConfPath, 'utf-8'));
 /** @type {OpenAIApi | null} */
-let openai = process.env.STACK_MONITOR_OPENAI_APIKEY ? new OpenAIApi({
-  apiKey: process.env.STACK_MONITOR_OPENAI_APIKEY,
+let openai = process.env.RUNEYA_OPENAI_APIKEY ? new OpenAIApi({
+  apiKey: process.env.RUNEYA_OPENAI_APIKEY,
 }) : null;
 
 module.exports = () => {
@@ -216,10 +216,10 @@ module.exports = () => {
 
   router.post('/openai/apikey', async (req, res) => {
     const { apikey } = req.body;
-    process.env.STACK_MONITOR_OPENAI_APIKEY = apikey;
+    process.env.RUNEYA_OPENAI_APIKEY = apikey;
     save();
-    openai = process.env.STACK_MONITOR_OPENAI_APIKEY ? new OpenAIApi({
-      apiKey: process.env.STACK_MONITOR_OPENAI_APIKEY,
+    openai = process.env.RUNEYA_OPENAI_APIKEY ? new OpenAIApi({
+      apiKey: process.env.RUNEYA_OPENAI_APIKEY,
     }) : null;
 
     res.json(true);
@@ -227,7 +227,7 @@ module.exports = () => {
 
   router.get('/openai/ready', async (req, res) => {
     if (!openai) return res.json(false);
-    console.log(process.env.STACK_MONITOR_OPENAI_APIKEY, openaiconf?.apikey)
+    console.log(process.env.RUNEYA_OPENAI_APIKEY, openaiconf?.apikey)
     try {
       const {data} = await openai.models.list({});
       res.json(!!data?.length);

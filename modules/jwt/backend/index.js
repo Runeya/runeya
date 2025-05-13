@@ -1,4 +1,4 @@
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./JWT')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./JWT')>} */
 const plugin = {
   enabled: true,
   name: 'JWT',

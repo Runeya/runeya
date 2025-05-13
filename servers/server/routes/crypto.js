@@ -1,11 +1,11 @@
-const { express } = require('@clabroche/common-express');
+const { express } = require('@runeya/common-express');
 const config = require('../models/EncryptionKey');
 const dbs = require('../helpers/dbs');
 const { encrypt } = require('../helpers/crypto');
 const fs = require('fs').promises;
 const path = require('path');
-const HTTPError = require('@clabroche/common-express-http-error');
-const { sockets } = require('@clabroche/common-socket-server');
+const HTTPError = require('@runeya/common-express-http-error');
+const { sockets } = require('@runeya/common-socket-server');
 const conflictStorage = require('../helpers/conflictStorage');
 
 const router = express.Router();

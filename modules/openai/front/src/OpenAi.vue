@@ -4,7 +4,7 @@
       <h1>Open ai</h1>
     </div>
     <div v-if="!ready">
-      You need to provide a valid apikey from openai in the STACK_MONITOR_OPENAI_APIKEY
+      You need to provide a valid apikey from openai in the RUNEYA_OPENAI_APIKEY
       environment variable to use this module.
       <a href="https://platform.openai.com/api-keys" target="_blank">See here.</a>
     </div>

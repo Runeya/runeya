@@ -23,12 +23,12 @@ cpSync(path.resolve(__dirname, './resources'), path.resolve(__dirname, './out/re
 let packageJSON = readFileSync(path.resolve(__dirname, './out/package.json'), 'utf-8');
 packageJSON = packageJSON
   .replaceAll('"main": "./src/extension.js",', '"main": "./src/main.js",')
-  .replaceAll('"name": "@clabroche/modules-vscode-extension",', '"name": "stack-monitor",');
+  .replaceAll('"name": "@runeya/modules-vscode-extension",', '"name": "runeya",');
 
 writeFileSync(path.resolve(__dirname, './out/package.json'), packageJSON, 'utf-8');
 writeFileSync(path.resolve(__dirname, './out/LICENSE'), 'MIT', 'utf-8');
 execSync('npm i --omit=dev', { stdio: 'inherit', cwd: path.resolve(__dirname, './out') });
-execSync('vsce package -o stack-monitor.vsix', { stdio: 'inherit', cwd: path.resolve(__dirname, './out') });
+execSync('vsce package -o runeya.vsix', { stdio: 'inherit', cwd: path.resolve(__dirname, './out') });
 if (existsSync(path.resolve(__dirname, '../backend'))) {
-  cpSync(path.resolve(__dirname, './out/stack-monitor.vsix'), path.resolve(__dirname, '../backend/stack-monitor.vsix'));
+  cpSync(path.resolve(__dirname, './out/runeya.vsix'), path.resolve(__dirname, '../backend/runeya.vsix'));
 }

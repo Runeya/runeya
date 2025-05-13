@@ -1,6 +1,6 @@
 <script type="text/javascript">
   RED.nodes.registerType('sm-popup', {
-    category: 'Stack Monitor',
+    category: 'Runeya',
     color: '#eaeab6',
     defaults: {
       name: { value: "[SM] Popup" },
@@ -19,7 +19,7 @@
 <script type="text/html" data-template-name="sm-popup">
   <h2>Popup</h2>
   <p>
-    Popup to display data of your flow in your stack monitor. Html should be placed on msg.payload.toDisplay
+    Popup to display data of your flow in your runeya. Html should be placed on msg.payload.toDisplay
   </p>
   <div class="form-row">
     <label for="node-input-name"><i class="fa fa-tag"></i> Name</label>
@@ -32,5 +32,5 @@
 </script>
 
 <script type="text/html" data-help-name="sm-popup">
-    <p>A simple node to display data in stack monitor</p>
+    <p>A simple node to display data in runeya</p>
 </script>

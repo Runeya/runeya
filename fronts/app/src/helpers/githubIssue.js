@@ -1,8 +1,8 @@
 import newGithubIssueUrl from "new-github-issue-url";
 
 export default newGithubIssueUrl({
-  user: 'clabroche',
-  repo: 'stack-monitor',
+  user: 'runeya',
+  repo: 'runeya',
   body: `
 ## Issue
 

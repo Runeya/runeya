@@ -1,4 +1,4 @@
-const { express } = require('@clabroche/common-express');
+const { express } = require('@runeya/common-express');
 const Parser = require('../models/Parser');
 
 const router = express.Router();

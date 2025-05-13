@@ -5,7 +5,7 @@ const { v4 } = require('uuid');
 const dbLeafTree = dbs.getDb(`leafs-leafs`, {encrypted: true, defaultData: []}).alasql
 class Leaf {
   /**
-   * @param {import('@clabroche/common-typings').NonFunctionProperties<Leaf>} leaf
+   * @param {import('@runeya/common-typings').NonFunctionProperties<Leaf>} leaf
    */
   constructor(leaf) {
     /** @type {string} */

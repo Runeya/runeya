@@ -82,4 +82,4 @@ const exploreDir = (rootDir) => fs
     return exploreDir(dir);
   })
   .flat()
-  .filter((f) => !f.packageJSON.name.startsWith('@clabroche/docker'));
+  .filter((f) => !f.packageJSON.name.startsWith('@runeya/docker'));

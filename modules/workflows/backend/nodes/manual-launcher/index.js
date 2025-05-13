@@ -3,7 +3,7 @@ module.exports = function (RED) {
   const controller = function (config) {
     RED.nodes.createNode(this, config);
     const node = this;
-    const { sockets, stack } = RED.settings.functionGlobalContext.stackmonitor
+    const { sockets, stack } = RED.settings.functionGlobalContext.runeya
     sockets.on(config.id, async (eventConfig, data) => {
       node.status({ fill: "green", shape: "dot", text: `${new Date().toISOString()} - ${eventConfig.launchType} - ${data}` });
       node.send({

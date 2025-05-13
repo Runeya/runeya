@@ -5,7 +5,7 @@ module.exports = function (RED) {
     RED.nodes.createNode(this, config);
     const node = this;
     if (!config.commandId) config.commandId = 'STACK_LOAD_FROM_INPUT'
-    const { sockets, stack } = RED.settings.functionGlobalContext.stackmonitor
+    const { sockets, stack } = RED.settings.functionGlobalContext.runeya
     node.on('input', async function (msg) {
       try {
         let command, service

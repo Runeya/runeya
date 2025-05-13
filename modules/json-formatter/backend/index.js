@@ -1,4 +1,4 @@
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./JSONFormatter')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./JSONFormatter')>} */
 const plugin = {
   enabled: true,
   name: 'JSONFormatter',

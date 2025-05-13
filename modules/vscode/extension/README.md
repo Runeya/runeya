@@ -1,6 +1,6 @@
-# stack-monitor README
+# runeya README
 
-This is the README for your extension "stack-monitor". After writing up a brief description, we recommend including the following sections.
+This is the README for your extension "runeya". After writing up a brief description, we recommend including the following sections.
 
 ## Features
 

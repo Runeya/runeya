@@ -1,9 +1,9 @@
 {
-  "name": "@clabroche/common-express",
+  "name": "@runeya/common-express",
   "private": true,
-  "version": "2.1.0",
+  "version": "1.0.0",
   "description": "",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",
   "types": "src/index.js",
   "scripts": {
@@ -12,10 +12,10 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@clabroche/common-express-404": "workspace:*",
-    "@clabroche/common-express-error-handler": "workspace:*",
-    "@clabroche/common-express-health-check": "workspace:*",
-    "@clabroche/common-socket-server": "workspace:*",
+    "@runeya/common-express-404": "workspace:*",
+    "@runeya/common-express-error-handler": "workspace:*",
+    "@runeya/common-express-health-check": "workspace:*",
+    "@runeya/common-socket-server": "workspace:*",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
@@ -25,7 +25,7 @@
     "http-proxy": "^1.18.1"
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
+    "@runeya/common-retrigger-all-build": "workspace:*",
     "@types/http-proxy": "^1"
   }
 }

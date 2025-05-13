@@ -1,4 +1,4 @@
-/** @type {import('@clabroche/modules-plugins-loader-front/src/views').PluginSM<import('./Base64')>} */
+/** @type {import('@runeya/modules-plugins-loader-front/src/views').PluginSM<import('./Base64')>} */
 const plugin = {
   enabled: true,
   name: 'Base64',

@@ -34,7 +34,7 @@ module.exports = {
     },
   },
   ignoreDependencies: [
-    '@clabroche/common-retrigger-all-build',
+    '@runeya/common-retrigger-all-build',
     '@types/*',
     'vue-router',
     'knip',

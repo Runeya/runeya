@@ -1,9 +1,9 @@
 /**
  * Module Base64 pour encoder et décoder des chaînes
- * @param {import('@clabroche/common-typings').StackMonitor} stackMonitor 
+ * @param {import('@runeya/common-typings').Runeya} runeya 
  */
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const Base64 = (stackMonitor) => ({
+const Base64 = (runeya) => ({
   /**
    * Encode une chaîne en Base64
    * @param {string} value - La chaîne à encoder

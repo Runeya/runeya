@@ -1,12 +1,12 @@
 {
-  "name": "@clabroche/stack-monitor",
+  "name": "@runeya/runeya",
   "version": "1.0.0",
   "description": "",
   "main": "stack.js",
   "scripts": {
     "prepare": "husky install",
     "postinstall": "husky install && node prepare-monorepo.js || true",
-    "serve": "cross-env STACK_MONITOR_HTTP_PORT=6874 stack-monitor",
+    "serve": "cross-env STACK_MONITOR_HTTP_PORT=6874 runeya",
     "check:monorepo": "cd common/check-monorepo && npm run start",
     "check:dependencies-consistency": "check-dependency-version-consistency .",
     "check:unused": "knip",
@@ -14,19 +14,19 @@
     "ci:generate": "node ./common/workflows/src/index.js",
     "lint": "node runScriptWithEnv \"turbo run lint\"",
     "test": "node runScriptWithEnv \"turbo run test\"",
-    "build": "node runScriptWithEnv \"turbo run build --filter @clabroche/servers-server\"",
-    "docs:build": "node runScriptWithEnv \"turbo run build --filter @clabroche/fronts-docs\"",
+    "build": "node runScriptWithEnv \"turbo run build --filter @runeya/servers-server\"",
+    "docs:build": "node runScriptWithEnv \"turbo run build --filter @runeya/fronts-docs\"",
     "eslint": "eslint",
     "lerna": "npx lerna",
     "changed": "yarn lerna changed -pl --toposort"
   },
-  "repository": "git+https://github.com/clabroche/stack-monitor.git",
+  "repository": "git+https://github.com/runeya/runeya.git",
   "author": "clabroche <corentinlabroche@gmail.com>",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/clabroche/stack-monitor/issues"
+    "url": "https://github.com/runeya/runeya/issues"
   },
-  "homepage": "https://github.com/clabroche/stack-monitor#readme",
+  "homepage": "https://github.com/runeya/runeya#readme",
   "workspaces": {
     "packages": [
       "./fronts/*",
@@ -38,13 +38,10 @@
   "private": true,
   "packageManager": "yarn@4.2.2",
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
-    "@clabroche/common-typings": "workspace:^",
     "@commitlint/cli": "^17.6.7",
     "@commitlint/config-conventional": "^17.6.7",
     "@eslint/eslintrc": "^3.2.0",
     "@eslint/js": "^9.17.0",
-    "@iryu54/stack-monitor": "^2.1.4",
     "@lerna-lite/changed": "^2.5.0",
     "@lerna-lite/cli": "^2.5.0",
     "@lerna-lite/diff": "^2.5.0",
@@ -52,6 +49,8 @@
     "@lerna-lite/list": "^2.5.0",
     "@lerna-lite/publish": "^2.5.0",
     "@lerna-lite/version": "^2.5.0",
+    "@runeya/common-retrigger-all-build": "workspace:*",
+    "@runeya/common-typings": "workspace:^",
     "@types/bluebird": "^3.5.38",
     "@types/debounce": "^1",
     "@types/kill-port": "^2",

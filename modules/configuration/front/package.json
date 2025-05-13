@@ -1,14 +1,14 @@
 {
-  "name": "@clabroche/modules-configuration-front",
-  "version": "2.2.1",
-  "repository": "https://github.com/clabroche/stack-monitor",
+  "name": "@runeya/modules-configuration-front",
+  "version": "1.0.0",
+  "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {
     "test": ""
   },
   "devDependencies": {
-    "@clabroche/common-retrigger-all-build": "workspace:*",
     "@primevue/forms": "^4.2.5",
+    "@runeya/common-retrigger-all-build": "workspace:*",
     "fast-sort": "^3.4.0",
     "vue": "^3.5.13",
     "vue-eslint-parser": "^9.4.2"

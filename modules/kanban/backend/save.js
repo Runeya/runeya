@@ -1,12 +1,12 @@
 const kanban = {
-  /** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-  getSave(stackMonitor) {
-    return stackMonitor.getSave('kanban.json', {
-      /** @type {Partial<import('@clabroche/common-typings').NonFunctionProperties<import('./Kanban').BoardType>['prototype']>[]} */
+  /** @param {import('@runeya/common-typings').Runeya} runeya */
+  getSave(runeya) {
+    return runeya.getSave('kanban.json', {
+      /** @type {Partial<import('@runeya/common-typings').NonFunctionProperties<import('./Kanban').BoardType>['prototype']>[]} */
       boards: [],
-      /** @type {Partial<import('@clabroche/common-typings').NonFunctionProperties<import('./Kanban').ColumnType>['prototype']>[]} */
+      /** @type {Partial<import('@runeya/common-typings').NonFunctionProperties<import('./Kanban').ColumnType>['prototype']>[]} */
       columns: [],
-      /** @type {Partial<import('@clabroche/common-typings').NonFunctionProperties<import('./Kanban').CardType>['prototype']>[]} */
+      /** @type {Partial<import('@runeya/common-typings').NonFunctionProperties<import('./Kanban').CardType>['prototype']>[]} */
       cards: [],
     }, {
       afterGet(data) {

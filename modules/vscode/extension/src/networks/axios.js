@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-unresolved
 const axios = require('axios');
 
-const getAxios = (context) => axios.create({ baseURL: `http://localhost:${context.globalState.get('stackMonitorPort')}` });
+const getAxios = (context) => axios.create({ baseURL: `http://localhost:${context.globalState.get('runeyaPort')}` });
 
 /** @param {import('vscode').ExtensionContext} context */
 module.exports = {

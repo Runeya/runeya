@@ -1,5 +1,5 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
-import plugins from '@clabroche/modules-plugins-loader-front/src/views';
+import plugins from '@runeya/modules-plugins-loader-front/src/views';
 import stack from '../models/stack';
 
 /**

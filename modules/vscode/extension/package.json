@@ -1,12 +1,12 @@
 {
-  "name": "@clabroche/modules-vscode-extension",
-  "displayName": "stack-monitor",
+  "name": "@runeya/modules-vscode-extension",
+  "displayName": "runeya",
   "private": true,
-  "description": "Connect to your stack-monitor instance",
-  "repository": "https://github.com/clabroche/stack-monitor",
-  "publisher": "clabroche",
+  "description": "Connect to your runeya instance",
+  "repository": "https://github.com/runeya/runeya",
+  "publisher": "runeya",
   "license": "ISC",
-  "version": "2.0.5",
+  "version": "1.0.0",
   "icon": "./resources/rocket.png",
   "engines": {
     "vscode": "^1.86.0"
@@ -24,27 +24,27 @@
   "contributes": {
     "commands": [
       {
-        "command": "stack-monitor.connect",
-        "title": "StackMonitor: Connect to stack monitor"
+        "command": "runeya.connect",
+        "title": "Runeya: Connect to runeya"
       },
       {
-        "command": "stack-monitor.log",
-        "title": "StackMonitor: Create log"
+        "command": "runeya.log",
+        "title": "Runeya: Create log"
       },
       {
-        "command": "stack-monitor.log-with-name",
-        "title": "StackMonitor: Create log with variable name"
+        "command": "runeya.log-with-name",
+        "title": "Runeya: Create log with variable name"
       }
     ],
     "keybindings": [
       {
-        "command": "stack-monitor.log",
+        "command": "runeya.log",
         "key": "ctrl+k l",
         "mac": "cmd+k l",
         "when": "editorTextFocus"
       },
       {
-        "command": "stack-monitor.log-with-name",
+        "command": "runeya.log-with-name",
         "key": "ctrl+k i",
         "mac": "cmd+k i",
         "when": "editorTextFocus"
@@ -53,8 +53,8 @@
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "stack-monitor",
-          "title": "Stack Monitor",
+          "id": "runeya",
+          "title": "Runeya",
           "icon": "resources/rocket.png"
         }
       ]
@@ -62,38 +62,38 @@
     "viewsWelcome": [
       {
         "view": "welcome",
-        "contents": "[Connect to stack-monitor](command:stack-monitor.connect)",
-        "when": "!stackMonitorAvailable"
+        "contents": "[Connect to runeya](command:runeya.connect)",
+        "when": "!runeyaAvailable"
       }
     ],
     "views": {
       "explorer": [
         {
           "id": "services-explorer",
-          "name": "Stackmonitor services",
+          "name": "Runeya services",
           "visibility": "visible",
           "type": "tree",
-          "when": "stackMonitorAvailable"
+          "when": "runeyaAvailable"
         }
       ],
-      "stack-monitor": [
+      "runeya": [
         {
           "id": "welcome",
           "name": "Welcome",
-          "when": "!stackMonitorAvailable"
+          "when": "!runeyaAvailable"
         },
         {
           "id": "services",
           "name": "Services",
           "visibility": "visible",
           "type": "tree",
-          "when": "stackMonitorAvailable"
+          "when": "runeyaAvailable"
         },
         {
           "id": "dependencies",
           "name": "Dependencies",
           "type": "tree",
-          "when": "stackMonitorAvailable"
+          "when": "runeyaAvailable"
         }
       ]
     }

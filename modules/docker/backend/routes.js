@@ -3,10 +3,10 @@ const { execAsync } = require('../../../servers/server/helpers/exec');
 
 const router = express.Router();
 
-/** @param {import('@clabroche/common-typings').StackMonitor} stackMonitor */
-module.exports = (stackMonitor) => {
+/** @param {import('@runeya/common-typings').Runeya} runeya */
+module.exports = (runeya) => {
   router.get('/docker/:service', async (req, res) => {
-    const service = stackMonitor.findService(req.params.service);
+    const service = runeya.findService(req.params.service);
     if (!service) return res.status(404).send('Service not found');
     const isAlive = await execAsync(`docker inspect --format {{.State.Pid}} ${service.container.name}`, {})
       .catch(() => null);

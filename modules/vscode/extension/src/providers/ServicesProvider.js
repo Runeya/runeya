@@ -4,7 +4,7 @@ const vscode = require('vscode');
 const PromiseB = require('bluebird');
 const { getAxios } = require('../networks/axios');
 
-/** @param {import('@clabroche/servers-server/models/Service')} service */
+/** @param {import('@runeya/servers-server/models/Service')} service */
 function getLabel(service) {
   let status = '';
   if (service.crashed) status = '🗰';
@@ -45,7 +45,7 @@ module.exports = class ServicesProvider {
   }
 
   async fillService(element) {
-    /** @type {{data: import('@clabroche/servers-server/models/Service')}} */
+    /** @type {{data: import('@runeya/servers-server/models/Service')}} */
     const { data: service } = await getAxios(this.context).get(`/stack/${element.data.label}`);
     return [
       new Dependency({
@@ -80,7 +80,7 @@ module.exports = class ServicesProvider {
   }
 
   async fillEnvs(element) {
-    /** @type {import('@clabroche/servers-server/models/Service')} */
+    /** @type {import('@runeya/servers-server/models/Service')} */
     const service = element.data;
     const envs = service.spawnOptions.env || {};
     return [
@@ -96,7 +96,7 @@ module.exports = class ServicesProvider {
   }
 
   async fillActions(element) {
-    /** @type {import('@clabroche/servers-server/models/Service')} */
+    /** @type {import('@runeya/servers-server/models/Service')} */
     const service = element.data;
     return [
       new Dependency({
@@ -121,7 +121,7 @@ module.exports = class ServicesProvider {
   }
 
   async fillCommands(element) {
-    /** @type {import('@clabroche/servers-server/models/Service')} */
+    /** @type {import('@runeya/servers-server/models/Service')} */
     const service = element.data;
     return [
       new Dependency({
@@ -144,7 +144,7 @@ module.exports = class ServicesProvider {
   }
 
   async fillCommand(element) {
-    /** @type {import('@clabroche/servers-server/models/Service')} */
+    /** @type {import('@runeya/servers-server/models/Service')} */
     const service = element.data;
     return [
       new Dependency({
@@ -158,7 +158,7 @@ module.exports = class ServicesProvider {
   }
 
   async fillUrls(element) {
-    /** @type {import('@clabroche/servers-server/models/Service')} */
+    /** @type {import('@runeya/servers-server/models/Service')} */
     const service = element.data;
     const { url } = service;
     return [
