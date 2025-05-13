@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-finder-front",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {

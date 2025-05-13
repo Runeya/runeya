@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-uuid-backend",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {

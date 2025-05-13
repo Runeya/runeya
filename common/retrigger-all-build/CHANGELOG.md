@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/runeya/runeya/compare/v1.0.1...v1.0.2) (2025-05-13)
+
+### Bug Fixes
+
+* retrigger all build ([29b2851](https://github.com/runeya/runeya/commit/29b285173f57474b3e146c8708766bc704865489))
+
 # [2.0.0](https://github.com/clabroche/stack-monitor/compare/v1.18.12...v2.0.0) (2024-12-19)
 
 **Note:** Version bump only for package @clabroche/common-retrigger-all-build

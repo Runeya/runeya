@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.2](https://github.com/runeya/runeya/compare/v1.0.1...v1.0.2) (2025-05-13)
+
+### Bug Fixes
+
+* add permission to write ([a38a60e](https://github.com/runeya/runeya/commit/a38a60ec773ba4ed0e3388dddd4c96a12ffe0da2))
+* add permission to write ([31f4192](https://github.com/runeya/runeya/commit/31f41924cc67deead526053ba33c33f55a933f78))
+* retrigger all build ([29b2851](https://github.com/runeya/runeya/commit/29b285173f57474b3e146c8708766bc704865489))
+
 ## [2.2.1](https://github.com/clabroche/stack-monitor/compare/v2.2.0...v2.2.1) (2025-04-02)
 
 **Note:** Version bump only for package @clabroche/stack-monitor
