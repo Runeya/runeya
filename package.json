@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "postinstall": "husky install && node prepare-monorepo.js || true",
-    "serve": "cross-env STACK_MONITOR_HTTP_PORT=6874 runeya",
+    "serve": "cross-env RUNEYA_HTTP_PORT=6874 runeya",
     "check:monorepo": "cd common/check-monorepo && npm run start",
     "check:dependencies-consistency": "check-dependency-version-consistency .",
     "check:unused": "knip",
@@ -51,6 +51,7 @@
     "@lerna-lite/version": "^2.5.0",
     "@runeya/common-retrigger-all-build": "workspace:*",
     "@runeya/common-typings": "workspace:^",
+    "@runeya/runeya": "1.0.2",
     "@types/bluebird": "^3.5.38",
     "@types/debounce": "^1",
     "@types/kill-port": "^2",
@@ -89,6 +90,7 @@
     "@octokit/core": "^6.1.2",
     "@octokit/plugin-rest-endpoint-methods": "^13.2.6",
     "primevue": "^4.3.3",
-    "quill": "^2.0.3"
+    "quill": "^2.0.3",
+    "vue-i18n": "^12.0.0-alpha.2"
   }
 }

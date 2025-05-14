@@ -1,3 +1,3 @@
-# Metada
+# Metadata
 
 Nothing for the moment

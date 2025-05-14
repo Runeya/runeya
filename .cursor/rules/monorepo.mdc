@@ -12,3 +12,7 @@ Les noms de packets sont normé par rapport a leurs path. Exemple
 @runeya/modules-uuid-front => modules/uuid/front
 
 ecris toujours le vue en version 3 avec l'api de composition
+
+All code should be write in english including comments
+
+You should not launch app by yourself

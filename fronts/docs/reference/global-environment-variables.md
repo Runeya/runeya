@@ -6,7 +6,7 @@ outline: deep
 
 Runeya can be launched with environment variables that modify its behavior or add features.
 
-Ca peut vous permettre de les overrider depuis un .env par exemple 
+This can allow you to override them from a .env file, for example.
 
 Here is a table listing them:
 

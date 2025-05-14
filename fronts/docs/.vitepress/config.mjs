@@ -4,11 +4,11 @@ export default defineConfig({
   title: "Runeya",
   vite: {
     server: {
-      port: process.env.PORT
+      port: process.env.PORT ? parseInt(process.env.PORT, 10) : 5173
     } 
   },
-  description: "Configure, share, launch and monitor all yours services in the same place for your development team",
-  base: '/runeya/',
+  description: "Configure, share, launch and monitor all your services in the same place for your development team",
+  base: '/',
   locales: {
     root: {
       label: 'English',
@@ -46,17 +46,20 @@ export default defineConfig({
       }, {
         text: 'Reference',
         items: [
-          { text: 'Global environments variables', link:'/reference/global-environment-variables.md'}
+          { text: 'Global environment variables', link:'/reference/global-environment-variables.md'},
+          { text: 'Commands', link: '/reference/commands.md' },
+          { text: 'Envs', link: '/reference/envs.md' },
+          { text: 'Git', link: '/reference/git.md' },
+          { text: 'Health Check', link: '/reference/health-check.md' },
+          { text: 'Metadata', link: '/reference/metadata.md' },
+          { text: 'OpenAPI', link: '/reference/openapi.md' },
+          { text: 'Parsers', link: '/reference/parsers.md' },
+          { text: 'Security', link: '/reference/security.md' }
         ]
       }, {
         text: 'Integration',
         items: [
           { text: 'Visual Studio Code', link: '/integration/vscode' },
-        ]
-      },{
-        text: 'Other',
-        items: [
-          { text: 'Screenshots', link: '/screenshots/screenshots' },
         ]
       }
     ],

@@ -1,0 +1,60 @@
+{
+  "header": {
+    "features": "Features",
+    "benefits": "Benefits",
+    "about": "About",
+    "github": "GitHub",
+    "launch": "Launch App"
+  },
+  "hero": {
+    "title": "Manage Your Development Environment Like a Pro",
+    "description": "Runeya is a powerful tool for managing and launching development environments, making your workflow more efficient.",
+    "getStarted": "Get Started",
+    "viewGithub": "View on GitHub"
+  },
+  "features": {
+    "title": "Key Features",
+    "synergyTitle": "Features designed for modern developers",
+    "synergyDescription": "Runeya centralizes the management, launch, and monitoring of your development environments for maximum productivity.",
+    "monitoring": {
+      "title": "Real-time Monitoring",
+      "description": "Tired of having too many terminal windows open, searching for crucial information in masses of logs? Runeya lets you monitor your processes in real-time with log formatting, search, filtering, and more."
+    },
+    "microservices": {
+      "title": "Development Environment Management",
+      "description": "If you have anything to launch, Runeya can do it for you with intuitive controls, shortcuts, environment variables, logs, documentation, etc., all in one place."
+    },
+    "sharing": {
+      "title": "Configuration Sharing",
+      "description": "Share your configurations with colleagues and teams. Stop spending hours looking for the right environment variables and commands to run. Everything is in one place, encrypted and secure."
+    }
+  },
+  "benefits": {
+    "title": "Benefits for Developers",
+    "productivity": {
+      "title": "Increased Productivity",
+      "description": "Spend less time managing application configurations and more time writing code."
+    },
+    "detection": {
+      "title": "Environments",
+      "description": "Have different development environments? Runeya allows you to manage multiple development environments by defining different environment variables for each and easily switch between them."
+    },
+    "debugging": {
+      "title": "Simplified Debugging",
+      "description": "Easily track and debug issues across multiple services with centralized logging."
+    }
+  },
+  "about": {
+    "title": "About Runeya",
+    "description": "Runeya is an open-source project dedicated to making development environment management and configuration easier for developers. Our mission is to simplify complex workflows and improve productivity.",
+    "visitGithub": "Visit Our GitHub"
+  },
+  "footer": {
+    "description": "Development Environment Management and Configuration Tool",
+    "copyright": "© {year} Runeya. All rights reserved."
+  },
+  "language": {
+    "fr": "French",
+    "en": "English"
+  }
+} 
