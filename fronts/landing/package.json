@@ -21,6 +21,7 @@
   "devDependencies": {
     "@fortawesome/fontawesome-free": "^6.5.1",
     "@primevue/themes": "^4.2.5",
+    "@runeya/common-retrigger-all-build": "workspace:*",
     "@types/compression": "^1",
     "@types/express": "^5",
     "@vitejs/plugin-vue": "^5.2.4",

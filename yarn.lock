@@ -5437,6 +5437,7 @@ __metadata:
   dependencies:
     "@fortawesome/fontawesome-free": "npm:^6.5.1"
     "@primevue/themes": "npm:^4.2.5"
+    "@runeya/common-retrigger-all-build": "workspace:*"
     "@types/compression": "npm:^1"
     "@types/express": "npm:^5"
     "@vitejs/plugin-vue": "npm:^5.2.4"
