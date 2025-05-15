@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-json-formatter-backend",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "JSON Formatter Enhanced Backend Module",
   "repository": "https://github.com/runeya/runeya",
   "main": "index.js",

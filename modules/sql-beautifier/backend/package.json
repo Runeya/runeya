@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-sql-beautifier-backend",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "SQL Beautifier module backend",
   "repository": "https://github.com/runeya/runeya",
   "main": "index.js",
