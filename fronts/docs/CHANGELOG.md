@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.10](https://github.com/runeya/runeya/compare/v1.0.9...v1.0.10) (2025-05-15)
+
+### Bug Fixes
+
+* **docker:** publish docker images on docker repository ([712902b](https://github.com/runeya/runeya/commit/712902b00906c2f746b8fbf4012a69e095fe9895))
+
 ## [1.0.9](https://github.com/runeya/runeya/compare/v1.0.8...v1.0.9) (2025-05-15)
 
 ### Bug Fixes
