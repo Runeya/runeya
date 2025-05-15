@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.8](https://github.com/runeya/runeya/compare/v1.0.7...v1.0.8) (2025-05-15)
+
+### Bug Fixes
+
+* **ci:** retrigger build ([0449c2d](https://github.com/runeya/runeya/commit/0449c2dc6fa84c8cd0fc2cb0e7b6ad8ba24fde0c))
+
 ## [1.0.6](https://github.com/runeya/runeya/compare/v1.0.5...v1.0.6) (2025-05-15)
 
 ### Bug Fixes

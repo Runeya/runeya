@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-uuid-front",
-  "version": "1.0.6",
+  "version": "1.0.8",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {
