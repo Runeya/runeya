@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.9](https://github.com/runeya/runeya/compare/v1.0.8...v1.0.9) (2025-05-15)
+
+### Bug Fixes
+
+* **docker:** optionnal yarn cache copy ([b010822](https://github.com/runeya/runeya/commit/b010822d9af98b03a9f8c8f12efc0b2637002314))
+* **docker:** reenable other ci stuff ([ffbae05](https://github.com/runeya/runeya/commit/ffbae05c8fed6a5b3b282c1b124648016b346efc))
+* try to authenticate docker ([f63e739](https://github.com/runeya/runeya/commit/f63e7397f0c0b8095fee66a5c656f486003e1659))
+
 ## [1.0.8](https://github.com/runeya/runeya/compare/v1.0.7...v1.0.8) (2025-05-15)
 
 ### Bug Fixes
