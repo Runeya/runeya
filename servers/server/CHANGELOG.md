@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.7](https://github.com/runeya/runeya/compare/v1.0.6...v1.0.7) (2025-05-15)
+
+### Bug Fixes
+
+* **ci:** retrigger build ([0ba5fcc](https://github.com/runeya/runeya/commit/0ba5fccb924e1728d125c2f3abb4065ba7404888))
+
 ## [1.0.6](https://github.com/runeya/runeya/compare/v1.0.5...v1.0.6) (2025-05-15)
 
 **Note:** Version bump only for package @runeya/servers-server
