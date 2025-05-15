@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.11](https://github.com/runeya/runeya/compare/v1.0.10...v1.0.11) (2025-05-15)
+
+### Bug Fixes
+
+* **landing:** update preview ([73eef56](https://github.com/runeya/runeya/commit/73eef5674380eb066877a7ce477894263a51355c))
+
 ## [1.0.10](https://github.com/runeya/runeya/compare/v1.0.9...v1.0.10) (2025-05-15)
 
 ### Bug Fixes

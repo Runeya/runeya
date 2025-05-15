@@ -1,6 +1,6 @@
 {
   "name": "@runeya/fronts-landing",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "private": true,
   "description": "Runeya landing page",
   "type": "module",
