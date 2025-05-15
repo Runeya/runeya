@@ -102,6 +102,17 @@ jobs:
           echo "type=latest" >> $GITHUB_OUTPUT
         fi
 
+    - name: "Build and publish server"
+      if: steps.version.outputs.type == 'latest' && contains(steps.changes.outputs.changed, 'servers-server')
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      run: |
+        echo "Attempting to build and publish server package..."
+        cd servers/server
+        npm run build
+        cd dist
+        npm publish --access public
+
     - id: lerna
       name: Export lerna config
       run: |

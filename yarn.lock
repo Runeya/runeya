@@ -5372,7 +5372,7 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@runeya/fronts-app@workspace:fronts/app":
+"@runeya/fronts-app@workspace:*, @runeya/fronts-app@workspace:fronts/app":
   version: 0.0.0-use.local
   resolution: "@runeya/fronts-app@workspace:fronts/app"
   dependencies:
@@ -6347,6 +6347,7 @@ __metadata:
     "@runeya/common-express": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     "@runeya/common-socket-server": "workspace:*"
+    "@runeya/fronts-app": "workspace:*"
     "@runeya/modules-plugins-loader-backend": "workspace:*"
     "@runeya/modules-plugins-loader-front": "workspace:*"
     "@runeya/modules-vscode-extension": "workspace:*"

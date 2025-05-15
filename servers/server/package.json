@@ -1,6 +1,7 @@
 {
   "name": "@runeya/servers-server",
   "version": "1.0.6",
+  "private": true,
   "description": "Monitor processes as a stack",
   "git": "https://github.com/runeya/runeya",
   "repository": "https://github.com/runeya/runeya",
@@ -29,7 +30,9 @@
     "@octokit/plugin-rest-endpoint-methods": "^13.2.6",
     "@runeya/common-express": "workspace:*",
     "@runeya/common-socket-server": "workspace:*",
+    "@runeya/fronts-app": "workspace:*",
     "@runeya/modules-plugins-loader-backend": "workspace:*",
+    "@runeya/modules-vscode-extension": "workspace:*",
     "alasql": "^4.6.2",
     "ansi-to-html": "^0.7.2",
     "axios": "^1.7.9",

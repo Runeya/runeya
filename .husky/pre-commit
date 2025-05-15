@@ -1,5 +1,6 @@
 #!/bin/bash
 yarn ci:generate
+git add .github/workflows
 yarn check:monorepo
 yarn test
 yarn build
