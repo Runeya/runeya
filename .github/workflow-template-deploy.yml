@@ -102,7 +102,7 @@ jobs:
           echo "type=latest" >> $GITHUB_OUTPUT
         fi
 
-    - name: "Build and publish server"
+    - name: "Build and publish core package to npm"
       if: steps.version.outputs.type == 'latest' && contains(steps.changes.outputs.changed, 'servers-server')
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

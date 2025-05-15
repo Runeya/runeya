@@ -34,7 +34,7 @@
           context: .
           file: {{LOCATION}}/Dockerfile
           tags: | 
-            ghcr.io/runeya/monorepo/{{NAME_ROUTE}}:${{ github.ref_name }} 
+            ghcr.io/runeya/docker/{{NAME_ROUTE}}:${{ github.ref_name }} 
           push: true
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
@@ -49,8 +49,8 @@
           context: .
           file: {{LOCATION}}/Dockerfile
           tags: | 
-            ghcr.io/runeya/monorepo/{{NAME_ROUTE}}:latest
-            ghcr.io/runeya/monorepo/{{NAME_ROUTE}}:${{fromJson(steps.package-json.outputs.packageJson).version}}
+            ghcr.io/runeya/docker/{{NAME_ROUTE}}:latest
+            ghcr.io/runeya/docker/{{NAME_ROUTE}}:${{fromJson(steps.package-json.outputs.packageJson).version}}
           push: true
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}

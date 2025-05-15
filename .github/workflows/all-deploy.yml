@@ -107,7 +107,7 @@ jobs:
           echo "type=latest" >> $GITHUB_OUTPUT
         fi
 
-    - name: "Build and publish server"
+    - name: "Build and publish core package to npm"
       if: steps.version.outputs.type == 'latest' && contains(steps.changes.outputs.changed, 'servers-server')
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
@@ -158,7 +158,7 @@ jobs:
           context: .
           file: fronts/docs/Dockerfile
           tags: | 
-            ghcr.io/runeya/monorepo/fronts-docs:${{ github.ref_name }} 
+            ghcr.io/runeya/docker/fronts-docs:${{ github.ref_name }} 
           push: true
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
@@ -173,8 +173,8 @@ jobs:
           context: .
           file: fronts/docs/Dockerfile
           tags: | 
-            ghcr.io/runeya/monorepo/fronts-docs:latest
-            ghcr.io/runeya/monorepo/fronts-docs:${{fromJson(steps.package-json.outputs.packageJson).version}}
+            ghcr.io/runeya/docker/fronts-docs:latest
+            ghcr.io/runeya/docker/fronts-docs:${{fromJson(steps.package-json.outputs.packageJson).version}}
           push: true
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
@@ -218,7 +218,7 @@ jobs:
           context: .
           file: fronts/landing/Dockerfile
           tags: | 
-            ghcr.io/runeya/monorepo/fronts-landing:${{ github.ref_name }} 
+            ghcr.io/runeya/docker/fronts-landing:${{ github.ref_name }} 
           push: true
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
@@ -233,8 +233,8 @@ jobs:
           context: .
           file: fronts/landing/Dockerfile
           tags: | 
-            ghcr.io/runeya/monorepo/fronts-landing:latest
-            ghcr.io/runeya/monorepo/fronts-landing:${{fromJson(steps.package-json.outputs.packageJson).version}}
+            ghcr.io/runeya/docker/fronts-landing:latest
+            ghcr.io/runeya/docker/fronts-landing:${{fromJson(steps.package-json.outputs.packageJson).version}}
           push: true
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}

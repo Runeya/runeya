@@ -27,3 +27,4 @@ USER runeya
 COPY --from=builder --chown=runeya:nodejs /app .
 
 CMD node node_modules/@runeya/fronts-landing/server.js
+
