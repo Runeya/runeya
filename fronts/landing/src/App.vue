@@ -16,7 +16,7 @@
               <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11.26 18.08C8.32 17.62 6 15.08 6 12C6 8.92 8.32 6.38 11.26 5.92C11.48 5.04 12.48 4.4 13.42 4.8C16.88 6.02 18.5 9.38 17.82 12.8C17.32 15.78 15.02 17.98 12.2 18.16C11.86 18.18 11.52 18.16 11.26 18.08Z" />
             </svg>
             <h1 class="text-2xl font-semibold tracking-tight">
-              <span class="text-emerald-600">rune</span><span class="text-neutral-700">ya</span>
+              <span class="text-emerald-600">run</span><span class="text-neutral-700">eya</span>
             </h1>
           </div>
           
@@ -263,7 +263,7 @@
             <div class="flex items-center justify-center md:justify-start space-x-2 mb-2">
                <svg class="h-7 w-auto text-emerald-600" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM11.26 18.08C8.32 17.62 6 15.08 6 12C6 8.92 8.32 6.38 11.26 5.92C11.48 5.04 12.48 4.4 13.42 4.8C16.88 6.02 18.5 9.38 17.82 12.8C17.32 15.78 15.02 17.98 12.2 18.16C11.86 18.18 11.52 18.16 11.26 18.08Z" /></svg>
               <h2 class="text-xl font-semibold text-neutral-700">
-                <span class="text-emerald-600">rune</span>ya
+                <span class="text-emerald-600">run</span>eya
               </h2>
             </div>
             <p class="text-sm">{{ $t('footer.description') }}</p>
