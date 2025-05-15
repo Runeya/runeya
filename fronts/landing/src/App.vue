@@ -197,7 +197,7 @@
             <div class="mt-10 md:mt-0">
               <div class="relative">
                 <div class="absolute inset-0 -m-4 bg-gradient-to-br from-emerald-200 to-sky-200 rounded-2xl blur-xl opacity-50"></div>
-                <img src="@/assets/images/placeholder.svg" alt="Developer using Runeya" class="relative w-full h-auto rounded-2xl shadow-2xl border border-stone-200" />
+                <img src="@/assets/images/preview.png" alt="Developer using Runeya" class="relative w-full h-auto rounded-2xl shadow-2xl border border-stone-200" />
               </div>
             </div>
           </div>
