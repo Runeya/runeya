@@ -1,19 +1,19 @@
 {
   "name": "@runeya/servers-server",
   "version": "1.0.2",
-  "private": true,
+  "private": false,
   "description": "Monitor processes as a stack",
   "git": "https://github.com/runeya/runeya",
   "repository": "https://github.com/runeya/runeya",
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org",
-    "scope": "@iryu54"
+    "scope": "@runeya"
   },
   "author": {
     "name": "runeya",
-    "email": "corentinlabroche@gmail.com",
-    "url": "https://corentinlabroche.fr/"
+    "email": "contact@runeya.dev",
+    "url": "https://runeya.dev/"
   },
   "scripts": {
     "start": "cross-env-shell node bin/www $RUNEYA_ROOT_PATH \"$SERVICE\"",

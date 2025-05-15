@@ -22766,7 +22766,7 @@ function watchDeps(watchableDeps, cb = (
       .filter((f) => {
         if (!watchableDeps.find((w) => w.name === f)) return false;
         const changedPath = path.replace(`${__dirname}/`, '').replaceAll('/', '-');
-        const packageName = f.replace('@runeya/', '').replace('@iryu54/', '');
+        const packageName = f.replace('@runeya/', '').replace('@runeya/', '');
         return changedPath.startsWith(packageName);
       }).pop();
     if (packageChanged) {
@@ -22797,7 +22797,7 @@ function getDependencies(packageName, ignoreDependencies = [], recursiveAggr = [
   const deps = [
     ...Object.keys(dependencies),
     ...Object.keys(devDependencies),
-  ].filter((f) => (f.startsWith('@runeya') || f.startsWith('@iryu54')) && (dependencies[f] === 'workspace:*' || devDependencies[f] === 'workspace:*'));
+  ].filter((f) => (f.startsWith('@runeya') || f.startsWith('@runeya')) && (dependencies[f] === 'workspace:*' || devDependencies[f] === 'workspace:*'));
   deps.forEach((f) => {
     const isIgnored = !ignoreDependencies.some((ignoreCondition) => (
       typeof ignoreCondition === 'function'
@@ -22818,7 +22818,7 @@ function getPackageInfoFromPath(path) {
     .filter((f) => {
       const packageName = path.replace(`${__dirname}/`, '').replaceAll('/', '-');
       return packageName.startsWith(f.name.replace('@runeya/', ''))
-        || packageName.startsWith(f.name.replace('@iryu54/', ''));
+        || packageName.startsWith(f.name.replace('@runeya/', ''));
     }).pop();
 }
 
@@ -25108,8 +25108,8 @@ export default new Stack();
   "repository": "https://github.com/runeya/runeya",
   "author": {
     "name": "runeya",
-    "email": "corentinlabroche@gmail.com",
-    "url": "https://corentinlabroche.fr/"
+    "email": "contact@runeya.dev",
+    "url": "https://runeya.dev/"
   },
   "scripts": {
     "serve": "vitepress dev",
@@ -30459,7 +30459,7 @@ export default {
     "changed": "yarn lerna changed -pl --toposort"
   },
   "repository": "git+https://github.com/runeya/runeya.git",
-  "author": "runeya <corentinlabroche@gmail.com>",
+  "author": "runeya <contact@runeya.dev>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/runeya/runeya/issues"
@@ -37303,8 +37303,8 @@ module.exports = Service;
   "repository": "https://github.com/runeya/runeya",
   "author": {
     "name": "runeya",
-    "email": "corentinlabroche@gmail.com",
-    "url": "https://corentinlabroche.fr/"
+    "email": "contact@runeya.dev",
+    "url": "https://runeya.dev/"
   },
   "scripts": {
     "build": "vite build",
@@ -38184,12 +38184,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
   "publishConfig": {
     "access": "public",
     "registry": "https://registry.npmjs.org",
-    "scope": "@iryu54"
+    "scope": "@runeya"
   },
   "author": {
     "name": "runeya",
-    "email": "corentinlabroche@gmail.com",
-    "url": "https://corentinlabroche.fr/"
+    "email": "contact@runeya.dev",
+    "url": "https://runeya.dev/"
   },
   "scripts": {
     "start": "cross-env-shell node bin/www $RUNEYA_ROOT_PATH \"$SERVICE\"",

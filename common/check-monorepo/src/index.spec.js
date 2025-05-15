@@ -92,6 +92,7 @@ describe('Files', () => {
 describe('Publish config', () => {
   getWorkspaces().filter((workspace) => fse.existsSync(pathfs.resolve(workspace.path, 'package.json'))).forEach((workspace) => {
     it(`${workspace.packageJSON.name} should be in private mode`, () => {
+      if(workspace.packageJSON.name === '@runeya/servers-server') return
       if (!workspace.packageJSON.private) {
         expect(`${workspace.path}/package.json`).toBe('to be in private mode');
       }

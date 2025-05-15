@@ -21,7 +21,7 @@
     "changed": "yarn lerna changed -pl --toposort"
   },
   "repository": "git+https://github.com/runeya/runeya.git",
-  "author": "clabroche <corentinlabroche@gmail.com>",
+  "author": "runeya <contact@runeya.dev>",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/runeya/runeya/issues"
