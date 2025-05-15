@@ -44,6 +44,13 @@ jobs:
       env:
         NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ vars.DOCKER_HUB_USER }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
     - name: Config git user
       run: |
         git config --global user.name "${{ github.actor }}"
@@ -125,9 +132,6 @@ jobs:
           registry-url: 'https://npm.pkg.github.com/'
           cache: 'yarn'
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -136,7 +140,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ vars.DOCKER_HUB_USER }}
-          password: ${{ secrets.NPM_TOKEN }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - id: package-json
         name: Read package.json
@@ -153,7 +157,6 @@ jobs:
             ghcr.io/runeya/monorepo/fronts-docs:${{ github.ref_name }} 
           push: true
           build-args: |
-            NPM_TOKEN=${{secrets.NPM_TOKEN}}
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
           cache-from: type=gha
@@ -170,7 +173,6 @@ jobs:
             ghcr.io/runeya/monorepo/fronts-docs:${{fromJson(steps.package-json.outputs.packageJson).version}}
           push: true
           build-args: |
-            NPM_TOKEN=${{secrets.NPM_TOKEN}}
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
           cache-from: type=gha
@@ -197,9 +199,6 @@ jobs:
           registry-url: 'https://npm.pkg.github.com/'
           cache: 'yarn'
 
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
@@ -208,7 +207,7 @@ jobs:
         with:
           registry: ghcr.io
           username: ${{ vars.DOCKER_HUB_USER }}
-          password: ${{ secrets.NPM_TOKEN }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
 
       - id: package-json
         name: Read package.json
@@ -225,7 +224,6 @@ jobs:
             ghcr.io/runeya/monorepo/fronts-landing:${{ github.ref_name }} 
           push: true
           build-args: |
-            NPM_TOKEN=${{secrets.NPM_TOKEN}}
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
           cache-from: type=gha
@@ -242,7 +240,6 @@ jobs:
             ghcr.io/runeya/monorepo/fronts-landing:${{fromJson(steps.package-json.outputs.packageJson).version}}
           push: true
           build-args: |
-            NPM_TOKEN=${{secrets.NPM_TOKEN}}
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
             TURBO_TOKEN=${{ secrets.TURBO_TOKEN }}
           cache-from: type=gha
