@@ -70,10 +70,6 @@ yarn install
 yarn serve
 ```
 
-## 📄 License
-
-ISC License
-
 ---
 
-📚 [Complete Documentation](https://runeya.github.io/runeya/) | 👤 [Corentin Labroche](mailto:corentinlabroche@gmail.com) 
+📚 [Complete Documentation](https://docs.runeya.dev) | 👤 [Runeya](mailto:contact@runeya.dev) 

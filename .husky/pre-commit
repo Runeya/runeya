@@ -1,0 +1,5 @@
+#!/bin/bash
+yarn ci:generate
+yarn check:monorepo
+yarn test
+yarn build

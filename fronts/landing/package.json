@@ -7,8 +7,8 @@
   "repository": "https://github.com/runeya/runeya",
   "author": {
     "name": "runeya",
-    "email": "corentinlabroche@gmail.com",
-    "url": "https://corentinlabroche.fr/"
+    "email": "contact@runeya.dev",
+    "url": "https://runeya.dev"
   },
   "scripts": {
     "build": "npx tailwindcss -i ./src/assets/css/tailwind.css -o ./src/assets/css/tailwind.output.css && vite build",
