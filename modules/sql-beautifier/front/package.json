@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-sql-beautifier-front",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "SQL Beautifier module frontend",
   "repository": "https://github.com/runeya/runeya",
   "main": "src/SQLBeautifier.vue",

@@ -1,6 +1,6 @@
 {
   "name": "@runeya/servers-server",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Monitor processes as a stack",
   "git": "https://github.com/runeya/runeya",
   "repository": "https://github.com/runeya/runeya",

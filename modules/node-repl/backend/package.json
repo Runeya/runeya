@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-node-repl-backend",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "",
   "repository": "https://github.com/runeya/runeya",
   "main": "index.js",

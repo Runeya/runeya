@@ -1,7 +1,7 @@
 {
   "name": "@runeya/common-retrigger-all-build",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "",
   "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",

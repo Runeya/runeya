@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5](https://github.com/runeya/runeya/compare/v1.0.4...v1.0.5) (2025-05-15)
+
+### Bug Fixes
+
+* **ci:** connect to docker hub registry ([a2373ab](https://github.com/runeya/runeya/commit/a2373abecbc9ea1f7262af1fe44972f5b3c05673))
+
 ## [1.0.4](https://github.com/runeya/runeya/compare/v1.0.3...v1.0.4) (2025-05-15)
 
 ### Bug Fixes

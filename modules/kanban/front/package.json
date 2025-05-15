@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-kanban-front",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {
