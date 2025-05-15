@@ -9,7 +9,7 @@ COPY .gitignore .gitignore
 COPY --from=prune /app/out/json/ .
 COPY --from=prune /app/.turbo/ .
 COPY --from=prune /app/out/yarn.lock ./yarn.lock
-COPY --from=prune /app/.yarn/cache .yarn/cache
+COPY --from=prune /app/.yarn/cach[e] .yarn/cache
 RUN yarn workspaces focus @runeya/fronts-docs
 COPY --from=prune /app/out/full/ .
 ARG TURBO_TEAM
