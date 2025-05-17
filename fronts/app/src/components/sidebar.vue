@@ -2,16 +2,13 @@
   <div class="sidebar-root" :class="{ minimized, mouseInAnchor }" @mouseenter="mouseInAnchor = true" @mouseleave="mouseInAnchor = false">
     <div>
       <div class="sidebar">
+        <div class="add-container">
+          <Button class="add-button" fluid outlined icon="fas fa-plus" label="Add service" @click="openAddServiceModal" />
+          <label v-if="addServiceError">{{ addServiceError }}</label>
+        </div>
         <div class="header">
           <input type="text" v-model="search" @input="openGroup = 'All'" placeholder="Search service..." @keypress.enter="launchService" >
           <i class="fas fa-chevron-left" @click="minimized = true"></i>
-        </div>
-        <div class="add-container">
-          <div class="add">
-            <i class="fas fa-plus"></i>
-            <input v-model="serviceLabelToAdd" placeholder="Add new service..." @keypress.enter="addService">
-          </div>
-          <label v-if="addServiceError">{{ addServiceError }}</label>
         </div>
         <sidebar-group header="All" :open="openGroup === 'All'" @open="openGroup = 'All'">
           <sidebar-item v-for="service of sortedStack" :key="service.label" :service="service"/>
@@ -25,6 +22,19 @@
       <i class="fas fa-thumbtack" v-if="mouseInAnchor"></i>
       <i class="fas fa-chevron-right" v-else></i>
     </div>
+    
+    <Dialog v-model:visible="addServiceModalVisible" modal header="Add new service" :style="{ width: '350px' }">
+      <div class="p-fluid">
+        <div class="p-field">
+          <InputText v-model="serviceLabelToAdd" placeholder="Service name" @keypress.enter="addService" autofocus />
+          <small v-if="addServiceError" class="p-error">{{ addServiceError }}</small>
+        </div>
+      </div>
+      <template #footer>
+        <Button label="Cancel" icon="fas fa-times" @click="cancelAddService" class="p-button-text" />
+        <Button label="Add" icon="fas fa-plus" @click="addService" :disabled="!!addServiceError || !serviceLabelToAdd" />
+      </template>
+    </Dialog>
   </div>
 </template>
 
@@ -39,11 +49,17 @@ import Socket from '../helpers/Socket'
 import notification from '../helpers/notification'
 import { useRouter } from 'vue-router';
 import axios from '../helpers/axios'
+import Dialog from 'primevue/dialog'
+import Button from 'primevue/button'
+import InputText from 'primevue/inputtext'
 
 export default {
   components: {
     sidebarItem: sidebarItemVue,
-    sidebarGroup
+    sidebarGroup,
+    Dialog,
+    Button,
+    InputText
   },
   props: {
     currentService: {default: null}
@@ -54,6 +70,7 @@ export default {
     const openGroup = ref('All');
     const minimized = ref(false);
     const mouseInAnchor = ref(false);
+    const addServiceModalVisible = ref(false);
     onMounted(async () => {
       await Stack.loadServices()
       Socket.on('service:crash', async ({ label, code, signal }) => {
@@ -99,16 +116,18 @@ export default {
       sortedStack,
       System,
       serviceLabelToAdd,
+      addServiceModalVisible,
       addServiceError: computed(() => {
         if(Stack.services.value.find(a => a.label === serviceLabelToAdd.value)) return 'A service already exists with this label'
         return ''
       }),
-      addService: () => {
+      addService() {
         if(Stack.services.value.find(a => a.label === serviceLabelToAdd.value)) return
-        axios.post('/stack/services',  {
+        axios.post('/stack/services', {
           label: serviceLabelToAdd.value,
         }).then(() => {
           const label = serviceLabelToAdd.value
+          addServiceModalVisible.value = false
           setTimeout(() => {
             router.push({name: 'stack-single', params: {label}, query: {tab: "Configuration"}})
           }, 100);
@@ -123,6 +142,13 @@ export default {
           localStorage.setItem('last-service-visisted', service.label || '')
           router.push({name: 'stack-single', params: {label: service.label}})
         }
+      },
+      openAddServiceModal() {
+        addServiceModalVisible.value = true;
+      },
+      cancelAddService() {
+        addServiceModalVisible.value = false;
+        serviceLabelToAdd.value = '';
       }
     }
   }
@@ -262,18 +288,15 @@ input {
   justify-content: center;
 }
 .add-container {
-  margin: 0 10px;
-  margin-bottom: 10px;
-  label {
-    color: red;
-  }
-  .add {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    input {
-      margin: 0;
-    }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  .add-button {
+    flex-shrink: 0;
+    width: 90%;
+    padding: 0;
   }
 }
 </style>
