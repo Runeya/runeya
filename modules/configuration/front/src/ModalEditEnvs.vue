@@ -424,13 +424,11 @@ defineExpose({
     overflow: auto;
   }
 
-  ::v-deep {
-    .p-datatable-table-container {
-      width: 100%;
-    }
-    .p-inputgroupaddon {
-      line-break: anywhere
-    }
+  :deep(.p-datatable-table-container) {
+    width: 100%;
+  }
+  :deep(.p-inputgroupaddon) {
+    line-break: anywhere
   }
   .line {
     display: flex;

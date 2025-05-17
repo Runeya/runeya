@@ -158,12 +158,10 @@ h2 {
   height: 100%;
   overflow: auto;
   flex-grow: 1;
-  &::v-deep {
-    ul {
-      li {
-        margin-left: 20px;
-        list-style: disc;
-      }
+  :deep(ul) {
+    li {
+      margin-left: 20px;
+      list-style: disc;
     }
   }
 }
@@ -181,20 +179,18 @@ h2 {
 .p-tree {
   padding: 0;
 }
-::v-deep {
-  .p-tree-node-content {
-    padding: 0;
-  }
-  .p-tree-node-toggle-button {
-    display: none;
-  }
-  .p-tree-node-label {
-    flex-grow: 1;
-    overflow: hidden;
-  }
-  .p-tree-node-children {
-    padding: 0 30px
-  }
+:deep(.p-tree-node-content) {
+  padding: 0;
+}
+:deep(.p-tree-node-toggle-button) {
+  display: none;
+}
+:deep(.p-tree-node-label) {
+  flex-grow: 1;
+  overflow: hidden;
+}
+:deep(.p-tree-node-children) {
+  padding: 0 30px
 }
 .button-add {
   flex-grow: 1;

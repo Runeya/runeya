@@ -1,7 +1,9 @@
 import PrimeVue from 'primevue/config';
-import Aura from '@primevue/themes/aura';
 import Socket from './helpers/Socket';
 import Tooltip from 'primevue/tooltip';
+
+import './assets/theme/index.scss';
+import Aura from '@primevue/themes/aura';
 
 (async () => {
   console.log('Init Socket...');

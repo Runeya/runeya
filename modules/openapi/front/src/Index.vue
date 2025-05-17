@@ -59,13 +59,11 @@ onMounted(async () => {
 </script>
 
 <style lang="scss" scoped>
-::v-deep {
-  .swagger-ui {
-    padding: 10px 0;
-    border-radius: 5px;
-    .information-container {
-      display: none;
-    }
+:deep(.swagger-ui) {
+  padding: 10px 0;
+  border-radius: 5px;
+  .information-container {
+    display: none;
   }
 }
 </style>

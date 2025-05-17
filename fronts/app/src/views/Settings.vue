@@ -91,15 +91,13 @@ const nodes = computed(() => ([
   .leftPanel {
     background-color: var(--p-content-background);
   }
-  ::v-deep {
-    .p-splitter {
-      background-color: transparent;
-      border: none;
-      .p-tree-node-toggle-button {
-        display: none;
-      }
-      .p-splitterpanel {}
+  :deep(.p-splitter) {
+    background-color: transparent;
+    border: none;
+    .p-tree-node-toggle-button {
+      display: none;
     }
+    .p-splitterpanel {}
   }
   .splitter-content {
     width: 100%;

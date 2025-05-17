@@ -53,7 +53,7 @@ export default defineConfig({
   css: {
     preprocessorOptions: {
       scss: {
-        additionalData: '@import "@/assets/theme/_mixin";',
+        additionalData: `@use "@/assets/theme/mixin" as *;`
       },
     },
   },

@@ -184,12 +184,6 @@ export default {
 }
 </script>
 
-<style lang="scss">
-@import '~@fortawesome/fontawesome-free/css/all.min.css';
-@import './assets/fonts/Jost/Jost.css';
-@import './assets/theme/index.scss'
-</style>
-
 <style lang="scss" scoped> 
 .main {
   display: flex;

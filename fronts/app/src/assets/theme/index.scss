@@ -1,8 +1,11 @@
-@import "reset";
-@import "font";
-@import "a";
-@import "var";
-@import "mixin";
-@import "input";
-@import "button";
-@import "scrollbar";
+@use "reset" as *;
+@use "font" as *;
+@use "a" as *;
+@use "var" as *;
+@use "mixin" as *;
+@use "input" as *;
+@use "button" as *;
+@use "scrollbar" as *;
+
+@use '~@fortawesome/fontawesome-free/css/all.min.css' as *;
+@use '@/assets/fonts/Jost/Jost.css' as *;
