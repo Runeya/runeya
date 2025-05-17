@@ -1,7 +1,8 @@
 const path = require('path');
 
 const yargs = require('yargs/yargs')
-const { hideBin } = require('yargs/helpers')
+const { hideBin } = require('yargs/helpers');
+const { existsSync } = require('fs');
 const yarg = yargs(hideBin(process.argv))
   .usage('Usage: <path-to-your-stack> [options]')
 
@@ -34,6 +35,11 @@ const args = Object.assign({
   rootPath: path.resolve(yarg['_']?.[0] || '.'),
   initialCwd: '',
 }, yarg);
+
+if(!existsSync(args.rootPath)) {
+  console.error('Error: Runeya was launched with an invalid root path that does not exist. Please check your launch command. \nPath: ', args.rootPath)
+  process.exit(1)
+}
 
 if (args.rootPath) {
   args.initialCwd = process.cwd()
