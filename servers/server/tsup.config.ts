@@ -81,6 +81,8 @@ const copyFilePlugin = {
     await copyFile(path.resolve(__dirname, "../../modules/bugs/backend/checkJsFork.js"), path.resolve(distPath, "checkJsFork.js"))
     await copyFile(path.resolve(__dirname, "../../modules/bugs/backend/defaultJsConfig.json"), path.resolve(distPath, "defaultJsConfig.json"))
     await copyFile(path.resolve(__dirname, "./helpers/cpuFork.js"), path.resolve(distPath, "cpuFork.js"))
+    await copyFile(path.resolve(__dirname, "../../README.md"), path.resolve(distPath, "README.md"))
+    await copyFile(path.resolve(__dirname, "../../LICENSE.md"), path.resolve(distPath, "LICENSE.md"))
   }
 }
 
