@@ -1,15 +1,14 @@
 <template>
-  <div class="sidebar-root" :class="{ minimized, mouseInAnchor }" @mouseenter="mouseInAnchor = true" @mouseleave="mouseInAnchor = false">
-    <div>
-      <div class="sidebar">
-        <div class="add-container">
-          <Button class="add-button" fluid outlined icon="fas fa-plus" label="Add service" @click="openAddServiceModal" />
-          <label v-if="addServiceError">{{ addServiceError }}</label>
-        </div>
-        <div class="header">
-          <input type="text" v-model="search" @input="openGroup = 'All'" placeholder="Search service..." @keypress.enter="launchService" >
-          <i class="fas fa-chevron-left" @click="minimized = true"></i>
-        </div>
+  <div class="sidebar-root">
+    <div class="sidebar">
+      <div class="add-container">
+        <Button class="add-button" fluid outlined icon="fas fa-plus" label="Add service" @click="openAddServiceModal" />
+        <label v-if="addServiceError">{{ addServiceError }}</label>
+      </div>
+      <div class="header">
+        <input type="text" v-model="search" @input="openGroup = 'All'" class="search-input" placeholder="Search service..." @keypress.enter="launchService" >
+      </div>
+      <div class="services-container">
         <sidebar-group header="All" :open="openGroup === 'All'" @open="openGroup = 'All'">
           <sidebar-item v-for="service of sortedStack" :key="service.label" :service="service"/>
         </sidebar-group>
@@ -17,12 +16,10 @@
           <sidebar-item v-for="service of group.services" :key="service.label" :service="service"/>
         </sidebar-group>
       </div>
+      <div class="minimized-container">
+        <Button icon="fas fa-chevron-left" outlined @click="$emit('toggle-minimized')" v-if="!isMinimized"></Button>
+      </div>
     </div>
-    <div class="minimized anchor" @click="minimized = false" >
-      <i class="fas fa-thumbtack" v-if="mouseInAnchor"></i>
-      <i class="fas fa-chevron-right" v-else></i>
-    </div>
-    
     <Dialog v-model:visible="addServiceModalVisible" modal header="Add new service" :style="{ width: '350px' }">
       <div class="p-fluid">
         <div class="p-field">
@@ -62,14 +59,13 @@ export default {
     InputText
   },
   props: {
-    currentService: {default: null}
+    currentService: {default: null},
+    isMinimized: {default: false},  
   },
   setup() {
     const router = useRouter(); 
     const search = ref('')
     const openGroup = ref('All');
-    const minimized = ref(false);
-    const mouseInAnchor = ref(false);
     const addServiceModalVisible = ref(false);
     onMounted(async () => {
       await Stack.loadServices()
@@ -109,8 +105,6 @@ export default {
     const serviceLabelToAdd= ref('')
     return {
       groups,
-      minimized,
-      mouseInAnchor,
       openGroup,
       search,
       sortedStack,
@@ -173,54 +167,8 @@ export default {
   }
 }
 .sidebar-root {
-  height: 100vh;
+  height: 100%;
   display: flex;
-
-  &.minimized {
-    .sidebar {
-      max-width: 0;
-      overflow: hidden;
-      opacity: 0;
-
-    }
-    .anchor {
-      max-width: 25px;
-    }
-    &.mouseInAnchor {
-      .sidebar {
-        max-width: 250px;
-        overflow: hidden;
-        opacity: 1;
-      }
-      .anchor {
-        max-width: 50px;
-        width: 50px;
-      }
-    }
-  }
-  .anchor  {
-    transition: 300ms;
-    max-width: 0;
-    overflow: hidden;
-    display: flex;
-    width: 25px;
-    justify-content: center;
-    align-items: center;
-    @include card(rgb(57, 42, 59), rgb(156, 22, 209), rgb(141, 58, 148));
-    &:hover {
-      @include card(rgb(81, 56, 84), rgb(156, 22, 209), rgb(141, 58, 148));
-    }
-    color: white;
-    cursor: pointer;
-    &:hover {
-      background-color: #666;
-    }
-    i {
-      width: 100%;
-      font-size: 25px;
-      text-align: center;
-    }
-  }
 }
 .header {
   display: flex;
@@ -233,11 +181,12 @@ export default {
     height: 15px;
   }
 }
-input {
+.search-input {
   flex-grow: 1;
   box-sizing: border-box;
   margin: 5px auto;
   justify-self: center;
+  min-width: 0;
 }
 .sidebar {
     transform-origin: left;
@@ -248,12 +197,11 @@ input {
     overflow: auto;
     flex-direction: column;
     box-shadow: 0px 0px 4px 0px black;
-    width: 250px;
-    max-width: 250px;
     background-color: var(--system--secondary-sidebar-backgroundColor);
     height: 100%;
     flex-shrink: 0;
     z-index: 3;
+    width: 100%;
     
     ul {
       list-style: none;
@@ -261,6 +209,16 @@ input {
       margin: 0;
       display: flex;
       flex-direction: column;
+    }
+    .services-container {
+      flex-grow: 1;
+      overflow: auto;
+    }
+    .minimized-container {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 10px;
     }
   }
 

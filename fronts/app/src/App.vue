@@ -2,8 +2,48 @@
   <div id="app-container" v-if="connected">
     <div id="app">
       <sidebar-view-mode v-if="!['stack-chooser', 'import-create'].includes($route.name?.toString() || '')"/>
-      <sidebar v-if="['stack-single', 'stack-single-no-view'].includes($route.name?.toString() || '')"/>
-      <div class="main">
+      <Splitter v-if="['stack-single', 'stack-single-no-view'].includes($route.name?.toString() || '')" class="splitter" :pt="{
+        gutter: {
+          style: {
+            width: isMinimized ? '0px' : '5px',
+          }
+        }
+      }">
+        <SplitterPanel
+          ref="sidebarPanelRef"
+          :style="{minWidth: '160px', maxWidth: '660px'}"
+          :size="20"
+          @mouseenter="debouncedMouseInAnchor(true)"
+          @mouseleave="debouncedMouseInAnchor(false)">
+          <sidebar @toggle-minimized="toggleMinimized" :is-minimized="isMinimized" />
+        </SplitterPanel>
+        <SplitterPanel ref="mainPanelRef" class="main-panel" :size="80">
+          <Button
+            class="maximize"
+            :class="{'mouse-in-anchor': mouseInAnchor}"
+            :style="{display: isMinimized ? 'flex' : 'none'}"
+            :pt="{
+              root: {
+                style: {
+                  margin: '0',
+                  borderRadius: '0',
+                }
+              }
+            }"
+            @mouseenter="debouncedMouseInAnchor(true)"
+            @mouseleave="debouncedMouseInAnchor(false)"
+            @click.stop="toggleMinimized">
+            <template v-if="isMinimized">
+              <i class="fas fa-thumbtack" v-if="mouseInAnchor"></i>
+              <i class="fas fa-chevron-right" v-else></i>
+            </template>
+          </Button>
+          <div class="main">
+            <router-view/>
+          </div>
+        </SplitterPanel>
+      </Splitter>
+      <div class="main" v-else>
         <router-view/>
       </div>
     </div>
@@ -30,7 +70,7 @@ import Stack from './models/stack'
 import sidebarVue from './components/sidebar.vue'
 import Socket from './helpers/Socket'
 import githubIssue from './helpers/githubIssue'
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
 import system from './models/system'
 import notif from './helpers/notification'
 import Notifications from "./components/Notifications.vue"
@@ -42,6 +82,10 @@ import GitConflictModal from './components/GitConflictModal.vue'
 import { useRouter } from 'vue-router';
 import Theme from './helpers/Theme'
 import plugins from '@runeya/modules-plugins-loader-front/src/views';
+import Splitter from 'primevue/splitter';
+import SplitterPanel from 'primevue/splitterpanel'; 
+import debounce from 'debounce'
+import Button from 'primevue/button'
 
 const componentsToLoad = plugins.filter(p => p.load).reduce((agg, {cmp, name}) => {
   agg[name] = cmp
@@ -55,6 +99,9 @@ export default {
     SidebarViewMode,
     EnvironmentsChooser,
     GitConflictModal,
+    Splitter,
+    SplitterPanel,
+    Button,
     ...componentsToLoad
   },
   setup() {
@@ -68,7 +115,7 @@ export default {
     })()
     const router = useRouter(); 
     const connected = ref(true)
-    
+    const sidebarPanelRef = ref(null)
     /**
      * @typedef {Object} GitConflictMethods
      * @property {(conflict: any) => void} addConflict - Add a conflict to the queue
@@ -172,6 +219,42 @@ export default {
         notif.next('error', `Update available: ${versions.value.local} => ${versions.value.remote}`)
       }
     })
+    const size = ref(40)
+    const isMinimized = ref(false)
+    /** @type {import('vue').Ref<HTMLDivElement | null>} */
+    const mainPanelRef = ref(null)
+    const mouseInAnchor = ref(false)
+    watch(mouseInAnchor, () => {
+      if(isMinimized.value) {
+        if(mouseInAnchor.value) {
+          controlSidebarSize(size.value)
+        } else {
+          controlSidebarSize(0)
+        }
+      }
+    })
+    const controlSidebarSize = (size) => {
+      const sidebarEl = sidebarPanelRef.value?.$el
+        // @ts-ignore
+        const mainEl = mainPanelRef.value?.$el
+        if(!sidebarEl || !mainEl) return
+        sidebarEl.style['flex-basis'] = `calc(${size}%)`
+        sidebarEl.style['transition'] = `100ms`
+        sidebarEl.style['will-change'] = `flex-basis`
+        mainEl.style['flex-basis'] = `calc(${100 - size}%)`
+        mainEl.style['transition'] = `100ms`
+        mainEl.style['will-change'] = `flex-basis`
+
+        if(size === 0) {
+          sidebarEl.style['min-width'] = '0px'
+        } else {
+          sidebarEl.style['min-width'] = '160px'
+        }
+        setTimeout(() => {
+          sidebarEl.style['transition'] = `0ms`
+          mainEl.style['transition'] = `0ms`
+        }, 300);
+    }
     return {
       componentsToLoad: ref(Object.keys(componentsToLoad)),
       redirect,
@@ -179,6 +262,18 @@ export default {
       githubIssue,
       versions,
       gitConflictModalRef,
+      sidebarPanelRef,
+      mainPanelRef,
+      isMinimized,
+      mouseInAnchor,
+      toggleMinimized: () => {
+        isMinimized.value = !isMinimized.value
+        const effectiveSize = isMinimized.value ? 0 : size.value
+        controlSidebarSize(effectiveSize)
+      },
+      debouncedMouseInAnchor: debounce((value) => {
+        mouseInAnchor.value = value
+      }, 75),
     }
   }
 }
@@ -205,6 +300,24 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
+    
+    :deep(.p-splitter) {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+    
+    :deep(.p-splitter-panel) {
+      overflow: auto;
+    }
+    
+    :deep(.p-splitter-gutter) {
+      background: var(--surface-border);
+      
+      &:hover {
+        background: var(--primary-color);
+      }
+    }
   }
 }
 .not-connected {
@@ -215,5 +328,33 @@ export default {
   width: 100vw;
   height: 100vh;
   text-align: center;
+}
+.splitter {
+  background-color: transparent;
+  flex-grow: 1;
+  width: 0 !important;
+}
+:deep(.p-splitter-gutter) {
+  background-color: var(--system-backgroundColor-darker) !important;
+}
+
+.maximize {
+  width: 25px;
+  height: 100%;
+  transition: width 300ms;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  color: white;
+  i {
+    font-size: 1.5rem;
+  }
+  &.mouse-in-anchor {
+    width: 50px;
+  }
+}
+.main-panel {
+  display: flex;
 }
 </style>
