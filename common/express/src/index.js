@@ -31,6 +31,7 @@ module.exports = {
    *  baseUrl?: string,
    *  helmetConf?: import('helmet').HelmetOptions | null,
    *  corsConf?: import('cors').CorsOptions,
+   *  authApi?: (app: import('express').Express) => any,
    *  beforeAll?: ({app, server}) => any,
    *  afterAll?: () => any,
    *  socket?: boolean,
@@ -63,6 +64,7 @@ module.exports = {
     apiPrefix = '/api',
     bodyLimit = '50mb',
     healthPath = apiPrefix,
+    authApi = (app) => {},
   }) {
     const pkgJSONPath = pathfs.resolve(baseUrl, 'package.json');
     const isPkgJSONExists = fs.existsSync(pkgJSONPath);
@@ -74,7 +76,6 @@ module.exports = {
     console.log(`v${appVersion} started, listening on port ${port}.`);
 
     const app = express();
-
     const server = http.createServer(app);
     if (helmetConf) {
       app.use((req, res, next) => {
@@ -87,6 +88,8 @@ module.exports = {
 
     console.log('Enable cors...');
     app.use(cors(corsConf));
+    await authApi(app);
+
     app.options('*', (req, res, next) => {
       res.setHeader('Access-Control-Allow-Credentials', 'true');
       next();
