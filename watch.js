@@ -25,6 +25,7 @@ const ignored = [
   '**/*logs-express',
   '**/*coverage',
   '**/*sandbox-node-repl',
+  '**/*public',
 ];
 let restartInProgress = false;
 let pid;
@@ -123,7 +124,7 @@ function watchDeps(watchableDeps, cb = (
 
 function getWatchableDeps(path) {
   const currentPackage = getPackageInfoFromPath(path);
-  if (currentPackage) {
+    if (currentPackage) {
     const ignoreDependencies = [];
     if (currentPackage.name === '@runeya/servers-server') {
       ignoreDependencies.push('@runeya/fronts-app');
@@ -152,7 +153,7 @@ function getDependencies(packageName, ignoreDependencies = [], recursiveAggr = [
     ));
     if (!recursiveAggr.includes(f) && isIgnored) {
       recursiveAggr.push(f);
-      deps.map((dep) => getDependencies(dep, ignoreDependencies, recursiveAggr)).flat();
+      getDependencies(f, ignoreDependencies, recursiveAggr)
     }
   });
   return recursiveAggr;
