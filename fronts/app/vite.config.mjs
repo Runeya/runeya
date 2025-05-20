@@ -9,7 +9,13 @@ const __dirname = path.dirname(__filename); // get the name of the directory
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
-    vue({}),
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: (tag) => tag.includes('runeya-')
+        }
+      }
+    }),
     createHtmlPlugin({
       minify: true,
       entry: 'src/main.js',

@@ -7,5 +7,5 @@
 @use "button" as *;
 @use "scrollbar" as *;
 
-@use '~@fortawesome/fontawesome-free/css/all.min.css' as *;
-@use '@/assets/fonts/Jost/Jost.css' as *;
+@use '../../../../../node_modules/@fortawesome/fontawesome-free/css/all.min.css' as *;
+@use '../fonts/Jost/Jost.css' as *;

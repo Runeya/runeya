@@ -5,6 +5,11 @@ import Tooltip from 'primevue/tooltip';
 import './assets/theme/index.scss';
 import Aura from '@primevue/themes/aura';
 
+import * as Vue from 'vue'
+
+window.Vue = Vue;
+
+
 (async () => {
   console.log('Init Socket...');
   await Socket.init('/socket');
