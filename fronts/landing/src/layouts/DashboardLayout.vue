@@ -95,7 +95,6 @@ watch(() => organizationStore.currentOrganization.value?.id, async (newVal) => {
 // Get session on component mount
 onMounted(async () => {
   try {
-    console.log(organizationStore.currentOrganization.value?.id)
     const sessionData = await authStore.getSession();
     
     if (!sessionData) {

@@ -1,79 +1,71 @@
 <template>
-  <div class="organizations-view">
-    <h1 class="text-2xl font-bold mb-4">Organizations</h1>
-    
-    <div class="card">
-      <div class="card-header">
-        <h2 class="card-title">Your Organizations</h2>
+  <DashboardPageLayout :title="$t('dashboard.organizationsPage.title')">
+    <DashboardCard
+      :title="$t('dashboard.organizationsPage.yourOrganizations')"
+      :is-loading="isLoading"
+      :loading-text="$t('dashboard.organizationsPage.loading')"
+      :is-empty="organizations.length === 0"
+      empty-icon="fa-building"
+      :empty-title="$t('dashboard.organizationsPage.noOrganizations')"
+      :empty-description="$t('dashboard.organizationsPage.noOrganizationsDescription')"
+    >
+      <template #actions>
         <Button 
-          label="Create Organization" 
+          :label="$t('dashboard.organizationsPage.createOrganization')" 
           icon="fas fa-plus" 
           @click="openCreateDialog"
         />
-      </div>
+      </template>
       
-      <div class="card-content">
-        <div v-if="isLoading" class="loading-state">
-          <i class="fas fa-spinner fa-spin"></i>
-          <span>Loading organizations...</span>
-        </div>
-        <div v-else-if="organizations.length === 0" class="empty-state">
-          <i class="fas fa-building empty-icon"></i>
-          <h3>No Organizations</h3>
-          <p>You haven't created any organizations yet. Create your first organization to get started.</p>
-          <Button 
-            label="Create Organization" 
-            icon="fas fa-plus" 
-            @click="openCreateDialog"
-          />
-        </div>
-        
-        <div v-else>
-          <DataTable 
-            :value="organizations" 
-            stripedRows 
-            responsiveLayout="scroll"
-            class="organizations-table"
-            dataKey="id"
-            :paginator="organizations.length > 10"
-            :rows="10"
-            :rowsPerPageOptions="[5, 10, 20]"
-            paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
-            :sortMode="'multiple'"
-          >
-            <Column field="name" header="Name" :sortable="true">
-              <template #body="slotProps">
-                <div class="org-name-cell">
-                  <div class="org-avatar">
-                    {{ getOrganizationInitials(slotProps.data.name) }}
-                  </div>
-                  <span class="org-name-text">{{ slotProps.data.name }}</span>
-                  <span v-if="slotProps.data.id === currentOrganization?.id" class="current-tag">Current</span>
-                </div>
-              </template>
-            </Column>
-            <Column field="slug" header="Slug" :sortable="true" />
-            <Column header="Actions" style="width: 100px" :exportable="false">
-              <template #body="slotProps">
-                <div class="action-buttons">
-                  <Button 
-                    icon="fas fa-cog" 
-                    class="p-button-sm p-button-text" 
-                    @click="goToSettings(slotProps.data)"
-                  />
-                </div>
-              </template>
-            </Column>
-          </DataTable>
-        </div>
-      </div>
-    </div>
+      <template #empty-actions>
+        <Button 
+          :label="$t('dashboard.organizationsPage.createOrganization')" 
+          icon="fas fa-plus" 
+          @click="openCreateDialog"
+        />
+      </template>
+      
+      <DataTable 
+        :value="organizations" 
+        stripedRows 
+        responsiveLayout="scroll"
+        class="organizations-table"
+        dataKey="id"
+        :paginator="organizations.length > 10"
+        :rows="10"
+        :rowsPerPageOptions="[5, 10, 20]"
+        paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
+        :sortMode="'multiple'"
+      >
+        <Column field="name" :header="$t('dashboard.organizationsPage.table.name')" :sortable="true">
+          <template #body="slotProps">
+            <div class="org-name-cell">
+              <Tag :value="slotProps.data.name?.substring(0, 1)" severity="primary" class="mr-2" />
+              <span class="org-name-text">{{ slotProps.data.name }}</span>
+              <Tag v-if="slotProps.data.id === currentOrganization?.id" :value="$t('dashboard.current')" severity="contrast" class="ml-2" />
+            </div>
+          </template>
+        </Column>
+        <Column field="slug" :header="$t('dashboard.organizationsPage.table.slug')" :sortable="true" />
+        <Column :header="$t('dashboard.organizationsPage.table.actions')" style="width: 100px" :exportable="false">
+          <template #body="slotProps">
+            <div class="action-buttons">
+              <Button 
+                icon="fas fa-cog" 
+                class="p-button-sm p-button-text" 
+                @click="goToSettings(slotProps.data)"
+              />
+            </div>
+          </template>
+        </Column>
+      </DataTable>
+    </DashboardCard>
     
     <!-- Create Organization Dialog -->
     <Dialog 
       v-model:visible="createDialogVisible" 
       modal 
-      header="Create New Organization"
+      :header="$t('dashboard.organizationsPage.createNewOrganization')"
       :style="{ width: '450px' }"
     >
       <OrganizationForm
@@ -87,7 +79,7 @@
     
     <!-- Delete Confirmation Dialog -->
     <ConfirmDialog></ConfirmDialog>
-  </div>
+  </DashboardPageLayout>
 </template>
 
 <script>
@@ -102,6 +94,9 @@ import { useToast } from 'primevue/usetoast';
 import { useI18n } from 'vue-i18n';
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
+import { Tag } from 'primevue';
+import DashboardPageLayout from '../../components/common/DashboardPageLayout.vue';
+import DashboardCard from '../../components/common/DashboardCard.vue';
 
 export default defineComponent({
   name: 'Organizations',
@@ -111,7 +106,10 @@ export default defineComponent({
     ConfirmDialog,
     OrganizationForm,
     DataTable,
-    Column
+    Column,
+    Tag,
+    DashboardPageLayout,
+    DashboardCard
   },
   setup() {
     const organizationStore = useOrganizationStore();
@@ -155,17 +153,20 @@ export default defineComponent({
         try {
           await organizationStore.createOrganization(event.values);
           createDialogVisible.value = false;
-      console.log(event)
-    } catch (err) {
-      const error = err;
+          console.log(event)
+        } catch (err) {
+          const error = err;
           console.log(error)
           if (
+            error &&
             typeof error === 'object' &&
-            error !== null &&
             'response' in error &&
             error.response &&
+            typeof error.response === 'object' &&
             'data' in error.response &&
             error.response.data &&
+            typeof error.response.data === 'object' &&
+            'code' in error.response.data &&
             error.response.data.code === 'YOU_HAVE_REACHED_THE_MAXIMUM_NUMBER_OF_ORGANIZATIONS'
           ) {
             toast.add({
@@ -225,165 +226,14 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.organizations-view {
-  padding: 20px;
-}
-
-.page-title {
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 20px;
-}
-
-.card {
-  background-color: var(--surface-a);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--surface-d);
-  margin-bottom: 20px;
-  overflow: hidden;
-}
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 20px;
-  border-bottom: 1px solid var(--surface-d);
-}
-
-.card-title {
-  font-size: 18px;
-  font-weight: 600;
-  margin: 0;
-}
-
-.card-content {
-  padding: 20px;
-}
-
-.loading-state,
-.empty-state {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  text-align: center;
-  color: var(--text-color-secondary);
-}
-
-.loading-state i,
-.empty-state .empty-icon {
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.empty-state h3 {
-  margin: 10px 0;
-  font-weight: 600;
-}
-
-.empty-state p {
-  margin-bottom: 20px;
-  max-width: 400px;
-}
-
 .org-name-cell {
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.org-avatar {
-  width: 45px;
-  height: 45px;
-  border-radius: 8px;
-  background-color: var(--primary-color);
-  color: var(--primary-color-text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-weight: 600;
-  margin-right: 15px;
-  flex-shrink: 0;
+  gap: 0.75rem;
 }
 
 .org-name-text {
   font-weight: 500;
-}
-
-.org-info {
-  flex: 1;
-  min-width: 0;
-}
-
-.org-name {
-  margin: 0 0 5px 0;
-  font-size: 16px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.org-details {
-  margin: 0;
-  font-size: 14px;
-  color: var(--text-color-secondary);
-}
-
-.current-tag {
-  background-color: var(--primary-color);
-  color: var(--primary-color-text);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 12px;
-  font-weight: 600;
-  margin-right: 8px;
-}
-
-.org-actions {
-  display: flex;
-  gap: 4px;
-}
-
-.p-field {
-  margin-bottom: 20px;
-  
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-}
-
-.danger-zone {
-  margin-top: 30px;
-  padding: 15px;
-  border: 1px dashed #ff5757;
-  border-radius: 6px;
-  
-  h3 {
-    color: #ff5757;
-    margin-top: 0;
-    margin-bottom: 10px;
-    font-size: 16px;
-    font-weight: 600;
-  }
-  
-  p {
-    margin-bottom: 15px;
-    font-size: 14px;
-  }
-}
-
-.dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
 }
 
 .action-buttons {

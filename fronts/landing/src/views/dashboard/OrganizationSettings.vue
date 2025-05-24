@@ -1,14 +1,12 @@
 <template>
-  <div class="organization-settings-view">
-    <h1 class="text-2xl font-bold mb-4">{{ $t('dashboard.orgSettings.title') }}</h1>
-    
-    <div class="mb-4 page-actions">
+  <DashboardPageLayout :title="$t('dashboard.orgSettings.title')">
+    <template #actions>
       <router-link :to="{ name: 'organization-members' }">
         <Button :label="$t('dashboard.orgSettings.manageMembers')" icon="fas fa-users" class="p-button-secondary" />
       </router-link>
-    </div>
+    </template>
     
-    <div class="settings-card">
+    <DashboardCard>
       <OrganizationForm
         v-if="currentOrganization"
         :key="currentOrganization?.id"
@@ -20,6 +18,7 @@
         :onCancel="resetForm"
         :isEdit="true"
       />
+      
       <div class="danger-zone">
         <h3>Danger Zone</h3>
         <p>{{ $t('dashboard.orgSettings.deleteConfirmMessage') }}</p>
@@ -31,16 +30,18 @@
           @click="confirmDelete"
         />
       </div>
-      <Dialog v-model:visible="deleteDialogVisible" modal :closable="false" :style="{ width: '400px' }" :header="$t('dashboard.orgSettings.deleteConfirmTitle')">
-        <div class="mb-4">{{ $t('dashboard.orgSettings.deleteConfirmMessage') }}</div>
-        <template #footer>
-          <Button :label="$t('dashboard.orgSettings.cancelButton')" class="p-button-text" @click="deleteDialogVisible = false" />
-          <Button :label="$t('dashboard.orgSettings.deleteButton')" icon="fas fa-trash" class="p-button-danger" :loading="isSubmitting" @click="handleDelete" />
-        </template>
-      </Dialog>
-      <Toast position="bottom-right" />
-    </div>
-  </div>
+    </DashboardCard>
+    
+    <Dialog v-model:visible="deleteDialogVisible" modal :closable="false" :style="{ width: '400px' }" :header="$t('dashboard.orgSettings.deleteConfirmTitle')">
+      <div class="mb-4">{{ $t('dashboard.orgSettings.deleteConfirmMessage') }}</div>
+      <template #footer>
+        <Button :label="$t('dashboard.orgSettings.cancelButton')" class="p-button-text" @click="deleteDialogVisible = false" />
+        <Button :label="$t('dashboard.orgSettings.deleteButton')" icon="fas fa-trash" class="p-button-danger" :loading="isSubmitting" @click="handleDelete" />
+      </template>
+    </Dialog>
+    
+    <Toast position="bottom-right" />
+  </DashboardPageLayout>
 </template>
 
 <script setup>
@@ -55,6 +56,8 @@ import Dialog from 'primevue/dialog';
 import { useRoute, useRouter } from 'vue-router';
 import { useToast } from 'primevue/usetoast';
 import { Toast } from 'primevue';
+import DashboardPageLayout from '../../components/common/DashboardPageLayout.vue';
+import DashboardCard from '../../components/common/DashboardCard.vue';
 
 const { t } = useI18n();
 const organizationStore = useOrganizationStore();
@@ -141,31 +144,12 @@ const resetForm = () => {
 </script>
 
 <style scoped lang="scss">
-.organization-settings-view {
-  padding: 20px;
-}
-.settings-card {
-  background-color: var(--surface-a);
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border: 1px solid var(--surface-d);
-  margin-top: 20px;
-  padding: 30px 24px;
-  max-width: 500px;
-}
-.p-field {
-  margin-bottom: 20px;
-  label {
-    display: block;
-    margin-bottom: 8px;
-    font-weight: 500;
-  }
-}
 .danger-zone {
   margin-top: 30px;
   padding: 15px;
   border: 1px dashed #ff5757;
   border-radius: 6px;
+  
   h3 {
     color: #ff5757;
     margin-top: 0;
@@ -173,15 +157,10 @@ const resetForm = () => {
     font-size: 16px;
     font-weight: 600;
   }
+  
   p {
     margin-bottom: 15px;
     font-size: 14px;
   }
-}
-.dialog-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
 }
 </style>

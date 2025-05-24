@@ -5702,6 +5702,7 @@ __metadata:
     "@runeya/common-retrigger-all-build": "workspace:*"
     "@types/compression": "npm:^1"
     "@types/express": "npm:^5"
+    "@types/markdown-it": "npm:^14"
     "@vitejs/plugin-vue": "npm:^5.2.4"
     "@vuelidate/core": "npm:^2.0.3"
     "@vuelidate/validators": "npm:^2.0.4"
@@ -5711,7 +5712,10 @@ __metadata:
     compression: "npm:^1.8.0"
     concurrently: "npm:^9.1.2"
     express: "npm:^5.1.0"
+    github-markdown-css: "npm:^5.8.1"
     glob: "npm:^11.0.2"
+    highlight.js: "npm:^11.11.1"
+    markdown-it: "npm:^14.1.0"
     postcss: "npm:^8.4.35"
     primevue: "npm:^4.3.4"
     sass: "npm:^1.70.0"
@@ -8805,7 +8809,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/markdown-it@npm:^14.1.2":
+"@types/markdown-it@npm:^14, @types/markdown-it@npm:^14.1.2":
   version: 14.1.2
   resolution: "@types/markdown-it@npm:14.1.2"
   dependencies:
@@ -14943,6 +14947,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"github-markdown-css@npm:^5.8.1":
+  version: 5.8.1
+  resolution: "github-markdown-css@npm:5.8.1"
+  checksum: 10/6adbab7a918662c5178ec3e6e390a54824e4ad6b964261579800c49da0b7a3d4afe3efb834a7f177f9552b8f6d64b07fdf044ae6fdd2e1e0cca66f814df13b94
+  languageName: node
+  linkType: hard
+
 "glob-parent@npm:^5.1.2, glob-parent@npm:~5.1.2":
   version: 5.1.2
   resolution: "glob-parent@npm:5.1.2"
@@ -15355,7 +15366,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highlight.js@npm:^11.9.0":
+"highlight.js@npm:^11.11.1, highlight.js@npm:^11.9.0":
   version: 11.11.1
   resolution: "highlight.js@npm:11.11.1"
   checksum: 10/205272f12f2c8ab1760452a75c58b043b11129cf3a5d2a9c0c90d43993580d0f5c385a73a4b8aba197eef20c0ec37d64000e6b35c4ed5991324f4c2dc78f4e43

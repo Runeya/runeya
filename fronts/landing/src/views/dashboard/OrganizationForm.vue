@@ -43,7 +43,9 @@
       
 
       <div class="p-field">
-        <label for="language">{{ $t('dashboard.orgSettings.languageLabel') }}</label>
+        <div class="flex items-center">
+          <label for="language">{{ $t('dashboard.orgSettings.languageLabel') }}</label>
+        </div>
         <Select name="metadata.language"
           :options="countries"
           :model-value="$form.metadata?.language?.value"

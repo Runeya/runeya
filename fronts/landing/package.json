@@ -24,6 +24,7 @@
     "@runeya/common-retrigger-all-build": "workspace:*",
     "@types/compression": "^1",
     "@types/express": "^5",
+    "@types/markdown-it": "^14",
     "@vitejs/plugin-vue": "^5.2.4",
     "autoprefixer": "^10.4.20",
     "concurrently": "^9.1.2",
@@ -58,7 +59,10 @@
     "chart.js": "^4.4.9",
     "compression": "^1.8.0",
     "express": "^5.1.0",
+    "github-markdown-css": "^5.8.1",
     "glob": "^11.0.2",
+    "highlight.js": "^11.11.1",
+    "markdown-it": "^14.1.0",
     "primevue": "^4.3.4",
     "yup": "^1.6.1",
     "zod": "^3.25.7"

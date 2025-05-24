@@ -9,6 +9,10 @@ import DashboardLayout from '../layouts/DashboardLayout.vue';
 import Organizations from '../views/dashboard/Organizations.vue';
 import OrganizationSettings from '../views/dashboard/OrganizationSettings.vue';
 import OrganizationMembers from '../views/dashboard/OrganizationMembers.vue';
+import ApiKeys from '../views/dashboard/ApiKeys.vue';
+import MyPlugins from '../views/dashboard/MyPlugins.vue';
+import PluginsList from '../views/PluginsList.vue';
+import PluginDetail from '../views/PluginDetail.vue';
 import useOrganizationStore from '../stores/organizationStore.js';
 import NewOrganization from '../views/dashboard/NewOrganization.vue';
 
@@ -19,6 +23,24 @@ const routes = [
     component: Home,
     meta: {
       title: 'Runeya - Harmonious Development',
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/plugins',
+    name: 'plugins-list',
+    component: PluginsList,
+    meta: {
+      title: 'Plugins - Runeya',
+      requiresAuth: false
+    }
+  },
+  {
+    path: '/plugins/:pluginName',
+    name: 'plugin-detail',
+    component: PluginDetail,
+    meta: {
+      title: 'Plugin Details - Runeya',
       requiresAuth: false
     }
   },
@@ -100,6 +122,24 @@ const routes = [
         component: OrganizationMembers,
         meta: {
           title: 'Organization Members - Runeya',
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'api-keys',
+        name: 'api-keys',
+        component: ApiKeys,
+        meta: {
+          title: 'API Keys - Runeya',
+          requiresAuth: true
+        }
+      },
+      {
+        path: 'my-plugins',
+        name: 'my-plugins',
+        component: MyPlugins,
+        meta: {
+          title: 'My Plugins - Runeya',
           requiresAuth: true
         }
       }

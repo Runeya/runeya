@@ -52,6 +52,28 @@ export default defineComponent({
           },
         ]
       },
+      {
+        label: t('dashboard.sidebar.apiKeys') || 'API Keys',
+        icon: 'fas fa-key',
+        items: [
+          {
+            label: t('dashboard.sidebar.manageApiKeys') || 'Manage API Keys',
+            icon: 'fas fa-key',
+            command: () => router.push({name: 'api-keys'})
+          }
+        ]
+      },
+      {
+        label: t('dashboard.plugins.title') || 'My Plugins',
+        icon: 'fas fa-puzzle-piece',
+        items: [
+          {
+            label: t('dashboard.plugins.yourPlugins') || 'Your Plugins',
+            icon: 'fas fa-puzzle-piece',
+            command: () => router.push({name: 'my-plugins'})
+          }
+        ]
+      }
     ]);
     
     return {

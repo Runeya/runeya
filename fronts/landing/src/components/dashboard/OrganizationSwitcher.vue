@@ -11,9 +11,7 @@
       >
         <template #value="slotProps">
           <div class="organization-option" v-if="slotProps.value">
-            <div class="org-avatar">
-              {{ getOrganizationInitials(slotProps.value.name) }}
-            </div>
+            <Tag :value="slotProps.value.name?.substring(0, 1)" severity="primary" class="mr-2" />
             <div class="org-name">{{ slotProps.value.name }}</div>
           </div>
           <span v-else>
@@ -22,9 +20,6 @@
         </template>
         <template #option="slotProps">
           <div class="organization-option">
-            <div class="org-avatar">
-              {{ getOrganizationInitials(slotProps.option.name) }}
-            </div>
             <div class="org-name">{{ slotProps.option.name }}</div>
           </div>
         </template>
@@ -39,11 +34,13 @@ import useOrganizationStore from '../../stores/organizationStore';
 import type { Organization } from '../../types/organization';
 import Select from 'primevue/select';
 import { useRoute, useRouter } from 'vue-router';
+import { Tag } from 'primevue';
 
 export default defineComponent({
   name: 'OrganizationSwitcher',
   components: {
-    Select
+    Select,
+    Tag
   },
   setup() {
     const organizationStore = useOrganizationStore();
@@ -119,18 +116,6 @@ export default defineComponent({
   align-items: center;
 }
 
-.org-avatar {
-  width: 30px;
-  height: 30px;
-  border-radius: 6px;
-  background-color: var(--primary-color);
-  color: var(--primary-color-text);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 10px;
-  font-weight: 600;
-}
 
 .org-name {
   font-weight: 500;

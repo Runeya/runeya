@@ -1,26 +1,24 @@
 <template>
-  <div class="organization-members-view">
-    <h2 class="text-2xl font-bold mb-4">{{ $t('dashboard.orgMembers.title') }}</h2>
-
-    <div class="card">
-      <div class="flex flex-row justify-between items-center mb-4 w-full">
-        <h3>{{ $t('dashboard.orgMembers.membersList') }}</h3>
-        <div class="flex gap-2">
-          <Button
-            v-if="isOwner"
-            :label="$t('dashboard.orgMembers.transferOwnership.button')"
-            icon="fas fa-crown"
-            class="p-button-warning"
-            @click="showTransferOwnership"
-          />
-          <Button
-            v-if="canInvite"
-            :label="$t('dashboard.orgMembers.inviteButton')"
-            icon="fas fa-user-plus"
-            @click="showInviteDialog = true"
-          />
-        </div>
-      </div>
+  <DashboardPageLayout :title="$t('dashboard.orgMembers.title')">
+    <DashboardCard :title="$t('dashboard.orgMembers.membersList')">
+      <template #actions>
+        <Button
+          v-if="isOwner"
+          :label="$t('dashboard.orgMembers.transferOwnership.button')"
+          icon="fas fa-crown"
+          class="p-button-warning"
+          size="small"
+          @click="showTransferOwnership"
+        />
+        <Button
+          v-if="canInvite"
+          :label="$t('dashboard.orgMembers.inviteButton')"
+          icon="fas fa-user-plus"
+          size="small"
+          @click="showInviteDialog = true"
+        />
+      </template>
+      
       <DataTable :value="members" :loading="isLoadingMembers">
         <Column field="user.name" :header="$t('dashboard.orgMembers.table.name')"></Column>
         <Column field="user.email" :header="$t('dashboard.orgMembers.table.email')"></Column>
@@ -35,12 +33,9 @@
           {{ $t('dashboard.orgMembers.noMembers') }}
         </template>
       </DataTable>
-    </div>
+    </DashboardCard>
 
-    <div class="card mt-4">
-      <div class="flex flex-row justify-between items-center mb-4 w-full">
-        <h3>{{ $t('dashboard.orgMembers.invitationsList') }}</h3>
-      </div>
+    <DashboardCard :title="$t('dashboard.orgMembers.invitationsList')">
       <DataTable :value="invitations" :loading="isLoadingInvitations">
         <Column field="email" :header="$t('dashboard.orgMembers.table.email')"></Column>
         <Column field="role" :header="$t('dashboard.orgMembers.table.role')"></Column>
@@ -56,7 +51,7 @@
           {{ $t('dashboard.orgMembers.noInvitations') }}
         </template>
       </DataTable>
-    </div>
+    </DashboardCard>
 
     <Dialog v-model:visible="showInviteDialog" modal :header="$t('dashboard.orgMembers.inviteDialog.title')" :style="{ width: '400px' }">
       <div class="p-field mb-3">
@@ -104,7 +99,7 @@
 
      <ConfirmDialog group="removeMember"></ConfirmDialog>
      <Toast position="bottom-right" />
-  </div>
+  </DashboardPageLayout>
 </template>
 
 <script setup>
@@ -127,6 +122,8 @@ import authStore from '../../stores/authStore';
 import invitationStore from '../../stores/invitationStore';
 import useOrganizationStore from '../../stores/organizationStore.js';
 import { Select } from 'primevue';
+import DashboardPageLayout from '../../components/common/DashboardPageLayout.vue';
+import DashboardCard from '../../components/common/DashboardCard.vue';
 
 const { t } = useI18n();
 const toast = useToast();
@@ -672,9 +669,9 @@ onMounted(() => {
 }
 .card {
   background-color: var(--surface-card);
+  border: 1px solid var(--surface-border);
   padding: 2rem;
   border-radius: 8px;
-  box-shadow: 0 2px 1px -1px rgba(0,0,0,.2), 0 1px 1px 0 rgba(0,0,0,.14), 0 1px 3px 0 rgba(0,0,0,.12);
 }
 .p-field label {
   display: block;

@@ -21,23 +21,21 @@
           </div>
           
           <!-- Desktop navigation -->
-          <nav class="hidden md:flex items-center space-x-8">
+          <nav class="hidden md:flex items-center justify-end space-x-8 w-full mr-3">
             <template v-if="isHomePage">
               <a href="#features" class="text-neutral-600 hover:text-emerald-600 transition-colors font-medium text-sm">{{ $t('header.features') }}</a>
               <a href="#benefits" class="text-neutral-600 hover:text-emerald-600 transition-colors font-medium text-sm">{{ $t('header.benefits') }}</a>
               <a href="#about" class="text-neutral-600 hover:text-emerald-600 transition-colors font-medium text-sm">{{ $t('header.about') }}</a>
               <a href="https://github.com/runeya/runeya" target="_blank" class="text-neutral-600 hover:text-emerald-600 transition-colors font-medium text-sm">{{ $t('header.github') }}</a>
             </template>
+            <router-link to="/plugins" class="text-neutral-600 hover:text-emerald-600 transition-colors font-medium text-sm">{{ $t('header.plugins') }}</router-link>
           </nav>
           
           <!-- Right side -->
           <div class="hidden md:flex items-center space-x-4">
             <LanguageSelector />
-            <a :href="docsUrl" target="_blank" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-md">
-              {{ $t('header.launch') }}
-            </a>
             <template v-if="authStore.isAuthenticated.value">
-              <router-link to="/app/dashboard" class="bg-neutral-800 hover:bg-neutral-900 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-md">
+              <router-link to="/app/dashboard" class="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-md">
                 {{ $t('header.dashboard') }}
               </router-link>
               <button @click="handleLogout" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-sm hover:shadow-md">
@@ -75,6 +73,7 @@
           <template v-else>
             <a href="https://github.com/runeya/runeya" @click="closeMobileMenu" target="_blank" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-emerald-600 hover:bg-emerald-50">{{ $t('header.github') }}</a>
           </template>
+          <router-link to="/plugins" @click="closeMobileMenu" class="block px-3 py-2 rounded-md text-base font-medium text-neutral-700 hover:text-emerald-600 hover:bg-emerald-50">{{ $t('header.plugins') }}</router-link>
           <div class="pt-3">
             <LanguageSelector @language-changed="closeMobileMenu" />
           </div>
@@ -99,9 +98,11 @@
     </header>
 
     <!-- Main content - Use router-view for dynamic page rendering -->
-    <router-view v-slot="{ Component }">
-      <component :is="Component" />
-    </router-view>
+    <div :style="{ position: 'relative'}">
+      <router-view v-slot="{ Component }">
+        <component :is="Component" />
+      </router-view>
+    </div>
 
     <!-- Invitation Modal -->
     <InvitationModal/>

@@ -17,51 +17,62 @@ const backendProjectPath = path.resolve(projectRoot, 'backend');
 const archiveTarget = path.resolve(projectRoot, 'dist/runeya.tar.gz');
 
 async function buildAndPackage() {
-  // await rm(path.resolve(projectRoot, 'dist'), {recursive: true, force: true})
+  if(!process.env.PLUGINS_API_URL) {
+    console.log('❌ PLUGINS_API_URL is not set');
+    process.exit(1);
+  }
+  if(!process.env.PLUGINS_API_KEY) {
+    console.log('❌ PLUGINS_API_KEY is not set');
+    process.exit(1);
+  }
+  await rm(path.resolve(projectRoot, 'dist'), {recursive: true, force: true})
   let {version} = require('../package.json')
   const name = require('../package.json').name
-  // console.log('📦 Version:', version);
-  // console.log('📦 Packaging front-end...');
+  console.log('📦 Version:', version);
+  console.log('📦 Packaging front-end...');
 
-  // // Step 1: Build front with Vite
-  // console.log('📦 Building front-end...', viteProjectPath);
-  // execSync('yarn vite build', {
-  //   cwd: viteProjectPath,
-  //   env: process.env,
-  //   stdio: 'inherit'
-  // });
+  // Step 1: Build front with Vite
+  console.log('📦 Building front-end...', viteProjectPath);
+  execSync('yarn vite build', {
+    cwd: viteProjectPath,
+    env: process.env,
+    stdio: 'inherit'
+  });
 
-  // // Step 1: Build front with Vite
-  // execSync('yarn tsup', {
-  //   cwd: backendProjectPath,
-  //   env: process.env,
-  //   stdio: 'inherit'
-  // });
+  // Step 1: Build front with Vite
+  execSync('yarn tsup', {
+    cwd: backendProjectPath,
+    env: process.env,
+    stdio: 'inherit'
+  });
 
-  // await cp(path.resolve(viteProjectPath, 'dist'), frontDistPath, {
-  //   recursive: true
-  // });
-  // await cp(path.resolve(backendProjectPath, 'dist'), backendDistPath, {
-  //   recursive: true
-  // });
+  await cp(path.resolve(viteProjectPath, 'dist'), frontDistPath, {
+    recursive: true
+  });
+  await cp(path.resolve(backendProjectPath, 'dist'), backendDistPath, {
+    recursive: true
+  });
+  if(existsSync(path.resolve(projectRoot, 'README.md'))) {
+    await cp(path.resolve(projectRoot, 'README.md'), path.resolve(distPath, 'README.md'));
+  }
 
-  // const entrypoint = path.resolve(projectRoot, './dist/plugins/config.json')
-  // await writeFile(entrypoint, JSON.stringify({
-  //   backend: './backend/index.js',
-  //   front: {
-  //     js: './front/index.umd.js',
-  //     css: './front/index.css',
-  //   },
-  //  name,
-  //   version,
-  // }), 'utf-8')
+  const entrypoint = path.resolve(projectRoot, './dist/plugins/config.json')
+  await writeFile(entrypoint, JSON.stringify({
+    backend: './backend/index.js',
+    front: {
+      js: './front/index.umd.js',
+      css: './front/index.css',
+    },
+   name,
+    version,
+  }), 'utf-8')
 
-  // await compressing.tgz.compressDir(distPath, archiveTarget, {
-  //   ignoreBase: true,
-  //   relativePath: '/'
-  // });
+  await compressing.tgz.compressDir(distPath, archiveTarget, {
+    ignoreBase: true,
+    relativePath: '/'
+  });
 
-  // console.log(`✅ Archive created at: ${archiveTarget}`);
+  console.log(`✅ Archive created at: ${archiveTarget}`);
 
   const pluginPath =  path.resolve(__dirname, `../../../../servers/plugins/routes/public/plugins/${name}/${version}`)
   if(!existsSync(pluginPath)) await mkdir(pluginPath, {recursive: true})
@@ -75,10 +86,10 @@ async function buildAndPackage() {
       const form = new FormData();
       form.append('file', createReadStream(filePath));
 
-      await axios.post('http://127.0.0.1:5469/api/plugins/upload', form, {
+      await axios.post(process.env.PLUGINS_API_URL + '/api/plugins/upload', form, {
         headers: {
           ...form.getHeaders(),
-          'x-api-key': '447cc139-fc99-484e-8585-b84b1ae00e57'
+          'x-api-key': process.env.PLUGINS_API_KEY
         },
       })
 

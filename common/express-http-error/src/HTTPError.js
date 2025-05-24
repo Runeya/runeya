@@ -12,7 +12,7 @@ class HTTPError extends Error {
   /**
    *
    * @param {string} message
-   * @param {number} code
+   * @param {number | string} code
    * @param {string} errorId
    * @param {string} date
    * @param {string} stack
