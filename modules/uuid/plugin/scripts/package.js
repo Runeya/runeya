@@ -17,54 +17,53 @@ const backendProjectPath = path.resolve(projectRoot, 'backend');
 const archiveTarget = path.resolve(projectRoot, 'dist/runeya.tar.gz');
 
 async function buildAndPackage() {
-  await rm(path.resolve(projectRoot, 'dist'), {recursive: true, force: true})
+  // await rm(path.resolve(projectRoot, 'dist'), {recursive: true, force: true})
   let {version} = require('../package.json')
   const name = require('../package.json').name
-  console.log('📦 Version:', version);
-  console.log('📦 Packaging front-end...');
+  // console.log('📦 Version:', version);
+  // console.log('📦 Packaging front-end...');
 
-  // Step 1: Build front with Vite
-  console.log('📦 Building front-end...', viteProjectPath);
-  execSync('yarn vite build', {
-    cwd: viteProjectPath,
-    env: process.env,
-    stdio: 'inherit'
-  });
+  // // Step 1: Build front with Vite
+  // console.log('📦 Building front-end...', viteProjectPath);
+  // execSync('yarn vite build', {
+  //   cwd: viteProjectPath,
+  //   env: process.env,
+  //   stdio: 'inherit'
+  // });
 
-  // Step 1: Build front with Vite
-  execSync('yarn tsup', {
-    cwd: backendProjectPath,
-    env: process.env,
-    stdio: 'inherit'
-  });
+  // // Step 1: Build front with Vite
+  // execSync('yarn tsup', {
+  //   cwd: backendProjectPath,
+  //   env: process.env,
+  //   stdio: 'inherit'
+  // });
 
-  await cp(path.resolve(viteProjectPath, 'dist'), frontDistPath, {
-    recursive: true
-  });
-  await cp(path.resolve(backendProjectPath, 'dist'), backendDistPath, {
-    recursive: true
-  });
+  // await cp(path.resolve(viteProjectPath, 'dist'), frontDistPath, {
+  //   recursive: true
+  // });
+  // await cp(path.resolve(backendProjectPath, 'dist'), backendDistPath, {
+  //   recursive: true
+  // });
 
-  const entrypoint = path.resolve(projectRoot, './dist/plugins/config.json')
-  await writeFile(entrypoint, JSON.stringify({
-    backend: './backend/index.js',
-    front: {
-      js: './front/index.umd.js',
-      css: './front/index.css',
-    },
-   name,
-    version,
-  }), 'utf-8')
+  // const entrypoint = path.resolve(projectRoot, './dist/plugins/config.json')
+  // await writeFile(entrypoint, JSON.stringify({
+  //   backend: './backend/index.js',
+  //   front: {
+  //     js: './front/index.umd.js',
+  //     css: './front/index.css',
+  //   },
+  //  name,
+  //   version,
+  // }), 'utf-8')
 
-  await compressing.tgz.compressDir(distPath, archiveTarget, {
-    ignoreBase: true,
-    relativePath: '/'
-  });
+  // await compressing.tgz.compressDir(distPath, archiveTarget, {
+  //   ignoreBase: true,
+  //   relativePath: '/'
+  // });
 
-  console.log(`✅ Archive created at: ${archiveTarget}`);
+  // console.log(`✅ Archive created at: ${archiveTarget}`);
 
   const pluginPath =  path.resolve(__dirname, `../../../../servers/plugins/routes/public/plugins/${name}/${version}`)
-  console.log(pluginPath)
   if(!existsSync(pluginPath)) await mkdir(pluginPath, {recursive: true})
   await cp(archiveTarget, path.resolve(pluginPath, 'runeya.tar.gz'), )
 
@@ -75,9 +74,8 @@ async function buildAndPackage() {
 
       const form = new FormData();
       form.append('file', createReadStream(filePath));
-      form.append('text', 'toto');
 
-      await axios.post('http://127.0.0.1:5469/plugins/upload', form, {
+      await axios.post('http://127.0.0.1:5469/api/plugins/upload', form, {
         headers: {
           ...form.getHeaders(),
           'x-api-key': '447cc139-fc99-484e-8585-b84b1ae00e57'
