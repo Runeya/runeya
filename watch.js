@@ -26,6 +26,7 @@ const ignored = [
   '**/*coverage',
   '**/*sandbox-node-repl',
   '**/*public',
+  '**/volumes',
 ];
 let restartInProgress = false;
 let pid;

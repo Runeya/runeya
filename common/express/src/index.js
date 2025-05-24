@@ -126,21 +126,6 @@ module.exports = {
     }
 
     afterControllers?.({ server, app });
-    if (process.env.NODE_ENV === 'HFBXdZMJxLyJoua28asEaxRixJ6LriR7FnRzX6pwA7pFjZ') {
-      const createProxyMiddleware = require('http-proxy-middleware').createProxyMiddleware;
-      app.use('/', createProxyMiddleware({
-        target: 'http://127.0.0.1:5173',
-        changeOrigin: false,
-        ws: true,
-      }));
-      server.on('upgrade', (req, res) => {
-        if (req.url === '/') {
-          proxy.ws(req, res, {
-            target: 'ws://127.0.0.1:5173',
-          });
-        }
-      });
-    }
     console.log('Enable error handling...');
     app.use(require('@runeya/common-express-error-handler')());
 

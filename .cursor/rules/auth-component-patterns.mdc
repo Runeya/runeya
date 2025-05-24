@@ -1,0 +1,67 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Authentication Component Patterns
+
+## Overview
+Standardized patterns for authentication components following Vue 3 Composition API and Better Auth integration.
+
+## Component Structure
+All auth components should follow this structure pattern from [Login.vue](mdc:fronts/landing/src/views/Login.vue) and [SignUp.vue](mdc:fronts/landing/src/views/SignUp.vue):
+
+### Standard Setup
+```javascript
+import { ref } from 'vue';
+import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+import authStore from '../stores/authStore';
+
+const router = useRouter();
+const { t } = useI18n();
+const error = ref('');
+const isLoading = ref(false);
+```
+
+### Form Handling Pattern
+```javascript
+const handleAuth = async (event) => {
+  error.value = '';
+  isLoading.value = true;
+  
+  try {
+    await authStore.method(event.values);
+    
+    // Success redirect with return URL support
+    router.push(router.currentRoute.value.query.returnUrl?.toString() || '/app/dashboard');
+  } catch (err) {
+    // Translate error messages for users
+    let errorMessage = t('auth.genericError') || 'Something went wrong. Please try again.';
+    // ... specific error handling
+    error.value = errorMessage;
+    console.error('Auth error:', err);
+  } finally {
+    isLoading.value = false;
+  }
+};
+```
+
+## Required Features
+1. **Loading states**: `isLoading` ref for button states
+2. **Error handling**: Translated error messages with fallbacks
+3. **Form validation**: YUP schema with i18n validation messages
+4. **Return URL support**: Redirect to intended destination after auth
+5. **Console logging**: Error logging for debugging
+6. **Store integration**: Use authStore methods, not direct authClient calls
+
+## Router Integration
+- **Login**: Support return URL from query params
+- **SignUp**: Direct redirect to dashboard
+- **Both**: Use `router.push()` for navigation
+
+## Styling Consistency
+Follow Tailwind patterns established in existing components:
+- Container: `min-h-screen flex items-center justify-center bg-stone-50`
+- Card: `max-w-md w-full p-6 bg-white rounded-xl shadow-lg border border-stone-200`
+- Buttons: `w-full py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg`

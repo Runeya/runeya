@@ -1,0 +1,137 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+# PrimeVue Forms Patterns
+
+## Form Structure
+
+When converting forms to PrimeVue Forms, follow the pattern established in [OrganizationForm.vue](mdc:fronts/landing/src/views/dashboard/OrganizationForm.vue), [Login.vue](mdc:fronts/landing/src/views/Login.vue), and [SignUp.vue](mdc:fronts/landing/src/views/SignUp.vue).
+
+### Required Imports
+
+```javascript
+import { Form } from '@primevue/forms';
+import { yupResolver } from '@primevue/forms/resolvers/yup';
+import Button from 'primevue/button';
+import InputText from 'primevue/inputtext';
+import Message from 'primevue/message';
+import * as yup from 'yup';
+import { useI18n } from 'vue-i18n';
+```
+
+### Form Template Structure
+
+```vue
+<Form @submit="handleSubmit" :resolver="formResolver">
+  <template v-slot="$form">
+    <div class="p-field">
+      <label for="fieldName">{{ $t('label.key') }}</label>
+      <InputText 
+        name="fieldName" 
+        type="text" 
+        class="w-full"
+        :placeholder="$t('placeholder.key')"
+      />
+      <Message v-if="$form.fieldName?.invalid" severity="error" size="small" variant="simple">
+        {{ $form.fieldName.error?.message }}
+      </Message>
+    </div>
+    
+    <Button 
+      type="submit" 
+      :loading="isLoading"
+      :disabled="isLoading || !$form.valid"
+    >
+      {{ $t('submit.key') }}
+    </Button>
+  </template>
+</Form>
+```
+
+### Validation Schema Pattern
+
+```javascript
+const { t } = useI18n();
+
+const formResolver = yupResolver(
+  yup.object().shape({
+    email: yup
+      .string()
+      .email(t('auth.emailInvalid') || 'Invalid email format')
+      .required(t('auth.emailRequired') || 'Email is required'),
+    password: yup
+      .string()
+      .min(8, t('auth.passwordMinLength') || 'Password must be at least 8 characters')
+      .required(t('auth.passwordRequired') || 'Password is required')
+  })
+);
+```
+
+### Submit Handler Pattern
+
+```javascript
+const handleSubmit = async (event) => {
+  error.value = '';
+  isLoading.value = true;
+  
+  try {
+    // Use event.values to access form data
+    const result = await apiCall(event.values);
+    // Handle success
+  } catch (err) {
+    error.value = err instanceof Error ? err.message : 'Something went wrong';
+  } finally {
+    isLoading.value = false;
+  }
+};
+```
+
+## i18n Keys Pattern
+
+Form validation error keys follow the pattern: `auth.[field][ValidationRule]`
+
+Examples:
+- `auth.emailRequired` - "Email is required"
+- `auth.emailInvalid` - "Invalid email format"  
+- `auth.passwordRequired` - "Password is required"
+- `auth.passwordMinLength` - "Password must be at least 8 characters"
+- `auth.nameRequired` - "Name is required"
+- `auth.nameMinLength` - "Name must be at least 2 characters"
+
+Add these keys to both [fr.json](mdc:fronts/landing/src/i18n/locales/fr.json) and [en.json](mdc:fronts/landing/src/i18n/locales/en.json).
+
+## Common Patterns
+
+### Disabled Submit Button
+Always disable submit button when form is invalid or loading:
+```javascript
+:disabled="isLoading || !$form.valid"
+```
+
+### Field Validation Display
+```vue
+<Message v-if="$form.fieldName?.invalid" severity="error" size="small" variant="simple">
+  {{ $form.fieldName.error?.message }}
+</Message>
+```
+
+### Error Handling
+```javascript
+// Global form error (outside validation)
+<div v-if="error" class="text-red-600 text-sm">
+  {{ error }}
+</div>
+```
+
+## TypeScript Configuration
+
+If encountering module resolution issues with `@primevue/forms/resolvers/yup`, just ignore it
+
+## Known Issues
+
+- The `yupResolver` import may show TypeScript errors but works at runtime
+- Use `@primevue/forms/resolvers/yup` import path (not `@primeuix/forms`)
+- PrimeVue Forms resolver exports have known issues but functionality remains intact
+

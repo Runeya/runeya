@@ -1,0 +1,51 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# i18n Error Message Patterns
+
+## Overview
+All user-facing messages, including errors, must be internationalized using the `t()` function with appropriate fallbacks.
+
+## Error Handling Pattern
+Components should translate error messages at the presentation layer:
+
+### Basic Pattern
+```javascript
+catch (err) {
+  let errorMessage = t('auth.genericError') || 'Something went wrong. Please try again.';
+  
+  if (err instanceof Error) {
+    // Translate specific error messages
+    if (err.message.includes('Authentication failed')) {
+      errorMessage = t('auth.invalidCredentials') || 'Invalid email or password';
+    } else if (err.message.includes('already exists')) {
+      errorMessage = t('auth.emailExists') || 'An account with this email already exists';
+    }
+  }
+  
+  error.value = errorMessage;
+}
+```
+
+## Implementation Examples
+Reference [Login.vue](mdc:fronts/landing/src/views/Login.vue) and [SignUp.vue](mdc:fronts/landing/src/views/SignUp.vue) for complete implementations.
+
+### Login Error Messages
+- `t('auth.loginError')` - Generic login error
+- `t('auth.invalidCredentials')` - Wrong email/password
+- `t('auth.noUserData')` - Authentication data missing
+
+### SignUp Error Messages  
+- `t('auth.signUpError')` - Generic signup error
+- `t('auth.emailExists')` - Email already registered
+- `t('auth.registrationFailed')` - Registration process failed
+- `t('auth.passwordError')` - Password validation errors
+
+## Best Practices
+1. **Always provide fallbacks**: `t('key') || 'English fallback'`
+2. **Specific error detection**: Check error message content for specific cases
+3. **Consistent key naming**: Use domain prefixes like `auth.`, `user.`, etc.
+4. **User-friendly messages**: Avoid technical jargon in user-facing errors
+5. **Component-level translation**: Don't translate in stores, do it in components

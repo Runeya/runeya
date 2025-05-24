@@ -1,0 +1,71 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Better Auth Architecture & Best Practices
+
+## Configuration Files
+
+### Backend Configuration
+The backend auth configuration is in [servers/plugins/auth/auth.js](mdc:servers/plugins/auth/auth.js).
+- Configures Better Auth with MongoDB adapter
+- Handles email/password authentication
+- Includes API key and organization plugins
+- Manages social providers (GitHub)
+- Sends organization invitation emails
+
+### Frontend Configuration  
+The frontend auth client is configured in [fronts/landing/src/auth.js](mdc:fronts/landing/src/auth.js).
+- Creates and exports the authClient with plugins
+- Handles Bearer token storage in localStorage
+- Includes apiKey and organization client plugins
+- Exports common auth methods (signIn, signUp, signOut, getSession, useSession)
+
+## Best Practices for Frontend Auth Calls
+
+### Centralize AuthClient Usage
+When working with authentication, users, organizations, or invitations on the frontend:
+
+1. **Create dedicated store files** for each domain (like [fronts/landing/src/stores/organizationStore.js](mdc:fronts/landing/src/stores/organizationStore.js))
+2. **Import authClient** from the main auth configuration file
+3. **Encapsulate all auth-related API calls** within these store files
+4. **Export reactive state and methods** for components to use
+
+### Example Pattern (from organizationStore.js):
+```javascript
+import { authClient } from '../auth';
+
+// Encapsulate auth calls in store methods
+const fetchOrganizations = async () => {
+  const organizationsRes = await authClient.organization.list();
+  // Handle response...
+};
+
+const createOrganization = async (organizationData) => {
+  const res = await authClient.organization.create(organizationData);
+  // Handle response...
+};
+```
+
+### Benefits of This Approach:
+- **Centralized configuration**: All auth calls in one place per domain
+- **Consistent error handling**: Uniform error management across the app
+- **Reactive state management**: Automatic UI updates when data changes
+- **Reusability**: Store methods can be used across multiple components
+- **Type safety**: Better TypeScript support with centralized interfaces
+
+## Available Auth Domains
+Based on the Better Auth plugins configured:
+- **Authentication**: signIn, signUp, signOut, session management
+- **Organizations**: create, list, update, delete, set active
+- **API Keys**: management and validation  
+- **Invitations**: send, accept, manage organization invitations
+- **Permissions**: role-based access control within organizations
+
+## When Creating New Auth Features
+1. Check if a store already exists for the domain
+2. If not, create a new store file following the organizationStore pattern
+3. Import authClient from [fronts/landing/src/auth.js](mdc:fronts/landing/src/auth.js)
+4. Encapsulate all related auth calls within the store
+5. Export reactive state and methods for component usage

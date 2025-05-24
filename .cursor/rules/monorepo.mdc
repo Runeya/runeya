@@ -16,3 +16,11 @@ ecris toujours le vue en version 3 avec l'api de composition
 All code should be write in english including comments
 
 You should not launch app by yourself
+
+N'importe pas par toi meme cette ressource, c'est gérer par le theme preset Aura:
+import 'primevue/resources/primevue.min.css';
+
+
+Applique toi meme les modification dans le code que tu proposes
+
+N'ecris jamais de typescript le code doit etre en javascript

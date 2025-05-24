@@ -8,7 +8,7 @@ process.on('message', async (/** @type {Record<string, any>} */conf) => {
   const files = [];
   if (
     pathfs.basename(path).charAt(0) === '.'
-    || (['node_modules'].includes(pathfs.basename(path)))
+    || (['node_modules', 'volumes'].includes(pathfs.basename(path)))
   ) return process.send?.({ dirs, npmPath: null });
   await fs
     .readdir(path)

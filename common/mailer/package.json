@@ -1,0 +1,23 @@
+{
+  "name": "@runeya/common-mailer",
+  "version": "1.0.8",
+  "description": "",
+  "repository": "https://github.com/runeya/runeya",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"no test\""
+  },
+  "private": true,
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "lodash": "^4.17.21",
+    "mustache": "^4.2.0",
+    "nodemailer": "^6.9.11"
+  },
+  "devDependencies": {
+    "@runeya/common-retrigger-all-build": "workspace:*",
+    "@types/mustache": "^4.2.6"
+  }
+}

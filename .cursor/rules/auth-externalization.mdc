@@ -1,0 +1,48 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Better Auth Client Externalization
+
+## Overview
+Never use `authClient` directly in Vue components. All authentication calls must be externalized through dedicated stores.
+
+## Store Pattern
+All auth-related operations should be centralized in [authStore.js](mdc:fronts/landing/src/stores/authStore.js):
+
+### Store Structure
+```javascript
+import { authClient } from '../auth';
+
+export const useAuth = () => {
+  const user = ref(null);
+  const isLoading = ref(false);
+  const error = ref(null);
+  const isAuthenticated = ref(false);
+
+  const login = async (credentials) => {
+    // Encapsulate authClient.signIn.email() call
+  };
+
+  const register = async (userData) => {
+    // Encapsulate authClient.signUp.email() call
+  };
+
+  return { user, isLoading, error, isAuthenticated, login, register };
+};
+```
+
+## Component Usage
+Components like [Login.vue](mdc:fronts/landing/src/views/Login.vue) and [SignUp.vue](mdc:fronts/landing/src/views/SignUp.vue) should:
+
+1. Import `authStore` instead of `authClient`
+2. Use store methods: `authStore.login()`, `authStore.register()`
+3. Handle errors at component level for proper i18n
+
+## Benefits
+- **Centralized auth logic**: All auth calls in one place
+- **Consistent error handling**: Uniform error management
+- **Reactive state**: Automatic UI updates
+- **Reusability**: Store methods usable across components
+- **Better separation of concerns**: Components focus on UI, stores handle data

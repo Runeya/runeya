@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+process.title = 'runeya';
+
+
+require('dotenv').config();
+(async () => {
+  require('./server')
+    .launch()
+      .catch((err) => {
+        console.error(err)
+        return err
+      })
+})()

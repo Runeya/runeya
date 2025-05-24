@@ -6,7 +6,6 @@ import BugsVue from '@runeya/modules-bugs-front/src/Bugs.vue';
 import ConfigsVue from '@runeya/modules-configuration-front/src/Configs.vue';
 import OpenAI from '@runeya/modules-openai-front/src/OpenAi.vue';
 import Toolbox from '@runeya/modules-toolbox-front/src/Toolbox.vue';
-import UUID from '@runeya/modules-uuid-front/src/UUID.vue';
 import HttpClient from '@runeya/modules-http-client-front/src/HttpClient.vue';
 import Base64 from '@runeya/modules-base64-front/src/Base64.vue';
 import JWT from '@runeya/modules-jwt-front/src/Index.vue';
@@ -36,7 +35,6 @@ const toolboxPlugins = [
   { name: 'Finder', component: Finder },
   { name: 'Git-NotUpToDate', component: NotUpToDate },
   { name: 'Regex', component: Regex },
-  { name: 'UUID', component: UUID },
   { name: 'HttpClient', component: HttpClient },
   { name: 'Base64', component: Base64 },
   { name: 'JSONFormatter', component: JSONFormatter },

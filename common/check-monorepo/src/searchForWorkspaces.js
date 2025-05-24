@@ -65,7 +65,7 @@ function checkIfAllWorkspacesAreLinkedToLerna() {
  */
 const exploreDir = (rootDir) => fs
   .readdirSync(rootDir)
-  .filter((dir) => !['node_modules', 'out'].includes(dir)
+  .filter((dir) => !['node_modules', 'out', 'volumes'].includes(dir)
       && dir[0] !== '.')
   .map((dir) => pathfs.resolve(rootDir, dir))
   .filter((dir) => fs.statSync(dir).isDirectory())

@@ -1,0 +1,6 @@
+{
+  "watch": [".", "../modules"],
+  "ext": "js, css",
+  "ignore": ["./public"],
+  "delay": "1000"
+}

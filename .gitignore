@@ -69,3 +69,4 @@ tsup.config.bundled*
 encryption-key.json
 
 !.git/hooks
+volumes
