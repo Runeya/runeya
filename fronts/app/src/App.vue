@@ -48,6 +48,7 @@
       </div>
     </div>
     <EnvironmentsChooser/>
+    <PluginDev/>
   </div>
   <div class="not-connected" v-else>
     Server is not connected or has crashed <br>
@@ -86,6 +87,7 @@ import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel'; 
 import debounce from 'debounce'
 import Button from 'primevue/button'
+import PluginDev from './components/PluginDev.vue'
 
 const componentsToLoad = plugins.filter(p => p.load).reduce((agg, {cmp, name}) => {
   agg[name] = cmp
@@ -102,6 +104,7 @@ export default {
     Splitter,
     SplitterPanel,
     Button,
+    PluginDev,
     ...componentsToLoad
   },
   setup() {
@@ -142,27 +145,24 @@ export default {
       const shouldSetup = await Stack.shouldSetup()
       if(shouldSetup) router.push({name: 'settings', params: {setting: 'crypto'}, query: { wrongKey: 'true' }})
     }
-    
+    const reload = () => {
+      console.log('reload')
+      window.location.reload()
+    }
+    const wrongKey = () => router.push({name: 'settings', params: {setting: 'crypto'}, query: { wrongKey: 'true' }})
+
     onMounted(async () => {
       Socket.on('connect', redirect);
       Socket.on('disconnect', redirect);
-      Socket.on('forceReload', () => {
-        window.location.reload()
-      });
-      Socket.on('system:wrongKey', () => router.push({name: 'settings', params: {setting: 'crypto'}, query: { wrongKey: 'true' }}))
-      
-      // Handle git conflicts in encrypted files
+      Socket.on('forceReload', reload);
+      Socket.on('system:wrongKey', wrongKey)
+      Socket.on('plugins:installed', reload)
+      Socket.on('plugins:uninstalled', reload)
       Socket.on('crypto:conflict', handleGitConflict);
-      
       await redirect()
-      
-      // Fetch pending conflicts after connection is established
-      // Attendre un peu pour s'assurer que le composant est monté avant d'appeler ses méthodes
       setTimeout(() => {
         if (gitConflictModalRef.value && typeof gitConflictModalRef.value.fetchPendingConflicts === 'function') {
           gitConflictModalRef.value.fetchPendingConflicts();
-          
-          // Traiter les conflits qui auraient été mis en attente pendant le chargement
           if (pendingGitConflicts.value.length > 0) {
             console.log(`Traitement de ${pendingGitConflicts.value.length} conflits en attente...`);
             pendingGitConflicts.value.forEach(conflict => {
@@ -170,7 +170,6 @@ export default {
                 gitConflictModalRef.value.addConflict(conflict);
               }
             });
-            // Vider la file d'attente 
             pendingGitConflicts.value = [];
           }
         } else {
@@ -181,6 +180,10 @@ export default {
     
     onBeforeUnmount(() => {
       Socket.off('crypto:conflict', handleGitConflict);
+      Socket.off('plugins:installed', reload)
+      Socket.off('plugins:uninstalled', reload)
+      Socket.off('forceReload', reload)
+      Socket.off('system:wrongKey', wrongKey)
     })
     
     /**

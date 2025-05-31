@@ -158,6 +158,7 @@ import hljs from 'highlight.js'
 import 'highlight.js/styles/monokai.min.css'
 import markdownIt from 'markdown-it'
 import githubMarkdown from '../helpers/github-markdown-css'
+import iframe from '../helpers/iframe';
 
 const route = useRoute();
 const router = useRouter();
@@ -238,7 +239,14 @@ const getDownloadUrl = () => {
 };
 
 const downloadPlugin = () => {
-  window.open(getDownloadUrl(), '_blank');
+  if(iframe.isIframed) {
+    window.top?.postMessage({
+      type: 'download-plugin',
+      url: getDownloadUrl(),
+    }, '*');
+  } else {
+    window.open(getDownloadUrl(), '_blank');
+  }
 };
 
 const copyToClipboard = async (text) => {

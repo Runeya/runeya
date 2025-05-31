@@ -1,5 +1,19 @@
 const plugins = require('@runeya/modules-plugins-loader-backend');
 const Stack = require('../models/stack');
+const { default: axios } = require('axios');
+const { tmpdir } = require('node:os');
+const path = require('node:path');
+const { writeFileSync, existsSync } = require('node:fs');
+const { writeFile, mkdir, readFile, cp, rm, readdir } = require('node:fs/promises');
+const dbs = require('./dbs');
+const HTTPError = require('@runeya/common-express-http-error');
+const args = require('./args');
+const tar = require('tar');
+const dbConfig = dbs.getDb('plugins', {encrypted: false, defaultData: []});
+const { sockets } = require('@runeya/common-socket-server');
+const stack = require('../models/stack');
+const chokidar = require('chokidar');
+const debounce = require('debounce');
 
 /** @type {import('express').Router[]} */
 const routes = [];
@@ -7,6 +21,9 @@ const routes = [];
 const forService = [];
 /** @type {Record<string, PluginSM[]>} */
 const allPlugins = {};
+
+/** @type {Record<string, any>} */
+const loadedPlugins = {};
 
 Object.keys(plugins)
   .map((key) => plugins[/** @type {keyof (typeof plugins)} */(key)])
@@ -31,7 +48,203 @@ Object.keys(plugins)
     });
     return plugin;
   });
+
+async function install(remotePath, force = false) {
+  const rootPath = args.rootPath;
+  if(!existsSync(rootPath)) await mkdir(rootPath, { recursive: true });
+  const runeyaPath = path.resolve(rootPath, '.runeya');
+  if(!existsSync(runeyaPath)) await mkdir(runeyaPath, { recursive: true });
+  const pluginsPath = path.resolve(runeyaPath, 'plugins');
+  if(!existsSync(pluginsPath)) await mkdir(pluginsPath, { recursive: true });
+  const packageTmpPath = path.resolve(tmpdir(), `runeya-plugin-${Date.now()}`);
+  if(!existsSync(packageTmpPath)) await mkdir(packageTmpPath, { recursive: true });
+  const packageTmpFilePath = `${packageTmpPath}.tar.gz`;
+
+  const { data } = await axios.get(remotePath, { responseType: 'arraybuffer' });
+  await writeFile(packageTmpFilePath, data);
+  await tar.extract({ file: packageTmpFilePath, cwd: packageTmpPath });
+  const config = JSON.parse(await readFile(path.join(packageTmpPath, 'package.json'), 'utf8'));
+  const plugin = await getInstalledPlugin(config.name, config.version);
+  console.log(config.version)
+
+  if(plugin && !force) {
+    throw new HTTPError('Plugin already installed', '400.68746854743512');
+  }
+  await dbConfig.alasql.delete(`name='${config.name}'`);
+  const diskPath = path.resolve(pluginsPath, config.name);
+  if(existsSync(diskPath)) await rm(diskPath, { recursive: true, force: true });
+  await cp(path.resolve(packageTmpPath), diskPath, { recursive: true });
+  await dbConfig.alasql.insertOne({
+    name: config.name,
+    version: config.version,
+    diskPath,
+    config,
+    remotePath,
+  });
+  await loadPlugin(config.name);
+  sockets.emit('plugins:installed', {
+    name: config.name,
+    version: config.version,
+    diskPath,
+    config,
+    remotePath,
+  });
+}
+
+async function getInstalledPlugins() {
+  const installedPlugins = await dbConfig.alasql.simpleSelect({});
+
+  if(process.env.NODE_ENV === 'HFBXdZMJxLyJoua28asEaxRixJ6LriR7FnRzX6pwA7pFjZ') {
+    const pluginsPath = path.resolve(__dirname, '../../../plugins')
+    const pluginsDir = await readdir(pluginsPath)
+    await Promise.all(pluginsDir.map(async (pluginDirName) => {
+      const pluginPath = path.resolve(pluginsPath, pluginDirName)
+      const packageJsonPath = path.resolve(pluginPath, 'package.json')
+      const config = JSON.parse(await readFile(packageJsonPath, 'utf8'));
+      installedPlugins.push( {
+        "name": config.name,
+        "version": "development",
+        "diskPath": pluginPath,
+        "config": {
+          ...config,
+          runeya: {
+            ...config.runeya,
+            entries: {
+              ...config.runeya.entries,
+              front: {
+                ...config.runeya.entries.front,
+                js: './front/dist/index.umd.js',
+              },
+            },
+          },
+        },
+        "remotePath": "http://127.0.0.1:5469/api/plugins/download/%40runeya%2Fplugins-uuid/1.0.8"
+      })
+    }))
+  }
+
+  return installedPlugins;
+}
+async function getInstalledPlugin(name, version) {
+  const [plugin] = (await getInstalledPlugins()).filter((plugin) => plugin.name === name);
+  if(!plugin) throw new HTTPError('Plugin not found', '404.plugin.not.found');
+  if(version && plugin.version !== version) return null;
+  return plugin;
+}
+async function getInstalledToolboxPlugins() {
+  const plugins = await getInstalledPlugins();
+  const toolboxPlugins = plugins.filter((plugin) => plugin?.config?.runeya?.toolbox);
+  return toolboxPlugins;
+}
+
+async function uninstall(name) {
+  const [plugin] = await dbConfig.alasql.simpleSelect({where: `name='${name}'`});
+  
+  if (!plugin) {
+    throw new HTTPError('Plugin not found', '404.plugin.not.found');
+  }
+  if (plugin.diskPath && existsSync(plugin.diskPath)) {
+    await rm(plugin.diskPath, { recursive: true, force: true });
+  }
+  await dbConfig.alasql.delete(`name='${name}'`);
+  sockets.emit('plugins:uninstalled', {
+    name,
+  });
+  return { success: true, message: 'Plugin uninstalled successfully' };
+}
+
+async function registerRoutes(router) {
+  routes.forEach((route) => router.use(route));
+}
+
+async function call(pluginName, method, args) {
+  if(!loadedPlugins[pluginName]) await loadPlugin(pluginName);
+  const loadedPlugin = loadedPlugins[pluginName];
+  if(!loadedPlugin) throw new HTTPError('Plugin not found', '404.plugin.not.found');
+  return loadedPlugin[method](...args);
+}
+
+// Add this helper function to clear plugin cache recursively
+function clearPluginCache(pluginPath) {
+  const pluginDir = path.dirname(pluginPath);
+  
+  // Find all cached modules that belong to this plugin directory
+  Object.keys(require.cache).forEach(cachedPath => {
+    if (cachedPath.startsWith(pluginDir)) {
+      console.log('Clearing cache for:', cachedPath);
+      delete require.cache[cachedPath];
+    }
+  });
+}
+async function loadPlugin(pluginName) {
+  const plugin = await getInstalledPlugin(pluginName);
+  let backendPath;
+
+  if(process.env.NODE_ENV === 'HFBXdZMJxLyJoua28asEaxRixJ6LriR7FnRzX6pwA7pFjZ' && pluginName.startsWith('@runeya/')) {
+    const pluginPath = path.resolve(__dirname,`../../../plugins/${pluginName.replace('@runeya/plugins-', '')}`)
+    const frontPath = path.resolve(pluginPath, 'front') 
+    const frontPathDist = path.resolve(`${frontPath}/dist`)
+    backendPath = path.resolve(pluginPath, 'backend/index.js') 
+
+    if(!existsSync(frontPath)) throw new HTTPError('Front not found: ' + frontPath, '404.front.not.found');
+    if(!existsSync(frontPathDist)) throw new HTTPError('Front not found: ' + frontPathDist, '404.front.not.found');
+    if(!existsSync(backendPath)) throw new HTTPError('Backend not found: ' + backendPath, '404.backend.not.found');
+
+    const debouncedFrontWatcher = debounce(async () => {
+      sockets.emit('plugins:front:building', pluginName);
+      console.log('Front changed', pluginName)
+    }, 1000);
+    const frontWatcher = chokidar.watch(frontPath, {ignored: frontPathDist, ignoreInitial: true}).on('all', debouncedFrontWatcher);
+
+    const debouncedFrontDistWatcher = debounce(async (a,b,c) => {
+      sockets.emit('plugins:front:changed', pluginName);
+      console.log('Front dist changed', pluginName)
+    }, 1000);
+    const frontDistWatcher = chokidar.watch(frontPathDist, {ignoreInitial: true}).on('all', debouncedFrontDistWatcher);
+
+    const debouncedBackendWatcher = debounce(async () => {
+      await frontWatcher.close()
+      await frontDistWatcher.close()
+      await watcher.close()
+      loadPlugin(pluginName);
+      console.log('Backend changed', pluginName)
+    }, 1000);
+    const watcher = chokidar.watch(path.dirname(backendPath), {ignoreInitial: true}).on('all', debouncedBackendWatcher);
+  } else {
+    backendPath = path.resolve(args.rootPath,'.runeya', 'plugins', pluginName, plugin.config.runeya.entries.backend) 
+  }
+
+  clearPluginCache(backendPath);
+  const loadedPlugin = require(backendPath)
+  loadedPlugins[pluginName] = await loadedPlugin(stack);
+  return loadedPlugins[pluginName];
+}
+
+async function frontFile(pluginName) {
+  const plugin = await getInstalledPlugin(pluginName);
+  return await readFile(path.join(plugin.diskPath,  plugin.config.runeya.entries.front.js), 'utf8');
+}
+;(async () => {
+  const plugins = await getInstalledPlugins();
+  await Promise.all(plugins.map(async (plugin) => {
+    try {
+      await loadPlugin(plugin.name);
+      console.log('loadedPlugin', plugin.name)
+    } catch (error) {
+      console.error(error)
+    }
+  }));
+})();
+
 module.exports = {
+  install,
+  frontFile,
+  call,
+  uninstall,
+  getInstalledPlugins,
+  getInstalledPlugin,
+  registerRoutes,
+  getInstalledToolboxPlugins,
   forService,
   ...allPlugins,
   routes,

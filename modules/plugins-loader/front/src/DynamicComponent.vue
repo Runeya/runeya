@@ -1,68 +1,29 @@
 <template>
-    <component :is="'runeya-' + component" class="dynamic-component"></component>
-    <!-- <{{ component }}/> -->
+  <div :style="{flexGrow: 1}">
+    <component :is="componentName" class="dynamic-component" ></component>
+    <component :is="route.params.plugin" class="dynamic-component" ></component>
+  </div>
 </template>
 
 <script setup>
-import { ref, watchEffect, onMounted } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 
-const router = useRouter();
+const route = useRoute();
 
-const component = ref();
-const urlcss = ref();
-watchEffect(() => {
-  component.value = router.currentRoute.value.params.plugin;
+const props = defineProps({
+  context: {
+    type: String,
+    default: '',
+  },
 });
-function moveStyles(shadowDOM) {
-  observeHeadForStyles(shadowDOM)
-  const styles = document.querySelectorAll('head > style[type="text/css"]')
-  styles.forEach((styleEl) => {
-      const clonedStyleEl = styleEl.cloneNode(true)
-      shadowDOM.prepend(clonedStyleEl)
-  })
-}
 
-function observeHeadForStyles(shadowDOM) {
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-      mutation.addedNodes.forEach((node) => {
-        if (node instanceof HTMLStyleElement) {
-          const clonedStyleEl = node.cloneNode(true)
-          shadowDOM.appendChild(clonedStyleEl)
-        }
-      })
-    })
-  })
-
-  observer.observe(document.head, { childList: true, subtree: false })
-}
-const tryAttachCSS = () => {
-  const el = document.querySelector(`runeya-${component.value}`)?.shadowRoot
-  if (el) {
-    const link = document.createElement('link')
-    link.rel = 'stylesheet'
-    link.href = `http://localhost:5469/plugins/${component.value}/0.0.1/index.css`
-    el.appendChild(link)
-    moveStyles(el)
-  } else {
-    setTimeout(tryAttachCSS)
+const componentName = computed(() => {
+  if(props.context) {
+    return route.params.plugin + '-' + props.context;
   }
-}
-async function loadScript() {
-  const url = `http://localhost:5469/plugins/${component.value}/0.0.1/index.umd.js`
-  await import(url)
-  tryAttachCSS()
-}
-watchEffect(() => {
-  if (component.value) {
-    loadScript()
-  }
-})
-onMounted(() => {
-  console.log('DynamicComponent mounted')
-  loadScript()
-})
+  return route.params.plugin;
+});
 </script>
 
 <style lang="scss" scoped>

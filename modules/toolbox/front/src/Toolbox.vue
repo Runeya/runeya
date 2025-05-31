@@ -8,7 +8,7 @@
           :class="{ active: isActive(plugin) }">
           <div class="item">
             <i class="icon" :class="plugin?.icon" v-if="plugin?.icon"></i>
-            <span class="icon" v-if="plugin?.iconText">{{ plugin?.iconText }}</span>
+            <span class="icon" v-else-if="plugin?.iconText">{{ plugin?.iconText }}</span>
             {{ plugin?.text }}
           </div>
         </li>
@@ -45,8 +45,24 @@ onMounted(async () => {
   searchToolRef.value?.focus();
 });
 
+const nativePlugins = computed(() => plugins.value.filter((plugin) => !plugin.version));
+const currentElement = ref(null);
+
+
 const buttonsPlugins = computed(() => ([
-  ...plugins.value.map((plugin) => plugin.placements.map((placement) => {
+  ...globalThis.toolboxPlugins.value.map((plugin) => {
+    return {
+      ...plugin,
+      click: () => {
+        currentElement.value = plugin.id;
+        router.push({
+          // @ts-ignore
+          path: `/toolbox/${encodeURIComponent(plugin.id)}`,
+        });
+      },
+    };
+  }),
+  ...nativePlugins.value.map((plugin) => plugin.placements.map((placement) => {
     if (typeof placement === 'string') return null;
     return {
       ...plugin,
@@ -54,6 +70,7 @@ const buttonsPlugins = computed(() => ([
       icon: placement.icon,
       iconText: placement.iconText,
       click: placement.goTo ? () => {
+        currentElement.value = null;
         if (typeof placement.goTo === 'string') router.push({ path: placement.goTo });
         else {
           router.push({
@@ -73,7 +90,7 @@ function chooseFirst() {
 }
 /** @param {import('../../../plugins-loader/front/src/views').PluginSM<undefined> | undefined | null} plugin */
 function isActive(plugin) {
-  return router.currentRoute.value.params.plugin === plugin?.name;
+  return router.currentRoute.value.params.plugin === (plugin?.name || plugin.id);
 }
 
 </script>

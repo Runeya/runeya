@@ -10,9 +10,11 @@
     "url": "https://runeya.dev/"
   },
   "scripts": {
-    "build": "vite build",
-    "serve:front": "vite",
-    "test": ""
+    "build": "npx tailwindcss -i ./src/assets/css/tailwind.css -o ./src/assets/css/tailwind.output.css && vite build",
+    "serve:front": "npx tailwindcss -i ./src/assets/css/tailwind.css -o ./src/assets/css/tailwind.output.css && vite",
+    "test": "",
+    "tailwind": "npx tailwindcss -i ./src/assets/css/tailwind.css -o ./src/assets/css/tailwind.output.css --watch",
+    "start": "concurrently \"yarn tailwind\" \"yarn serve:front\""
   },
   "main": "./background.js",
   "files": [
@@ -36,6 +38,7 @@
     "autoprefixer": "^10.4.20",
     "axios": "^1.7.9",
     "bluebird": "^3.7.2",
+    "concurrently": "^9.1.2",
     "dayjs": "^1.11.10",
     "debounce": "^2.0.0",
     "dot-object": "^2.1.4",
@@ -60,6 +63,7 @@
   },
   "postcss": {
     "plugins": {
+      "tailwindcss": {},
       "autoprefixer": {}
     }
   },

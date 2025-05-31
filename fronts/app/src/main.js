@@ -1,13 +1,21 @@
-import PrimeVue from 'primevue/config';
+import PrimeVueConfig from 'primevue/config';
 import Socket from './helpers/Socket';
 import Tooltip from 'primevue/tooltip';
 
+import './assets/css/tailwind.output.css';
 import './assets/theme/index.scss';
-import Aura from '@primevue/themes/aura';
+import PrimeVueAura from '@primevue/themes/aura';
 
 import * as Vue from 'vue'
+import PluginManager from './models/pluginManager.js';
+import { i18n } from './i18n';
+import config from './config';
+import axios from 'axios';
 
 window.Vue = Vue;
+window.PrimeVueConfig = PrimeVueConfig;
+window.PrimeVueAura = PrimeVueAura; 
+
 
 
 (async () => {
@@ -23,17 +31,22 @@ window.Vue = Vue;
   const { default: Section } = await import('./components/Section.vue');
   const { default: Markdown } = await import('./components/Markdown.vue');
 
+  await PluginManager.init();
+
+  await config.init();
+
   system.getVersion().catch((err) => {
     console.error(err);
   });
 
   const app = createApp(App)
+    .use(i18n)
     .component('Editor', Editor)
     .component('SectionCmp', Section)
     .use(Markdown)
-    .use(PrimeVue, {
+    .use(PrimeVueConfig, {
       theme: {
-        preset: Aura,
+        preset: PrimeVueAura,
         options: {
           darkModeSelector: '.theme-dark',
         },

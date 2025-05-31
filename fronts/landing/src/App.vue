@@ -7,7 +7,7 @@
     </div>
 
     <!-- Header -->
-    <header class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-stone-200">
+    <header v-if="!hideHeader" class="sticky top-0 z-40 bg-white/80 backdrop-blur-md border-b border-stone-200">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <!-- Logo -->
@@ -108,7 +108,7 @@
     <InvitationModal/>
 
     <!-- Footer -->
-    <footer class="bg-stone-100 border-t border-stone-200 text-neutral-600">
+    <footer v-if="!hideHeader" class="bg-stone-100 border-t border-stone-200 text-neutral-600">
       <div class="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col md:flex-row justify-between items-center">
           <div class="mb-8 md:mb-0 text-center md:text-left">
@@ -144,16 +144,21 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import LanguageSelector from './components/LanguageSelector.vue';
 import InvitationModal from './components/InvitationModal.vue';
 import { useRouter, useRoute } from 'vue-router';
 import authStore from './stores/authStore';
+import iframe from './helpers/iframe';
 const router = useRouter();
 const route = useRoute();
 const docsUrl = process.env.VUE_APP_DOCS_URL;
 const isMobileMenuOpen = ref(false);
+const hideHeader = ref(iframe.isIframed);
 
+window.top?.postMessage({
+  type: 'plugin-loaded',
+}, '*');
 authStore.getSession()
   
 // Vérifier si l'utilisateur est sur la page d'accueil

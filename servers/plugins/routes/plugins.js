@@ -32,18 +32,33 @@ router.post('/upload', getSession, multer().single('file'), async (req, res) => 
     });
   }
 
-  const extractedFiles = await extractFilesFromTar(req.file.buffer, req.file.originalname, ['config.json', 'README.md']);
-  const configData = extractedFiles['config.json'];
+  const extractedFiles = await extractFilesFromTar(req.file.buffer, req.file.originalname, ['package.json', 'README.md']);
+  const configData = extractedFiles['package.json'];
   const readmeData = extractedFiles['README.md'];
   
   const availableNamespaces = req.organizations.map(organization => `@${organization.slug}`)
   const namespace = configData.name.split('/')[0]
   if(!configData.name) {
-    throw new HTTPError('Name is required in the config.json file.', '400.1984598')
+    throw new HTTPError('Name is required in the package.json file.', '400.1984598')
   }
 
   if(!availableNamespaces.includes(namespace)) {
     throw new HTTPError(`Invalid namespace, available namespaces: ${availableNamespaces.join(', ')}, current namespace: ${namespace}`, '400.74549874')
+  }
+
+  if(!configData.runeya) {
+    throw new Error('No runeya section found in package.json')
+  }
+  if(!configData.runeya.entries) {
+    throw new Error('No entries found in package.json')
+  }
+  if(!configData.runeya.entries.front) {
+    if(!configData.entries.front.js) {
+      throw new Error('No front entrypoint found in package.json')
+    }
+    if(!configData.runeya.entries.front.css) {
+      throw new Error('No front css entrypoint found in package.json')
+    }
   }
 
   const s3 = new aws.S3Client({

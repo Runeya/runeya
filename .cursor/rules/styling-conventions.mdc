@@ -1,0 +1,84 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Styling and Icon Conventions
+
+## Tailwind CSS Classes
+
+### Color Palette
+Always use Tailwind `stone-*` classes instead of PrimeVue `surface-*` classes:
+
+**Correct:**
+- `bg-stone-50`, `text-stone-700`, `border-stone-200`
+
+**Incorrect:**
+- `bg-surface-50`, `text-surface-700`, `border-surface-200`
+
+### Common Styling Patterns
+
+Reference [PluginsManager.vue](mdc:fronts/app/src/views/settings/PluginsManager.vue) for examples:
+
+```vue
+<!-- Containers -->
+<div class="min-h-screen flex items-center justify-center bg-stone-50">
+<div class="max-w-md w-full p-6 bg-white rounded-xl shadow-lg border border-stone-200">
+
+<!-- Buttons -->
+<Button class="w-full py-2 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg">
+
+<!-- DataTable styling -->
+:deep(.p-datatable-thead > tr > th) {
+  @apply bg-stone-50 border-b border-stone-200 text-stone-700 font-medium;
+}
+
+:deep(.p-datatable-tbody > tr:hover) {
+  @apply bg-stone-50;
+}
+```
+
+## Icon Usage
+
+### FontAwesome Icons
+Always use FontAwesome icons instead of PrimeVue icons:
+
+**Correct:**
+- `fas fa-cog` (settings)
+- `fas fa-trash` (delete)
+- `fas fa-puzzle-piece` (plugins)
+- `fas fa-shopping-cart` (store)
+
+**Incorrect:**
+- `pi pi-cog`
+- `pi pi-trash`
+- `pi pi-puzzle`
+
+### Icon Implementation
+```vue
+<!-- In buttons -->
+<Button icon="fas fa-cog" />
+
+<!-- In HTML -->
+<i class="fas fa-cog text-stone-400"></i>
+```
+
+## PrimeVue Component Styling
+
+### Deep Selectors
+Use `:deep()` for styling PrimeVue components:
+
+```scss
+.component-class {
+  :deep(.p-component-element) {
+    @apply tailwind-classes;
+  }
+}
+```
+
+## Required Practices
+- Never import PrimeVue CSS themes manually (handled by Aura preset)
+- Use stone color palette consistently
+- Prefer FontAwesome over PrimeVue icons
+- Use `:deep()` for component styling
+- Follow existing spacing and sizing patterns

@@ -7,9 +7,9 @@ alwaysApply: true
 
 ## Component Structure
 
-Components in this project follow Vue 3 Composition API patterns. Reference examples: [Login.vue](mdc:fronts/landing/src/views/Login.vue), [SignUp.vue](mdc:fronts/landing/src/views/SignUp.vue).
+Components in this project follow Vue 3 Composition API patterns. Reference examples: [Login.vue](mdc:fronts/landing/src/views/Login.vue), [SignUp.vue](mdc:fronts/landing/src/views/SignUp.vue), [PluginsManager.vue](mdc:fronts/app/src/views/settings/PluginsManager.vue).
 
-### Standard Setup
+## Standard Setup
 
 ```vue
 <script setup>
@@ -24,7 +24,28 @@ const isLoading = ref(false);
 </script>
 ```
 
-### Error Handling Pattern
+## PrimeVue DataTable Pattern
+
+When using DataTable components, follow this structure:
+
+```vue
+<DataTable
+  :value="data" 
+  :paginator="data.length > 10"
+  :rows="10"
+  dataKey="id"
+  stripedRows
+  :loading="false"
+>
+  <Column :header="$t('key') || 'Fallback'" style="width: 35%">
+    <template #body="slotProps">
+      <!-- Column content -->
+    </template>
+  </Column>
+</DataTable>
+```
+
+## Error Handling Pattern
 
 ```javascript
 const handleAction = async () => {
@@ -49,6 +70,13 @@ const handleAction = async () => {
   }
 };
 ```
+
+## Required Practices
+- Always use Vue 3 Composition API with `<script setup>`
+- Write all code in JavaScript, never TypeScript
+- Use reactive refs for component state
+- Always provide i18n fallbacks: `$t('key') || 'Fallback'`
+- Use console.error for debugging
 
 ### i18n Usage
 

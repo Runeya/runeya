@@ -1,8 +1,8 @@
 import { ref , watch} from 'vue';
 import { v4 as uuid } from 'uuid';
 import Observable from './CustomObservable';
-import router from '../router/router';
-
+import {useRouter} from 'vue-router';
+const router = useRouter();
 class Notification {
   constructor() {
     /** @type {import('vue').Ref<Notif[]>} */

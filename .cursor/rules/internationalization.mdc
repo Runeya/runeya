@@ -1,0 +1,107 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Internationalization (i18n) Patterns
+
+## Translation Key Structure
+
+Translation files are located in:
+- [fronts/app/src/i18n/locales/fr.json](mdc:fronts/app/src/i18n/locales/fr.json)
+- [fronts/app/src/i18n/locales/en.json](mdc:fronts/app/src/i18n/locales/en.json)
+- @fronts/landing/src/i18n/locales/fr.json
+- @fronts/landing/src/i18n/locales/en.json
+
+## Key Naming Conventions
+
+Use domain-based prefixes for translation keys:
+
+```json
+{
+  "plugins": {
+    "myPlugins": "My Plugins",
+    "store": "Store", 
+    "plugin": "Plugin",
+    "description": "Description",
+    "version": "Version",
+    "actions": "Actions",
+    "configure": "Configure",
+    "uninstall": "Uninstall"
+  },
+  "auth": {
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "loginError": "Login failed"
+  }
+}
+```
+
+## Template Usage
+
+Always provide fallbacks for translation keys:
+
+```vue
+<!-- Template usage -->
+{{ $t('plugins.myPlugins') || 'My Plugins' }}
+
+<!-- Column headers -->
+<Column :header="$t('plugins.plugin') || 'Plugin'">
+
+<!-- Button labels -->
+<Button :label="$t('plugins.browseStore') || 'Browse Store'" />
+
+<!-- Titles and tooltips -->
+:title="$t('plugins.configure') || 'Configure'"
+```
+
+## Script Usage
+
+In Composition API scripts:
+
+```javascript
+import { useI18n } from 'vue-i18n';
+
+const { t } = useI18n();
+
+// Use in functions
+const errorMessage = t('auth.genericError') || 'Something went wrong. Please try again.';
+```
+
+## Error Message Translation
+
+Components should translate error messages at the presentation layer:
+
+```javascript
+catch (err) {
+  let errorMessage = t('auth.genericError') || 'Something went wrong. Please try again.';
+  
+  if (err instanceof Error) {
+    if (err.message.includes('Authentication failed')) {
+      errorMessage = t('auth.invalidCredentials') || 'Invalid email or password';
+    } else if (err.message.includes('already exists')) {
+      errorMessage = t('auth.emailExists') || 'An account with this email already exists';
+    }
+  }
+  
+  error.value = errorMessage;
+}
+```
+
+## Required Practices
+
+1. **Always provide fallbacks**: `t('key') || 'English fallback'`
+2. **Consistent key naming**: Use domain prefixes like `auth.`, `plugins.`, `user.`
+3. **User-friendly messages**: Avoid technical jargon in user-facing translations
+4. **Component-level translation**: Don't translate in stores, do it in components
+5. **Specific error detection**: Check error message content for specific cases
+6. **Add missing keys**: Update both `fr.json` and `en.json` when adding new translations
+
+## Common Translation Domains
+
+- `auth.*` - Authentication related
+- `plugins.*` - Plugin management
+- `user.*` - User management  
+- `navigation.*` - Menu and navigation
+- `validation.*` - Form validation
+- `errors.*` - Generic error messages

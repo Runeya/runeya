@@ -1,0 +1,30 @@
+{
+  "plugins": {
+    "myPlugins": "My Plugins",
+    "store": "Store",
+    "plugin": "Plugin",
+    "description": "Description",
+    "version": "Version",
+    "actions": "Actions",
+    "installedPlugins": "Installed Plugins",
+    "installedDescription": "Manage your installed plugins",
+    "storeDescription": "Discover and install new plugins",
+    "active": "Active",
+    "inactive": "Inactive",
+    "configure": "Configure",
+    "uninstall": "Uninstall",
+    "delete": "Delete",
+    "cancel": "Cancel",
+    "confirmDelete": "Confirm Deletion",
+    "deleteConfirmMessage": "Are you sure you want to delete this plugin?",
+    "deleteWarning": "This action is irreversible.",
+    "deleteSuccess": "Plugin deleted successfully",
+    "installSuccess": "Plugin installed successfully",
+    "deleteError": "Error deleting plugin",
+    "noPlugins": "No plugins installed",
+    "noPluginsDescription": "Explore the store to discover useful plugins",
+    "browseStore": "Browse Store",
+    "storeComingSoon": "Store under development",
+    "storeComingSoonDescription": "The plugin store will be available soon"
+  }
+} 

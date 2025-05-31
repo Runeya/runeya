@@ -1,0 +1,181 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# PrimeVue Component Patterns
+
+## DataTable Implementation
+
+Reference [PluginsManager.vue](mdc:fronts/app/src/views/settings/PluginsManager.vue) for complete DataTable implementation.
+
+### Basic Structure
+
+```vue
+<DataTable
+  :value="data" 
+  :paginator="data.length > 10"
+  :rows="10"
+  class="custom-datatable"
+  dataKey="id"
+  stripedRows
+  :loading="false"
+>
+  <!-- Columns here -->
+</DataTable>
+```
+
+### Column Patterns
+
+```vue
+<!-- Standard column with header translation -->
+<Column :header="$t('key') || 'Fallback'" style="width: 35%">
+  <template #body="slotProps">
+    <div class="flex items-center gap-3">
+      <div class="font-medium text-stone-800">
+        {{ slotProps.data?.displayName || slotProps.data?.name || 'Default' }}
+      </div>
+    </div>
+  </template>
+</Column>
+
+<!-- Badge column -->
+<Column :header="$t('plugins.version') || 'Version'" style="width: 10%">
+  <template #body="slotProps">
+    <Badge 
+      :value="slotProps.data?.version || '1.0.0'" 
+      severity="info"
+    />
+  </template>
+</Column>
+
+<!-- Actions column -->
+<Column :header="$t('plugins.actions') || 'Actions'" style="width: 15%">
+  <template #body="slotProps">
+    <div class="flex items-center gap-1">
+      <Button 
+        icon="fas fa-cog" 
+        severity="secondary" 
+        text 
+        rounded 
+        size="small"
+        :title="$t('plugins.configure') || 'Configure'"
+      />
+    </div>
+  </template>
+</Column>
+```
+
+### Empty State Template
+
+```vue
+<template #empty>
+  <div class="empty-state text-center py-8">
+    <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <i class="fas fa-puzzle-piece text-stone-400 text-2xl"></i>
+    </div>
+    <h3 class="text-lg font-medium text-stone-800 mb-2">
+      {{ $t('plugins.noPlugins') || 'No items found' }}
+    </h3>
+    <p class="text-stone-600 mb-4">
+      {{ $t('plugins.noPluginsDescription') || 'Description text' }}
+    </p>
+    <Button 
+      :label="$t('plugins.browseStore') || 'Action Button'"
+      icon="fas fa-shopping-cart"
+      @click="handleAction"
+    />
+  </div>
+</template>
+```
+
+## TabView Implementation
+
+```vue
+<TabView v-model:activeIndex="activeTabIndex" class="custom-tabs">
+  <TabPanel :header="$t('plugins.myPlugins') || 'Tab 1'" value="0">
+    <!-- Tab content -->
+  </TabPanel>
+  <TabPanel :header="$t('plugins.store') || 'Tab 2'" value="1">
+    <!-- Tab content -->
+  </TabPanel>
+</TabView>
+```
+
+## Button Patterns
+
+```vue
+<!-- Text button with icon -->
+<Button 
+  icon="fas fa-cog" 
+  severity="secondary" 
+  text 
+  rounded 
+  size="small"
+  :title="$t('tooltip.key') || 'Tooltip'"
+/>
+
+<!-- Primary button with label -->
+<Button 
+  :label="$t('button.label') || 'Button Text'"
+  icon="fas fa-icon"
+  @click="handleClick"
+/>
+```
+
+## Component Imports
+
+Always import PrimeVue components individually:
+
+```javascript
+import TabView from 'primevue/tabview';
+import TabPanel from 'primevue/tabpanel';
+import Button from 'primevue/button';
+import Badge from 'primevue/badge';
+import DataTable from 'primevue/datatable';
+import Column from 'primevue/column';
+```
+
+## Styling PrimeVue Components
+
+### Required CSS Patterns
+
+```scss
+.custom-datatable {
+  :deep(.p-datatable-table) {
+    @apply border-0;
+  }
+  
+  :deep(.p-datatable-thead > tr > th) {
+    @apply bg-stone-50 border-b border-stone-200 text-stone-700 font-medium;
+  }
+  
+  :deep(.p-datatable-tbody > tr > td) {
+    @apply border-b border-stone-100 py-3;
+  }
+  
+  :deep(.p-datatable-tbody > tr:hover) {
+    @apply bg-stone-50;
+  }
+  
+  :deep(.p-paginator) {
+    @apply bg-transparent border-0 border-t border-stone-200;
+  }
+}
+
+.custom-tabs {
+  :deep(.p-tabview-panels) {
+    @apply p-0;
+  }
+}
+```
+
+## Required Practices
+
+1. **Never import PrimeVue CSS themes** - handled by Aura preset
+2. **Use stone color palette** for consistent styling
+3. **Always provide i18n fallbacks** for labels and headers
+4. **Use FontAwesome icons** instead of PrimeVue icons
+5. **Follow responsive column widths** with style attributes
+6. **Implement empty states** for better UX
+7. **Use :deep() selectors** for component styling

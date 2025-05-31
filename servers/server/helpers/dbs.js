@@ -133,6 +133,26 @@ module.exports = new class {
           await read()
           return alasql.promise(sql)
         }, 
+        /**
+         * 
+         * @param {{where?: string, orderBy?: string, limit?: number, offset?: number}} param0 
+         * @returns {Promise<any[]>}
+         */
+        simpleSelect: async ({where, orderBy, limit, offset}) => {
+          await read()
+          return alasql.promise(`SELECT * FROM ${table} ${where ? `WHERE ${where}` : ''} ${orderBy ? `ORDER BY ${orderBy}` : ''} ${limit ? `LIMIT ${limit}` : ''} ${offset ? `OFFSET ${offset}` : ''}`)
+        },
+        /** @param {string} where */
+        delete: async (where) => {
+          await read()
+          await alasql.promise(`DELETE FROM ${table} WHERE ${where}`)
+          await write(await alasql(`select * from ${table}`))
+        },
+        insertOne: async (data) => {
+          await read()
+          await alasql.promise(`INSERT INTO ${table} VALUES ${JSON.stringify(data)}`)
+          await write(await alasql(`select * from ${table}`))
+        },
         write: async (sql, value) => {
           await read()
           await alasql.promise(sql, value)

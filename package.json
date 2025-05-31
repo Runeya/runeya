@@ -11,7 +11,9 @@
     "check:dependencies-consistency": "check-dependency-version-consistency .",
     "check:unused": "knip",
     "check:all": "yarn check:unused && yarn check:monorepo && yarn check:dependencies-consistency",
+    "plugin:create": "node common/plugin-creator/src/index.js",
     "ci:generate": "node ./common/workflows/src/index.js",
+    "plugin:dev": "node runScriptWithEnv \"turbo run plugin:dev\"",
     "lint": "node runScriptWithEnv \"turbo run lint\"",
     "test": "node runScriptWithEnv \"turbo run test\"",
     "build": "node runScriptWithEnv \"turbo run build --filter @runeya/servers-server\"",
@@ -32,7 +34,8 @@
       "./fronts/*",
       "./modules/*/*",
       "./common/*",
-      "./servers/*"
+      "./servers/*",
+      "./plugins/*"
     ]
   },
   "private": true,

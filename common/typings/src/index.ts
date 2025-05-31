@@ -1,3 +1,4 @@
+import {VueElementConstructor} from 'vue'
 export type FunctionPropertyNames<T> = {
   [K in keyof T]: T[K] extends Function ? K : never;
 }[keyof T];
@@ -147,6 +148,10 @@ export type {
   StackWithPlugins as Runeya,
 } from '../../../servers/server/models/stack.js';
 
+import type {
+  StackWithPlugins as _StackWithPlugins,
+} from '../../../servers/server/models/stack.js';
+
 export type {
   SpawnOptions,
   ServiceType as Service,
@@ -174,4 +179,34 @@ export namespace OpenAi {
 export namespace FS {
   export type Entry = _Entry
   export type NpmInfos = _NpmInfos
+}
+
+export type Plugin = ({runeya}: {runeya: import('../../../servers/server/models/stack.js').StackWithPlugins}) => Promise<any>
+export type PluginCallback = (
+  param:{
+    assetsBasePath: string,
+    components: {
+      Editor: typeof import('../../../fronts/app/src/components/Editor.vue').default,
+      Section: typeof import('../../../fronts/app/src/components/Section.vue').default,
+    },
+    router: import('../../../fronts/app/src/router/router').default,
+    notification: import('../../../fronts/app/src/helpers/notification').default,
+    callServer: (path: string, ...args: any[]) => Promise<any>,
+    primevueConfig: {
+      theme: {
+        preset: typeof import('@primevue/themes/aura').default,
+        options: {
+          darkModeSelector: '.theme-dark',
+        },
+      },
+    },
+}
+) => {
+  placements: {
+    location: 'toolbox' | 'sidebar' | 'sidebar-top' | 'dev-ops' | 'service' | 'global',
+    component: VueElementConstructor,
+    icon?: string,
+    text: string,
+    iconText?: string,
+  }[]
 }

@@ -80,7 +80,7 @@ async function runMainProcess() {
       process.kill(pid, 'SIGKILL');
     } catch (error) {}
   }
-  const port = +(process.env.PORT || process.env.RUNEYA_HTTP_PORT || '');
+  const port = +(process.env.PORT || '');
   if (port && !Number.isNaN(port)) {
     await new Promise((resolve) => {
       setTimeout(resolve, 100);
@@ -140,6 +140,7 @@ function getWatchableDeps(path) {
 }
 
 function getDependencies(packageName, ignoreDependencies = [], recursiveAggr = []) {
+  if(!packageName) return recursiveAggr;
   const dependencies = (getPackageInfos(__dirname)[packageName].dependencies || {});
   const devDependencies = (getPackageInfos(__dirname)[packageName].devDependencies || {});
   const deps = [

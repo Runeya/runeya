@@ -1,6 +1,12 @@
 {
   "$schema": "https://turborepo.org/schema.json",
   "tasks": {
+    "plugin:dev": {
+      "dependsOn": [
+        "^plugin:dev"
+      ],
+      "outputs": []
+    },
     "build": {
       "dependsOn": [
         "^build"

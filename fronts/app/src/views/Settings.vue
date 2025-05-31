@@ -2,8 +2,14 @@
   <div class="stack-create-root">
     <Splitter style="height: 100%">
         <SplitterPanel :size="1" :style="{minWidth: '160px'}" class="leftPanel"> 
-          <Tree :value="nodes" :selectionKeys="selectedKey" @update:selectionKeys="navigate" selectionMode="single" size="small" class="w-full md:w-[30rem]">
-          </Tree>
+          <Tree
+            :value="nodes"
+            :selectionKeys="selectedKey"
+            @update:selectionKeys="navigate"
+            selectionMode="single"
+            size="small"
+            class="w-full md:w-[30rem]"
+          />
         </SplitterPanel>
         <SplitterPanel :size="75" class="rightPanel">
           <div class="splitter-content" :class="{full: selectedKey['parsers']}">
@@ -12,6 +18,7 @@
             <Parsers v-else-if="selectedKey['parsers']"></Parsers>
             <General v-else-if="selectedKey['general']"></General>
             <Notifications v-else-if="selectedKey['notifications']"></Notifications>
+            <PluginsManager v-else-if="selectedKey['pluginsManager']"></PluginsManager>
           </div>
         </SplitterPanel>
     </Splitter>
@@ -24,6 +31,7 @@ import Crypto from './settings/Crypto.vue';
 import Notifications from './settings/Notifications.vue';
 import General from './settings/General.vue';
 import Parsers from './settings/Parsers.vue';
+import PluginsManager from './settings/PluginsManager.vue';
 import { computed, onMounted, ref, watch } from 'vue';
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
@@ -70,6 +78,11 @@ const nodes = computed(() => ([
     key: 'notifications',
     label: 'Notifications',
     icon: 'fas fa-bell',
+  },
+  {
+    key: 'pluginsManager',
+    label: 'Plugins',
+    icon: 'fas fa-plug',
   },
 ]));
 

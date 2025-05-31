@@ -1,5 +1,5 @@
 <template>
-  <div class="section" :class="{noStyle, noBodyPadding, headerBold,  headerCenter, noRadius}">
+  <div class="section-rtJYbnZTmbTnRmjreRzSMmHPf4NqoWVqEbGFBsz8BGaeKn" :class="{noStyle, noBodyPadding, headerBold,  headerCenter, noRadius}">
     <div class="background">
     </div>
     <div class="title" v-if="header || actions?.length || $slots.header">
@@ -69,11 +69,13 @@ const activeActions = computed(() => {
  */
 </script>
 
-<style lang="scss" scoped>
-$mainColor: rgb(234, 234, 234);
-$secondaryColor: rgb(255, 255, 255);
-$shadow: rgb(165, 177, 179);
-.section {
+<style lang="scss">
+/** Manual scoping to avoid global styles and be able to use the component in a custom element */
+.section-rtJYbnZTmbTnRmjreRzSMmHPf4NqoWVqEbGFBsz8BGaeKn {
+
+  $mainColor: rgb(234, 234, 234);
+  $secondaryColor: rgb(255, 255, 255);
+  $shadow: rgb(165, 177, 179);
   min-width: 0;
   width: calc(100%);
   box-sizing: border-box;

@@ -56,7 +56,7 @@ router.get('/restart', async (req, res) => {
 });
 
 router.get('/proxy-img', async (req, res) => {
-  axios({
+  await axios({
     method: 'get',
     url: req.query.url,
     responseType: 'stream',

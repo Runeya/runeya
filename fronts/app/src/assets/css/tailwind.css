@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* CSS Custom Properties for Theme Colors */
+:root {
+  /* Surface colors */
+  --surface-ground: #f8fafc;
+  --surface-card: #ffffff;
+  --surface-border: #e2e8f0;
+  --surface-b: #f1f5f9;
+  
+  /* Text colors */
+  --text-color: #1e293b;
+  --text-color-secondary: #64748b;
+  
+  /* Brand colors */
+  --primary-color: var(--p-primary-color);
+  
+  /* Status colors */
+  --red-500: #ef4444;
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --surface-ground: #0f172a;
+    --surface-card: #1e293b;
+    --surface-border: #334155;
+    --surface-b: #334155;
+    
+    --text-color: #f1f5f9;
+    --text-color-secondary: #94a3b8;
+    
+    --primary-color: var(--p-primary-color);
+    
+    --red-500: #f87171;
+  }
+}
+
+/* Additional custom styles can be added here */
+html {
+  scroll-behavior: smooth;
+} 
+
+h1 {
+  @apply text-2xl font-bold;
+}
