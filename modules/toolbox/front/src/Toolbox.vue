@@ -48,20 +48,17 @@ onMounted(async () => {
 const nativePlugins = computed(() => plugins.value.filter((plugin) => !plugin.version));
 const currentElement = ref(null);
 
-
 const buttonsPlugins = computed(() => ([
-  ...globalThis.toolboxPlugins.value.map((plugin) => {
-    return {
-      ...plugin,
-      click: () => {
-        currentElement.value = plugin.id;
-        router.push({
-          // @ts-ignore
-          path: `/toolbox/${encodeURIComponent(plugin.id)}`,
-        });
-      },
-    };
-  }),
+  ...globalThis.toolboxPlugins.value.map((plugin) => ({
+    ...plugin,
+    click: () => {
+      currentElement.value = plugin.id;
+      router.push({
+        // @ts-ignore
+        path: `/toolbox/${encodeURIComponent(plugin.id)}`,
+      });
+    },
+  })),
   ...nativePlugins.value.map((plugin) => plugin.placements.map((placement) => {
     if (typeof placement === 'string') return null;
     return {

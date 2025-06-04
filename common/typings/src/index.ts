@@ -106,13 +106,6 @@ export interface Schema {
 // @ts-ignore
 export type AnyObject<T = string> = Record<T, any>;
 
-
-import type {
-  GlobalScript as _Script,
-  ScriptStep as _ScriptStep,
-  TrackStep as _TrackStep,
-} from '../../../modules/global-scripts/backend/GlobalScripts';
-
 //= ==== Plugins ==========
 import type {
   PluginSM as _RuneyaPlugin,
@@ -158,11 +151,7 @@ export type {
   LogMessage,
   Parser,
 } from '../../../servers/server/models/Service';
-export namespace GlobalScripts {
-  export type Script = _Script
-  export type ScriptStep = _ScriptStep
-  export type TrackStep = _TrackStep
-}
+
 export namespace Plugins {
   export type RuneyaPlugin<T> = _RuneyaPlugin<T>
 }
@@ -192,6 +181,11 @@ export type PluginCallback = (
     router: import('../../../fronts/app/src/router/router').default,
     notification: import('../../../fronts/app/src/helpers/notification').default,
     callServer: (path: string, ...args: any[]) => Promise<any>,
+    socket: {
+      emit: (event: string, ...args: any[]) => void,
+      on: (event: string, callback: (...args: any[]) => void) => void,
+      off: (event: string, callback: (...args: any[]) => void) => void,
+    }
     primevueConfig: {
       theme: {
         preset: typeof import('@primevue/themes/aura').default,
@@ -203,7 +197,7 @@ export type PluginCallback = (
 }
 ) => {
   placements: {
-    location: 'toolbox' | 'sidebar' | 'sidebar-top' | 'dev-ops' | 'service' | 'global',
+    location: 'toolbox' | 'sidebar' | 'sidebar-top'  | 'service' | 'global',
     component: VueElementConstructor,
     icon?: string,
     text: string,

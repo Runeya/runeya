@@ -286,6 +286,7 @@ import { ref } from 'vue';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
 import CopyButton from './components/CopyButton.vue';
+import args from './helpers/args'
 
 const callServer = args.params.callServer;
 
@@ -295,8 +296,6 @@ const result = ref(null);
 const settings = ref({
   example: ''
 });
-
-console.log('${className}.ce.vue');
 
 const handleProcess = async () => {
   error.value = '';

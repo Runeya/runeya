@@ -1,5 +1,5 @@
 <template>
-  <div :style="{flexGrow: 1}">
+  <div :style="{flexGrow: 1}" :class="`context-${context}`">
     <component :is="componentName" class="dynamic-component" ></component>
     <component :is="route.params.plugin" class="dynamic-component" ></component>
   </div>
@@ -27,6 +27,9 @@ const componentName = computed(() => {
 </script>
 
 <style lang="scss" scoped>
+.context-sidebar{
+  padding: 10px;
+}
 .dynamic-component{
   width: 100%;
 }

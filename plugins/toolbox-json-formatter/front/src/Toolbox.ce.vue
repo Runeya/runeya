@@ -215,7 +215,7 @@
     </section-cmp>
     
     <!-- Modal for tree visualization -->
-    <Dialog v-model:visible="showJsonCrack" header="JSON Visualizer" modal maximizable :style="{width: '90vw'}" :contentStyle="{height: '80vh'}">
+    <Dialog v-model:visible="showJsonCrack" header="JSON Visualizer" appendTo="self" modal maximizable :style="{width: '90vw'}" :contentStyle="{height: '80vh'}">
       <iframe width="100%" height="100%" ref="jsoncrackEmbed" id="jsoncrackEmbed" :src="`https://jsoncrack.com/widget`" />
     </Dialog>
   </div>

@@ -142,6 +142,7 @@ export default {
       const { data: _pluginsTop } = await axios.get('/plugins/sidebar-top')
       plugins.value = _plugins?.flat() || []
       pluginsTop.value = _pluginsTop?.flat() || []
+
       Socket.on('infos:global', data => {
         const {memPercentage, cpu: _cpu} = data
         cpu.value = _cpu
@@ -212,6 +213,15 @@ export default {
       ])),
       buttonsPlugins: computed(() => ([
         ...extractButtonsFromPlugin(plugins.value),
+        ...globalThis.sidebarPlugins.value.map((plugin) => ({
+            ...plugin,
+            active: `/dynamic/${encodeURIComponent(plugin.id)}`,
+            click: () => {
+              router.push({
+                path: `/dynamic/${encodeURIComponent(plugin.id)}`,
+              })
+            }
+          }))
       ])),
       buttonsBottom: computed(() => ([
         {

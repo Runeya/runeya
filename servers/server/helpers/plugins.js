@@ -134,7 +134,9 @@ async function getInstalledPlugin(name, version) {
 async function getInstalledToolboxPlugins() {
   const plugins = await getInstalledPlugins();
   const toolboxPlugins = plugins.filter((plugin) => plugin?.config?.runeya?.toolbox);
-  return toolboxPlugins;
+
+  console.log(JSON.stringify(['runeya', plugins ],(_, v) => (typeof v === 'function' ? `[func]` : v)));
+  return [];
 }
 
 async function uninstall(name) {
@@ -216,7 +218,19 @@ async function loadPlugin(pluginName) {
 
   clearPluginCache(backendPath);
   const loadedPlugin = require(backendPath)
-  loadedPlugins[pluginName] = await loadedPlugin(stack);
+  loadedPlugins[pluginName] = await loadedPlugin(stack, {
+    socket: {
+      emit: (event, ...args) => {
+        sockets.emit(encodeURIComponent(pluginName) + '-' + event, ...args);
+      },
+      on: (event, callback) => {
+        sockets.on(encodeURIComponent(pluginName) + '-' + event, callback);
+      },
+      off: (event, callback) => {
+        sockets.off(encodeURIComponent(pluginName) + '-' + event, callback);
+      },
+    },
+  });
   return loadedPlugins[pluginName];
 }
 

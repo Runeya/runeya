@@ -1,0 +1,27 @@
+{
+  "name": "@runeya/plugins-toolbox-regex",
+  "version": "1.0.0",
+  "repository": "https://github.com/runeya/runeya",
+  "private": true,
+  "runeya": {
+    "entries": {
+      "backend": "./backend/index.js",
+      "front": {
+        "js": "./front/index.umd.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "node scripts/package.js",
+    "plugin:dev": "cd front && vite build --watch",
+    "test": ""
+  },
+  "devDependencies": {
+    "@runeya/common-plugin-packager": "workspace:*",
+    "@runeya/common-retrigger-all-build": "workspace:*",
+    "primevue": "^4.3.4",
+    "vite": "^6.3.5",
+    "vite-plugin-css-injected-by-js": "^3.5.2",
+    "vue": "^3.5.13"
+  }
+}

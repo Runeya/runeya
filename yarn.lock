@@ -207,6 +207,105 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@ast-grep/napi-darwin-arm64@npm:0.36.3":
+  version: 0.36.3
+  resolution: "@ast-grep/napi-darwin-arm64@npm:0.36.3"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@ast-grep/napi-darwin-x64@npm:0.36.3":
+  version: 0.36.3
+  resolution: "@ast-grep/napi-darwin-x64@npm:0.36.3"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@ast-grep/napi-linux-arm64-gnu@npm:0.36.3":
+  version: 0.36.3
+  resolution: "@ast-grep/napi-linux-arm64-gnu@npm:0.36.3"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@ast-grep/napi-linux-arm64-musl@npm:0.36.3":
+  version: 0.36.3
+  resolution: "@ast-grep/napi-linux-arm64-musl@npm:0.36.3"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@ast-grep/napi-linux-x64-gnu@npm:0.36.3":
+  version: 0.36.3
+  resolution: "@ast-grep/napi-linux-x64-gnu@npm:0.36.3"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@ast-grep/napi-linux-x64-musl@npm:0.36.3":
+  version: 0.36.3
+  resolution: "@ast-grep/napi-linux-x64-musl@npm:0.36.3"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@ast-grep/napi-win32-arm64-msvc@npm:0.36.3":
+  version: 0.36.3
+  resolution: "@ast-grep/napi-win32-arm64-msvc@npm:0.36.3"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@ast-grep/napi-win32-ia32-msvc@npm:0.36.3":
+  version: 0.36.3
+  resolution: "@ast-grep/napi-win32-ia32-msvc@npm:0.36.3"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@ast-grep/napi-win32-x64-msvc@npm:0.36.3":
+  version: 0.36.3
+  resolution: "@ast-grep/napi-win32-x64-msvc@npm:0.36.3"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@ast-grep/napi@npm:^0.36.2":
+  version: 0.36.3
+  resolution: "@ast-grep/napi@npm:0.36.3"
+  dependencies:
+    "@ast-grep/napi-darwin-arm64": "npm:0.36.3"
+    "@ast-grep/napi-darwin-x64": "npm:0.36.3"
+    "@ast-grep/napi-linux-arm64-gnu": "npm:0.36.3"
+    "@ast-grep/napi-linux-arm64-musl": "npm:0.36.3"
+    "@ast-grep/napi-linux-x64-gnu": "npm:0.36.3"
+    "@ast-grep/napi-linux-x64-musl": "npm:0.36.3"
+    "@ast-grep/napi-win32-arm64-msvc": "npm:0.36.3"
+    "@ast-grep/napi-win32-ia32-msvc": "npm:0.36.3"
+    "@ast-grep/napi-win32-x64-msvc": "npm:0.36.3"
+  dependenciesMeta:
+    "@ast-grep/napi-darwin-arm64":
+      optional: true
+    "@ast-grep/napi-darwin-x64":
+      optional: true
+    "@ast-grep/napi-linux-arm64-gnu":
+      optional: true
+    "@ast-grep/napi-linux-arm64-musl":
+      optional: true
+    "@ast-grep/napi-linux-x64-gnu":
+      optional: true
+    "@ast-grep/napi-linux-x64-musl":
+      optional: true
+    "@ast-grep/napi-win32-arm64-msvc":
+      optional: true
+    "@ast-grep/napi-win32-ia32-msvc":
+      optional: true
+    "@ast-grep/napi-win32-x64-msvc":
+      optional: true
+  checksum: 10/b7a46e30f3145ded7d468985d4a499ddde4db8c8f6a27ed25ac41e898fe9ad50ede0eb126327349a71f76c0194c4ad84d19df4b902be793ce4edb636e084e00d
+  languageName: node
+  linkType: hard
+
 "@aws-crypto/crc32@npm:5.2.0":
   version: 5.2.0
   resolution: "@aws-crypto/crc32@npm:5.2.0"
@@ -5753,29 +5852,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@runeya/modules-base64-backend@workspace:*, @runeya/modules-base64-backend@workspace:modules/base64/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-base64-backend@workspace:modules/base64/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    express: "npm:^4.18.2"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-base64-front@workspace:*, @runeya/modules-base64-front@workspace:modules/base64/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-base64-front@workspace:modules/base64/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    axios: "npm:^1.4.0"
-    primevue: "npm:^4.3.3"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
 "@runeya/modules-bugs-backend@workspace:*, @runeya/modules-bugs-backend@workspace:modules/bugs/backend":
   version: 0.0.0-use.local
   resolution: "@runeya/modules-bugs-backend@workspace:modules/bugs/backend"
@@ -5816,26 +5892,6 @@ __metadata:
     fast-sort: "npm:^3.4.0"
     vue: "npm:^3.5.13"
     vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-dev-ops-backend@workspace:*, @runeya/modules-dev-ops-backend@workspace:modules/dev-ops/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-dev-ops-backend@workspace:modules/dev-ops/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-plugins-loader-front": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-dev-ops-front@workspace:*, @runeya/modules-dev-ops-front@workspace:modules/dev-ops/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-dev-ops-front@workspace:modules/dev-ops/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
   languageName: unknown
   linkType: soft
 
@@ -5962,30 +6018,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@runeya/modules-global-scripts-backend@workspace:*, @runeya/modules-global-scripts-backend@workspace:modules/global-scripts/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-global-scripts-backend@workspace:modules/global-scripts/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    express: "npm:^4.18.2"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-global-scripts-front@workspace:*, @runeya/modules-global-scripts-front@workspace:modules/global-scripts/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-global-scripts-front@workspace:modules/global-scripts/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
 "@runeya/modules-help-backend@workspace:*, @runeya/modules-help-backend@workspace:modules/help/backend":
   version: 0.0.0-use.local
   resolution: "@runeya/modules-help-backend@workspace:modules/help/backend"
@@ -6001,78 +6033,6 @@ __metadata:
   dependencies:
     "@runeya/common-retrigger-all-build": "workspace:*"
     vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-http-client-backend@workspace:*, @runeya/modules-http-client-backend@workspace:modules/http-client/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-http-client-backend@workspace:modules/http-client/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    axios: "npm:^1.6.0"
-    express: "npm:^4.18.2"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-http-client-front@workspace:*, @runeya/modules-http-client-front@workspace:modules/http-client/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-http-client-front@workspace:modules/http-client/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    primevue: "npm:^4.3.3"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-jwt-backend@workspace:*, @runeya/modules-jwt-backend@workspace:modules/jwt/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-jwt-backend@workspace:modules/jwt/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/jsonwebtoken": "npm:^9.0.5"
-    express: "npm:^4.18.2"
-    jsonwebtoken: "npm:^9.0.2"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-jwt-front@workspace:*, @runeya/modules-jwt-front@workspace:modules/jwt/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-jwt-front@workspace:modules/jwt/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    json-tree-view-vue3: "npm:^1.0.1"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-kanban-backend@workspace:*, @runeya/modules-kanban-backend@workspace:modules/kanban/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-kanban-backend@workspace:modules/kanban/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    express: "npm:^4.18.2"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-kanban-front@workspace:*, @runeya/modules-kanban-front@workspace:modules/kanban/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-kanban-front@workspace:modules/kanban/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-    vue-router: "npm:^4.5.1"
-    vuedraggable: "npm:^4.1.0"
   languageName: unknown
   linkType: soft
 
@@ -6104,50 +6064,6 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@runeya/modules-mongo-backend@workspace:*, @runeya/modules-mongo-backend@workspace:modules/mongo/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-mongo-backend@workspace:modules/mongo/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    express: "npm:^4.18.2"
-    mongodb: "npm:^6.3.0"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-mongo-front@workspace:*, @runeya/modules-mongo-front@workspace:modules/mongo/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-mongo-front@workspace:modules/mongo/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    dayjs: "npm:^1.11.10"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-node-repl-backend@workspace:*, @runeya/modules-node-repl-backend@workspace:modules/node-repl/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-node-repl-backend@workspace:modules/node-repl/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/common-typings": "workspace:*"
-    express: "npm:^4.18.2"
-    prettier: "npm:^3.1.0"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-node-repl-front@workspace:*, @runeya/modules-node-repl-front@workspace:modules/node-repl/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-node-repl-front@workspace:modules/node-repl/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@vueuse/core": "npm:^10.7.0"
-  languageName: unknown
-  linkType: soft
-
 "@runeya/modules-npm-backend@workspace:*, @runeya/modules-npm-backend@workspace:modules/npm/backend":
   version: 0.0.0-use.local
   resolution: "@runeya/modules-npm-backend@workspace:modules/npm/backend"
@@ -6169,34 +6085,6 @@ __metadata:
     vue: "npm:^3.5.13"
     vue-eslint-parser: "npm:^9.4.2"
     vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-openai-backend@workspace:*, @runeya/modules-openai-backend@workspace:modules/openai/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-openai-backend@workspace:modules/openai/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-plugins-loader-front": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/uuid": "npm:^9.0.8"
-    axios: "npm:^1.7.9"
-    bluebird: "npm:^3.7.2"
-    express: "npm:^4.18.2"
-    gpt-3-encoder: "npm:^1.1.4"
-    openai: "npm:^4.26.1"
-    uuid: "npm:^9.0.1"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-openai-front@workspace:*, @runeya/modules-openai-front@workspace:modules/openai/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-openai-front@workspace:modules/openai/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    dayjs: "npm:^1.11.10"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
   languageName: unknown
   linkType: soft
 
@@ -6228,28 +6116,17 @@ __metadata:
   dependencies:
     "@runeya/common-express": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-base64-backend": "workspace:*"
     "@runeya/modules-bugs-backend": "workspace:*"
     "@runeya/modules-configuration-backend": "workspace:*"
-    "@runeya/modules-dev-ops-backend": "workspace:*"
     "@runeya/modules-docker-backend": "workspace:*"
     "@runeya/modules-documentation-backend": "workspace:*"
     "@runeya/modules-finder-backend": "workspace:*"
     "@runeya/modules-git-backend": "workspace:*"
     "@runeya/modules-github-backend": "workspace:*"
-    "@runeya/modules-global-scripts-backend": "workspace:*"
     "@runeya/modules-help-backend": "workspace:*"
-    "@runeya/modules-http-client-backend": "workspace:*"
-    "@runeya/modules-jwt-backend": "workspace:*"
-    "@runeya/modules-kanban-backend": "workspace:*"
     "@runeya/modules-logs-backend": "workspace:*"
-    "@runeya/modules-mongo-backend": "workspace:*"
-    "@runeya/modules-node-repl-backend": "workspace:*"
     "@runeya/modules-npm-backend": "workspace:*"
-    "@runeya/modules-openai-backend": "workspace:*"
     "@runeya/modules-openapi-backend": "workspace:*"
-    "@runeya/modules-regex-backend": "workspace:*"
-    "@runeya/modules-sql-beautifier-backend": "workspace:*"
     "@runeya/modules-toolbox-backend": "workspace:*"
     "@runeya/modules-vscode-backend": "workspace:*"
     "@runeya/modules-workflows-backend": "workspace:*"
@@ -6262,28 +6139,17 @@ __metadata:
   dependencies:
     "@runeya/common-retrigger-all-build": "workspace:*"
     "@runeya/common-typings": "workspace:*"
-    "@runeya/modules-base64-front": "workspace:*"
     "@runeya/modules-bugs-front": "workspace:*"
     "@runeya/modules-configuration-front": "workspace:*"
-    "@runeya/modules-dev-ops-front": "workspace:*"
     "@runeya/modules-docker-front": "workspace:*"
     "@runeya/modules-documentation-front": "workspace:*"
     "@runeya/modules-finder-front": "workspace:*"
     "@runeya/modules-git-front": "workspace:*"
     "@runeya/modules-github-front": "workspace:*"
-    "@runeya/modules-global-scripts-front": "workspace:*"
     "@runeya/modules-help-front": "workspace:*"
-    "@runeya/modules-http-client-front": "workspace:*"
-    "@runeya/modules-jwt-front": "workspace:*"
-    "@runeya/modules-kanban-front": "workspace:*"
     "@runeya/modules-logs-front": "workspace:*"
-    "@runeya/modules-mongo-front": "workspace:*"
-    "@runeya/modules-node-repl-front": "workspace:*"
     "@runeya/modules-npm-front": "workspace:*"
-    "@runeya/modules-openai-front": "workspace:*"
     "@runeya/modules-openapi-front": "workspace:*"
-    "@runeya/modules-regex-front": "workspace:*"
-    "@runeya/modules-sql-beautifier-front": "workspace:*"
     "@runeya/modules-toolbox-front": "workspace:*"
     "@runeya/modules-vscode-front": "workspace:*"
     "@runeya/modules-workflows-front": "workspace:*"
@@ -6292,55 +6158,6 @@ __metadata:
     vue: "npm:^3.5.13"
     vue-eslint-parser: "npm:^9.4.2"
     vue-router: "npm:^4.5.1"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-regex-backend@workspace:*, @runeya/modules-regex-backend@workspace:modules/regex/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-regex-backend@workspace:modules/regex/backend"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@runeya/modules-plugins-loader-front": "workspace:*"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-regex-front@workspace:*, @runeya/modules-regex-front@workspace:modules/regex/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-regex-front@workspace:modules/regex/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    json-tree-view-vue3: "npm:^1.0.1"
-    monaco-editor: "npm:^0.46.0"
-    vue: "npm:^3.5.13"
-    vue-eslint-parser: "npm:^9.4.2"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-sql-beautifier-backend@workspace:*, @runeya/modules-sql-beautifier-backend@workspace:modules/sql-beautifier/backend":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-sql-beautifier-backend@workspace:modules/sql-beautifier/backend"
-  dependencies:
-    "@runeya/common-express": "workspace:*"
-    "@runeya/common-express-error-handler": "workspace:*"
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@types/express": "npm:^4.17.21"
-    "@types/node": "npm:^20.11.19"
-    express: "npm:^4.18.2"
-    node-sql-parser: "npm:^4.12.0"
-    sql-formatter: "npm:^12.0.0"
-    typescript: "npm:^5.3.3"
-  languageName: unknown
-  linkType: soft
-
-"@runeya/modules-sql-beautifier-front@workspace:*, @runeya/modules-sql-beautifier-front@workspace:modules/sql-beautifier/front":
-  version: 0.0.0-use.local
-  resolution: "@runeya/modules-sql-beautifier-front@workspace:modules/sql-beautifier/front"
-  dependencies:
-    "@runeya/common-retrigger-all-build": "workspace:*"
-    "@types/node": "npm:^20.11.19"
-    axios: "npm:^1.6.7"
-    debounce: "npm:^2.0.0"
-    typescript: "npm:^5.3.3"
   languageName: unknown
   linkType: soft
 
@@ -6440,11 +6257,50 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@runeya/plugins-openai@workspace:plugins/openai":
+  version: 0.0.0-use.local
+  resolution: "@runeya/plugins-openai@workspace:plugins/openai"
+  dependencies:
+    "@runeya/common-plugin-packager": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    primevue: "npm:^4.3.4"
+    vite: "npm:^6.3.5"
+    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vue: "npm:^3.5.13"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/plugins-toolbox-base64@workspace:plugins/toolbox-base64":
+  version: 0.0.0-use.local
+  resolution: "@runeya/plugins-toolbox-base64@workspace:plugins/toolbox-base64"
+  dependencies:
+    "@runeya/common-plugin-packager": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    primevue: "npm:^4.3.4"
+    vite: "npm:^6.3.5"
+    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vue: "npm:^3.5.13"
+  languageName: unknown
+  linkType: soft
+
 "@runeya/plugins-toolbox-compare@workspace:plugins/toolbox-compare":
   version: 0.0.0-use.local
   resolution: "@runeya/plugins-toolbox-compare@workspace:plugins/toolbox-compare"
   dependencies:
     "@primeuix/themes": "npm:^1.1.1"
+    "@runeya/common-plugin-packager": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    primevue: "npm:^4.3.4"
+    vite: "npm:^6.3.5"
+    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vue: "npm:^3.5.13"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/plugins-toolbox-http-client@workspace:plugins/toolbox-http-client":
+  version: 0.0.0-use.local
+  resolution: "@runeya/plugins-toolbox-http-client@workspace:plugins/toolbox-http-client"
+  dependencies:
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
@@ -6480,6 +6336,76 @@ __metadata:
     "@runeya/common-retrigger-all-build": "workspace:*"
     "@types/jsonwebtoken": "npm:^9.0.5"
     jsonwebtoken: "npm:^9.0.2"
+    primevue: "npm:^4.3.4"
+    vite: "npm:^6.3.5"
+    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vue: "npm:^3.5.13"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/plugins-toolbox-kanban@workspace:plugins/toolbox-kanban":
+  version: 0.0.0-use.local
+  resolution: "@runeya/plugins-toolbox-kanban@workspace:plugins/toolbox-kanban"
+  dependencies:
+    "@runeya/common-plugin-packager": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    lodash: "npm:^4.17.21"
+    primevue: "npm:^4.3.4"
+    tsup: "npm:^8.0.0"
+    uuid: "npm:^9.0.0"
+    vite: "npm:^6.3.5"
+    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vite-plugin-lib-inject-css: "npm:^2.2.2"
+    vue: "npm:^3.5.13"
+    vuedraggable: "npm:^4.1.0"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/plugins-toolbox-mongodb@workspace:plugins/toolbox-mongodb":
+  version: 0.0.0-use.local
+  resolution: "@runeya/plugins-toolbox-mongodb@workspace:plugins/toolbox-mongodb"
+  dependencies:
+    "@runeya/common-plugin-packager": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    primevue: "npm:^4.3.4"
+    vite: "npm:^6.3.5"
+    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vue: "npm:^3.5.13"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/plugins-toolbox-node-sandbox@workspace:plugins/toolbox-node-sandbox":
+  version: 0.0.0-use.local
+  resolution: "@runeya/plugins-toolbox-node-sandbox@workspace:plugins/toolbox-node-sandbox"
+  dependencies:
+    "@runeya/common-plugin-packager": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    primevue: "npm:^4.3.4"
+    vite: "npm:^6.3.5"
+    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vue: "npm:^3.5.13"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/plugins-toolbox-regex@workspace:plugins/toolbox-regex":
+  version: 0.0.0-use.local
+  resolution: "@runeya/plugins-toolbox-regex@workspace:plugins/toolbox-regex"
+  dependencies:
+    "@runeya/common-plugin-packager": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    primevue: "npm:^4.3.4"
+    vite: "npm:^6.3.5"
+    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vue: "npm:^3.5.13"
+  languageName: unknown
+  linkType: soft
+
+"@runeya/plugins-toolbox-sql-beautifier@workspace:plugins/toolbox-sql-beautifier":
+  version: 0.0.0-use.local
+  resolution: "@runeya/plugins-toolbox-sql-beautifier@workspace:plugins/toolbox-sql-beautifier"
+  dependencies:
+    "@runeya/common-plugin-packager": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
@@ -8913,7 +8839,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^20.11.19, @types/node@npm:^20.8.9":
+"@types/node@npm:^20.8.9":
   version: 20.17.47
   resolution: "@types/node@npm:20.17.47"
   dependencies:
@@ -9052,13 +8978,6 @@ __metadata:
   version: 1.100.0
   resolution: "@types/vscode@npm:1.100.0"
   checksum: 10/ce51cfa8398f67f137e32766485e2099e3a6635d0af6acf148cfecff72ae146a186d90c669209d815ea83e8f3d4723ab8aeb247b4232e14c79ebdbd90bb41a19
-  languageName: node
-  linkType: hard
-
-"@types/web-bluetooth@npm:^0.0.20":
-  version: 0.0.20
-  resolution: "@types/web-bluetooth@npm:0.0.20"
-  checksum: 10/2faa323e5c994e9468fff4675e3b6d35f3730eb4dc7c761d02267fb6246dbfd659fd8f3583db0872aae05b3ee139799c25655bbe79bf1b56c08c06e665db814b
   languageName: node
   linkType: hard
 
@@ -9669,18 +9588,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/core@npm:^10.7.0":
-  version: 10.11.1
-  resolution: "@vueuse/core@npm:10.11.1"
-  dependencies:
-    "@types/web-bluetooth": "npm:^0.0.20"
-    "@vueuse/metadata": "npm:10.11.1"
-    "@vueuse/shared": "npm:10.11.1"
-    vue-demi: "npm:>=0.14.8"
-  checksum: 10/bbebdcd1ef0a77437cf2432062bb57c13e0afdadc474861ddad7ce343a8638778c5e54ad302c80e1d4351d4bdaf43501dc5937185e08d257fd000bdfea4ecb36
-  languageName: node
-  linkType: hard
-
 "@vueuse/integrations@npm:^12.4.0":
   version: 12.8.2
   resolution: "@vueuse/integrations@npm:12.8.2"
@@ -9730,26 +9637,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vueuse/metadata@npm:10.11.1":
-  version: 10.11.1
-  resolution: "@vueuse/metadata@npm:10.11.1"
-  checksum: 10/20336a05eb4945c1486d5e0a81c91a8ba08137f567b86d2bc1171af36d916c56d30166163016ed64642cce904cad1af09332655f7f0178eb5f2c65e54f648b4f
-  languageName: node
-  linkType: hard
-
 "@vueuse/metadata@npm:12.8.2":
   version: 12.8.2
   resolution: "@vueuse/metadata@npm:12.8.2"
   checksum: 10/ad7299346dbbf2f6256c631f70801cc86a2b58b53a83cc978f48f6a452a92b52e47966a631f5c35b667b3307a4a817eb6a8421f76b0b5ae4e9a2e12dc2c2b3ca
-  languageName: node
-  linkType: hard
-
-"@vueuse/shared@npm:10.11.1":
-  version: 10.11.1
-  resolution: "@vueuse/shared@npm:10.11.1"
-  dependencies:
-    vue-demi: "npm:>=0.14.8"
-  checksum: 10/5d8c28ed441a66b200c76ab44b6dbc6af152a6cecc527a1f4f645d95547e1de65e4b99e16d25f77609cb146e9e4b4961b260fe723043b08ab198e88ed1d47f4e
   languageName: node
   linkType: hard
 
@@ -10398,7 +10289,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.4.0, axios@npm:^1.6.0, axios@npm:^1.6.7, axios@npm:^1.7.9, axios@npm:^1.8.2, axios@npm:^1.9.0":
+"axios@npm:^1.7.9, axios@npm:^1.8.2, axios@npm:^1.9.0":
   version: 1.9.0
   resolution: "axios@npm:1.9.0"
   dependencies:
@@ -23752,7 +23643,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsup@npm:^8.0.1, tsup@npm:^8.3.5, tsup@npm:^8.5.0":
+"tsup@npm:^8.0.0, tsup@npm:^8.0.1, tsup@npm:^8.3.5, tsup@npm:^8.5.0":
   version: 8.5.0
   resolution: "tsup@npm:8.5.0"
   dependencies:
@@ -24471,7 +24362,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uuid@npm:9.0.1, uuid@npm:^9.0.1":
+"uuid@npm:9.0.1, uuid@npm:^9.0.0, uuid@npm:^9.0.1":
   version: 9.0.1
   resolution: "uuid@npm:9.0.1"
   bin:
@@ -24588,6 +24479,19 @@ __metadata:
   peerDependencies:
     vite: ">=2.0.0"
   checksum: 10/e0d2f8cddc21209d1db4502de546d8a457016f7a38e02af89742a85ee1638b3515ae90532a344e25bd0745665376f793cef10b8b90d9d3d97529c58808d8d06d
+  languageName: node
+  linkType: hard
+
+"vite-plugin-lib-inject-css@npm:^2.2.2":
+  version: 2.2.2
+  resolution: "vite-plugin-lib-inject-css@npm:2.2.2"
+  dependencies:
+    "@ast-grep/napi": "npm:^0.36.2"
+    magic-string: "npm:^0.30.17"
+    picocolors: "npm:^1.1.1"
+  peerDependencies:
+    vite: "*"
+  checksum: 10/f7c8cfb4eb32b5fd81a7104b7b8f615440e6f58f5cb12a2c493285743373fa1e1e54ccfaeb2f2e9f5243302cb3b3f9e239e7e6737bb99163b1766cee29867d0e
   languageName: node
   linkType: hard
 
@@ -24722,22 +24626,6 @@ __metadata:
   bin:
     vitepress: bin/vitepress.js
   checksum: 10/b7d3492faa3c84612f8562f946651af2499b54c306d61b7ef72304e2aab2fdb05939e6d93502251de2a5f5f523ebcd2ac6d28a6e34a694e94ce2c734cb0a39b9
-  languageName: node
-  linkType: hard
-
-"vue-demi@npm:>=0.14.8":
-  version: 0.14.10
-  resolution: "vue-demi@npm:0.14.10"
-  peerDependencies:
-    "@vue/composition-api": ^1.0.0-rc.1
-    vue: ^3.0.0-0 || ^2.6.0
-  peerDependenciesMeta:
-    "@vue/composition-api":
-      optional: true
-  bin:
-    vue-demi-fix: bin/vue-demi-fix.js
-    vue-demi-switch: bin/vue-demi-switch.js
-  checksum: 10/3028239c0c25a84361a13ab936fcc9a199f54e0320c2ec1d2f4fdf7da8bae663382b7c1e5b1f5a1a43f6aebc73b955892cd4b6c7b3eaf2b766e18cc2a6f7ebea
   languageName: node
   linkType: hard
 

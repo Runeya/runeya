@@ -4,26 +4,16 @@ import NotUpToDate from '@runeya/modules-git-front/src/NotUpToDate.vue';
 import NpmVue from '@runeya/modules-npm-front/src/Npm.vue';
 import BugsVue from '@runeya/modules-bugs-front/src/Bugs.vue';
 import ConfigsVue from '@runeya/modules-configuration-front/src/Configs.vue';
-import OpenAI from '@runeya/modules-openai-front/src/OpenAi.vue';
 import Toolbox from '@runeya/modules-toolbox-front/src/Toolbox.vue';
-import HttpClient from '@runeya/modules-http-client-front/src/HttpClient.vue';
-import Base64 from '@runeya/modules-base64-front/src/Base64.vue';
-import Mongo from '@runeya/modules-mongo-front/src/Index.vue';
-import NodeREPL from '@runeya/modules-node-repl-front/src/Index.vue';
-import Regex from '@runeya/modules-regex-front/src/Index.vue';
 import Documentation from '@runeya/modules-documentation-front/src/Index.vue';
-import DevOps from '@runeya/modules-dev-ops-front/src/Index.vue';
 import Github from '@runeya/modules-github-front/src/Index.vue';
-import Kanban from '@runeya/modules-kanban-front/src/Index.vue';
 import OpenApi from '@runeya/modules-openapi-front/src/Index.vue';
-import GlobalScripts from '@runeya/modules-global-scripts-front/src/Index.vue';
 import Finder from '@runeya/modules-finder-front/src/Index.vue';
 import Help from '@runeya/modules-help-front/src/Index.vue';
 import Vscode from '@runeya/modules-vscode-front/src/Index.vue';
 import Docker from '@runeya/modules-docker-front/src/Index.vue';
 import Workflows from '@runeya/modules-workflows-front/src/Index.vue';
 import WorkflowsModals from '@runeya/modules-workflows-front/src/modals/Modals.vue';
-import SQLBeautifier from '@runeya/modules-sql-beautifier-front/src/SQLBeautifier.vue';
 import DynamicComponent from './DynamicComponent.vue';
 import { ref } from 'vue';
 import axios from '../../../../fronts/app/src/helpers/axios';
@@ -40,19 +30,10 @@ const toolboxPlugins = [
   { name: 'OpenApi', component: OpenApi },
   { name: 'Finder', component: Finder },
   { name: 'Git-NotUpToDate', component: NotUpToDate },
-  { name: 'Regex', component: Regex },
-  { name: 'HttpClient', component: HttpClient },
-  { name: 'Base64', component: Base64 },
-  { name: 'NodeREPL', component: NodeREPL },
-  { name: 'Mongo', component: Mongo },
   { name: 'Help', component: Help },
-  { name: 'OpenAI', component: OpenAI },
-  { name: 'GlobalScripts', component: GlobalScripts },
   { name: 'Workflows', component: Workflows },
-  { name: 'Kanban', component: Kanban },
   { name: 'Vscode', component: Vscode },
   { name: 'Docker', component: Docker },
-  { name: 'SQLBeautifier', component: SQLBeautifier },
   {
     name: 'Toolbox',
     component: Toolbox,
@@ -63,17 +44,6 @@ const toolboxPlugins = [
         props: {
           context: 'toolbox',
         },
-      },
-    ],
-  },
-  {
-    name: 'DevOps',
-    component: DevOps,
-    children: [
-      {
-        path: ':plugin',
-        props: true,
-        component: DynamicComponent,
       },
     ],
   },
@@ -100,13 +70,26 @@ const plugins = [
       },
     ],
   })),
+  {
+    name: 'Dynamic',
+    component: DynamicComponent,
+    routes: [
+      {
+        path: `/dynamic/:plugin`,
+        name: 'dynamic',
+        component: DynamicComponent,
+        props: {
+          context: 'sidebar',
+        }
+      },
+    ],
+  },
   { name: 'Logs', cmp: LogsVue },
   { name: 'Git', cmp: GitVue },
   { name: 'Github', cmp: Github },
   { name: 'Documentation', cmp: Documentation },
   { name: 'Npm', cmp: NpmVue },
   { name: 'Bugs', cmp: BugsVue },
-  { name: 'SQLBeautifier', cmp: SQLBeautifier },
   { name: 'Configuration', cmp: ConfigsVue },
 ];
 
@@ -140,7 +123,6 @@ const plugins = [
  * }[]>}
  */
 export const remotePlugins = ref([]);
-
 
 globalThis.toolboxPlugins = ref([]);
 globalThis.sidebarPlugins = ref([]);
@@ -181,7 +163,7 @@ function movePrimeVueStyles(shadowDOM) {
   // Observe if any new styles are added by PrimeVue
   observeHeadForStyles(shadowDOM)
 
-  const primeStyles = document.querySelectorAll('head > style[type="text/css"]')
+  const primeStyles = document.querySelectorAll('head > style')
 
   // Move all styles that aren't for definining variables into the shadow dom
   primeStyles.forEach((styleEl) => {
@@ -189,7 +171,7 @@ function movePrimeVueStyles(shadowDOM) {
     shadowDOM.prepend(clonedStyleEl)
   })
   // copy all root variables css into the shadow dom
-  const rootVariables = document.querySelectorAll('head > style[type="text/css"][data-primevue-style-id="variables"]')
+  const rootVariables = document.querySelectorAll('head > style[data-primevue-style-id="variables"]')
   rootVariables.forEach((styleEl) => {
     const clonedStyleEl = styleEl.cloneNode(true) 
     shadowDOM.appendChild(clonedStyleEl)
@@ -212,6 +194,18 @@ function observeHeadForStyles(shadowDOM) {
   observer.observe(document.head, { childList: true, subtree: false })
 }
 
+const loadPlugin = (contextPluginName, component) => {
+  observe(contextPluginName, async (tag) => {
+    try {
+      movePrimeVueStyles(tag.shadowRoot)
+    } catch (error) {
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+      movePrimeVueStyles(tag.shadowRoot)
+    }
+  }) 
+  customElements.define(contextPluginName, component);
+}
+
 /**
  * Crée une fonction registerPlugin spécifique pour un plugin donné
  * @param {string} pluginName 
@@ -223,17 +217,11 @@ const createRegisterPluginForName = (pluginName) => {
       const component = placement.component;
       if (placement.location === 'toolbox') {
         const contextPluginName = pluginName + '-toolbox';
-        observe(contextPluginName, async (tag) => {
-          try {
-            movePrimeVueStyles(tag.shadowRoot)
-          } catch (error) {
-            await new Promise((resolve) => setTimeout(resolve, 1000));
-            movePrimeVueStyles(tag.shadowRoot)
-          }
-        })
-        customElements.define(contextPluginName, component);
+        loadPlugin(contextPluginName, component)
         globalThis.toolboxPlugins.value.push({ ...placement, id: pluginName });
       } else if (placement.location === 'sidebar') {
+        const contextPluginName = pluginName + '-sidebar';
+        loadPlugin(contextPluginName, component)
         globalThis.sidebarPlugins.value.push({ ...placement, id: pluginName });
       }
       
@@ -268,6 +256,17 @@ axios.get('/plugins').then(async (res) => {
           },
           callServer: (method, ...args) => {
             return axios.post(`/plugins/${encodeURIComponent(pluginName)}/call/${encodeURIComponent(method)}`, {args});
+          },
+          socket: {
+            emit: (event, ...args) => {
+              sockets.emit(encodeURIComponent(pluginName) + '-' + event, ...args);
+            },
+            on: (event, callback) => {
+              sockets.on(encodeURIComponent(pluginName) + '-' + event, callback);
+            },
+            off: (event, callback) => {
+              sockets.off(encodeURIComponent(pluginName) + '-' + event, callback);
+            },
           },
           primevueConfig: {
             theme: {
@@ -314,19 +313,19 @@ export default plugins;
  *  hidden?: (
  *    service: import('../../../../servers/server/models/Service') | null,
  *    stack: typeof import('../../../../servers/server/models/stack'),
- *    placement: 'toolbox' | 'sidebar' | 'dev-ops' | 'service' | 'global',
+ *    placement: 'toolbox' | 'sidebar' | 'service' | 'global',
  *  ) => Promise<boolean> | boolean,
  *  routes?: (runeya: import('../../../../servers/server/models/stack')) => import('express').Router,
  *  export: T,
  *  finder?: (search: string, runeya: typeof import('../../../../servers/server/models/stack')) => import('../../../finder/backend/routes').FinderChoice[] | Promise<import('../../../finder/backend/routes').FinderChoice[]>
  *  placements: ({
  *    label: string,
- *    position?: 'toolbox' | 'sidebar' | 'sidebar-top' | 'dev-ops',
+ *    position?: 'toolbox' | 'sidebar' | 'sidebar-top',
  *    icon?: string,
  *    img?: string,
  *    iconText?: string,
  *    goTo?: import('vue-router').RouteLocationRaw | string,
  *    active: string
- *  } | 'toolbox' | 'sidebar' | 'sidebar-top'  | 'dev-ops' | 'service' | 'global')[]
+ *  } | 'toolbox' | 'sidebar' | 'sidebar-top' | 'service' | 'global')[]
  * }} PluginSM
  */
