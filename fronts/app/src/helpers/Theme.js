@@ -10,12 +10,26 @@ import { merge, cloneDeep } from 'lodash-es';
 import { ref } from 'vue';
 import CustomObservable from './CustomObservable';
 import base from './themes/base';
-import lightPurple from './themes/lightPurple';
+// Light themes - Chromatic order
+import lightRed from './themes/lightRed';
 import lightOrange from './themes/lightOrange';
+import lightYellow from './themes/lightYellow';
+import lightGreen from './themes/lightGreen';
+import lightCyan from './themes/lightCyan';
 import lightBlue from './themes/lightBlue';
-import darkPurple from './themes/darkPurple';
+import lightIndigo from './themes/lightIndigo';
+import lightPurple from './themes/lightPurple';
+import lightPink from './themes/lightPink';
+// Dark themes - Chromatic order
+import darkRed from './themes/darkRed';
 import darkOrange from './themes/darkOrange';
+import darkYellow from './themes/darkYellow';
+import darkGreen from './themes/darkGreen';
+import darkCyan from './themes/darkCyan';
 import darkBlue from './themes/darkBlue';
+import darkIndigo from './themes/darkIndigo';
+import darkPurple from './themes/darkPurple';
+import darkPink from './themes/darkPink';
 import baseDark from './themes/baseDark';
 
 class Theme {
@@ -23,14 +37,34 @@ class Theme {
     this.themes = ref({
       light: base(),
       dark: baseDark(),
-      /** ==================================== */
-      lightPurple: lightPurple(),
+      /** ===== CHROMATIC ORDER ===== */
+      // Red spectrum
+      lightRed: lightRed(),
+      darkRed: darkRed(),
+      // Orange spectrum
       lightOrange: lightOrange(),
-      lightBlue: lightBlue(),
-      /** ==================================== */
-      darkPurple: darkPurple(),
       darkOrange: darkOrange(),
+      // Yellow spectrum
+      lightYellow: lightYellow(),
+      darkYellow: darkYellow(),
+      // Green spectrum
+      lightGreen: lightGreen(),
+      darkGreen: darkGreen(),
+      // Cyan spectrum
+      lightCyan: lightCyan(),
+      darkCyan: darkCyan(),
+      // Blue spectrum
+      lightBlue: lightBlue(),
       darkBlue: darkBlue(),
+      // Indigo spectrum
+      lightIndigo: lightIndigo(),
+      darkIndigo: darkIndigo(),
+      // Purple spectrum
+      lightPurple: lightPurple(),
+      darkPurple: darkPurple(),
+      // Pink spectrum
+      lightPink: lightPink(),
+      darkPink: darkPink(),
     });
     this.currentTheme = 'lightPurple';
     this.buildedTheme = this.themes.value.light;
@@ -125,14 +159,16 @@ class Theme {
 // @ts-ignore
 function getCssVariable() {
   const r = document.querySelector(':root');
+  if (!r) return '';
   const rs = getComputedStyle(r);
   return rs.getPropertyValue('--blue');
 }
 
 function setCssVariable(key, value) {
   const r = document.querySelector(':root');
+  if (!r) return;
   if (!key.startsWith('--')) throw new Error('Css variable should starts with --');
-  r.style.setProperty(key, value);
+  (r).style.setProperty(key, value);
 }
 
 export default new Theme();
