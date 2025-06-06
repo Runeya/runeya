@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.14](https://github.com/runeya/runeya/compare/v1.0.13...v1.0.14) (2025-06-06)
+
+### Bug Fixes
+
+* add landing app ([fe66c3f](https://github.com/runeya/runeya/commit/fe66c3f783322cc574a2872967e3314090747f61))
+* **landing:** can view and download plugins ([c85af9f](https://github.com/runeya/runeya/commit/c85af9f78daa37f7cef4fbfcf13d1296e58eeccc))
+* **server:** update config ([107c486](https://github.com/runeya/runeya/commit/107c48618f3395c6e64ca8ca8d8700fa81673207))
+* wip ([5137049](https://github.com/runeya/runeya/commit/5137049e4de89d65551a9408c46fae5ed0ef3d6c))
+
 ## [1.0.13](https://github.com/runeya/runeya/compare/v1.0.12...v1.0.13) (2025-05-15)
 
 ### Bug Fixes

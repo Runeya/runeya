@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.14](https://github.com/runeya/runeya/compare/v1.0.13...v1.0.14) (2025-06-06)
+
+### Bug Fixes
+
+* add landing app ([fe66c3f](https://github.com/runeya/runeya/commit/fe66c3f783322cc574a2872967e3314090747f61))
+* add plugin upload route ([36997c8](https://github.com/runeya/runeya/commit/36997c8cb140432ead61f4df61801ad0e566dd9c))
+* **dev:** point runeya used to dev to latest published tag ([67f06b3](https://github.com/runeya/runeya/commit/67f06b3531a57711a13a6de3a127b45ce93d2e37))
+* **express:** support betterauth injection ([562be8d](https://github.com/runeya/runeya/commit/562be8d7d3376775f5823a21e4ff7a3a6286120d))
+* **front:** can resize service sidebar on single service view ([262af44](https://github.com/runeya/runeya/commit/262af4497647110e0a4ce50ceb1952d6d3ef4732))
+* **front:** rework add service button ([db7bb15](https://github.com/runeya/runeya/commit/db7bb15a36a45558e322331b31885dc18b4433e4))
+* **fronts-app:** prepare support for webelements integration ([bd952bc](https://github.com/runeya/runeya/commit/bd952bc214a4e161ebd7a915d8f78ca9ba19552d))
+* **landing:** can view and download plugins ([c85af9f](https://github.com/runeya/runeya/commit/c85af9f78daa37f7cef4fbfcf13d1296e58eeccc))
+* make themes ([846b370](https://github.com/runeya/runeya/commit/846b370a23102eb726e9172768b9b6839bce3537))
+* **mongo:** add common mongo to connect to mongo inside monorepo ([ce14f63](https://github.com/runeya/runeya/commit/ce14f63aebc3f523cca79c7c4d8e1375f9e1b269))
+* **plugin:** migrate all toolbox plugins ([75de7e8](https://github.com/runeya/runeya/commit/75de7e82483ba022199b91f6c84da608f2889f13))
+* **server:** update config ([107c486](https://github.com/runeya/runeya/commit/107c48618f3395c6e64ca8ca8d8700fa81673207))
+* **themes:** add new themes ([a9b6915](https://github.com/runeya/runeya/commit/a9b69158fc3f44ee2dfcddb4fd706ebba4f650a6))
+* update yarn ([c93ca47](https://github.com/runeya/runeya/commit/c93ca47e0a1525978ae3543478aea32417ba90ce))
+* wip ([5137049](https://github.com/runeya/runeya/commit/5137049e4de89d65551a9408c46fae5ed0ef3d6c))
+
 ## [1.0.13](https://github.com/runeya/runeya/compare/v1.0.12...v1.0.13) (2025-05-15)
 
 ### Bug Fixes
