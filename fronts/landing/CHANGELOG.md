@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.15](https://github.com/runeya/runeya/compare/v1.0.14...v1.0.15) (2025-06-06)
+
+### Bug Fixes
+
+* add missing axios dependency ([cf5323a](https://github.com/runeya/runeya/commit/cf5323a6a5cacbc8cc1fb32c582938f0dd5988dd))
+
 ## [1.0.14](https://github.com/runeya/runeya/compare/v1.0.13...v1.0.14) (2025-06-06)
 
 ### Bug Fixes
