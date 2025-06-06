@@ -5828,6 +5828,7 @@ __metadata:
     "@vuelidate/core": "npm:^2.0.3"
     "@vuelidate/validators": "npm:^2.0.4"
     autoprefixer: "npm:^10.4.20"
+    axios: "npm:^1.9.0"
     better-auth: "npm:^1.2.8"
     chart.js: "npm:^4.4.9"
     compression: "npm:^1.8.0"
