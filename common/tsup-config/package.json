@@ -1,0 +1,18 @@
+{
+  "name": "@runeya/common-tsup-config",
+  "version": "1.33.0",
+  "description": "",
+  "repository": "https://github.com/runeya/runeya",
+  "main": "src/index.js",
+  "types": "src/index.js",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "test": "echo \"no test\""
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@runeya/common-retrigger-all-build": "workspace:*"
+  }
+}

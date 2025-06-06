@@ -5734,6 +5734,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@runeya/common-tsup-config@workspace:*, @runeya/common-tsup-config@workspace:common/tsup-config":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-tsup-config@workspace:common/tsup-config"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+  languageName: unknown
+  linkType: soft
+
 "@runeya/common-typings@workspace:*, @runeya/common-typings@workspace:^, @runeya/common-typings@workspace:common/typings":
   version: 0.0.0-use.local
   resolution: "@runeya/common-typings@workspace:common/typings"
@@ -6579,10 +6587,9 @@ __metadata:
     "@runeya/common-mongo": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     "@runeya/common-socket-server": "workspace:*"
-    "@runeya/fronts-app": "workspace:*"
+    "@runeya/common-tsup-config": "workspace:*"
     "@runeya/modules-plugins-loader-backend": "workspace:*"
     "@runeya/modules-plugins-loader-front": "workspace:*"
-    "@runeya/modules-vscode-extension": "workspace:*"
     "@types/babel__preset-env": "npm:^7"
     "@types/concat-stream": "npm:^2"
     "@types/http-proxy": "npm:^1"
