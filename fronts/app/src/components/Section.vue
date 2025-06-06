@@ -82,12 +82,12 @@ const activeActions = computed(() => {
   border-right: 0;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor200);
   border-radius: 5px;
   position: relative;
   .background{
     border-radius: 5px;
-    background: var(--system-sections-backgroundColor);
+    background: var(--system-backgroundColor50);
     position: absolute;
     width: 100%;
     height: 100%;
@@ -109,7 +109,7 @@ const activeActions = computed(() => {
       left: calc(50%);
       transform: rotate(20deg);
       transform-origin: bottom left;
-      box-shadow: inset 0 10px 100px var(--system-sections-innerShadow);
+      box-shadow: inset 0 10px 100px var(--system-backgroundColor100);
     }
     &::after {
       left: calc(50%);

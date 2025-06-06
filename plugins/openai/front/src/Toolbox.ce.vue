@@ -221,9 +221,9 @@ $leftSize: 200px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background-color: var(--system-sidebar-backgroundColor);
+        background-color: var(--system-backgroundColor50);
         padding: 5px 10px ;
-        border: 1px solid var(--system-border-borderColor);
+        border: 1px solid var(--system-backgroundColor300);
         border-bottom: 0;
         .toolbar {
           display: flex;

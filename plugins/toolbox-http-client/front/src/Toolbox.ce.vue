@@ -576,7 +576,7 @@ function loadFromHistory(item) {
 .request-panel {
   display: flex;
   flex-direction: column;
-  background-color: var(--system-backgroundColor);
+  background-color: var(--system-backgroundColor800);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -588,7 +588,7 @@ function loadFromHistory(item) {
 
 .request-header {
   padding: 1rem;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor300);
   border-bottom: 1px solid var(--system-borderColor);
 }
 
@@ -616,7 +616,7 @@ function loadFromHistory(item) {
 .response-panel {
   display: flex;
   flex-direction: column;
-  background-color: var(--system-backgroundColor);
+  background-color: var(--system-backgroundColor800);
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   min-height: 300px;
@@ -637,7 +637,7 @@ function loadFromHistory(item) {
   justify-content: space-between;
   margin-bottom: 1rem;
   padding: 0.75rem;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor300);
   border-radius: 6px;
 }
 
@@ -648,7 +648,7 @@ function loadFromHistory(item) {
 
 .time {
   font-family: monospace;
-  background: var(--system-backgroundColor);
+  background: var(--system-backgroundColor800);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
 }
@@ -696,7 +696,7 @@ function loadFromHistory(item) {
   gap: 1.5rem;
   margin-bottom: 1rem;
   padding: 0.5rem;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor300);
   border-radius: 6px;
 }
 
@@ -726,7 +726,7 @@ function loadFromHistory(item) {
 }
 
 .text-response {
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor300);
   padding: 1rem;
   border-radius: 6px;
   white-space: pre-wrap;
@@ -744,7 +744,7 @@ function loadFromHistory(item) {
   display: flex;
   padding: 0.75rem;
   border-bottom: 1px solid var(--system-borderColor);
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor300);
   margin-bottom: 0.25rem;
   border-radius: 4px;
 }
@@ -805,7 +805,7 @@ function loadFromHistory(item) {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  color: var(--system-secondary-color);
+  color: var(--system-color300);
 }
 
 .empty-icon {
@@ -841,7 +841,7 @@ function loadFromHistory(item) {
   padding: 0.75rem;
   border-radius: 6px;
   margin-bottom: 0.75rem;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor300);
   cursor: pointer;
   transition: transform 0.2s, box-shadow 0.2s;
 }
@@ -861,7 +861,7 @@ function loadFromHistory(item) {
   justify-content: flex-end;
   font-size: 0.8rem;
   margin-top: 0.5rem;
-  color: var(--system-secondary-color);
+  color: var(--system-color300);
 }
 
 .history-timestamp {

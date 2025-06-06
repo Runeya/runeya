@@ -387,8 +387,8 @@ tr {
 }
 select {
   width: 100%;
-  background-color: var(--system-secondary-backgroundColor);
-  color: var(--system-secondary-color);
+  background-color: var(--system-backgroundColor300);
+  color: var(--system-color300);
 }
 button.small {
   width: max-content;

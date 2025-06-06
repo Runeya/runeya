@@ -36,17 +36,17 @@
   color: white;
 }
 @mixin card() {
-  @include card-template(var(--system-accent-backgroundColor1), var(--system-accent-backgroundColor2), var(--system-accent-backgroundColor3-lighter));
+  @include card-template(var(--system-primary400), var(--system-primary600), var(--system-primary600));
 }
 @mixin card-darker() {
-  @include card-template(var(--system-accent-backgroundColor1-darker), var(--system-accent-backgroundColor2-darker), var(--system-accent-backgroundColor3-darkest));
+  @include card-template(var(--system-primary500), var(--system-primary700), var(--system-primary800));
 }
 @mixin card-darkest() {
-  @include card-template(var(--system-accent-backgroundColor1-darkest), var(--system-accent-backgroundColor2-darkest), var(--system-accent-backgroundColor3-darkest));
+  @include card-template(var(--system-primary600), var(--system-primary800), var(--system-primary900));
 }
 @mixin card-secondary() {
-  @include card-template(var(--system-accent-backgroundColor1-secondary), var(--system-accent-backgroundColor2-secondary), var(--system-accent-backgroundColor3-secondary));
+  @include card-template(var(--system-secondary400), var(--system-secondary600), var(--system-secondary700));
 }
 @mixin card-tertiary() {
-  @include card-template(var(--system-accent-backgroundColor1-tertiary), var(--system-accent-backgroundColor2-tertiary), var(--system-accent-backgroundColor3-tertiary));
+  @include card-template(var(--system-tertiary400), var(--system-tertiary600), var(--system-tertiary700));
 }

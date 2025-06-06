@@ -19,7 +19,7 @@
             <Column :header="$t('plugins.plugin') || 'Plugin'" style="width: 35%">
               <template #body="slotProps">
                 <div class="flex items-center gap-3">
-                  <div class="font-medium text-stone-800">
+                  <div class="font-medium">
                     {{ slotProps.data?.displayName || slotProps.data?.name || 'Plugin' }}
                   </div>
                 </div>
@@ -29,7 +29,7 @@
             <!-- Description Column -->
             <Column :header="$t('plugins.description') || 'Description'" style="width: 40%">
               <template #body="slotProps">
-                <p class="text-stone-600 text-sm">
+                <p class="text-sm">
                   {{ slotProps.data?.description || 'No description available' }}
                 </p>
               </template>
@@ -68,12 +68,12 @@
             <template #empty>
               <div class="empty-state text-center py-8">
                 <div class="w-16 h-16 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <i class="fas fa-puzzle-piece text-stone-400 text-2xl"></i>
+                  <i class="fas fa-puzzle-piece text-2xl"></i>
                 </div>
-                <h3 class="text-lg font-medium text-stone-800 mb-2">
+                <h3 class="text-lg font-medium mb-2">
                   {{ $t('plugins.noPlugins') || 'Aucun plugin installé' }}
                 </h3>
-                <p class="text-stone-600 mb-4">
+                <p class="mb-4">
                   {{ $t('plugins.noPluginsDescription') || 'Explorez le store pour découvrir des plugins utiles' }}
                 </p>
                 <Button 
@@ -109,10 +109,10 @@
           <i class="fas fa-exclamation-triangle text-red-600 text-xl"></i>
         </div>
         <div class="flex-1">
-          <p class="text-stone-800 mb-2">
+          <p class=" mb-2">
             {{ $t('plugins.deleteConfirmMessage') || 'Êtes-vous sûr de vouloir supprimer ce plugin ?' }}
           </p>
-          <p class="text-stone-600 text-sm">
+          <p class="text-sm">
             <strong>{{ pluginToDelete?.displayName || pluginToDelete?.name }}</strong>
           </p>
           <p class="text-stone-500 text-xs mt-1">
@@ -239,38 +239,6 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .plugins-tabs {
   :deep(.p-tabview-panels) {
-    @apply p-0;
-  }
-}
-
-.plugins-datatable {
-  :deep(.p-datatable-table) {
-    @apply border-0;
-  }
-  
-  :deep(.p-datatable-thead > tr > th) {
-    @apply bg-stone-50 border-b border-stone-200 text-stone-700 font-medium;
-  }
-  
-  :deep(.p-datatable-tbody > tr > td) {
-    @apply border-b border-stone-100 py-3;
-  }
-  
-  :deep(.p-datatable-tbody > tr:hover) {
-    @apply bg-stone-50;
-  }
-  
-  :deep(.p-paginator) {
-    @apply bg-transparent border-0 border-t border-stone-200;
-  }
-}
-
-.empty-state {
-  @apply max-w-md mx-auto;
-}
-
-.store-placeholder {
-  :deep(.p-card-content) {
     @apply p-0;
   }
 }

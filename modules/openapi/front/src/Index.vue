@@ -75,7 +75,7 @@ onMounted(async () => {
 }
 
 .swagger-ui .dialog-ux .modal-ux {
-    background: var(--system-sections-backgroundColor);
+    background: var(--system-sections-backgroundColor100);
 }
 .swagger-ui .dialog-ux .modal-ux,
 .swagger-ui .dialog-ux .modal-ux button,
@@ -134,7 +134,7 @@ onMounted(async () => {
     outline: none;
 }
 .swagger-ui .opblock .opblock-section-header {
-    background: var(--system-sections-backgroundColor);
+    background: var(--system-sections-backgroundColor100);
     color: var(--system-sections-color);
 }
 </style>

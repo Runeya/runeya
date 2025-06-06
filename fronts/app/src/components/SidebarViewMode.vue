@@ -8,10 +8,20 @@
         <div v-for="item of buttonsPlugins" :key="item?.text">
           <Popover appendTo="parent" trigger="mouseenter" placement="right">
               <template #trigger>
-                <button @click="item?.click()" :class="{ active: $router.currentRoute.value.fullPath.includes(item?.active || ''), 'button-speed-dial': true }" class="sidebar-item" :title="item?.text">
-                  <i v-if="item?.icon" :class="{ [item?.icon]: true }" aria-hidden="true"/>
-                  <img :alt="`Icon for ${item?.text}`" v-else-if="item?.img" :src="item?.img" height="10px">
-                </button>
+                <div class="button-container">
+                  <button @click="item?.click()" :class="{ active: $router.currentRoute.value.fullPath.includes(item?.active || ''), 'button-speed-dial': true }" class="sidebar-item" :title="item?.text">
+                    <i v-if="item?.icon" :class="{ [item?.icon]: true }" aria-hidden="true"/>
+                    <div
+                      v-else-if="item?.img"
+                      :alt="`Icon for ${item?.text}`"
+                      class="masked-icon"
+                      :style="{
+                        WebkitMaskImage: `url(${item?.img})`,
+                        maskImage: `url(${item?.img})`,
+                      }"
+                    />
+                  </button>
+                </div>
               </template>
               <template #content>
                 {{item?.text}}
@@ -33,8 +43,8 @@
             :adjustTitleTop="-5"
             :adjustSubtitleTop="-11"
             :padding="14"
-            strokeColor="var(--system-accent-backgroundColor3-lightest)"
-            strokeColorBg="var(--system-accent-backgroundColor1)"/>
+            strokeColor="var(--system-primary600-lightest)"
+            strokeColorBg="var(--system-primary400)"/>
         </template>
         <template #content>
           CPU
@@ -54,8 +64,8 @@
             :adjustSubtitleLeft="-2"
             :adjustTitleTop="-5"
             :padding="14"
-            strokeColor="var(--system-accent-backgroundColor3-tertiary-lightest)"
-            strokeColorBg="var(--system-accent-backgroundColor1-tertiary)"/>
+            strokeColor="var(--system-tertiary400)"
+            strokeColorBg="var(--system-tertiary600)"/>
         </template>
         <template #content>
           RAM
@@ -67,7 +77,10 @@
           <sidebar-view-mode-item key="Themes" :button="{
             text: '',
             icon: 'fas fa-sun',
-            click: () => Theme.toggle()
+            click: () => {
+              console.log(Theme)
+              Theme?.toggle?.()
+            }
           }"/>
         </template>
         <template #content>
@@ -75,25 +88,18 @@
             <div v-for="(group) of groups" class="group">
               {{ group.group }}
               <div class="themes">
-                <div v-for="theme of group.themes" class="theme" @click="Theme.apply(theme.id)">
-                  <Popover appendTo="parent" trigger="mouseenter" placement="top" :showOnCreate="false">
-                    <template #trigger>
-                      <div class="view">
-                        <div class="viewwindows" :style="{
-                          ...(theme.preview.background || {}),
-                          border: `4px solid ${theme.preview.background.backgroundColor}`
-                        }">
-                          <div class="rad" :style="theme.preview.foreground4 || theme.preview.foreground1"></div>
-                          <div class="rad" :style="theme.preview.foreground3 || theme.preview.foreground1"></div>
-                          <div class="rad" :style="theme.preview.foreground2 || theme.preview.foreground1"></div>
-                          <div class="rad" :style="theme.preview.foreground1"></div>
-                        </div>
-                      </div>
-                    </template>
-                    <template #content>
-                      {{ theme.name || theme.label }}
-                    </template>
-                  </Popover>
+                <div v-for="theme of group.themes" class="theme" @click="Theme.apply(theme.id)" :key="theme.id">
+                  <div class="view" :key="theme.id">
+                    <div class="viewwindows" :style="{
+                      ...(theme.preview.background || {}),
+                      border: `4px solid ${theme.preview.background.backgroundColor}`
+                    }">
+                      <div class="rad" :style="theme.preview.foreground4 || theme.preview.foreground1"></div>
+                      <div class="rad" :style="theme.preview.foreground3 || theme.preview.foreground1"></div>
+                      <div class="rad" :style="theme.preview.foreground2 || theme.preview.foreground1"></div>
+                      <div class="rad" :style="theme.preview.foreground1"></div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -250,7 +256,8 @@ export default {
   justify-content: space-between;
   box-shadow: 0px 0px 4px 0px black;
   width: 50px;
-  background-color: var(--system-sidebar-backgroundColor);
+  background-color: var(--sidebarMain-backgroundColor);
+  color: var(--sidebarMain-color);
   height: 100%;
   flex-shrink: 0;
   z-index: 4;
@@ -357,7 +364,7 @@ export default {
       width: 40px;
       height: 40px;
       border-radius: 40px;
-      border: 1px solid var(--system-border-borderColor);
+      border: 1px solid var(--system-backgroundColor300);
       position: relative;
       display: flex;
       flex-wrap: wrap;
@@ -390,6 +397,11 @@ export default {
 .logo {
   width: 100%;
 }
+.button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .button-speed-dial, .speeddial-button-trigger {
   outline: none;
   border-radius: 5px;
@@ -403,32 +415,39 @@ export default {
   margin: 0 5px;
   font-size: 1em;
   box-shadow: none;
-  color: var(--system-tertiary-color);
   border: none;
+  flex-grow: 1;
+  color: var(--sidebarMain-color);
   &:hover {
-    background: var(--system-secondary-backgroundColor);
-    color: var(--system-secondary-color);
+    @include card();
     box-shadow: none;
     transform: none;
-    img {
-      filter: contrast(0) brightness(1.6);
+    .masked-icon {
+      background-color: white      
     }
   }
   &.active {
     @include card();
-    img {
-      filter: contrast(0) brightness(2);
+    .masked-icon {
+      background-color: white      
     }
   }
   i {
     font-size: 1.2em;
   }
-  img {
-    width: 1.2em;
-    height: 1.2em;
+  .masked-icon {
     object-fit: contain;
-    filter: contrast(0) brightness(2) brightness(0.5);
-    
+    background: var(--sidebarMain-color);
+    width: 100%;
+    height: 100%;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+    mask-position: center;
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+    -webkit-mask-position: center;
+
+
   }
 }
 </style>

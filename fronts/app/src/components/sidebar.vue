@@ -23,7 +23,7 @@
     <Dialog v-model:visible="addServiceModalVisible" modal header="Add new service" :style="{ width: '350px' }">
       <div class="p-fluid">
         <div class="p-field">
-          <InputText v-model="serviceLabelToAdd" placeholder="Service name" @keypress.enter="addService" autofocus />
+          <InputText v-model="serviceLabelToAdd" placeholder="Service name" @keypress.enter="addService" autofocus fluid />
           <small v-if="addServiceError" class="p-error">{{ addServiceError }}</small>
         </div>
       </div>
@@ -175,7 +175,7 @@ export default {
   justify-content: center;
   align-items: center;
   gap: 10px;
-  padding: 10px;
+  padding: 0px 8px;
   i {
     width: 15px;
     height: 15px;
@@ -197,7 +197,7 @@ export default {
     overflow: auto;
     flex-direction: column;
     box-shadow: 0px 0px 4px 0px black;
-    background-color: var(--system--secondary-sidebar-backgroundColor);
+    background-color: var(--sidebar-backgroundColor);
     height: 100%;
     flex-shrink: 0;
     z-index: 3;
@@ -250,7 +250,6 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-top: 20px;
   .add-button {
     flex-shrink: 0;
     width: 90%;

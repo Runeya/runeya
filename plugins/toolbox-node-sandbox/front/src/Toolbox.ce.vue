@@ -668,7 +668,7 @@ $leftSize: 200px;
   gap: 5px;
   overflow-y: auto;
   padding: 10px;
-  background: var(--system-secondary-backgroundColor);
+  background: var(--system-backgroundColor300);
   border-radius: 4px;
   height: 100%;
 
@@ -683,12 +683,12 @@ $leftSize: 200px;
     border: 1px solid transparent;
 
     &:hover {
-      background: var(--system-secondary-backgroundColor-darker);
+      background: var(--system-backgroundColor300-darker);
     }
 
     &.active {
-      background: var(--system-secondary-backgroundColor-darker);
-      border-color: var(--system-secondary-backgroundColor-darker);
+      background: var(--system-backgroundColor300-darker);
+      border-color: var(--system-backgroundColor300-darker);
       font-weight: bold;
     }
 
@@ -738,7 +738,7 @@ $leftSize: 200px;
   display: flex;
   gap: 10px;
   padding: 10px;
-  background: var(--system-secondary-backgroundColor);
+  background: var(--system-backgroundColor300);
   border-radius: 4px;
   margin-top: 10px;
   flex-shrink: 0;
@@ -787,7 +787,7 @@ $leftSize: 200px;
     align-items: center;
     gap: 10px;
     padding: 8px;
-    background: var(--system-secondary-backgroundColor);
+    background: var(--system-backgroundColor300);
     border-radius: 4px;
     margin-bottom: 8px;
     border: 1px solid var(--system-primary-backgroundColor-darker);
@@ -814,20 +814,20 @@ $leftSize: 200px;
 
 :deep(.p-inputtext) {
   width: 100%;
-  background: var(--system-secondary-backgroundColor);
+  background: var(--system-backgroundColor300);
   border: 1px solid var(--system-primary-backgroundColor-darker);
   color: var(--system-text-textColor);
 
   &:focus {
     outline: none;
-    border-color: var(--system-accent-backgroundColor2);
+    border-color: var(--system-primary500);
   }
 }
 
 :deep(.p-button) {
   &.p-button-text {
     &:hover {
-      background: var(--system-secondary-backgroundColor);
+      background: var(--system-backgroundColor300);
     }
   }
 }
@@ -840,7 +840,7 @@ $leftSize: 200px;
 
   :deep(.p-dialog-header) {
     padding: 1rem;
-    border-bottom: 1px solid var(--system-secondary-backgroundColor);
+    border-bottom: 1px solid var(--system-backgroundColor300);
   }
 }
 
@@ -899,7 +899,7 @@ $leftSize: 200px;
 
   :deep(.p-dialog-header) {
     padding: 1rem;
-    border-bottom: 1px solid var(--system-secondary-backgroundColor);
+    border-bottom: 1px solid var(--system-backgroundColor300);
   }
 }
 
@@ -918,7 +918,7 @@ $leftSize: 200px;
     align-items: center;
     gap: 10px;
     padding: 8px;
-    background: var(--system-secondary-backgroundColor);
+    background: var(--system-backgroundColor300);
     border-radius: 4px;
     margin-bottom: 8px;
     border: 1px solid var(--system-primary-backgroundColor-darker);
@@ -963,7 +963,7 @@ $leftSize: 200px;
 
   :deep(.p-dialog-header) {
     padding: 1rem;
-    border-bottom: 1px solid var(--system-secondary-backgroundColor);
+    border-bottom: 1px solid var(--system-backgroundColor300);
   }
 }
 
@@ -979,7 +979,7 @@ $leftSize: 200px;
   margin-top: 10px;
   font-size: 14px;
   padding: 8px;
-  background: var(--system-secondary-backgroundColor);
+  background: var(--system-backgroundColor300);
   border-radius: 4px;
   border: 1px solid #ff6b6b;
 }

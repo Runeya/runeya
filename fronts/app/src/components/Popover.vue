@@ -76,20 +76,20 @@ export default {
 </style>
 <style lang="scss">
 .tippy-content {
-  background-color: var(--system-sidebar-backgroundColor);
-  color: var(--system-color);
+  background-color: var(--system-backgroundColor50);
+  color: var(--system-color50);
 }
 .tippy-box[data-theme~=light-border][data-placement^=right]>.tippy-arrow:before{
-  border-right-color: var(--system-sidebar-backgroundColor) !important;
+  border-right-color: var(--system-backgroundColor50) !important;
 }
 
 .tippy-box[data-theme~=light-border][data-placement^=left]>.tippy-arrow:before{
-  border-left-color: var(--system-sidebar-backgroundColor) !important;
+  border-left-color: var(--system-backgroundColor50) !important;
 }
 .tippy-box[data-theme~=light-border][data-placement^=top]>.tippy-arrow:before{
-  border-top-color: var(--system-sidebar-backgroundColor) !important;
+  border-top-color: var(--system-backgroundColor50) !important;
 }
 .tippy-box[data-theme~=light-border][data-placement^=bottom]>.tippy-arrow:before{
-  border-bottom-color: var(--system-sidebar-backgroundColor) !important;
+  border-bottom-color: var(--system-backgroundColor50) !important;
 }
 </style>

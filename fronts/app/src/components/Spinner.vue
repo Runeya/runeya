@@ -65,7 +65,7 @@ defineProps({
 </style>
 <style scoped lang="scss">
 .spinner {
-  border: 3px solid var(--system-accent-backgroundColor1);
+  border: 3px solid var(--system-primary400);
   width: 70px;
   height: 70px;
   box-sizing: border-box;
@@ -87,7 +87,7 @@ defineProps({
     animation-duration: 0.8s;
     animation-fill-mode: forwards;
     animation-iteration-count: infinite;
-    background-color: var(--system-accent-backgroundColor1);
+    background-color: var(--system-primary400);
     position: absolute;
     border-radius: 100%;
   }
@@ -96,7 +96,7 @@ defineProps({
     content: " ";
     width: 30%;
     height: 30%;
-    background-color: var(--system-accent-backgroundColor1);
+    background-color: var(--system-primary400);
     position: absolute;
     border-radius: 100%;
   }

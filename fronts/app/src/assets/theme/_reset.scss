@@ -45,8 +45,8 @@ body {
   margin: 0;
   width: 100vw;
   height: 100vh;
-  background-color: var(--system-backgroundColor);
-  color: var(--system-color);
+  background-color: var(--background-backgroundColor);
+  color: var(--background-color);
   transition: 300ms;
   font-size: 0.9em;
   font-family: JOST, sans-serif;
@@ -58,6 +58,11 @@ ul {
     margin: 0;
     list-style-type: none;
   }
+}
+
+h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
 }
 
 pre {
@@ -86,4 +91,13 @@ pre {
 }
 .p-tag {
   padding: 0 10px;
+}
+.p-tabs {
+  background-color: transparent !important;
+}
+.p-tablist-tab-list {
+  background-color: transparent !important;
+}
+.p-tabpanels {
+  background-color: transparent !important;
 }

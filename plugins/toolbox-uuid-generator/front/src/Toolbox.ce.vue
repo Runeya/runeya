@@ -198,7 +198,7 @@ watch(count, () => {
 
 .uuid-item {
   padding: 0.5rem;
-  background: var(--system-secondary-backgroundColor);
+  background: var(--system-backgroundColor300);
   border-radius: 4px;
 }
 
@@ -233,7 +233,7 @@ watch(count, () => {
   top: -30px;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--system-secondary-backgroundColor);
+  background: var(--system-backgroundColor300);
   padding: 0.25rem 0.5rem;
   border-radius: 4px;
   font-size: 0.8rem;

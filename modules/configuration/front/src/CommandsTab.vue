@@ -62,6 +62,7 @@
                       v-model="command.spawnCmd"
                       placeholder="Enter command..."
                       @change="save"
+                      fluid
                       class="p-inputtext-sm"
                     />
                   </div>
@@ -91,6 +92,7 @@
                             v-model="command.spawnArgs[i]"
                             placeholder="Enter argument..."
                             @change="save"
+                            fluid
                             class="p-inputtext-sm flex-1"
                           />
                         </div>
@@ -130,6 +132,7 @@
                       v-model="command.spawnOptions.cwd"
                       placeholder="Enter path..."
                       @change="save"
+                      fluid
                       class="p-inputtext-sm"
                     />
                   </div>
@@ -398,7 +401,7 @@ export default {
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--system-border-borderColor);
+  border-bottom: 1px solid var(--system-backgroundColor300);
   
   h3 {
     margin: 0;
@@ -413,7 +416,7 @@ export default {
   align-items: center;
   justify-content: center;
   padding: 3rem 1rem;
-  background-color: var(--system-sections-backgroundColor);
+  background-color: var(--system-sections-backgroundColor100);
   border-radius: 8px;
   text-align: center;
   
@@ -443,9 +446,9 @@ export default {
 }
 
 .command-card {
-  background-color: var(--system-sections-backgroundColor);
+  background-color: var(--system-sections-backgroundColor100);
   border-radius: 8px;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor300);
   overflow: hidden;
   transition: box-shadow 0.2s ease-in-out;
   
@@ -463,12 +466,12 @@ export default {
   transition: background-color 0.2s ease;
   
   &:hover {
-    background-color: var(--system-secondary-backgroundColor);
+    background-color: var(--system-backgroundColor300);
   }
   
   &.is-expanded {
-    background-color: var(--system-secondary-backgroundColor);
-    border-bottom: 1px solid var(--system-border-borderColor);
+    background-color: var(--system-backgroundColor100);
+    border-bottom: 1px solid var(--system-backgroundColor300);
   }
   
   .command-title {
@@ -480,7 +483,7 @@ export default {
     min-width: 0;
     
     i {
-      color: var(--system-accent-backgroundColor2);
+      color: var(--system-primary500);
       flex-shrink: 0;
     }
     
@@ -503,7 +506,6 @@ export default {
 }
 
 .command-content {
-  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1.25rem;
@@ -538,7 +540,7 @@ export default {
 
 .section-divider {
   height: 1px;
-  background-color: var(--system-border-borderColor);
+  background-color: var(--system-backgroundColor300);
   margin: 0.75rem 0;
   opacity: 0.6;
 }
@@ -555,7 +557,7 @@ export default {
   align-items: center;
   width: 100%;
   gap: 8px;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor50);
   padding: 6px;
   border-radius: 4px;
   
@@ -563,7 +565,8 @@ export default {
     flex: 1;
     
     .p-inputtext {
-      background-color: var(--system-sections-backgroundColor);
+      height: 36px;
+      background-color: var(--system-sections-backgroundColor100);
     }
   }
   
@@ -588,7 +591,7 @@ export default {
     padding: 0 10px;
     color: var(--system-text-secondaryLabel);
     background-color: var(--system-neutral-02);
-    border: 1px solid var(--system-border-borderColor);
+    border: 1px solid var(--system-backgroundColor300);
     border-right: none;
     border-radius: 4px 0 0 4px;
     font-size: 0.9rem;
@@ -597,6 +600,7 @@ export default {
   
   .p-inputtext {
     flex: 1;
+    height: 36px;
     border-radius: 0 4px 4px 0;
   }
 }
@@ -617,9 +621,9 @@ export default {
 .empty-arguments, .empty-parsers {
   text-align: center;
   padding: 1rem;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor100);
   border-radius: 4px;
-  color: var(--system-text-secondaryLabel);
+  color: var(--system-color100);
   font-size: 0.9rem;
 }
 
@@ -661,14 +665,14 @@ export default {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor100);
   border-radius: 4px;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor100);
   transition: all 0.2s ease;
   width: 100%;
   
   &:hover {
-    background-color: var(--system-tertiary-backgroundColor);
+    background-color: var(--system-backgroundColor200);
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   }
   
@@ -679,7 +683,7 @@ export default {
     flex: 1;
     
     .parser-icon {
-      color: var(--system-accent-backgroundColor2);
+      color: var(--system-primary500);
       font-size: 0.85rem;
     }
     

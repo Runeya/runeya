@@ -337,8 +337,8 @@ async function handleCardMoved(moveData) {
   }
 
   &.active {
-    background: var(--system-accent-backgroundColor1);
-    border-color: var(--system-accent-backgroundColor1);
+    background: var(--system-primary400);
+    border-color: var(--system-primary400);
     color: white;
 
     .board-name {

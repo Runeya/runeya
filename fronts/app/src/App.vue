@@ -338,7 +338,7 @@ export default {
   width: 0 !important;
 }
 :deep(.p-splitter-gutter) {
-  background-color: var(--system-backgroundColor-darker) !important;
+  background-color: var(--system-backgroundColor100) !important;
 }
 
 .maximize {
@@ -349,6 +349,12 @@ export default {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  background-color: var(--system-primary200) !important;
+  color: var(--system-primary600) !important;
+  border-top-width: 0px;
+  border-bottom-width: 0px;
+  border-left-width: 0px;
+  border-color: var(--system-primary600) !important;
   color: white;
   i {
     font-size: 1.5rem;

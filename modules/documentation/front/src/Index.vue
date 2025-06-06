@@ -17,9 +17,7 @@
               <a :href="slotProps.node.data">{{ slotProps.node.label }}</a>
             </template>
         </Tree>
-        <div>
-          <button :style="{width: '100%'}" class="button-add" @click="addNewDoc"><i class="fas fa-plus" /></button>
-        </div>
+        <Button :style="{width: '100%'}" class="button-add" outlined size="small" @click="addNewDoc"><i class="fas fa-plus" /></Button>
       </SplitterPanel>
       <SplitterPanel :size="75" class="rightPanel">
         <template v-if="currentNode">
@@ -42,6 +40,7 @@ import Markdown from '../../../../fronts/app/src/components/Markdown.vue';
 import Splitter from 'primevue/splitter';
 import SplitterPanel from 'primevue/splitterpanel';
 import {Plugins, Sortable} from '@shopify/draggable';
+import Button from 'primevue/button';
 
 
 const props = defineProps({
@@ -172,7 +171,7 @@ h2 {
   transition: 300ms;
   padding: 10px;
   &.active {
-    background-color:var(--system-accent-backgroundColor1);
+    background-color:var(--system-primary400);
     color:white;
   }
 }

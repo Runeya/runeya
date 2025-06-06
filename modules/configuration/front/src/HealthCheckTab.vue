@@ -180,9 +180,9 @@ export default {
 .section {
   margin-bottom: 0.75rem;
   padding: 0.75rem;
-  background-color: var(--system-sections-backgroundColor);
+  background-color: var(--system-sections-backgroundColor100);
   border-radius: 6px;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor300);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 

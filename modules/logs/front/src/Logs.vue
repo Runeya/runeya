@@ -857,7 +857,7 @@ async function sendScenario(scenario) {
     }
     .terminal-panel-content {
       max-width: calc(100% - 40px);
-      background-color: var(--system-backgroundColor);
+      background-color: var(--system-backgroundColor800);
       color: var(--system-color);
       z-index: 2;
       position: absolute;
@@ -895,7 +895,7 @@ async function sendScenario(scenario) {
     flex-wrap: wrap;
     position: relative;
     z-index: 1;
-    background-color: var(--system-sections-backgroundColor);
+    background-color: var(--system-sections-backgroundColor100);
     color: var(--system-sections-color);
     .pids {
       max-height: 400px;
@@ -943,7 +943,7 @@ async function sendScenario(scenario) {
   background: none;
   right: 3px;
   top: 0;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor300 );
   box-sizing: border-box;
   margin: 0;
   z-index: 100;
@@ -1112,8 +1112,9 @@ async function sendScenario(scenario) {
   border-radius: 10px;
   padding: 10px;
   box-sizing: border-box;
-  background: var(--system-backgroundColor);
-  color: var(--system-color);
+  background: var(--system-backgroundColor200);
+  border: 1px solid var(--system-backgroundColor300 );
+  color: var(--system-color200);
   width: calc(100% - 10px);
   margin: auto;
   margin-bottom: 5px;
@@ -1209,8 +1210,8 @@ async function sendScenario(scenario) {
     gap: 10px;
   }
   textarea {
-    background-color: var(--system-backgroundColor);
-    color: var(--system-color);
+    background-color: var(--system-backgroundColor200);
+    color: var(--system-color200);
     outline: none;
     height: max-content;
     height: calc(19px);
@@ -1235,9 +1236,9 @@ async function sendScenario(scenario) {
     font-weight: bold;
   }
   .more-info-content {
-    background-color: var(--system-backgroundColor);
+    background-color: var(--system-backgroundColor800);
     color: var(--system-color);
-    border: 1px solid var(--system-border-borderColor);
+    border: 1px solid var(--system-backgroundColor300);
     border-radius: 5px;
     padding: 5px;
     display: flex;
@@ -1316,7 +1317,7 @@ async function sendScenario(scenario) {
   position: absolute;
   display: flex;
   flex-direction: column;
-  background-color: var(--system-backgroundColor);
+  background-color: var(--system-backgroundColor800);
   color: var(--system-color);
   width: 100%;
   left: 0;

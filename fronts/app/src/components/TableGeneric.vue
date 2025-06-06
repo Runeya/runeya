@@ -407,7 +407,7 @@ export default {
 
 <style lang="scss" scoped>
 .table-root {
-  background-color: var(--system-sidebar-backgroundColor);
+  background-color: var(--system-backgroundColor50);
   color: var(--system-sidebar-color);
 
   border-radius: 10px;
@@ -469,7 +469,7 @@ export default {
   .table-wrapper th{
       position: sticky;
       top: 0;
-      background-color: var(--system-sidebar-backgroundColor);
+      background-color: var(--system-backgroundColor50);
       color: var(--system-sidebar-color);
 
   }
@@ -485,7 +485,7 @@ table {
       content: "";
       width: 40px;
       height: 100%;
-      background-color: var(--system-sidebar-backgroundColor);
+      background-color: var(--system-backgroundColor50);
       color: var(--system-sidebar-color);
       position: absolute;
       left: 0;
@@ -510,7 +510,7 @@ table {
       padding: 0;
     }
     div {
-      background-color: var(--system-sidebar-backgroundColor);
+      background-color: var(--system-backgroundColor50);
       color: var(--system-sidebar-color);
       border: 1px solid #ddd;
       padding: 10px 12px;

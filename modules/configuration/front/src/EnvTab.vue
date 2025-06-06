@@ -207,9 +207,9 @@ function openEditModal() {
 .section {
   margin-bottom: 0.75rem;
   padding: 0.75rem;
-  background-color: var(--system-sections-backgroundColor);
+  background-color: var(--system-sections-backgroundColor100);
   border-radius: 6px;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor300);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
@@ -221,7 +221,7 @@ function openEditModal() {
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--system-border-borderColor);
+  border-bottom: 1px solid var(--system-backgroundColor300);
 }
 
 .section-title {
@@ -275,14 +275,9 @@ function openEditModal() {
   width: 100%;
   padding: 0.5rem 0.5rem 0.5rem 2rem;
   border-radius: 4px;
-  border: 1px solid var(--system-border-borderColor);
-  background-color: var(--system-tertiary-backgroundColor);
-  color: var(--system-text-primaryLabel);
   
   &:focus {
     outline: none;
-    border-color: var(--system-blue-color);
-    box-shadow: 0 0 0 1px var(--system-blue-color);
   }
 }
 
@@ -318,10 +313,10 @@ function openEditModal() {
 }
 
 .env-item {
-  background-color: var(--system-tertiary-backgroundColor);
+  background-color: var(--system-backgroundColor600);
   border-radius: 4px;
   padding: 0.75rem;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor300);
   transition: all 0.2s ease;
   
   &:hover {
@@ -354,7 +349,7 @@ function openEditModal() {
 }
 
 .env-value-container {
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor300);
   border-radius: 3px;
   padding: 0.5rem;
   overflow-x: auto;

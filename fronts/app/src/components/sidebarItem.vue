@@ -60,17 +60,17 @@ function goToService(service) {
     transition: 300ms
   }
   &:hover {
-    background-color: var(--system-secondary-backgroundColor);
+    background-color: var(--system-backgroundColor300);
     i {
       opacity: 1;
     }
   }
   &.active {
     font-weight: bold;
-    border-left: 5px solid var(--system-accent-backgroundColor1)
+    border-left: 5px solid var(--system-primary500)
   }
   &.disabled {
-    color: var(--system-tertiary-color);
+    color: var(--system-color600);
   }
   &.crashed {
     color: red;

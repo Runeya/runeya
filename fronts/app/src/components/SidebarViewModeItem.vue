@@ -47,7 +47,7 @@ const isActive = computed(() => {
   z-index: 2;
   
   &:hover {
-    background-color: var(--system-secondary-sidebar-backgroundColor);
+    background-color: var(--system-backgroundColor300);
     i {
       opacity: 1;
     }
@@ -66,10 +66,9 @@ button {
   margin: 0 5px;
   font-size: 1em;
   box-shadow: none;
-  color: var(--system-tertiary-color);
+  color: var(--sidebarMain-color);
   &:hover {
-    background: var(--system-secondary-backgroundColor);
-    color: var(--system-secondary-color);
+    @include card();
     box-shadow: none;
     transform: none;
     img {

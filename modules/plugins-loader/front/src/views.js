@@ -241,10 +241,9 @@ const registerPluginWithName = (pluginName, plugin) => {
 
 axios.get('/plugins').then(async (res) => {
   remotePlugins.value = res.data.sort((a, b) => b.name.localeCompare(a.name));
-  console.log(remotePlugins.value.map((plugin) => plugin.name))
+  console.log("load plugins...", remotePlugins.value.map((plugin) => plugin.name))
   await PromiseB.map(remotePlugins.value, async (plugin) => {
     if(plugin.config.runeya.entries.front.js) {
-      console.log(`🔄 Début chargement plugin: ${plugin.name}`);
       const pluginName = plugin.name;
       /** @param {import('@runeya/common-typings').PluginCallback} callback */
       globalThis[pluginName] = (callback) => {
@@ -272,24 +271,21 @@ axios.get('/plugins').then(async (res) => {
             theme: {
               preset: PrimeVueAura,
               options: {
-                darkModeSelector: '.theme-dark',
+                darkModeSelector: '.theme-dark-bak',
               },
             },
           },
           router,
           notification,
         });
-        console.log(`✅ registerPlugin appelé pour: ${pluginName}`);
         registerPluginWithName(pluginName, pluginConfig);
       };
 
       
       try {
         let url = `/plugins/${encodeURIComponent(plugin.name)}/js`;
-        console.log(`📥 Import commence: ${url}`);
         // @ts-ignore
         await import(url)
-        console.log(`✅ Import terminé: ${plugin.name}`);
       } catch (error) {
         console.error(`❌ Erreur lors du chargement du plugin ${plugin.name}:`, error);
       }

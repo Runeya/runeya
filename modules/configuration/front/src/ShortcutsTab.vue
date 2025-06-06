@@ -62,6 +62,7 @@
                       v-model="shortcut.label"
                       placeholder="Enter label..."
                       @change="save"
+                      fluid
                       class="p-inputtext-sm"
                     />
                   </div>
@@ -76,6 +77,7 @@
                       v-model="shortcut.spawnCmd"
                       placeholder="Enter command..."
                       @change="save"
+                      fluid
                       class="p-inputtext-sm"
                     />
                   </div>
@@ -105,6 +107,7 @@
                             v-model="shortcut.spawnArgs[i]"
                             placeholder="Enter argument..."
                             @change="save"
+                            fluid
                             class="p-inputtext-sm flex-1"
                           />
                         </div>
@@ -144,6 +147,7 @@
                       v-model="shortcut.spawnOptions.cwd"
                       placeholder="Enter path..."
                       @change="save"
+                      fluid
                       class="p-inputtext-sm"
                     />
                   </div>
@@ -381,7 +385,7 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
   align-items: center;
   margin-bottom: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid var(--system-border-borderColor);
+  border-bottom: 1px solid var(--system-backgroundColor300);
   
   h3 {
     margin: 0;
@@ -396,7 +400,7 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
   align-items: center;
   justify-content: center;
   padding: 3rem 1rem;
-  background-color: var(--system-sections-backgroundColor);
+  background-color: var(--system-sections-backgroundColor100);
   border-radius: 8px;
   text-align: center;
   
@@ -426,9 +430,9 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
 }
 
 .shortcut-card {
-  background-color: var(--system-sections-backgroundColor);
+  background-color: var(--system-sections-backgroundColor100);
   border-radius: 8px;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor300);
   overflow: hidden;
   transition: box-shadow 0.2s ease-in-out;
   
@@ -446,12 +450,12 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
   transition: background-color 0.2s ease;
   
   &:hover {
-    background-color: var(--system-secondary-backgroundColor);
+    background-color: var(--system-backgroundColor200);
   }
   
   &.is-expanded {
-    background-color: var(--system-secondary-backgroundColor);
-    border-bottom: 1px solid var(--system-border-borderColor);
+    background-color: var(--system-backgroundColor100);
+    border-bottom: 1px solid var(--system-backgroundColor200);
   }
   
   .shortcut-title {
@@ -463,7 +467,7 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
     min-width: 0;
     
     i {
-      color: var(--system-accent-backgroundColor2);
+      color: var(--system-primary500);
       flex-shrink: 0;
     }
     
@@ -521,7 +525,7 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
 
 .section-divider {
   height: 1px;
-  background-color: var(--system-border-borderColor);
+  background-color: var(--system-backgroundColor300);
   margin: 0.75rem 0;
   opacity: 0.6;
 }
@@ -538,7 +542,7 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
   align-items: center;
   width: 100%;
   gap: 8px;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor50);
   padding: 6px;
   border-radius: 4px;
   
@@ -546,7 +550,8 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
     flex: 1;
     
     .p-inputtext {
-      background-color: var(--system-sections-backgroundColor);
+      height: 36px;
+      background-color: var(--system-sections-backgroundColor50);
     }
   }
   
@@ -571,7 +576,7 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
     padding: 0 10px;
     color: var(--system-text-secondaryLabel);
     background-color: var(--system-neutral-02);
-    border: 1px solid var(--system-border-borderColor);
+    border: 1px solid var(--system-backgroundColor300);
     border-right: none;
     border-radius: 4px 0 0 4px;
     font-size: 0.9rem;
@@ -580,6 +585,7 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
   
   .p-inputtext {
     flex: 1;
+    height: 36px;
     border-radius: 0 4px 4px 0;
   }
 }
@@ -600,9 +606,9 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
 .empty-arguments, .empty-parsers {
   text-align: center;
   padding: 1rem;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor100);
   border-radius: 4px;
-  color: var(--system-text-secondaryLabel);
+  color: var(--system-color500);
   font-size: 0.9rem;
 }
 
@@ -644,14 +650,14 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem;
-  background-color: var(--system-secondary-backgroundColor);
+  background-color: var(--system-backgroundColor300);
   border-radius: 4px;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor300);
   transition: all 0.2s ease;
   width: 100%;
   
   &:hover {
-    background-color: var(--system-tertiary-backgroundColor);
+    background-color: var(--system-backgroundColor600);
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   }
   
@@ -662,7 +668,7 @@ const moveParserInShortcut = (shortcut, fromIndex, toIndex) => {
     flex: 1;
     
     .parser-icon {
-      color: var(--system-accent-backgroundColor2);
+      color: var(--system-primary500);
       font-size: 0.85rem;
     }
     

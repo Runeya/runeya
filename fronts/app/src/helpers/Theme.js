@@ -7,75 +7,42 @@
 /* eslint-disable no-sequences */
 /* eslint-disable no-mixed-operators */
 import { merge, cloneDeep } from 'lodash-es';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import CustomObservable from './CustomObservable';
 import base from './themes/base';
-// Light themes - Chromatic order
-import lightRed from './themes/lightRed';
-import lightOrange from './themes/lightOrange';
-import lightYellow from './themes/lightYellow';
-import lightGreen from './themes/lightGreen';
-import lightCyan from './themes/lightCyan';
-import lightBlue from './themes/lightBlue';
-import lightIndigo from './themes/lightIndigo';
-import lightPurple from './themes/lightPurple';
-import lightPink from './themes/lightPink';
-// Dark themes - Chromatic order
-import darkRed from './themes/darkRed';
-import darkOrange from './themes/darkOrange';
-import darkYellow from './themes/darkYellow';
-import darkGreen from './themes/darkGreen';
-import darkCyan from './themes/darkCyan';
-import darkBlue from './themes/darkBlue';
-import darkIndigo from './themes/darkIndigo';
-import darkPurple from './themes/darkPurple';
-import darkPink from './themes/darkPink';
 import baseDark from './themes/baseDark';
+import api from '../helpers/axios';
 
 class Theme {
   constructor() {
     this.themes = ref({
-      light: base(),
-      dark: baseDark(),
-      /** ===== CHROMATIC ORDER ===== */
-      // Red spectrum
-      lightRed: lightRed(),
-      darkRed: darkRed(),
-      // Orange spectrum
-      lightOrange: lightOrange(),
-      darkOrange: darkOrange(),
-      // Yellow spectrum
-      lightYellow: lightYellow(),
-      darkYellow: darkYellow(),
-      // Green spectrum
-      lightGreen: lightGreen(),
-      darkGreen: darkGreen(),
-      // Cyan spectrum
-      lightCyan: lightCyan(),
-      darkCyan: darkCyan(),
-      // Blue spectrum
-      lightBlue: lightBlue(),
-      darkBlue: darkBlue(),
-      // Indigo spectrum
-      lightIndigo: lightIndigo(),
-      darkIndigo: darkIndigo(),
-      // Purple spectrum
-      lightPurple: lightPurple(),
-      darkPurple: darkPurple(),
-      // Pink spectrum
-      lightPink: lightPink(),
-      darkPink: darkPink(),
+      light: base,
+      dark: baseDark,
     });
-    this.currentTheme = 'lightPurple';
+    this.currentTheme = ref('light');
     this.buildedTheme = this.themes.value.light;
     this.observableCurrentTheme = new CustomObservable();
+    api.get('/api/plugins/themes').then((res) => {
+      this.themes.value = {
+        ...this.themes.value,
+        ...res.data
+      }
+    });
+    watch(() => this.currentTheme.value, (newTheme) => {
+      this.apply(newTheme);
+    });
+    watch(() => this.themes.value[this.currentTheme.value], (newThemes) => {
+      console.log('ffezjfzkfjzekjfzekfjzzejffejkzfjzkefjkezfjkzefkjzejkzefjkzefkjze')
+      this.loadCurrentTheme();
+    }, {deep: true});
   }
 
   load(additionnalThemes = {}) {
     Object.assign(this.themes.value, additionnalThemes);
     this.loadCurrentTheme();
-    this.apply(this.currentTheme);
+    this.apply(this.currentTheme.value);
   }
+
 
   get(property) {
     const [scope, rule] = property.split('/');
@@ -96,7 +63,7 @@ class Theme {
       localStorage.setItem('currentTheme', 'darkPurple');
       currentTheme = 'darkPurple';
     }
-    this.currentTheme = currentTheme;
+    this.currentTheme.value = currentTheme;
   }
 
   lighter(amount, color) {
@@ -104,6 +71,7 @@ class Theme {
   }
 
   buildTheme(_theme) {
+    /** @type {import('./themes/theme').Theme} */
     let theme = cloneDeep(this.themes.value[_theme]);
     if (!theme) throw new Error(`${_theme} theme not exists`);
     if (theme.base) {
@@ -116,10 +84,10 @@ class Theme {
   apply(_theme) {
     localStorage.setItem('currentTheme', _theme);
     const theme = this.buildTheme(_theme);
-    this.currentTheme = _theme;
+    this.currentTheme.value = _theme;
 
     this.buildedTheme = theme;
-    if (this.currentTheme.startsWith('dark')) {
+    if (this.currentTheme.value.startsWith('dark')) {
       document.documentElement.classList.add('theme-dark');
       document.documentElement.classList.remove('theme-light');
     } else {
@@ -139,19 +107,37 @@ class Theme {
         setCssVariable(`${cssVariable}-lightest`, this.lighter(0.5, value));
       });
     });
-    setCssVariable('--p-primary-color', theme.rules['system.accent'].backgroundColor2);
-    setCssVariable('--p-content-background', theme.rules['system.sections'].backgroundColor);
-    setCssVariable('--p-button-primary-color', '#FFFFFF');
-    setCssVariable('--p-primary-active-color', theme.rules['system.accent'].backgroundColor3);
-    setCssVariable('--p-primary-hover-color', theme.rules['system.accent'].backgroundColor3);
-    setCssVariable('--p-button-primary-hover-color', '#FFFFFF');
-    setCssVariable('--p-button-primary-background', 'linear-gradient(93deg, var(--system-accent-backgroundColor1) 0%, var(--system-accent-backgroundColor2) 100%)');
-    setCssVariable('--p-button-primary-hover-background', 'linear-gradient(93deg, var(--system-accent-backgroundColor2) 0%, var(--system-accent-backgroundColor1) 100%)');
-    setCssVariable('--p-highlight-color', theme.rules['system.accent'].backgroundColor3);
-    setCssVariable('--p-highlight-background', theme.rules['system.secondary'].backgroundColor);
-    setCssVariable('--p-primary-50', theme.rules['system.secondary'].backgroundColor);
-    setCssVariable('--p-primary-100', theme.rules['system.secondary'].backgroundColor);
-    setCssVariable('--p-primary-200', theme.rules['system.tertiary'].backgroundColor);
+
+
+    
+
+    setCssVariable('--p-surface-0', theme.rules.system?.backgroundColor0)
+    setCssVariable('--p-surface-50', theme.rules.system?.backgroundColor50)
+    setCssVariable('--p-surface-100', theme.rules.system?.backgroundColor100)
+    setCssVariable('--p-surface-200', theme.rules.system?.backgroundColor200)
+    setCssVariable('--p-surface-300', theme.rules.system?.backgroundColor300)
+    setCssVariable('--p-surface-400', theme.rules.system?.backgroundColor400)
+    setCssVariable('--p-surface-500', theme.rules.system?.backgroundColor500)
+    setCssVariable('--p-surface-600', theme.rules.system?.backgroundColor600)
+    setCssVariable('--p-surface-700', theme.rules.system?.backgroundColor700)
+    setCssVariable('--p-surface-800', theme.rules.system?.backgroundColor800)
+    setCssVariable('--p-surface-900', theme.rules.system?.backgroundColor900)
+    setCssVariable('--p-surface-950', theme.rules.system?.backgroundColor950)
+
+    setCssVariable('--p-primary-50', theme.rules.system?.primary950)
+    setCssVariable('--p-primary-100', theme.rules.system?.primary900)
+    setCssVariable('--p-primary-200', theme.rules.system?.primary800)
+    setCssVariable('--p-primary-300', theme.rules.system?.primary700)
+    setCssVariable('--p-primary-400', theme.rules.system?.primary600)
+    setCssVariable('--p-primary-500', theme.rules.system?.primary500)
+    setCssVariable('--p-primary-600', theme.rules.system?.primary400)
+    setCssVariable('--p-primary-700', theme.rules.system?.primary300)
+    setCssVariable('--p-primary-800', theme.rules.system?.primary200)
+    setCssVariable('--p-primary-900', theme.rules.system?.primary100)
+    setCssVariable('--p-primary-950', theme.rules.system?.primary50)
+    setCssVariable('--p-tabs-nav-button-shadow', `0px 0px 10px 50px ${pSBC.lighter(0, theme.rules.system?.backgroundColor300)}55`)
+
+
     console.log(theme.rules);
   }
 }

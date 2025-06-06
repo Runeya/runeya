@@ -48,13 +48,12 @@ window.PrimeVueAura = PrimeVueAura;
       theme: {
         preset: PrimeVueAura,
         options: {
-          darkModeSelector: '.theme-dark',
+          darkModeSelector: '.theme-dark-bak',
         },
       },
     })
     .use(router)
     .directive('tooltip', Tooltip);
   views.forEach((cmp) => app.component(cmp.name, cmp.cmp));
-  console.log('views', views);
   app.mount('#app');
 })();

@@ -12,7 +12,7 @@ const MyToolbox = defineCustomElement(Toolbox, {
       theme: {
         preset: Aura,
         options: {
-          darkModeSelector: '.theme-dark',
+          darkModeSelector: '.theme-dark-bak',
         },
       },
     })
@@ -26,7 +26,7 @@ const MySidebar = defineCustomElement(Toolbox, {
       theme: {
         preset: Aura,
         options: {
-          darkModeSelector: '.theme-dark',
+          darkModeSelector: '.theme-dark-bak',
         },
       },
     })

@@ -274,7 +274,7 @@ export default {
         border-bottom: 3px solid #214f6b;
         border-bottom-left-radius: 20px;
         border-bottom-right-radius: 20px;
-        background: linear-gradient(93deg, #1d95db 0%, #074971 100%);
+        background: linear-gradient(93deg, var(--system-primary400) 0%, var(--system-primary700) 100%);
         width: 100%;
         height: calc(100% + 30px);
       }

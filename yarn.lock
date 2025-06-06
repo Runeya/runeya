@@ -6270,6 +6270,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@runeya/plugins-themes@workspace:plugins/themes":
+  version: 0.0.0-use.local
+  resolution: "@runeya/plugins-themes@workspace:plugins/themes"
+  dependencies:
+    "@runeya/common-plugin-packager": "workspace:*"
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
+    vite: "npm:^6.3.5"
+    vite-plugin-css-injected-by-js: "npm:^3.5.2"
+    vue: "npm:^3.5.13"
+  languageName: unknown
+  linkType: soft
+
 "@runeya/plugins-toolbox-base64@workspace:plugins/toolbox-base64":
   version: 0.0.0-use.local
   resolution: "@runeya/plugins-toolbox-base64@workspace:plugins/toolbox-base64"

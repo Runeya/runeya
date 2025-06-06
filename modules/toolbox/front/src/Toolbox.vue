@@ -111,8 +111,8 @@ input {
     justify-content: space-between;
     box-shadow: 0px 0px 4px 0px black;
     width: 150px;
-    background-color: var(--system-secondary-sidebar-backgroundColor);
-    color: var(--system-sidebar-secondary-color);
+    background-color: var(--system-backgroundColor50);
+    color: var(--system-color50);
     height: 100%;
     flex-shrink: 0;
     z-index: 3;
@@ -156,15 +156,15 @@ input {
 
   }
   &:hover {
-    background-color: var(--system-backgroundColor);
-    color: var(--system-color);
+    background-color: var(--system-backgroundColor300);
+    color: var(--system-color300);
     i {
       opacity: 1;
     }
   }
   &.active {
     font-weight: bold;
-    border-left: 5px solid var(--system-accent-backgroundColor1)
+    border-left: 5px solid var(--system-primary400)
   }
   &.disabled {
     color: #999;

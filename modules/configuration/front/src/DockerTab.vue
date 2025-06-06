@@ -285,9 +285,9 @@ function moveIgnoreVolume(fromIndex, toIndex) {
 .section {
   margin-bottom: 0.75rem;
   padding: 0.75rem;
-  background-color: var(--system-sections-backgroundColor);
+  background-color: var(--system-sections-backgroundColor100);
   border-radius: 6px;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor300);
 }
 
 .section-header {
@@ -348,8 +348,8 @@ function moveIgnoreVolume(fromIndex, toIndex) {
   height: 300px;
   border-radius: 4px;
   overflow: hidden;
-  border: 1px solid var(--system-border-borderColor);
-  background-color: var(--system-secondary-backgroundColor);
+  border: 1px solid var(--system-backgroundColor300);
+  background-color: var(--system-backgroundColor300);
 
   :deep(.monaco) {
     height: 100%;
@@ -369,14 +369,13 @@ function moveIgnoreVolume(fromIndex, toIndex) {
   align-items: center;
   justify-content: space-between;
   padding: 0.5rem;
-  background-color: var(--system-secondary-backgroundColor);
   border-radius: 4px;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor200);
   transition: all 0.2s ease;
   width: 100%;
   
   &:hover {
-    background-color: var(--system-tertiary-backgroundColor);
+    background-color: var(--system-backgroundColor50);
     box-shadow: 0 1px 3px rgba(0,0,0,0.05);
   }
 }

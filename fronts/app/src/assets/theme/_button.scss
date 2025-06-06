@@ -6,7 +6,6 @@ button {
   border-radius: 4px;
   transition: 300ms;
   @include card-darker();
-  color: white;
   font-weight: bold;
   border: none;
   cursor: pointer;
@@ -17,8 +16,8 @@ button {
   }
 
   &.bordered {
-    border: 1px solid #074971;
-    color: #074971;
+    border: 1px solid var(--system-primary500);
+    color: var(--system-primary500);
     background: none;
   }
 

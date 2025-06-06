@@ -4,7 +4,7 @@
   }">
     <div class="buttons" :class="{invert:invertColor}">
       <template v-for="tab of availableTabs" :key="tab.label" >
-        <Popover appendTo="parent" trigger="mouseenter" placement="right" :fullWidth="true">
+        <Popover appendTo="self" trigger="mouseenter" placement="right" :fullWidth="true">
           <template #trigger>
             <button @click="currentTab = tab;save()" :class="{active: tab?.id === currentTab?.id}">
               <div v-if="tab.label && !tab.icon">{{tab.label}}</div>
@@ -130,6 +130,16 @@ defineExpose({
           @include card()
         }
       }
+      & > :first-child button {
+        border-radius: 0;
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+      }
+      & > :last-child button {
+        border-radius: 0;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+      }
     }
   }
 }
@@ -144,14 +154,15 @@ defineExpose({
   flex-shrink: 0;
   width: max-content;
   gap: 5px;
-  background-color: var(--system-sections-backgroundColor);
+  background-color: var(--system-backgroundColor50);
   z-index: 1;
-  border: 1px solid var(--system-border-borderColor);
+  border: 1px solid var(--system-backgroundColor200);
+
   button {
     position: relative;
     outline: none;
     margin: 0;
-    color: var(--system-tertiary-color);
+    color: var(--system-color600);
     transition: 200ms;
     border-bottom: 0;
     height: 40px;
@@ -169,7 +180,6 @@ defineExpose({
       border-radius: 0;
       color: #777;
       @include card()
-
     }
     label {
       background-color: #fff;
@@ -184,6 +194,15 @@ defineExpose({
       padding-top: 2px;
       box-sizing: border-box;
     }
+  }
+
+  & > :first-child button {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+  }
+  & > :last-child button {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
   }
 }
 .content {

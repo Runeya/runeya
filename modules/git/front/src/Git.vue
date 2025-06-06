@@ -256,10 +256,10 @@ function loadTerminal() {
     disableStdin: true,
     fontSize: 13,
     allowTransparency: true,
-    minimumContrastRatio: Theme.get('system.terminal/contrastRatio'),
+    minimumContrastRatio: Theme.get('system/terminalContrastRatio'),
     theme: {
-      background: Theme.get('system.terminal/backgroundColor'),
-      foreground: Theme.get('system.terminal/color'),
+      background: Theme.get('system/backgroundColor50'),
+      foreground: Theme.get('system/color50'),
       selectionBackground: '#1d95db',
       selectionForeground: 'white',
     },

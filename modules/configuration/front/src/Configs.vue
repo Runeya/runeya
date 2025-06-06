@@ -288,7 +288,7 @@ export default {
 
 :deep(button:hover) {
   background: initial;
-  color: var(--system-accent-backgroundColor1-darkest);
+  color: var(--system-primary400-darkest);
 }
 
 :deep(button) {

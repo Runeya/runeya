@@ -1,10 +1,8 @@
 <template>
-  <span class="container">    
-    <div class="progress progress-moved">
-      <div class="progress-bar" :style="{width: `${(percent > 100 ? 100 : percent)}%`}">
-      </div>                       
-    </div> 
-  </span>
+  <div class="progress progress-moved">
+    <div class="progress-bar" :style="{width: `${((percent || 0) > 100 ? 100 : (percent ||0))}%`}">
+    </div>                       
+  </div> 
 </template>
 
 <script>
@@ -17,13 +15,10 @@ export default {
 
 <style lang="scss" scoped>
 
-.container {
-  width: 100%;
-  text-align: center;
-}
 
 .progress {
   padding: 3px;
+  width: 100%;
   box-sizing: border-box;
   border-radius: 100px;
   background: #dfdfdf;  
@@ -33,7 +28,7 @@ export default {
 .progress-bar {
   height: 10px;
   width: 100%;
-  background-image: linear-gradient(to bottom, var(--system-accent-backgroundColor1), var(--system-accent-backgroundColor1-darkest));
+  background-image: linear-gradient(to bottom, var(--system-primary400), var(--system-primary400-darkest));
   border-radius: 100px;
   overflow: hidden;
   transform: translateZ(0);

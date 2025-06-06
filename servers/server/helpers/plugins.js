@@ -25,6 +25,10 @@ const allPlugins = {};
 /** @type {Record<string, any>} */
 const loadedPlugins = {};
 
+
+/** @type {Record<string, any>} */
+const themes = {};
+
 Object.keys(plugins)
   .map((key) => plugins[/** @type {keyof (typeof plugins)} */(key)])
   .forEach((plugin) => {
@@ -157,6 +161,17 @@ async function uninstall(name) {
 
 async function registerRoutes(router) {
   routes.forEach((route) => router.use(route));
+  router.get('/api/plugins/themes', async (req, res) => {
+    res.json(Object.keys(themes).reduce((acc, theme) => {
+      themes[theme].forEach((t, i) => {
+        acc[theme.replace('@', '').replace('/', '-') + '-' + i] = {
+          ...t,
+          group: theme + '-' + t.group,
+        };
+      });
+      return acc;
+    }, {}));
+  });
 }
 
 async function call(pluginName, method, args) {
@@ -181,56 +196,105 @@ function clearPluginCache(pluginPath) {
 async function loadPlugin(pluginName) {
   const plugin = await getInstalledPlugin(pluginName);
   let backendPath;
+  let themePath;
 
   if(process.env.NODE_ENV === 'HFBXdZMJxLyJoua28asEaxRixJ6LriR7FnRzX6pwA7pFjZ' && pluginName.startsWith('@runeya/')) {
     const pluginPath = path.resolve(__dirname,`../../../plugins/${pluginName.replace('@runeya/plugins-', '')}`)
     const frontPath = path.resolve(pluginPath, 'front') 
     const frontPathDist = path.resolve(`${frontPath}/dist`)
     backendPath = path.resolve(pluginPath, 'backend/index.js') 
+    themePath = path.resolve(pluginPath, 'theme/index.js') 
 
-    if(!existsSync(frontPath)) throw new HTTPError('Front not found: ' + frontPath, '404.front.not.found');
-    if(!existsSync(frontPathDist)) throw new HTTPError('Front not found: ' + frontPathDist, '404.front.not.found');
-    if(!existsSync(backendPath)) throw new HTTPError('Backend not found: ' + backendPath, '404.backend.not.found');
+    // if(!existsSync(frontPath)) throw new HTTPError('Front not found: ' + frontPath, '404.front.not.found');
+    // if(!existsSync(frontPathDist)) throw new HTTPError('Front not found: ' + frontPathDist, '404.front.not.found');
+    // if(!existsSync(backendPath)) throw new HTTPError('Backend not found: ' + backendPath, '404.backend.not.found');
 
-    const debouncedFrontWatcher = debounce(async () => {
-      sockets.emit('plugins:front:building', pluginName);
-      console.log('Front changed', pluginName)
-    }, 1000);
-    const frontWatcher = chokidar.watch(frontPath, {ignored: frontPathDist, ignoreInitial: true}).on('all', debouncedFrontWatcher);
-
-    const debouncedFrontDistWatcher = debounce(async (a,b,c) => {
-      sockets.emit('plugins:front:changed', pluginName);
-      console.log('Front dist changed', pluginName)
-    }, 1000);
-    const frontDistWatcher = chokidar.watch(frontPathDist, {ignoreInitial: true}).on('all', debouncedFrontDistWatcher);
-
-    const debouncedBackendWatcher = debounce(async () => {
-      await frontWatcher.close()
-      await frontDistWatcher.close()
-      await watcher.close()
-      loadPlugin(pluginName);
-      console.log('Backend changed', pluginName)
-    }, 1000);
-    const watcher = chokidar.watch(path.dirname(backendPath), {ignoreInitial: true}).on('all', debouncedBackendWatcher);
-  } else {
-    backendPath = path.resolve(args.rootPath,'.runeya', 'plugins', pluginName, plugin.config.runeya.entries.backend) 
+    let frontWatcher;
+    if(existsSync(frontPath) && existsSync(frontPathDist) && existsSync(backendPath)) {
+      const debouncedFrontWatcher = debounce(async () => {
+        sockets.emit('plugins:front:building', pluginName);
+        console.log('Front changed', pluginName)
+      }, 1000);
+      frontWatcher = chokidar.watch(frontPath, {ignored: frontPathDist, ignoreInitial: true}).on('all', debouncedFrontWatcher);
   }
 
-  clearPluginCache(backendPath);
-  const loadedPlugin = require(backendPath)
-  loadedPlugins[pluginName] = await loadedPlugin(stack, {
-    socket: {
-      emit: (event, ...args) => {
-        sockets.emit(encodeURIComponent(pluginName) + '-' + event, ...args);
+    let frontDistWatcher;
+      if(existsSync(frontPathDist)) {
+      const debouncedFrontDistWatcher = debounce(async (a,b,c) => {
+        sockets.emit('plugins:front:changed', pluginName);
+        console.log('Front dist changed', pluginName)
+      }, 1000);
+      frontDistWatcher = chokidar.watch(frontPathDist, {ignoreInitial: true}).on('all', debouncedFrontDistWatcher);
+    }
+
+    let backendWatcher;
+    if(existsSync(backendPath)) {
+      const debouncedBackendWatcher = debounce(async () => {
+        await frontWatcher.close()
+        await frontDistWatcher.close()
+        await backendWatcher.close()
+        loadPlugin(pluginName);
+        console.log('Backend changed', pluginName)
+      }, 1000);
+      backendWatcher = chokidar.watch(path.dirname(backendPath), {ignoreInitial: true}).on('all', debouncedBackendWatcher);
+    } else {
+      backendPath = null;
+    }
+
+    let themeWatcher;
+    if(existsSync(themePath)) {
+      const debouncedThemeWatcher = debounce(async () => {
+        if(frontWatcher) await frontWatcher.close()
+        if(frontDistWatcher) await frontDistWatcher.close()
+        if(themeWatcher) await themeWatcher.close()
+        loadPlugin(pluginName);
+        console.log('Theme changed', pluginName)
+      }, 1000);
+      themeWatcher = chokidar.watch(path.dirname(themePath), {ignoreInitial: true}).on('all', debouncedThemeWatcher);
+    } else {
+      themePath = null;
+    }
+  } else {
+    backendPath = path.resolve(args.rootPath,'.runeya', 'plugins', pluginName, plugin.config.runeya.entries.backend) 
+    themePath = path.resolve(args.rootPath,'.runeya', 'plugins', pluginName, plugin.config.runeya.entries.theme) 
+  }
+
+  if(backendPath) {
+    clearPluginCache(backendPath);
+    const loadedPlugin = require(backendPath)
+    loadedPlugins[pluginName] = await loadedPlugin(stack, {
+      socket: {
+        emit: (event, ...args) => {
+          sockets.emit(encodeURIComponent(pluginName) + '-' + event, ...args);
+        },
+        on: (event, callback) => {
+          sockets.on(encodeURIComponent(pluginName) + '-' + event, callback);
+        },
+        off: (event, callback) => {
+          sockets.off(encodeURIComponent(pluginName) + '-' + event, callback);
+        },
       },
-      on: (event, callback) => {
-        sockets.on(encodeURIComponent(pluginName) + '-' + event, callback);
+    });
+  }
+
+  if(themePath) {
+    clearPluginCache(themePath);
+    const loadedTheme = require(themePath)
+    themes[pluginName] = await loadedTheme(stack, {
+      socket: {
+        emit: (event, ...args) => {
+          sockets.emit(encodeURIComponent(pluginName) + '-' + event, ...args);
+        },
+        on: (event, callback) => {
+          sockets.on(encodeURIComponent(pluginName) + '-' + event, callback);
+        },
+        off: (event, callback) => {
+          sockets.off(encodeURIComponent(pluginName) + '-' + event, callback);
+        },
       },
-      off: (event, callback) => {
-        sockets.off(encodeURIComponent(pluginName) + '-' + event, callback);
-      },
-    },
-  });
+    });
+  }
+
   return loadedPlugins[pluginName];
 }
 

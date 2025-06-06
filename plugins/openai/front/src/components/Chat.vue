@@ -157,7 +157,7 @@ onBeforeUnmount(() => clearInterval(interval));
 
       .bubble {
         align-self: flex-end;
-        $gradient: 50deg, var(--system-accent-backgroundColor1-darkest) 0%, var(--system-accent-backgroundColor3) 100%;
+        $gradient: 50deg, var(--system-primary400-darkest) 0%, var(--system-primary600) 100%;
         background: -webkit-linear-gradient($gradient);
         background: linear-gradient($gradient);
         color: white;

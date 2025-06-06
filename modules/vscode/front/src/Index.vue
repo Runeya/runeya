@@ -142,14 +142,14 @@ async function downloadVSIX() {
   
   h1 {
     margin: 0.5rem 0;
-    color: var(--system-accent-backgroundColor2);
+    color: var(--system-primary500);
   }
 }
 
 .icon-vscode {
   font-size: 3rem;
   margin-bottom: 1rem;
-  background: linear-gradient(93deg, var(--system-accent-backgroundColor1) 0%, var(--system-accent-backgroundColor2) 100%);
+  background: linear-gradient(93deg, var(--system-primary400) 0%, var(--system-primary500) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -177,7 +177,7 @@ async function downloadVSIX() {
   
   h2 {
     margin-top: 0;
-    color: var(--system-accent-backgroundColor2);
+    color: var(--system-primary500);
     font-size: 1.5rem;
   }
   
@@ -296,7 +296,7 @@ button {
   border-radius: 8px;
   font-family: monospace;
   margin: 1rem 0 2rem;
-  color: var(--system-accent-backgroundColor2);
+  color: var(--system-primary500);
   font-weight: bold;
 }
 

@@ -108,7 +108,6 @@ export default {
 </script>
 <style scoped lang="scss">
 .modal-root {
-  color: var(--system-secondary-color);
   z-index: 1299;
   position: fixed;
   top: 0;
@@ -122,7 +121,8 @@ export default {
   transition: 300ms;
   #modal-content {
     max-height: 90vh;
-    background: var(--system-backgroundColor);
+    background: var(--system-backgroundColor100);
+    color: var(--system-color100);
     height: auto;
     margin: auto;
     display: flex;
@@ -185,10 +185,8 @@ export default {
   display: flex;
   .notif-button {
     background: none;
-    color: var(--system-secondary-color);
     font-size: 18px;
     padding: 12px 0px 12px 0px;
-    background-color: var(--system-secondary-backgroundColor);
     display: flex;
     justify-content: center;
     align-items: center;

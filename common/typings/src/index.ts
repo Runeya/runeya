@@ -190,7 +190,7 @@ export type PluginCallback = (
       theme: {
         preset: typeof import('@primevue/themes/aura').default,
         options: {
-          darkModeSelector: '.theme-dark',
+          darkModeSelector: '.theme-dark-bak',
         },
       },
     },
@@ -203,4 +203,86 @@ export type PluginCallback = (
     text: string,
     iconText?: string,
   }[]
+}
+
+export interface Theme {
+  public?: boolean,
+  name?: string,
+  group?: string,
+  base?: string,
+  preview?: {
+    background: Partial<{ backgroundColor: string }>,
+    foreground1: Partial<{ backgroundColor: string }>,
+    foreground2: Partial<{ backgroundColor: string }>,
+    foreground3: Partial<{ backgroundColor: string }>,
+    foreground4: Partial<{ backgroundColor: string }>,
+  },
+  rules: Partial<{
+    system: Partial<{
+      backgroundColor0: string,
+      backgroundColor50: string,
+      backgroundColor100: string,
+      backgroundColor200: string,
+      backgroundColor300: string,
+      backgroundColor400: string,
+      backgroundColor500: string,
+      backgroundColor600: string,
+      backgroundColor700: string,
+      backgroundColor800: string,
+      backgroundColor900: string,
+      backgroundColor950: string,
+      color0: string,
+      color50: string,
+      color100: string,
+      color200: string,
+      color300: string,
+      color400: string,
+      color500: string,
+      color600: string,
+      color700: string,
+      color800: string,
+      color900: string,
+      color950: string,
+      primary50: string;
+      primary100: string;
+      primary200: string;
+      primary300: string;
+      primary400: string;
+      primary500: string;
+      primary600: string;
+      primary700: string;
+      primary800: string;
+      primary900: string;
+      primary950: string;
+
+      secondary50: string;
+      secondary100: string;
+      secondary200: string;
+      secondary300: string;
+      secondary400: string;
+      secondary500: string;
+      secondary600: string;
+      secondary700: string;
+      secondary800: string;
+      secondary900: string;
+      secondary950: string;
+
+      tertiary50: string;
+      tertiary100: string;
+      tertiary200: string;
+      tertiary300: string;
+      tertiary400: string;
+      tertiary500: string;
+      tertiary600: string;  
+      tertiary700: string;
+      tertiary800: string;
+      tertiary900: string;
+      tertiary950: string;
+
+      terminalContrastRatio: number;
+    }>,
+    sidebarMain: Partial<{ color: string, backgroundColor: string }>,
+    sidebar: Partial<{ color: string, backgroundColor: string }>,
+    background: Partial<{ color: string, backgroundColor: string }>,
+  }>
 }

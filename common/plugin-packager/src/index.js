@@ -9,8 +9,10 @@ const projectRoot = path.resolve('.');
 const distPath = path.resolve('.', 'dist/plugins');
 const frontDistPath = path.resolve(distPath, 'front');
 const backendDistPath = path.resolve(distPath, 'backend');
+const themeDistPath = path.resolve(distPath, 'theme');
 const viteProjectPath = path.resolve(projectRoot, 'front');
 const backendProjectPath = path.resolve(projectRoot, 'backend');
+const themeProjectPath = path.resolve(projectRoot, 'theme');
 const archiveTarget = path.resolve(projectRoot, 'dist/runeya.tar.gz');
 const spawn = require('child_process').spawn;
 console.log(projectRoot)
@@ -55,26 +57,33 @@ module.exports = async function buildAndPackage() {
   console.log('📦 Building...', viteProjectPath);
   console.time('📦 Building...');
   await Promise.all([
-    exec('yarn vite build', {
+    existsSync(viteProjectPath) && exec('yarn vite build', {
       cwd: viteProjectPath,
       env: process.env,
-    }),
-    exec('yarn tsup', {
+    }), 
+    existsSync(backendProjectPath) && exec('yarn tsup', {
       cwd: backendProjectPath,
       env: process.env,
     }),
-  ]);
+    existsSync(themeProjectPath) && exec('yarn tsup', {
+      cwd: themeProjectPath,
+      env: process.env,
+    }),
+  ].filter(Boolean));
   console.timeEnd('📦 Building...');
   console.time('📦 Copying dist...');
   console.log('📦 Copying dist...', frontDistPath);
   await Promise.all([
-    cp(path.resolve(viteProjectPath, 'dist'), frontDistPath, {
+    existsSync(path.resolve(viteProjectPath, 'dist')) && cp(path.resolve(viteProjectPath, 'dist'), frontDistPath, {
       recursive: true
     }),
-    cp(path.resolve(backendProjectPath, 'dist'), backendDistPath, {
+    existsSync(path.resolve(backendProjectPath, 'dist')) && cp(path.resolve(backendProjectPath, 'dist'), backendDistPath, {
       recursive: true
     }),
-  ]);
+    existsSync(path.resolve(themeProjectPath, 'dist')) && cp(path.resolve(themeProjectPath, 'dist'), themeDistPath, {
+      recursive: true
+    }),
+  ].filter(Boolean));
   console.timeEnd('📦 Copying dist...');
   console.log('📦 Generating files...');
   console.time('📦 Generating files...');

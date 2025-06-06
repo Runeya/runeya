@@ -74,7 +74,7 @@ function deleteChild(_node) {
     align-items: center;
     padding: 0 10px;
     gap: 10px;
-    background-color: var(--system-accent-backgroundColor2);
+    background-color: var(--system-primary500);
     color: white;
     right: -100%;
   }

@@ -1,5 +1,5 @@
 <template>
-  <Inplace>
+  <Inplace fluid>
     <template #display>
       <div class="inplace-display-content">
         <span v-if="modelValue" class="inplace-display-text flex-1">{{ modelValue }}</span>
@@ -14,6 +14,7 @@
           ref="inputRef"
           :value="modelValue"
           @input="handleInput"
+          fluid
           autofocus
           @blur="handleBlur(closeCallback)"
         />
@@ -105,7 +106,6 @@ function handleBlur(closeCallback) {
     transition: all 0.2s ease;
     
     &:hover {
-      background-color: var(--system-neutral-03);
       cursor: pointer;
 
       .edit-icon {

@@ -189,7 +189,7 @@ const MyToolbox = defineCustomElement(Toolbox, {
       theme: {
         preset: Aura,
         options: {
-          darkModeSelector: '.theme-dark',
+          darkModeSelector: '.theme-dark-bak',
         },
       },
     })
@@ -368,7 +368,7 @@ const handleClear = () => {
 
 .result-item {
   padding: 0.5rem;
-  background: var(--system-secondary-backgroundColor);
+  background: var(--system-backgroundColor300);
   border-radius: 4px;
 }
 
