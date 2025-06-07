@@ -1,6 +1,6 @@
 {
   "name": "@runeya/plugins-toolbox-http-client",
-  "version": "1.33.7",
+  "version": "1.33.9",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "runeya": {
