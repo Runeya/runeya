@@ -56,7 +56,7 @@ module.exports.auth = betterAuth({
     },
   },
   basePath: '/api/auth',
-  baseURL: 'http://localhost:5469',
+  baseURL: process.env.BETTER_AUTH_URL,
   plugins: [
     apiKey(),
     organization({
