@@ -9,7 +9,7 @@
     }
   },
   "scripts": {
-    "build": "node scripts/package.js",
+    "plugin:publish": "node scripts/package.js",
     "test": ""
   },
   "devDependencies": {

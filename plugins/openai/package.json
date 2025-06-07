@@ -12,7 +12,7 @@
     }
   },
   "scripts": {
-    "build": "node scripts/package.js",
+    "plugin:publish": "node scripts/package.js",
     "plugin:dev": "cd front && vite build --watch",
     "test": ""
   },
