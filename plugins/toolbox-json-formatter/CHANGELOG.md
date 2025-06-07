@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.7](https://github.com/runeya/runeya/compare/v1.33.6...v1.33.7) (2025-06-07)
+
+### Bug Fixes
+
+* **plugins:** add ci stuff ([ae2216a](https://github.com/runeya/runeya/commit/ae2216a23b29d0351cdad8c73a3a6bb5747266c9))
+
 ## [1.33.6](https://github.com/runeya/runeya/compare/v1.33.5...v1.33.6) (2025-06-07)
 
 ### Bug Fixes
