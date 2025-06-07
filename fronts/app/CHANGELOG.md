@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.8](https://github.com/runeya/runeya/compare/v1.33.7...v1.33.8) (2025-06-07)
+
+### Bug Fixes
+
+* **plugins:** retrigger app ([efb995b](https://github.com/runeya/runeya/commit/efb995b052b543be6444e57e037cd36ed2c135ee))
+* **plugins:** retrigger app ([0059da3](https://github.com/runeya/runeya/commit/0059da31e8e6ec8ff28fe469c9f821c2e6f67926))
+* **plugins:** retrigger app ([1d2ed71](https://github.com/runeya/runeya/commit/1d2ed71e701fec0fa7575347df02f9ea59739637))
+
 ## [1.0.14](https://github.com/runeya/runeya/compare/v1.0.13...v1.0.14) (2025-06-06)
 
 ### Bug Fixes
