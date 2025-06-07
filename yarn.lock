@@ -6633,7 +6633,7 @@ __metadata:
     xlsx: "npm:^0.18.5"
     yargs: "npm:^17.7.2"
   bin:
-    servers-plugins: bin/www
+    servers-plugins: dist/www.js
   languageName: unknown
   linkType: soft
 
