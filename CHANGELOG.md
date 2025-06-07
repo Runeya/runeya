@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.4](https://github.com/runeya/runeya/compare/v1.33.3...v1.33.4) (2025-06-07)
+
+### Bug Fixes
+
+* **mongo:** connect directly to connectionString host on other parts ([6192401](https://github.com/runeya/runeya/commit/6192401eb0e3cdad883c67c8a71dd815138561c7))
+
 ## [1.33.3](https://github.com/runeya/runeya/compare/v1.33.2...v1.33.3) (2025-06-07)
 
 ### Bug Fixes
