@@ -7,6 +7,12 @@
       ],
       "outputs": []
     },
+    "plugin:publish": {
+      "dependsOn": [
+        "^plugin:publish"
+      ],
+      "outputs": []
+    },
     "build": {
       "dependsOn": [
         "^build"

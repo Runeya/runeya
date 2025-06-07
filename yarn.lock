@@ -6273,6 +6273,7 @@ __metadata:
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6300,6 +6301,7 @@ __metadata:
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6314,6 +6316,7 @@ __metadata:
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6327,6 +6330,7 @@ __metadata:
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6344,6 +6348,7 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     jsonrepair: "npm:^3.12.0"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6360,6 +6365,7 @@ __metadata:
     "@types/jsonwebtoken": "npm:^9.0.5"
     jsonwebtoken: "npm:^9.0.2"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6391,6 +6397,7 @@ __metadata:
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6404,6 +6411,7 @@ __metadata:
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6417,6 +6425,7 @@ __metadata:
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6430,6 +6439,7 @@ __metadata:
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     primevue: "npm:^4.3.4"
+    tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vite-plugin-css-injected-by-js: "npm:^3.5.2"
     vue: "npm:^3.5.13"
@@ -6565,7 +6575,7 @@ __metadata:
     knip: "npm:^5.41.1"
     primevue: "npm:^4.3.3"
     quill: "npm:^2.0.3"
-    tsup: "npm:^8.0.1"
+    tsup: "npm:^8.5.0"
     turbo: "npm:^2.3.3 "
     typescript: "npm:^5.3.3"
     vue-i18n: "npm:^12.0.0-alpha.2"
@@ -23706,7 +23716,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsup@npm:^8.0.0, tsup@npm:^8.0.1, tsup@npm:^8.3.5, tsup@npm:^8.5.0":
+"tsup@npm:^8.0.0, tsup@npm:^8.3.5, tsup@npm:^8.5.0":
   version: 8.5.0
   resolution: "tsup@npm:8.5.0"
   dependencies:
