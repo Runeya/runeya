@@ -18,7 +18,7 @@
           cache: 'yarn'
 
       - name: "Build and publish plugins packages to runeya"
-        if: steps.version.outputs.type == 'latest'
+        if: contains(github.ref_name, 'master')
         env:
           PLUGINS_API_URL: ${{ secrets.PLUGINS_API_URL }}
           PLUGINS_API_KEY: ${{ secrets.PLUGINS_API_KEY }}
