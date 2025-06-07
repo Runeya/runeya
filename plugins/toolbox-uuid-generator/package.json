@@ -1,6 +1,6 @@
 {
   "name": "@runeya/plugins-toolbox-uuid-generator",
-  "version": "1.33.3",
+  "version": "1.33.6",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "runeya": {
