@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.3](https://github.com/runeya/runeya/compare/v1.33.2...v1.33.3) (2025-06-07)
+
+**Note:** Version bump only for package @runeya/servers-plugins
+
 ## [1.33.2](https://github.com/runeya/runeya/compare/v1.33.1...v1.33.2) (2025-06-07)
 
 ### Bug Fixes
