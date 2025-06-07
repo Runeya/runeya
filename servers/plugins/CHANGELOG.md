@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.5](https://github.com/runeya/runeya/compare/v1.33.4...v1.33.5) (2025-06-07)
+
+### Bug Fixes
+
+* **auth:** redirect uri controlled by env ([2f09730](https://github.com/runeya/runeya/commit/2f09730aaf80b06566294efcd9758cdd15656677))
+
 ## [1.33.4](https://github.com/runeya/runeya/compare/v1.33.3...v1.33.4) (2025-06-07)
 
 ### Bug Fixes
