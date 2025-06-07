@@ -32,7 +32,7 @@ module.exports = {
         const { mongo } = require('@runeya/common-mongo');
         await mongo.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}?authSource=admin`, '', 'runeya');
         mongoose.set('strictQuery', false);
-        await mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/runeya?authSource=admin`);
+        await mongoose.connect(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/runeya?authSource=admin`, {directConnection: true});
         console.log('Mongoose connected successfully');
 
         const { mailer } = require('@runeya/common-mailer');

@@ -5,7 +5,7 @@ const { mongodbAdapter } = require("better-auth/adapters/mongodb");
 const { apiKey, organization } = require("better-auth/plugins");
 const { mailer } = require("@runeya/common-mailer");
 
-const client = new MongoClient(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/runeya?authSource=admin`);
+const client = new MongoClient(`mongodb://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_HOST}:${process.env.MONGO_PORT}/runeya?authSource=admin`, {directConnection: true});
 const db = client.db();
  
 module.exports.express = (app) => {
