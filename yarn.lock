@@ -5304,7 +5304,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@primevue/forms@npm:^4.2.5, @primevue/forms@npm:^4.3.4":
+"@primevue/forms@npm:^4.3.4":
   version: 4.3.4
   resolution: "@primevue/forms@npm:4.3.4"
   dependencies:
@@ -5504,6 +5504,20 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@runeya/common-dev-stuff@workspace:common/dev-stuff":
+  version: 0.0.0-use.local
+  resolution: "@runeya/common-dev-stuff@workspace:common/dev-stuff"
+  dependencies:
+    "@runeya/common-retrigger-all-build": "workspace:*"
+    "@types/kill-port": "npm:^2"
+    chokidar: "npm:^4.0.3"
+    debounce: "npm:^2.2.0"
+    kill-port: "npm:^2.0.1"
+    tree-kill: "npm:^1.2.2"
+    workspace-tools: "npm:^0.38.4"
+  languageName: unknown
+  linkType: soft
+
 "@runeya/common-express-404@workspace:*, @runeya/common-express-404@workspace:common/express-404":
   version: 0.0.0-use.local
   resolution: "@runeya/common-express-404@workspace:common/express-404"
@@ -5698,6 +5712,7 @@ __metadata:
     vite: "npm:^6.3.5"
     vite-plugin-html: "npm:^3.2.2"
     vue: "npm:^3.5.13"
+    vue-i18n: "npm:^12.0.0-alpha.2"
     vue-router: "npm:^4.5.1"
     vuedraggable: "npm:^4.1.0"
   bin:
@@ -5799,7 +5814,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@runeya/modules-configuration-front@workspace:modules/configuration/front"
   dependencies:
-    "@primevue/forms": "npm:^4.2.5"
     "@runeya/common-retrigger-all-build": "workspace:*"
     fast-sort: "npm:^3.4.0"
     vue: "npm:^3.5.13"
@@ -5912,6 +5926,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@runeya/modules-github-backend@workspace:modules/github/backend"
   dependencies:
+    "@octokit/core": "npm:^6.1.2"
+    "@octokit/plugin-rest-endpoint-methods": "npm:^13.2.6"
     "@runeya/common-retrigger-all-build": "workspace:*"
     "@runeya/modules-plugins-loader-front": "workspace:*"
     "@types/express": "npm:^4.17.21"
@@ -6162,7 +6178,6 @@ __metadata:
   resolution: "@runeya/modules-workflows-front@workspace:modules/workflows/front"
   dependencies:
     "@runeya/common-retrigger-all-build": "workspace:*"
-    primevue: "npm:^4.3.3"
     vue: "npm:^3.5.13"
     vue-eslint-parser: "npm:^9.4.2"
     vue-router: "npm:^4.5.1"
@@ -6464,14 +6479,11 @@ __metadata:
     "@lerna-lite/list": "npm:^2.5.0"
     "@lerna-lite/publish": "npm:^2.5.0"
     "@lerna-lite/version": "npm:^2.5.0"
-    "@octokit/core": "npm:^6.1.2"
-    "@octokit/plugin-rest-endpoint-methods": "npm:^13.2.6"
     "@runeya/common-retrigger-all-build": "workspace:*"
     "@runeya/common-typings": "workspace:^"
     "@runeya/runeya": "npm:*"
     "@types/bluebird": "npm:^3.5.38"
     "@types/debounce": "npm:^1"
-    "@types/kill-port": "npm:^2"
     "@types/lodash": "npm:^4.14.201"
     "@types/node": "npm:^20.8.9"
     "@typescript-eslint/eslint-plugin": "npm:^8.18.2"
@@ -6493,14 +6505,10 @@ __metadata:
     fix-esm: "npm:^1.0.1"
     globals: "npm:^15.14.0"
     husky: "npm:^9.1.7"
-    kill-port: "npm:^2.0.1"
     knip: "npm:^5.60.2"
-    primevue: "npm:^4.3.3"
-    quill: "npm:^2.0.3"
     tsup: "npm:^8.5.0"
     turbo: "npm:^2.3.3 "
     typescript: "npm:^5.3.3"
-    vue-i18n: "npm:^12.0.0-alpha.2"
     workspace-tools: "npm:^0.36.3"
   languageName: unknown
   linkType: soft
@@ -6512,8 +6520,6 @@ __metadata:
     "@aws-sdk/client-s3": "npm:^3.812.0"
     "@babel/preset-env": "npm:^7.26.0"
     "@babel/preset-typescript": "npm:^7.26.0"
-    "@octokit/core": "npm:^6.1.2"
-    "@octokit/plugin-rest-endpoint-methods": "npm:^13.2.6"
     "@runeya/common-express": "workspace:*"
     "@runeya/common-mailer": "workspace:*"
     "@runeya/common-mongo": "workspace:*"
@@ -8806,6 +8812,13 @@ __metadata:
   version: 2.4.4
   resolution: "@types/normalize-package-data@npm:2.4.4"
   checksum: 10/65dff72b543997b7be8b0265eca7ace0e34b75c3e5fee31de11179d08fa7124a7a5587265d53d0409532ecb7f7fba662c2012807963e1f9b059653ec2c83ee05
+  languageName: node
+  linkType: hard
+
+"@types/parse-path@npm:^7.0.0":
+  version: 7.0.3
+  resolution: "@types/parse-path@npm:7.0.3"
+  checksum: 10/21a12c228d38f5a75659dfd7cb127dc2001ed3f6acbd1b2e0575d1348c735594c0bab06a97fe849c151438384829f20ea5971cb045f7ecd37d53c76a9fcb9de3
   languageName: node
   linkType: hard
 
@@ -12214,7 +12227,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debounce@npm:^2.0.0":
+"debounce@npm:^2.0.0, debounce@npm:^2.2.0":
   version: 2.2.0
   resolution: "debounce@npm:2.2.0"
   checksum: 10/c78301e376677827ade07d423dac24266218ebee59e79ac135f4eadc4b5ff453c022fb00acb8cad1988ab65e8576631316a5cc263516716e2d7d4def69cf975b
@@ -13944,13 +13957,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"fast-diff@npm:^1.3.0":
-  version: 1.3.0
-  resolution: "fast-diff@npm:1.3.0"
-  checksum: 10/9e57415bc69cd6efcc720b3b8fe9fdaf42dcfc06f86f0f45378b1fa512598a8aac48aa3928c8751d58e2f01bb4ba4f07e4f3d9bc0d57586d45f1bd1e872c6cde
-  languageName: node
-  linkType: hard
-
 "fast-fifo@npm:^1.2.0, fast-fifo@npm:^1.3.2":
   version: 1.3.2
   resolution: "fast-fifo@npm:1.3.2"
@@ -14720,12 +14726,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"git-up@npm:^8.1.0":
+  version: 8.1.1
+  resolution: "git-up@npm:8.1.1"
+  dependencies:
+    is-ssh: "npm:^1.4.0"
+    parse-url: "npm:^9.2.0"
+  checksum: 10/475bfb816ee6003c505f25f2d6859148eedf684b2381f59774a8b4baf279d603710b888ecd1c5f5619fd7a582b131c2c52f8d247d59c7cc10bb7f7edffc704f7
+  languageName: node
+  linkType: hard
+
 "git-url-parse@npm:^13.0.0, git-url-parse@npm:^13.1.1":
   version: 13.1.1
   resolution: "git-url-parse@npm:13.1.1"
   dependencies:
     git-up: "npm:^7.0.0"
   checksum: 10/407f6579f3aa5e4040e215b45c1cfa7f08bd52a298a50310fc3debdd99e9d049d9f05e582b5475218116f312526691e1c3cc368e0d23f97c49735f210e381475
+  languageName: node
+  linkType: hard
+
+"git-url-parse@npm:^16.0.0":
+  version: 16.1.0
+  resolution: "git-url-parse@npm:16.1.0"
+  dependencies:
+    git-up: "npm:^8.1.0"
+  checksum: 10/1522e86ce89bb854ac5eaab13e71f9a72e93c4eb9897559d9731e03b700a7e2d38d16a77dddede9f79c8dac6f50633e2e420702bb1677580e797312e9b55379d
   languageName: node
   linkType: hard
 
@@ -17351,13 +17376,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash.isequal@npm:^4.5.0":
-  version: 4.5.0
-  resolution: "lodash.isequal@npm:4.5.0"
-  checksum: 10/82fc58a83a1555f8df34ca9a2cd300995ff94018ac12cc47c349655f0ae1d4d92ba346db4c19bbfc90510764e0c00ddcc985a358bdcd4b3b965abf8f2a48a214
-  languageName: node
-  linkType: hard
-
 "lodash.isfunction@npm:^3.0.9":
   version: 3.0.9
   resolution: "lodash.isfunction@npm:3.0.9"
@@ -19741,13 +19759,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"parchment@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "parchment@npm:3.0.0"
-  checksum: 10/67b91be827794c146b36bf56aa958e7519c8c47ff5298d7008eee3083ac33fdafdec4bb0f4b308d25b20c0e74775a4a729e280154209acf0e4d759d8ffc939ae
-  languageName: node
-  linkType: hard
-
 "parent-module@npm:^1.0.0":
   version: 1.0.1
   resolution: "parent-module@npm:1.0.1"
@@ -19841,6 +19852,16 @@ __metadata:
   dependencies:
     parse-path: "npm:^7.0.0"
   checksum: 10/ceb51dc474568092a50d6d936036dfe438a87aa45bcf20947c8fcdf1544ee9c50255608abae604644e718e91e0b83cfbea4675e8b2fd90bc197432f6d9be263c
+  languageName: node
+  linkType: hard
+
+"parse-url@npm:^9.2.0":
+  version: 9.2.0
+  resolution: "parse-url@npm:9.2.0"
+  dependencies:
+    "@types/parse-path": "npm:^7.0.0"
+    parse-path: "npm:^7.0.0"
+  checksum: 10/d2746f0dbcd34d39df966a0726c00ede272aa34d825513baca721ad95480786c664f91ab22cf4e79cdb130468056e41834f6c9cc912b9180539f73aa5bafa982
   languageName: node
   linkType: hard
 
@@ -20632,29 +20653,6 @@ __metadata:
   version: 5.1.1
   resolution: "quick-lru@npm:5.1.1"
   checksum: 10/a516faa25574be7947969883e6068dbe4aa19e8ef8e8e0fd96cddd6d36485e9106d85c0041a27153286b0770b381328f4072aa40d3b18a19f5f7d2b78b94b5ed
-  languageName: node
-  linkType: hard
-
-"quill-delta@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "quill-delta@npm:5.1.0"
-  dependencies:
-    fast-diff: "npm:^1.3.0"
-    lodash.clonedeep: "npm:^4.5.0"
-    lodash.isequal: "npm:^4.5.0"
-  checksum: 10/6cd9a634dd729504b0d13b25718f3dfa6b54fc5144cc682d32f229c5da2e50726222858f9f6612a676f9e2b0a2ec3173d3d678fdc96b1040ba725bfc35af3fbe
-  languageName: node
-  linkType: hard
-
-"quill@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "quill@npm:2.0.3"
-  dependencies:
-    eventemitter3: "npm:^5.0.1"
-    lodash-es: "npm:^4.17.21"
-    parchment: "npm:^3.0.0"
-    quill-delta: "npm:^5.1.0"
-  checksum: 10/e4207da2250c3a194eb02f2506c2af06c27633772c2f5f7da45f48913f34c00d313bb2bcbb27a8473b8a55a7d7d9a1ae4966417a5038059cd1c7fb14bd793f13
   languageName: node
   linkType: hard
 
@@ -24806,6 +24804,21 @@ __metadata:
     js-yaml: "npm:^4.1.0"
     micromatch: "npm:^4.0.0"
   checksum: 10/ea07e2949efb358fef96bd2c9b084fcca02ca3a0c74fe948a009198082afb7636cd81231d5720ea88d412238cefc23bc65fb917dae2fd78f4f9fb80902020fa7
+  languageName: node
+  linkType: hard
+
+"workspace-tools@npm:^0.38.4":
+  version: 0.38.4
+  resolution: "workspace-tools@npm:0.38.4"
+  dependencies:
+    "@yarnpkg/lockfile": "npm:^1.1.0"
+    fast-glob: "npm:^3.3.1"
+    git-url-parse: "npm:^16.0.0"
+    globby: "npm:^11.0.0"
+    jju: "npm:^1.4.0"
+    js-yaml: "npm:^4.1.0"
+    micromatch: "npm:^4.0.0"
+  checksum: 10/157c33537707de9aaee9cb34f0eb93ff588cbf2e08e93a7c526fa17290a2e1e3e061c3649d235e17571683930ede7b2f5ae45f8528aebb8557fc249bfa7bcd94
   languageName: node
   linkType: hard
 

@@ -9,6 +9,8 @@ const net = require('net');
 const kill = require('tree-kill');
 const { platform } = require('node:os');
 
+const rootPath = pathfs.resolve('../../../');
+
 const command = {
   cmd: process.argv[2],
   args: process.argv.slice(3),
@@ -108,12 +110,12 @@ function watchDeps(watchableDeps, cb = (
   /** @type {import('workspace-tools').PackageInfos[number]} */packageInfo,
 ) => packageInfo) {
   const call = debounce((packageInfo) => cb(packageInfo), 100);
-  watch(__dirname, { ignored, ignoreInitial: true }).on('all', (event, path) => {
+  watch(rootPath, { ignored, ignoreInitial: true }).on('all', (event, path) => {
     const packageInfos = getPackageInfos('.');
     const packageChanged = Object.keys(packageInfos)
       .filter((f) => {
         if (!watchableDeps.find((w) => w.name === f)) return false;
-        const changedPath = path.replace(`${__dirname}/`, '').replaceAll('/', '-');
+        const changedPath = path.replace(`${rootPath}/`, '').replaceAll('/', '-');
         const packageName = f.replace('@runeya/', '').replace('@runeya/', '');
         return changedPath.startsWith(packageName);
       }).pop();
@@ -141,8 +143,8 @@ function getWatchableDeps(path) {
 
 function getDependencies(packageName, ignoreDependencies = [], recursiveAggr = []) {
   if(!packageName) return recursiveAggr;
-  const dependencies = (getPackageInfos(__dirname)[packageName].dependencies || {});
-  const devDependencies = (getPackageInfos(__dirname)[packageName].devDependencies || {});
+  const dependencies = (getPackageInfos(rootPath)[packageName].dependencies || {});
+  const devDependencies = (getPackageInfos(rootPath)[packageName].devDependencies || {});
   const deps = [
     ...Object.keys(dependencies),
     ...Object.keys(devDependencies),
@@ -162,10 +164,10 @@ function getDependencies(packageName, ignoreDependencies = [], recursiveAggr = [
 }
 
 function getPackageInfoFromPath(path) {
-  const packagesInfos = getPackageInfos(__dirname);
+  const packagesInfos = getPackageInfos(rootPath);
   return Object.values(packagesInfos)
     .filter((f) => {
-      const packageName = path.replace(`${__dirname}/`, '').replaceAll('/', '-');
+      const packageName = path.replace(`${rootPath}/`, '').replaceAll('/', '-');
       return packageName.startsWith(f.name.replace('@runeya/', ''))
         || packageName.startsWith(f.name.replace('@runeya/', ''));
     }).pop();

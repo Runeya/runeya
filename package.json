@@ -13,13 +13,14 @@
     "check:all": "yarn check:unused && yarn check:monorepo && yarn check:dependencies-consistency",
     "plugin:create": "node common/plugin-creator/src/index.js",
     "ci:generate": "node ./common/workflows/src/index.js",
-    "plugin:dev": "node runScriptWithEnv \"turbo run plugin:dev\"",
-    "plugin:publish": "node runScriptWithEnv \"turbo run plugin:publish --env-mode=loose\"",
-    "lint": "node runScriptWithEnv \"turbo run lint\"",
-    "test": "node runScriptWithEnv \"turbo run test\"",
-    "build": "node runScriptWithEnv \"turbo run build --filter @runeya/servers-server\"",
-    "docs:build": "node runScriptWithEnv \"turbo run build --filter @runeya/fronts-docs\"",
+    "plugin:dev": "turbo run plugin:dev  --env-mode=loose",
+    "plugin:publish": "turbo run plugin:publish --env-mode=loose",
+    "lint": "turbo run lint  --env-mode=loose",
+    "test": "turbo run test  --env-mode=loose",
+    "build": "turbo run build --filter @runeya/servers-server --env-mode=loose",
+    "docs:build": "turbo run build --filter @runeya/fronts-docs --env-mode=loose",
     "eslint": "eslint",
+    "turbo": "turbo",
     "lerna": "npx lerna",
     "changed": "yarn lerna changed -pl --toposort"
   },
@@ -58,7 +59,6 @@
     "@runeya/runeya": "*",
     "@types/bluebird": "^3.5.38",
     "@types/debounce": "^1",
-    "@types/kill-port": "^2",
     "@types/lodash": "^4.14.201",
     "@types/node": "^20.8.9",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
@@ -80,10 +80,8 @@
     "fix-esm": "^1.0.1",
     "globals": "^15.14.0",
     "husky": "^9.1.7",
-    "kill-port": "^2.0.1",
     "knip": "^5.60.2",
     "tsup": "^8.5.0",
-    "turbo": "^2.3.3 ",
     "typescript": "^5.3.3",
     "workspace-tools": "^0.36.3"
   },
@@ -91,10 +89,6 @@
     "node": ">=16.0.0"
   },
   "dependencies": {
-    "@octokit/core": "^6.1.2",
-    "@octokit/plugin-rest-endpoint-methods": "^13.2.6",
-    "primevue": "^4.3.3",
-    "quill": "^2.0.3",
-    "vue-i18n": "^12.0.0-alpha.2"
+    "turbo": "^2.3.3 "
   }
 }
