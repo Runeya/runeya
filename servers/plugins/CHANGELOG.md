@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.2](https://github.com/runeya/runeya/compare/v1.33.1...v1.33.2) (2025-06-07)
+
+### Bug Fixes
+
+* **landing:** add correct dist entry ([8901edc](https://github.com/runeya/runeya/commit/8901edc5e2daa20eea0fb956a7818e4bcb60b948))
+
 ## [1.33.1](https://github.com/runeya/runeya/compare/v1.0.16...v1.33.1) (2025-06-06)
 
 ### Bug Fixes
