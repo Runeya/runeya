@@ -54,8 +54,7 @@ class MongoConnect {
     this.prefix = prefix;
     this.dbName = dbName;
     this.options = {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+      directConnection: true,
     };
     return this._connect();
   }

@@ -11,7 +11,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "mongodb": "^6.16.0"
+    "mongodb": "^6.17.0"
   },
   "devDependencies": {
     "@runeya/common-retrigger-all-build": "workspace:*"

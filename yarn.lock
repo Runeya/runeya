@@ -5682,7 +5682,7 @@ __metadata:
   resolution: "@runeya/common-mongo@workspace:common/mongo"
   dependencies:
     "@runeya/common-retrigger-all-build": "workspace:*"
-    mongodb: "npm:^6.16.0"
+    mongodb: "npm:^6.17.0"
   languageName: unknown
   linkType: soft
 
@@ -10769,6 +10769,13 @@ __metadata:
   version: 6.10.3
   resolution: "bson@npm:6.10.3"
   checksum: 10/53693ad7636fa1a128f32d5c30a9584b4a09a2b2aa2040ea8bf8dca35a283eb1394138770bc6c2dae91b0c6df96b3caef3b14532644736f4d7a1d3177969537b
+  languageName: node
+  linkType: hard
+
+"bson@npm:^6.10.4":
+  version: 6.10.4
+  resolution: "bson@npm:6.10.4"
+  checksum: 10/8a79a452219a13898358a5abc93e32bc3805236334f962661da121ce15bd5cade27718ba3310ee2a143ff508489b08467eed172ecb2a658cb8d2e94fdb76b215
   languageName: node
   linkType: hard
 
@@ -18501,7 +18508,41 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mongodb@npm:^6.16.0, mongodb@npm:^6.3.0, mongodb@npm:~6.16.0":
+"mongodb@npm:^6.17.0":
+  version: 6.17.0
+  resolution: "mongodb@npm:6.17.0"
+  dependencies:
+    "@mongodb-js/saslprep": "npm:^1.1.9"
+    bson: "npm:^6.10.4"
+    mongodb-connection-string-url: "npm:^3.0.0"
+  peerDependencies:
+    "@aws-sdk/credential-providers": ^3.188.0
+    "@mongodb-js/zstd": ^1.1.0 || ^2.0.0
+    gcp-metadata: ^5.2.0
+    kerberos: ^2.0.1
+    mongodb-client-encryption: ">=6.0.0 <7"
+    snappy: ^7.2.2
+    socks: ^2.7.1
+  peerDependenciesMeta:
+    "@aws-sdk/credential-providers":
+      optional: true
+    "@mongodb-js/zstd":
+      optional: true
+    gcp-metadata:
+      optional: true
+    kerberos:
+      optional: true
+    mongodb-client-encryption:
+      optional: true
+    snappy:
+      optional: true
+    socks:
+      optional: true
+  checksum: 10/9a1f13ce9e748aae888cfea2d3e2644af0e728fe0fca135a565b9f8f3976cc11fc0809a4808536e82d67d7e11c6f42a65311d5118a387e3849800c4ba39de859
+  languageName: node
+  linkType: hard
+
+"mongodb@npm:^6.3.0, mongodb@npm:~6.16.0":
   version: 6.16.0
   resolution: "mongodb@npm:6.16.0"
   dependencies:
