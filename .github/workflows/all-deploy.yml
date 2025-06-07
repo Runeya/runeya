@@ -118,18 +118,6 @@ jobs:
         cd dist
         npm publish --access public
 
-
-    - name: "Build and publish plugins packages to runeya"
-      if: steps.version.outputs.type == 'latest'
-      env:
-        PLUGINS_API_URL: ${{ secrets.PLUGINS_API_URL }}
-        PLUGINS_API_KEY: ${{ secrets.PLUGINS_API_KEY }}
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: |
-        echo "Attempting to build and publish plugins package to runeya..."
-        yarn plugin:publish
-    
-
     - id: lerna
       name: Export lerna config
       run: |
@@ -314,3 +302,51 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
  
+
+  webhook:
+    needs: [fronts-docs-docker,fronts-landing-docker,servers-plugins-docker]
+    runs-on: ubuntu-latest
+    if: always() && !failure() && !cancelled()
+    steps:
+      - name: Webhook master
+        if: contains(github.ref_name, 'master')
+        run: curl ${{ secrets.WEBHOOK_MASTER }}
+
+      - name: Webhook develop
+        if: contains(github.ref_name, 'develop')
+        run: curl ${{ secrets.WEBHOOK_DEVELOP }}
+
+      - name: Webhook staging
+        if: contains(github.ref_name, 'staging')
+        run: curl ${{ secrets.WEBHOOK_STAGING }}
+
+
+  publish-plugins:
+    needs: webhook
+    runs-on: ubuntu-latest
+    if: always() && !failure() && !cancelled()
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: "Checkout ${{ github.ref_name }}"
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'yarn'
+
+      - name: "Build and publish plugins packages to runeya"
+        if: steps.version.outputs.type == 'latest'
+        env:
+          PLUGINS_API_URL: ${{ secrets.PLUGINS_API_URL }}
+          PLUGINS_API_KEY: ${{ secrets.PLUGINS_API_KEY }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          echo "Attempting to build and publish plugins package to runeya..."
+          yarn plugin:publish
+      

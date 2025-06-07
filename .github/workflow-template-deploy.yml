@@ -113,18 +113,6 @@ jobs:
         cd dist
         npm publish --access public
 
-
-    - name: "Build and publish plugins packages to runeya"
-      if: steps.version.outputs.type == 'latest'
-      env:
-        PLUGINS_API_URL: ${{ secrets.PLUGINS_API_URL }}
-        PLUGINS_API_KEY: ${{ secrets.PLUGINS_API_KEY }}
-        NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      run: |
-        echo "Attempting to build and publish plugins package to runeya..."
-        yarn plugin:publish
-    
-
     - id: lerna
       name: Export lerna config
       run: |

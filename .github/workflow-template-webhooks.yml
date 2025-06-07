@@ -1,0 +1,16 @@
+  webhook:
+    needs: [NEEDS_DOCKER]
+    runs-on: ubuntu-latest
+    if: always() && !failure() && !cancelled()
+    steps:
+      - name: Webhook master
+        if: contains(github.ref_name, 'master')
+        run: curl ${{ secrets.WEBHOOK_MASTER }}
+
+      - name: Webhook develop
+        if: contains(github.ref_name, 'develop')
+        run: curl ${{ secrets.WEBHOOK_DEVELOP }}
+
+      - name: Webhook staging
+        if: contains(github.ref_name, 'staging')
+        run: curl ${{ secrets.WEBHOOK_STAGING }}
