@@ -14,15 +14,20 @@
   "scripts": {
     "plugin:publish": "node scripts/package.js",
     "plugin:dev": "cd front && vite build --watch",
+    "tsup": "cd backend && tsup",
     "test": ""
   },
   "devDependencies": {
     "@runeya/common-plugin-packager": "workspace:*",
     "@runeya/common-retrigger-all-build": "workspace:*",
+    "@runeya/common-tsup-config": "workspace:*",
+    "@vitejs/plugin-vue": "^5.2.4",
     "primevue": "^4.3.4",
     "tsup": "^8.5.0",
     "vite": "^6.3.5",
-    "vite-plugin-css-injected-by-js": "^3.5.2",
     "vue": "^3.5.13"
+  },
+  "dependencies": {
+    "axios": "^1.9.0"
   }
 }

@@ -5,6 +5,7 @@ import {
 } from 'fs/promises';
 import { dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { rmSync } from 'node:fs';
 
 // @ts-ignore
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -101,6 +102,32 @@ export const getDefaultConfigServer = (
     ...defaultConfig,
     esbuildPlugins,
 
+  };
+};
+
+export const getDefaultConfigPlugin = (
+  {
+    entries, plugins, rootPath, copy,
+  },
+) => {
+  const distPath = process.env.DIST_PATH
+  ? path.resolve(process.env.DIST_PATH)
+  : path.resolve(rootPath, "dist")
+
+  rmSync(distPath, {recursive: true, force: true})
+
+  const defaultConfig = getDefaultConfig({
+    entries, plugins, rootPath, copy,
+  });
+  const esbuildPlugins = [
+    ...defaultConfig.esbuildPlugins,
+  ];
+  return {
+    ...defaultConfig,
+    bundle: true,
+    clean: true,
+    outDir: distPath,
+    esbuildPlugins,
   };
 };
 

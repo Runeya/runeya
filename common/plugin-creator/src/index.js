@@ -68,9 +68,10 @@ const main = async () => {
       devDependencies: {
         "@runeya/common-plugin-packager": "workspace:*",
         "@runeya/common-retrigger-all-build": "workspace:*",
+        "@runeya/common-tsup-config": "workspace:*",
+        "tsup": "^8.5.0",
         "primevue": "^4.3.4",
         "vite": "^6.3.5",
-        "vite-plugin-css-injected-by-js": "^3.5.2",
         "vue": "^3.5.13"
       },
       dependencies: {
@@ -108,26 +109,13 @@ module.exports = ${className};
   };
 
   const generateBackendTsupConfig = () => {
-    return `import { rmSync } from 'fs';
-import { defineConfig } from 'tsup';
-import path from 'path'
+    return `import { getDefaultConfigPlugin } from '@runeya/common-tsup-config';
 
-const distPath = process.env.DIST_PATH
-  ? path.resolve(process.env.DIST_PATH)
-  : path.resolve(__dirname, "dist")
-
-rmSync(distPath, {recursive: true, force: true})
-
-export default defineConfig({
-  entry: ['./index.js'],
-  outDir: distPath,
-  clean: true,
-  bundle: true,
-  esbuildPlugins: [],
-  noExternal: [
-    /@runeya\\/.*/,
-  ],
-  sourcemap: true,
+export default getDefaultConfigPlugin({
+  entries: ['./index.js'],
+  rootPath: __dirname,
+  plugins: [],
+  copy: [],
 });
 `;
   };
@@ -136,13 +124,11 @@ export default defineConfig({
   const generateFrontendViteConfig = () => {
     return `import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 
 export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue(),
-      cssInjectedByJsPlugin()
     ],
     build: {
       outDir: 'dist',

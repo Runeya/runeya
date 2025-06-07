@@ -63,6 +63,7 @@
   <notif-history/>
   <notifications/>
   <GitConflictModal ref="gitConflictModalRef" />
+  <PluginInstallError/>
 
 </template>
 
@@ -88,6 +89,7 @@ import SplitterPanel from 'primevue/splitterpanel';
 import debounce from 'debounce'
 import Button from 'primevue/button'
 import PluginDev from './components/PluginDev.vue'
+import PluginInstallError from './components/PluginInstallError.vue'
 
 const componentsToLoad = plugins.filter(p => p.load).reduce((agg, {cmp, name}) => {
   agg[name] = cmp
@@ -105,6 +107,7 @@ export default {
     SplitterPanel,
     Button,
     PluginDev,
+    PluginInstallError,
     ...componentsToLoad
   },
   setup() {

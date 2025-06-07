@@ -43,7 +43,9 @@ router.get('/services', async (req, res) => {
 router.get('/:type', async (req, res) => {
   /** @type {import("@runeya/modules-plugins-loader-front/src/views").PluginSM<null>[]} */
   // @ts-ignore
-  const services = await PromiseB.filter(plugins[req.params.type], async (plugin) => (plugin.hidden ? !(await plugin.hidden(null, Stack, req.params.type)) : true));
+  const services = await PromiseB.filter(plugins[req.params.type] || [], async (plugin) => (
+    plugin.hidden ? !(await plugin.hidden(null, Stack, req.params.type)) : true)
+  );
   services.sort((a, b) => (a.order || 1000) - (b.order || 1000));
   res.send(services);
 });

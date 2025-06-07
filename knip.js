@@ -26,6 +26,14 @@ module.exports = {
       entry: ['src/{index,cli,server}.js!', 'src/{index,cli,server}.ts!', '**/*.spec.(js|ts)', '**/*.test.(js|ts)', 'tsup.config.ts', 'src/walkerFork.js'],
       project: ['**/*.ts!', '**/*.js!'],
     },
+
+    'plugins/*': {
+      ignore: ['node_modules/**/*'],
+      ignoreDependencies: [
+      ],
+      entry: ['backend/{index,cli,server}.js!', 'backend/{index,cli,server}.ts!', '**/*.spec.(js|ts)', '**/*.test.(js|ts)', 'backend/tsup.config.ts', 'front/vite.config.js', 'scripts/package.js', 'front/element.js', '**/*.js'],
+      project: ['**/*.ts!', '**/*.js!',  '**/*.vue!',],
+    },
     'modules/*/front': {
       vue: true,
       ignore: ['node_modules/**/*'],

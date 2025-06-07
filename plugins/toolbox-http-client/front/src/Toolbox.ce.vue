@@ -576,10 +576,10 @@ function loadFromHistory(item) {
 .request-panel {
   display: flex;
   flex-direction: column;
-  background-color: var(--system-backgroundColor800);
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: var(--system-backgroundColor0);
   
   @media screen and (min-width: 992px) {
     width: 50%;
@@ -588,8 +588,6 @@ function loadFromHistory(item) {
 
 .request-header {
   padding: 1rem;
-  background-color: var(--system-backgroundColor300);
-  border-bottom: 1px solid var(--system-borderColor);
 }
 
 .url-container {

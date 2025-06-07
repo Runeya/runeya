@@ -72,7 +72,6 @@ module.exports = async function buildAndPackage() {
   ].filter(Boolean));
   console.timeEnd('📦 Building...');
   console.time('📦 Copying dist...');
-  console.log('📦 Copying dist...', frontDistPath);
   await Promise.all([
     existsSync(path.resolve(viteProjectPath, 'dist')) && cp(path.resolve(viteProjectPath, 'dist'), frontDistPath, {
       recursive: true
@@ -91,6 +90,12 @@ module.exports = async function buildAndPackage() {
     await cp(path.resolve(projectRoot, 'README.md'), path.resolve(distPath, 'README.md'));
   }
   const packageJson = JSON.parse(await readFile(path.resolve(projectRoot, 'package.json'), 'utf-8'))
+  if(packageJson.dependencies) {
+    packageJson.dependencies = Object.fromEntries(Object.entries(packageJson.dependencies).filter(([key]) => !key.startsWith('@runeya/')))
+  }
+  if(packageJson.devDependencies) {
+    packageJson.devDependencies = Object.fromEntries(Object.entries(packageJson.devDependencies).filter(([key]) => !key.startsWith('@runeya/')))
+  }
   if(existsSync(path.resolve(projectRoot, 'package-lock.json'))) {
     await cp(path.resolve(projectRoot, 'package-lock.json'), path.resolve(distPath, 'package-lock.json'))
   }

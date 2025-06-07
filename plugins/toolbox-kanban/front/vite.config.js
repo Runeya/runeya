@@ -1,12 +1,10 @@
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import { libInjectCss } from 'vite-plugin-lib-inject-css';
 
 export default defineConfig(({ mode }) => {
   return {
     plugins: [
       vue(),
-      libInjectCss(),
     ],
     build: {
       outDir: 'dist',

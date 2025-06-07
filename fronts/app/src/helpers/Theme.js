@@ -32,7 +32,6 @@ class Theme {
       this.apply(newTheme);
     });
     watch(() => this.themes.value[this.currentTheme.value], (newThemes) => {
-      console.log('ffezjfzkfjzekjfzekfjzzejffejkzfjzkefjkezfjkzefkjzejkzefjkzefkjze')
       this.loadCurrentTheme();
     }, {deep: true});
   }
@@ -62,6 +61,9 @@ class Theme {
     if (currentTheme === 'dark') {
       localStorage.setItem('currentTheme', 'darkPurple');
       currentTheme = 'darkPurple';
+    }
+    if(!this.themes.value[currentTheme]) {
+      currentTheme = 'light';
     }
     this.currentTheme.value = currentTheme;
   }

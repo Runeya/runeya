@@ -52,14 +52,6 @@ router.post('/upload', getSession, multer().single('file'), async (req, res) => 
   if(!configData.runeya.entries) {
     throw new Error('No entries found in package.json')
   }
-  if(!configData.runeya.entries.front) {
-    if(!configData.entries.front.js) {
-      throw new Error('No front entrypoint found in package.json')
-    }
-    if(!configData.runeya.entries.front.css) {
-      throw new Error('No front css entrypoint found in package.json')
-    }
-  }
 
   const s3 = new aws.S3Client({
     forcePathStyle: true,
