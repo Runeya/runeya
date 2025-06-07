@@ -9,7 +9,8 @@
     },
     "plugin:publish": {
       "dependsOn": [
-        "^plugin:publish"
+        "^build",
+        "build"
       ],
       "outputs": []
     },

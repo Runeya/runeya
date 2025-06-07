@@ -42,7 +42,6 @@ const main = async () => {
     await fs.ensureDir(path.join(pluginDir, 'backend'));
     await fs.ensureDir(path.join(pluginDir, 'front', 'src', 'components'));
     await fs.ensureDir(path.join(pluginDir, 'front', 'src', 'helpers'));
-    await fs.ensureDir(path.join(pluginDir, 'scripts'));
   };
 
   // Generate package.json
@@ -61,8 +60,10 @@ const main = async () => {
         }
       },
       scripts: {
-        build: "node scripts/package.js",
+        "plugin:publish": "npx runeya-plugin-packager --publish",
+        "build": "npx runeya-plugin-packager --build",
         "plugin:dev": "cd front && vite build --watch",
+        "tsup": "cd backend && tsup",
         test: ""
       },
       devDependencies: {
@@ -459,17 +460,6 @@ async function handleCopy() {
 `;
   };
 
-  // Generate scripts
-  const generatePackageScript = () => {
-    return `const buildAndPackage = require('@runeya/common-plugin-packager');
-
-buildAndPackage().catch(err => {
-  console.error('❌ Packaging failed:', err);
-  process.exit(1);
-});
-`;
-  };
-
   // Generate README
   const generateReadme = () => {
     const displayName = className;
@@ -513,9 +503,6 @@ ${displayName} plugin for Runeya platform.
       await fs.outputFile(path.join(pluginDir, 'front', 'src', 'Toolbox.ce.vue'), generateFrontendVue());
       await fs.outputFile(path.join(pluginDir, 'front', 'src', 'components', 'CopyButton.vue'), generateCopyButtonComponent());
       await fs.outputFile(path.join(pluginDir, 'front', 'src', 'helpers', 'args.js'), generateArgsHelper());
-
-      // Scripts
-      await fs.outputFile(path.join(pluginDir, 'scripts', 'package.js'), generatePackageScript());
 
       console.log(`✅ Plugin "${pluginName}" created successfully!`);
       console.log(`📁 Location: ${pluginDir}`);

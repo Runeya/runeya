@@ -9,7 +9,8 @@
     }
   },
   "scripts": {
-    "plugin:publish": "node scripts/package.js",
+    "plugin:publish": "npx runeya-plugin-packager --publish",
+    "build": "npx runeya-plugin-packager --build",
     "tsup": "cd theme && tsup",
     "test": ""
   },

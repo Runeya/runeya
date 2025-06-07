@@ -5605,6 +5605,8 @@ __metadata:
     axios: "npm:^1.9.0"
     compressing: "npm:^1.10.3"
     form-data: "npm:^4.0.2"
+  bin:
+    runeya-plugin-packager: bin/entry.js
   languageName: unknown
   linkType: soft
 

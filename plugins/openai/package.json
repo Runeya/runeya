@@ -12,7 +12,8 @@
     }
   },
   "scripts": {
-    "plugin:publish": "node scripts/package.js",
+    "plugin:publish": "npx runeya-plugin-packager --publish",
+    "build": "npx runeya-plugin-packager --build",
     "plugin:dev": "cd front && vite build --watch",
     "tsup": "cd backend && tsup",
     "test": ""

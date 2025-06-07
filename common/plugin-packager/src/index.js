@@ -35,20 +35,15 @@ const exec = async (cmd, options = {}) => {
   });
 }
 
-
-module.exports = async function buildAndPackage() {
-  if(!process.env.PLUGINS_API_URL) {
-    console.log('❌ PLUGINS_API_URL is not set');
-  }
-  if(!process.env.PLUGINS_API_KEY) {
-    console.log('❌ PLUGINS_API_KEY is not set');
-  }
-  if(!process.env.RUNEYA_API_URL) {
-    console.log('❌ RUNEYA_API_URL is not set');
-  }
-  await rm(path.resolve(projectRoot, 'dist'), {recursive: true, force: true})
-  let {version} = require(path.resolve(projectRoot, 'package.json'))
+function getNameAndVersion() {
   const name = require(path.resolve(projectRoot, 'package.json')).name
+  const version = require(path.resolve(projectRoot, 'package.json')).version
+  return {name, version}
+}
+
+module.exports.build = async function build() {
+  await rm(path.resolve(projectRoot, 'dist'), {recursive: true, force: true})
+  const {name, version} = getNameAndVersion()
   console.log('📦 Name:', name);
   console.log('📦 Version:', version);
   console.log('📦 Packaging front-end...');
@@ -112,6 +107,19 @@ module.exports = async function buildAndPackage() {
   });
   console.timeEnd('📦 Compressing...');
   console.log(`✅ Archive created at: ${archiveTarget}`);
+}
+
+module.exports.publish = async function publish() {
+  if(!process.env.PLUGINS_API_URL) {
+    console.log('❌ PLUGINS_API_URL is not set');
+  }
+  if(!process.env.PLUGINS_API_KEY) {
+    console.log('❌ PLUGINS_API_KEY is not set');
+  }
+  if(!process.env.RUNEYA_API_URL) {
+    console.log('❌ RUNEYA_API_URL is not set');
+  }
+  const {name, version} = getNameAndVersion()
   const remotePath = `${process.env.PLUGINS_API_URL}/api/plugins/download/${encodeURIComponent(name)}/${version}`
 
   async function putObject(filePath) {
@@ -149,4 +157,5 @@ module.exports = async function buildAndPackage() {
     }
   }
   console.timeEnd('📦 Installing plugin...');
+
 }

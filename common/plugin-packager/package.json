@@ -5,6 +5,9 @@
   "description": "",
   "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",
+  "bin": {
+    "runeya-plugin-packager": "bin/entry.js"
+  },
   "scripts": {
     "test": "echo \"No test specified\""
   },
