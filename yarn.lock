@@ -6626,6 +6626,7 @@ __metadata:
     pidusage-tree: "npm:^2.0.5"
     slugify: "npm:^1.6.6"
     supertest: "npm:^6.3.4"
+    tar: "npm:^7.4.3"
     tree-kill: "npm:^1.2.2"
     tsup: "npm:^8.5.0"
     uuid: "npm:^9.0.1"

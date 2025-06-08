@@ -3,7 +3,7 @@ const Stack = require('../models/stack');
 const { default: axios } = require('axios');
 const { tmpdir } = require('node:os');
 const path = require('node:path');
-const { writeFileSync, existsSync } = require('node:fs');
+const { existsSync } = require('node:fs');
 const { writeFile, mkdir, readFile, cp, rm, readdir } = require('node:fs/promises');
 const { spawn } = require('node:child_process');
 const dbs = require('./dbs');
@@ -13,8 +13,14 @@ const tar = require('tar');
 const dbConfig = dbs.getDb('plugins', {encrypted: false, defaultData: []});
 const { sockets } = require('@runeya/common-socket-server');
 const stack = require('../models/stack');
-const chokidar = require('chokidar');
 const debounce = require('debounce');
+
+/** @type {import('chokidar')}  This is just a development depency*/
+// @ts-ignore
+let chokidar = null;
+if(process.env.NODE_ENV === 'HFBXdZMJxLyJoua28asEaxRixJ6LriR7FnRzX6pwA7pFjZ') {
+  chokidar = require('chokidar');
+}
 
 /** @type {import('express').Router[]} */
 const routes = [];
