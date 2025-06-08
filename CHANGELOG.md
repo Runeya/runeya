@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.18](https://github.com/runeya/runeya/compare/v1.33.17...v1.33.18) (2025-06-08)
+
+### Bug Fixes
+
+* **plugins:** use config tsup instead to compile it ([9c225bb](https://github.com/runeya/runeya/commit/9c225bb2d50542a32f29a6526b51a40cf223db33))
+
 ## [1.33.17](https://github.com/runeya/runeya/compare/v1.33.16...v1.33.17) (2025-06-08)
 
 ### Bug Fixes
