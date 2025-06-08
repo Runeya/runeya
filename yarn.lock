@@ -5522,6 +5522,8 @@ __metadata:
     kill-port: "npm:^2.0.1"
     tree-kill: "npm:^1.2.2"
     workspace-tools: "npm:^0.38.4"
+  bin:
+    runeya-dev-watch: src/watch.js
   languageName: unknown
   linkType: soft
 

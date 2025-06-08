@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 process.env.PREFERRED_WORKSPACE_MANAGER = 'yarn';
 const { watch } = require('chokidar');
 const { getPackageInfos } = require('workspace-tools');
@@ -9,26 +10,26 @@ const net = require('net');
 const kill = require('tree-kill');
 const { platform } = require('node:os');
 
-const rootPath = pathfs.resolve('../../../');
+const rootPath = pathfs.resolve('../../');
 
 const command = {
   cmd: process.argv[2],
   args: process.argv.slice(3),
 };
 const ignored = [
-  '**/*node_modules',
-  '**/*dist',
-  '**/*.git',
-  '**/*.yarn',
-  '**/*.turbo',
-  '**/*test-report.xml',
-  '**/*tsup*',
-  '**/*vite*',
-  '**/*logs-express',
-  '**/*coverage',
-  '**/*sandbox-node-repl',
-  '**/*public',
-  '**/volumes',
+  new RegExp('.*/.*volumes.*'),
+  new RegExp('.*/.*node_modules.*'),
+  new RegExp('.*/.*dist.*'),
+  new RegExp('.*/.*git.*'),
+  new RegExp('.*/.*yarn.*'),
+  new RegExp('.*/.*turbo.*'),
+  new RegExp('.*/.*test-report.xml.*'),
+  new RegExp('.*/.*tsup.*'),
+  new RegExp('.*/.*vite.*'),
+  new RegExp('.*/.*logs-express.*'),
+  new RegExp('.*/.*coverage.*'),
+  new RegExp('.*/.*sandbox-node-repl.*'),
+  new RegExp('.*/.*public.*'),
 ];
 let restartInProgress = false;
 let pid;
@@ -89,6 +90,7 @@ async function runMainProcess() {
     });
     const free = await checkport(port);
     if (!free) {
+      console.log('Killing port', port);
       await killport(+port).catch((err) => console.error('Error: (Kill port):', err?.message || err));
     }
   }
@@ -110,7 +112,7 @@ function watchDeps(watchableDeps, cb = (
   /** @type {import('workspace-tools').PackageInfos[number]} */packageInfo,
 ) => packageInfo) {
   const call = debounce((packageInfo) => cb(packageInfo), 100);
-  watch(rootPath, { ignored, ignoreInitial: true }).on('all', (event, path) => {
+  watch(rootPath, { ignored: (path) => ignored.some((f) => f.test(path)) , ignoreInitial: true }).on('all', (event, path) => {
     const packageInfos = getPackageInfos('.');
     const packageChanged = Object.keys(packageInfos)
       .filter((f) => {
@@ -127,7 +129,7 @@ function watchDeps(watchableDeps, cb = (
 
 function getWatchableDeps(path) {
   const currentPackage = getPackageInfoFromPath(path);
-    if (currentPackage) {
+  if (currentPackage) {
     const ignoreDependencies = [];
     if (currentPackage.name === '@runeya/servers-server') {
       ignoreDependencies.push('@runeya/fronts-app');

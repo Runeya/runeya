@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "cross-env-shell node bin/www $RUNEYA_ROOT_PATH \"$SERVICE\"",
-    "serve": "nodemon -e js,ts,jsx,tsx,vue,swagger.yml,swagger.yaml --ignore ./public -x \"node ../../watch.js npm run start\"",
+    "serve": "nodemon -e js,ts,jsx,tsx,vue,swagger.yml,swagger.yaml --ignore ./public -x \"runeya-dev-watch npm run start\"",
     "build": "tsup",
     "test": ""
   },

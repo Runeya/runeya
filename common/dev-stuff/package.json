@@ -5,6 +5,9 @@
   "description": "",
   "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",
+  "bin": {
+    "runeya-dev-watch": "src/watch.js"
+  },
   "scripts": {
     "test": "echo \"No test specified\""
   },
