@@ -1,6 +1,6 @@
 {
   "name": "@runeya/plugins-toolbox-regex",
-  "version": "1.33.12",
+  "version": "1.33.13",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "runeya": {

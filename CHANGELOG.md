@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.13](https://github.com/runeya/runeya/compare/v1.33.12...v1.33.13) (2025-06-08)
+
+**Note:** Version bump only for package @runeya/runeya
+
 ## [1.33.12](https://github.com/runeya/runeya/compare/v1.33.11...v1.33.12) (2025-06-08)
 
 **Note:** Version bump only for package @runeya/runeya
