@@ -1,6 +1,6 @@
 {
   "name": "@runeya/plugins-toolbox-base64",
-  "version": "1.33.9",
+  "version": "1.33.12",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "runeya": {
