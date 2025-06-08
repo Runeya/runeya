@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.15](https://github.com/runeya/runeya/compare/v1.33.14...v1.33.15) (2025-06-08)
+
+**Note:** Version bump only for package @runeya/common-plugin-packager
+
 ## [1.33.14](https://github.com/runeya/runeya/compare/v1.33.13...v1.33.14) (2025-06-08)
 
 **Note:** Version bump only for package @runeya/common-plugin-packager
@@ -28,4 +32,3 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 * make themes ([846b370](https://github.com/runeya/runeya/commit/846b370a23102eb726e9172768b9b6839bce3537))
 * wip ([5137049](https://github.com/runeya/runeya/commit/5137049e4de89d65551a9408c46fae5ed0ef3d6c))
- 
