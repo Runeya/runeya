@@ -1,8 +1,9 @@
 import { getDefaultConfigPlugin } from '@runeya/common-tsup-config';
+import { defineConfig } from 'tsup';
 
-export default getDefaultConfigPlugin({
-  entries: ['./index.js'],
-  rootPath: __dirname,
-  plugins: [],
-  copy: [],
+console.log('tsup.config.ts');
+
+export default defineConfig({
+  entry: ['./index.js'],
+  // ...
 });

@@ -56,11 +56,11 @@ module.exports.build = async function build() {
       cwd: viteProjectPath,
       env: process.env,
     }), 
-    existsSync(backendProjectPath) && exec('yarn tsup', {
+    existsSync(backendProjectPath) && exec('yarn tsup tsup.config.ts', {
       cwd: backendProjectPath,
       env: process.env,
     }),
-    existsSync(themeProjectPath) && exec('yarn tsup', {
+    existsSync(themeProjectPath) && exec('yarn tsup tsup.config.ts', {
       cwd: themeProjectPath,
       env: process.env,
     }),

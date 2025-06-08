@@ -6312,7 +6312,7 @@ __metadata:
     "@runeya/common-tsup-config": "workspace:*"
     "@vitejs/plugin-vue": "npm:^5.2.4"
     primevue: "npm:^4.3.4"
-    tsup: "npm:^8.0.0"
+    tsup: "npm:^8.5.0"
     uuid: "npm:^9.0.0"
     vite: "npm:^6.3.5"
     vue: "npm:^3.5.13"
@@ -6566,7 +6566,7 @@ __metadata:
     tar: "npm:^7.4.3"
     tar-stream: "npm:^3.1.7"
     tree-kill: "npm:^1.2.2"
-    tsup: "npm:^8.3.5"
+    tsup: "npm:^8.5.0"
     uuid: "npm:^9.0.1"
     xlsx: "npm:^0.18.5"
     yargs: "npm:^17.7.2"
@@ -6619,7 +6619,7 @@ __metadata:
     slugify: "npm:^1.6.6"
     supertest: "npm:^6.3.4"
     tree-kill: "npm:^1.2.2"
-    tsup: "npm:^8.3.5"
+    tsup: "npm:^8.5.0"
     uuid: "npm:^9.0.1"
     xlsx: "npm:^0.18.5"
     yargs: "npm:^17.7.2"
@@ -23426,7 +23426,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tsup@npm:^8.0.0, tsup@npm:^8.3.5, tsup@npm:^8.5.0":
+"tsup@npm:^8.5.0":
   version: 8.5.0
   resolution: "tsup@npm:8.5.0"
   dependencies:
