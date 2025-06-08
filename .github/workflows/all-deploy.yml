@@ -356,6 +356,6 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           echo "Attempting to build and publish plugins package to runeya..."
-          npx turbo run plugin:publish $(find plugins/* -maxdepth 0 -type d | sed 's|plugins/|--filter=@runeya/plugins-|' | tr '\n' ' ')
+          npx turbo run plugin:publish $(find plugins/* -maxdepth 0 -type d | sed 's|plugins/|--filter=@runeya/plugins-|' | tr '\n' ' ') --env-mode=loose
 
       
