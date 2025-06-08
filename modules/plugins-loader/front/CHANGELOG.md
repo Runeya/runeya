@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.17](https://github.com/runeya/runeya/compare/v1.33.16...v1.33.17) (2025-06-08)
+
+### Bug Fixes
+
+* **app:** some modules hasnt front file ([91ce2d4](https://github.com/runeya/runeya/commit/91ce2d4b56e0ae5bb5696197e1b6e6e81289c635))
+
 ## [1.33.11](https://github.com/runeya/runeya/compare/v1.33.10...v1.33.11) (2025-06-07)
 
 **Note:** Version bump only for package @runeya/modules-plugins-loader-front

@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-openapi-backend",
-  "version": "1.33.11",
+  "version": "1.33.17",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {

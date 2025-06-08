@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.17](https://github.com/runeya/runeya/compare/v1.33.16...v1.33.17) (2025-06-08)
+
+### Bug Fixes
+
+* **server:** authorize some frames origin ([d3158ac](https://github.com/runeya/runeya/commit/d3158ac4918056b21f5248d000bdad5b879fbe39))
+
 ## [1.0.8](https://github.com/runeya/runeya/compare/v1.0.7...v1.0.8) (2025-05-15)
 
 **Note:** Version bump only for package @runeya/modules-help-front

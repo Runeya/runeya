@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.17](https://github.com/runeya/runeya/compare/v1.33.16...v1.33.17) (2025-06-08)
+
+### Bug Fixes
+
+* **app:** some modules hasnt front file ([91ce2d4](https://github.com/runeya/runeya/commit/91ce2d4b56e0ae5bb5696197e1b6e6e81289c635))
+* **server:** authorize some frames origin ([d3158ac](https://github.com/runeya/runeya/commit/d3158ac4918056b21f5248d000bdad5b879fbe39))
+
 ## [1.33.16](https://github.com/runeya/runeya/compare/v1.33.15...v1.33.16) (2025-06-08)
 
 ### Bug Fixes
