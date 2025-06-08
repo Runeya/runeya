@@ -334,15 +334,19 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: "Install minimal dependencies (build is already done)"
+      - name: "Resync from  ${{ github.ref_name }}"
         run: |
-          yarn workspaces focus @runeya/common-plugin-packager @runeya/runeya
+          git pull origin ${{ github.ref_name }}
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
         with:
           node-version: 18
           cache: 'yarn'
+
+      - name: "Install minimal dependencies (build is already done)"
+        run: |
+          yarn workspaces focus  @runeya/common-plugin-packager @runeya/runeya $(find plugins/* -maxdepth 0 -type d | sed 's|plugins/|@runeya/plugins-|' | tr '\n' ' ')
 
       - name: "Build and publish plugins packages to runeya"
         if: contains(github.ref_name, 'master')
