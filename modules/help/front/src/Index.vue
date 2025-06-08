@@ -1,5 +1,5 @@
 <template>
-  <iframe src="https://runeya.github.io/runeya/" width="100%" height="100%"></iframe>
+  <iframe src="https://docs.runeya.dev" width="100%" height="100%"></iframe>
 </template>
 
 <script setup>

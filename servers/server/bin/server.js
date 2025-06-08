@@ -20,7 +20,7 @@ module.exports = {
         contentSecurityPolicy: {
           directives: {
             upgradeInsecureRequests: null,
-            'frame-src': ["'self'", 'runeya.github.io', 'jsoncrack.com'],
+            'frame-src': ["'self'", 'docs.runeya.dev','runeya.dev', 'jsoncrack.com'],
           },
           useDefaults: true,
         },
