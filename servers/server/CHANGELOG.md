@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.19](https://github.com/runeya/runeya/compare/v1.33.18...v1.33.19) (2025-06-08)
+
+### Bug Fixes
+
+* various bugfix on assets loading in production ([7a6e79e](https://github.com/runeya/runeya/commit/7a6e79e3202a4d51b2164af9b4144b392bc13457))
+
 ## [1.33.17](https://github.com/runeya/runeya/compare/v1.33.16...v1.33.17) (2025-06-08)
 
 ### Bug Fixes

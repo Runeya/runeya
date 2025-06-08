@@ -1,6 +1,6 @@
 {
   "name": "@runeya/fronts-app",
-  "version": "1.33.17",
+  "version": "1.33.19",
   "private": true,
   "description": "Monitor processes as a stack",
   "repository": "https://github.com/runeya/runeya",
