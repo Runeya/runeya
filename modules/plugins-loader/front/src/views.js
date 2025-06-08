@@ -243,7 +243,7 @@ axios.get('/plugins').then(async (res) => {
   remotePlugins.value = res.data.sort((a, b) => b.name.localeCompare(a.name));
   console.log("load plugins...", remotePlugins.value.map((plugin) => plugin.name))
   await PromiseB.map(remotePlugins.value, async (plugin) => {
-    if(plugin.config.runeya.entries.front.js) {
+    if(plugin.config.runeya.entries?.front?.js) {
       const pluginName = plugin.name;
       /** @param {import('@runeya/common-typings').PluginCallback} callback */
       globalThis[pluginName] = (callback) => {
