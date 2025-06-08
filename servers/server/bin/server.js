@@ -21,6 +21,7 @@ module.exports = {
           directives: {
             upgradeInsecureRequests: null,
             'frame-src': ["'self'", 'docs.runeya.dev','runeya.dev', 'jsoncrack.com'],
+            'worker-src': ["'self'", 'blob:'],
           },
           useDefaults: true,
         },
@@ -48,7 +49,7 @@ module.exports = {
           ? addr
           : addr?.port;
         ports.setHttpPort(+(port || 0));
-        if (process.env.NODE_ENV !== 'HFBXdZMJxLyJoua28asEaxRixJ6LriR7FnRzX6pwA7pFjZ' && !process.versions.electron) {
+        if (process.env.NODE_ENV !== 'HFBXdZMJxLyJoua28asEaxRixJ6LriR7FnRzX6pwA7pFjZ' && !process.versions.electron && process.env.RUNEYA_DISABLE_OPEN_ON_START !== 'true') {
           require('open')(`http://localhost:${port}`);
         }
         // Tips

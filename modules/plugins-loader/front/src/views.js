@@ -163,7 +163,7 @@ function movePrimeVueStyles(shadowDOM) {
   // Observe if any new styles are added by PrimeVue
   observeHeadForStyles(shadowDOM)
 
-  const primeStyles = document.querySelectorAll('head > style')
+  const primeStyles = document.querySelectorAll('head > style, head > link[rel="stylesheet"]')
 
   // Move all styles that aren't for definining variables into the shadow dom
   primeStyles.forEach((styleEl) => {
@@ -271,7 +271,6 @@ axios.get('/plugins').then(async (res) => {
             theme: {
               preset: PrimeVueAura,
               options: {
-                darkModeSelector: '.theme-dark-bak',
               },
             },
           },

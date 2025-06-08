@@ -2,7 +2,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-100.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-100.ttf") format("truetype");
   font-weight: 100;
   font-style: normal;
   font-display: swap;
@@ -10,7 +10,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-200.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-200.ttf") format("truetype");
   font-weight: 200;
   font-style: normal;
   font-display: swap;
@@ -18,7 +18,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-300.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-300.ttf") format("truetype");
   font-weight: 300;
   font-style: normal;
   font-display: swap;
@@ -26,7 +26,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-400.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-400.ttf") format("truetype");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
@@ -34,7 +34,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-500.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-500.ttf") format("truetype");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
@@ -42,7 +42,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-600.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-600.ttf") format("truetype");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
@@ -50,7 +50,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-700.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-700.ttf") format("truetype");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
@@ -58,7 +58,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-800.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-800.ttf") format("truetype");
   font-weight: 800;
   font-style: normal;
   font-display: swap;
@@ -66,7 +66,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-900.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-900.ttf") format("truetype");
   font-weight: 900;
   font-style: normal;
   font-display: swap;
@@ -74,7 +74,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-100-Italic.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-100-Italic.ttf") format("truetype");
   font-weight: 100;
   font-style: italic;
   font-display: swap;
@@ -82,7 +82,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-200-Italic.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-200-Italic.ttf") format("truetype");
   font-weight: 200;
   font-style: italic;
   font-display: swap;
@@ -90,7 +90,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-300-Italic.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-300-Italic.ttf") format("truetype");
   font-weight: 300;
   font-style: italic;
   font-display: swap;
@@ -98,7 +98,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-400-Italic.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-400-Italic.ttf") format("truetype");
   font-weight: 400;
   font-style: italic;
   font-display: swap;
@@ -106,7 +106,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-500-Italic.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-500-Italic.ttf") format("truetype");
   font-weight: 500;
   font-style: italic;
   font-display: swap;
@@ -114,7 +114,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-600-Italic.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-600-Italic.ttf") format("truetype");
   font-weight: 600;
   font-style: italic;
   font-display: swap;
@@ -122,7 +122,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-700-Italic.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-700-Italic.ttf") format("truetype");
   font-weight: 700;
   font-style: italic;
 
@@ -130,7 +130,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-800-Italic.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-800-Italic.ttf") format("truetype");
   font-weight: 800;
   font-style: italic;
   font-display: swap;
@@ -138,7 +138,7 @@
 
 @font-face {
   font-family: "Jost";
-  src: url("Jost-900-Italic.ttf") format("truetype");
+  src: url("@/assets/fonts/Jost/Jost-900-Italic.ttf") format("truetype");
   font-weight: 900;
   font-style: italic;
   font-display: swap;
