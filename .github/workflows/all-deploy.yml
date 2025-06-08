@@ -132,7 +132,7 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -192,7 +192,7 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -252,7 +252,7 @@ jobs:
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
     steps:
       - name: "Checkout"
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
@@ -336,7 +336,7 @@ jobs:
 
       - name: "Install minimal dependencies (build is already done)"
         run: |
-          yarn workspaces focus --production @runeya/common-plugin-packager @runeya/runeya
+          yarn workspaces focus @runeya/common-plugin-packager @runeya/runeya
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4

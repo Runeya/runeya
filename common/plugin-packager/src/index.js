@@ -46,7 +46,7 @@ module.exports.build = async function build() {
   const {name, version} = getNameAndVersion()
   console.log('📦 Name:', name);
   console.log('📦 Version:', version);
-  console.log('📦 Packaging front-end...');
+  console.log('📦 Packaging...');
 
   // Step 1: Build front with Vite
   console.log('📦 Building...', viteProjectPath);

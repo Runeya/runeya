@@ -13,7 +13,7 @@
 
       - name: "Install minimal dependencies (build is already done)"
         run: |
-          yarn workspaces focus --production @runeya/common-plugin-packager @runeya/runeya
+          yarn workspaces focus @runeya/common-plugin-packager @runeya/runeya
 
       - name: Setup Node.js environment
         uses: actions/setup-node@v4
