@@ -173,7 +173,7 @@ async function keyup($event) {
   background-color: rgba(0,0,0,0.2);
   .hint {
     margin: 10px;
-    background-color: var(--system-backgroundColor800);
+    background-color: var(--system-backgroundColor0);
     color: var(--system-color);
     border: 1px solid var(--system-backgroundColor300);
     box-sizing: border-box;
@@ -198,7 +198,7 @@ async function keyup($event) {
     border-radius: 10px;
     max-width: 1000px;
     height: max-content;
-    background-color: var(--system-backgroundColor800);
+    background-color: var(--system-backgroundColor0);
     color: var(--system-color);
     border: 1px solid var(--system-backgroundColor300);
     padding: 10px;

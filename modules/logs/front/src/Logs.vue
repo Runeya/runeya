@@ -857,7 +857,7 @@ async function sendScenario(scenario) {
     }
     .terminal-panel-content {
       max-width: calc(100% - 40px);
-      background-color: var(--system-backgroundColor800);
+      background-color: var(--system-backgroundColor50);
       color: var(--system-color);
       z-index: 2;
       position: absolute;
@@ -1236,7 +1236,7 @@ async function sendScenario(scenario) {
     font-weight: bold;
   }
   .more-info-content {
-    background-color: var(--system-backgroundColor800);
+    background-color: var(--system-backgroundColor50);
     color: var(--system-color);
     border: 1px solid var(--system-backgroundColor300);
     border-radius: 5px;
@@ -1317,7 +1317,7 @@ async function sendScenario(scenario) {
   position: absolute;
   display: flex;
   flex-direction: column;
-  background-color: var(--system-backgroundColor800);
+  background-color: var(--system-backgroundColor50);
   color: var(--system-color);
   width: 100%;
   left: 0;
