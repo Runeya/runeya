@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-logs-front",
-  "version": "1.0.14",
+  "version": "1.33.22",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {

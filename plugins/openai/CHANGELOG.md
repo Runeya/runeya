@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.22](https://github.com/runeya/runeya/compare/v1.33.21...v1.33.22) (2025-06-09)
+
+### Bug Fixes
+
+* **openai:** remove from sidebar ([51115c2](https://github.com/runeya/runeya/commit/51115c27f239649083ff2b6d658b3038a4393795))
+
 ## [1.33.18](https://github.com/runeya/runeya/compare/v1.33.17...v1.33.18) (2025-06-08)
 
 **Note:** Version bump only for package @runeya/plugins-openai

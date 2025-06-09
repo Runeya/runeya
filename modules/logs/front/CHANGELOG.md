@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.22](https://github.com/runeya/runeya/compare/v1.33.21...v1.33.22) (2025-06-09)
+
+### Bug Fixes
+
+* **finder+logs:** change some css variable to match with selected theme ([3f219f0](https://github.com/runeya/runeya/commit/3f219f0318e2995e83ba341dd41daf618a9f3e53))
+
 ## [1.0.14](https://github.com/runeya/runeya/compare/v1.0.13...v1.0.14) (2025-06-06)
 
 ### Bug Fixes

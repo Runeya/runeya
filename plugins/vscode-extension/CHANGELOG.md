@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.22](https://github.com/runeya/runeya/compare/v1.33.21...v1.33.22) (2025-06-09)
+
+**Note:** Version bump only for package @runeya/plugins-vscode-extension
+
 ## [1.33.21](https://github.com/runeya/runeya/compare/v1.33.20...v1.33.21) (2025-06-09)
 
 ### Bug Fixes

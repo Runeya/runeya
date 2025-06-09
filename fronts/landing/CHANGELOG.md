@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.22](https://github.com/runeya/runeya/compare/v1.33.21...v1.33.22) (2025-06-09)
+
+### Bug Fixes
+
+* **app:** change some breakpoint in ui ([d9690df](https://github.com/runeya/runeya/commit/d9690dff11ae8518b22525c27d69d653beb0f54d))
+
 ## [1.0.16](https://github.com/runeya/runeya/compare/v1.0.15...v1.0.16) (2025-06-06)
 
 ### Bug Fixes

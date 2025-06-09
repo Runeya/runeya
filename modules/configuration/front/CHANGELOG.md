@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.22](https://github.com/runeya/runeya/compare/v1.33.21...v1.33.22) (2025-06-09)
+
+### Bug Fixes
+
+* **Editor:** set correct theme ([bdcda9a](https://github.com/runeya/runeya/commit/bdcda9a94b466ba94471aff7b4aa282c9af26b1f))
+* **environments variable:** restart only on modal close ([ab0916a](https://github.com/runeya/runeya/commit/ab0916a608e7921543d3684e5df6f028eabb5caa))
+
 ## [1.33.11](https://github.com/runeya/runeya/compare/v1.33.10...v1.33.11) (2025-06-07)
 
 **Note:** Version bump only for package @runeya/modules-configuration-front

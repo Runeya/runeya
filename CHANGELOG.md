@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.22](https://github.com/runeya/runeya/compare/v1.33.21...v1.33.22) (2025-06-09)
+
+### Bug Fixes
+
+* **app:** change some breakpoint in ui ([d9690df](https://github.com/runeya/runeya/commit/d9690dff11ae8518b22525c27d69d653beb0f54d))
+* **documentation:** fix documentation not loading + cosmetic changes on documentation sidebar ([e76d932](https://github.com/runeya/runeya/commit/e76d93218c01293d3d13ca21574515b4a374c86a))
+* **Editor:** set correct theme ([bdcda9a](https://github.com/runeya/runeya/commit/bdcda9a94b466ba94471aff7b4aa282c9af26b1f))
+* **environments variable:** restart only on modal close ([ab0916a](https://github.com/runeya/runeya/commit/ab0916a608e7921543d3684e5df6f028eabb5caa))
+* **finder+logs:** change some css variable to match with selected theme ([3f219f0](https://github.com/runeya/runeya/commit/3f219f0318e2995e83ba341dd41daf618a9f3e53))
+* **finder:** open up everywhere ([ae25f0f](https://github.com/runeya/runeya/commit/ae25f0ff1feba68d0f046471985f836688db4b56))
+* **openai:** remove from sidebar ([51115c2](https://github.com/runeya/runeya/commit/51115c27f239649083ff2b6d658b3038a4393795))
+* **server:** fix problems on migration from stackmonitor resulting on subfolder copy, no encryptionkey and no overrides ([23ea8bc](https://github.com/runeya/runeya/commit/23ea8bc219d3d4500aeb5231a59626ec898d4f34))
+* **theme:** change sidebarmain item color ([01cc010](https://github.com/runeya/runeya/commit/01cc01006e22d7fcbe9c7a044e139a273a5b6389))
+
 ## [1.33.21](https://github.com/runeya/runeya/compare/v1.33.20...v1.33.21) (2025-06-09)
 
 ### Bug Fixes

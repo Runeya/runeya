@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.22](https://github.com/runeya/runeya/compare/v1.33.21...v1.33.22) (2025-06-09)
+
+### Bug Fixes
+
+* **server:** fix problems on migration from stackmonitor resulting on subfolder copy, no encryptionkey and no overrides ([23ea8bc](https://github.com/runeya/runeya/commit/23ea8bc219d3d4500aeb5231a59626ec898d4f34))
+
 ## [1.33.20](https://github.com/runeya/runeya/compare/v1.33.19...v1.33.20) (2025-06-09)
 
 ### Bug Fixes

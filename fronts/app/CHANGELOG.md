@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.22](https://github.com/runeya/runeya/compare/v1.33.21...v1.33.22) (2025-06-09)
+
+### Bug Fixes
+
+* **app:** change some breakpoint in ui ([d9690df](https://github.com/runeya/runeya/commit/d9690dff11ae8518b22525c27d69d653beb0f54d))
+* **documentation:** fix documentation not loading + cosmetic changes on documentation sidebar ([e76d932](https://github.com/runeya/runeya/commit/e76d93218c01293d3d13ca21574515b4a374c86a))
+* **Editor:** set correct theme ([bdcda9a](https://github.com/runeya/runeya/commit/bdcda9a94b466ba94471aff7b4aa282c9af26b1f))
+* **theme:** change sidebarmain item color ([01cc010](https://github.com/runeya/runeya/commit/01cc01006e22d7fcbe9c7a044e139a273a5b6389))
+
 ## [1.33.20](https://github.com/runeya/runeya/compare/v1.33.19...v1.33.20) (2025-06-09)
 
 **Note:** Version bump only for package @runeya/fronts-app
