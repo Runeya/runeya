@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.23](https://github.com/runeya/runeya/compare/v1.33.22...v1.33.23) (2025-06-09)
+
+### Bug Fixes
+
+* **plugins:** write correct .gitignore file for plugins ([4771d82](https://github.com/runeya/runeya/commit/4771d82f0509a0f6e65f94c85704f8a3e063d2bd))
+* **server:** factorize creation of default files ([34824df](https://github.com/runeya/runeya/commit/34824df5d4b706ff7eb6123d4eb9aaf171f0f14e))
+
 ## [1.33.22](https://github.com/runeya/runeya/compare/v1.33.21...v1.33.22) (2025-06-09)
 
 ### Bug Fixes
