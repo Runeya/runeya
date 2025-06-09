@@ -336,7 +336,6 @@ async function save() {
     await props.service.save()
       .then(() => {
         notification.next('success', 'Configuration saved')
-        if(props.service.enabled)props.service.restart()
       })
       .catch(() => notification.next('error', 'Cannot save configuration'));
   }
@@ -345,7 +344,6 @@ async function saveEnvironment() {
   await axios.patch(`/stack/environments/${currentEnvironment.value.label}`, currentEnvironment.value)
     .then(() => {
       notification.next('success', 'Environment saved')
-      if(props.service.enabled)props.service.restart()
     })
     .catch(() => notification.next('success', 'Environment cant be saved'));
 }
@@ -359,6 +357,7 @@ async function open() {
   
   return new Promise((resolve) => {
     function onClose() {
+      if(props.service.enabled) props.service.restart()
       resolve();
     }
     
