@@ -14,7 +14,7 @@ on:
 
 jobs:
   publish:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     permissions:
       contents: write
     env:
@@ -32,7 +32,7 @@ jobs:
         fetch-depth: 0
 
     - name: Setup Node.js environment
-      uses: actions/setup-node@v4
+      uses: useblacksmith/setup-node@v5
       with:
         node-version: 18
         cache: 'yarn'
@@ -125,7 +125,7 @@ jobs:
 
   fronts-docs-docker:
     needs: [publish]
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: contains(needs.publish.outputs.changed, 'fronts-docs')
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -185,7 +185,7 @@ jobs:
 
   fronts-landing-docker:
     needs: [publish]
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: contains(needs.publish.outputs.changed, 'fronts-landing')
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -245,7 +245,7 @@ jobs:
 
   servers-plugins-docker:
     needs: [publish]
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: contains(needs.publish.outputs.changed, 'servers-plugins')
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -305,7 +305,7 @@ jobs:
 
   webhook:
     needs: [fronts-docs-docker,fronts-landing-docker,servers-plugins-docker]
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: always() && !failure() && !cancelled()
     steps:
       - name: Webhook master
@@ -323,7 +323,7 @@ jobs:
 
   publish-plugins:
     needs: webhook
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: always() && !failure() && !cancelled()
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -339,7 +339,7 @@ jobs:
           git pull origin ${{ github.ref_name }}
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v4
+        uses: useblacksmith/setup-node@v5
         with:
           node-version: 18
           cache: 'yarn'
