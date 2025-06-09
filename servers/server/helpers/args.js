@@ -29,11 +29,13 @@ const yarg = yargs(hideBin(process.argv))
   .help('h')
   .alias('h', 'help')
   .parse()
-
-/** @type {Awaited<yarg> &  {rootPath: string, initialCwd: string}} */
+const rootPath = path.resolve(yarg['_']?.[0] || '.')
+/** @type {Awaited<yarg> &  {rootPath: string, initialCwd: string, runeyaConfigPath: string, runeyaGlobalConfigPath: string}} */
 const args = Object.assign({
-  rootPath: path.resolve(yarg['_']?.[0] || '.'),
+  rootPath,
   initialCwd: '',
+  runeyaConfigPath: path.resolve(rootPath, '.runeya'),
+  runeyaGlobalConfigPath: path.resolve(require('os').homedir(), '.runeya-global'),
 }, yarg);
 
 if(!existsSync(args.rootPath)) {

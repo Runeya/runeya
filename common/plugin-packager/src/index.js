@@ -1,5 +1,5 @@
 const path =require('path');
-const { cp, writeFile, rm, mkdir, readFile } =require('fs/promises');
+const { cp, writeFile, rm, readFile } =require('fs/promises');
 const compressing =require('compressing');
 const { existsSync, createReadStream } = require('fs');
 const FormData = require('form-data');

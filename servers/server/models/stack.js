@@ -11,8 +11,8 @@ const EnvironmentModel = require('./Environment');
 const EncryptionKey = require('./EncryptionKey');
 const CustomObservable = require('@runeya/common-socket-server/src/CustomObservable');
 const args = require('../helpers/args');
-const { existsSync, mkdirSync  } = require('fs');
-const { rename } = require('fs/promises');
+const { existsSync, mkdirSync,   } = require('fs');
+const { rename, cp, rmdir,rm } = require('fs/promises');
 const pathfs = require('path');
 const { default: axios } = require('axios');
 
@@ -106,7 +106,6 @@ Stack.prototype.toStorage = function () {
 
 Stack.getRootPath = () => {
   const rootPath = pathfs.resolve(args.rootPath, '.runeya');
-  if (!existsSync(rootPath)) mkdirSync(rootPath, { recursive: true });
   return rootPath;
 }
 
@@ -192,19 +191,6 @@ Stack.prototype.findService = function (serviceLabel) {
 };
 
 Stack.selectConf = async function () {
-  const localLegacyPath = pathfs.resolve(require('./stack').getRootPath(), '../.stackmonitor')
-  const localNewPath = pathfs.resolve(require('./stack').getRootPath(), '.runeya')
-  if(existsSync(localLegacyPath) && !existsSync(localNewPath)) {
-    console.log('Legacy path found, move to new path')
-    await rename(localLegacyPath, localNewPath)
-  }
-
-  const globalLegacyPath = pathfs.resolve(require('os').homedir(), '.stackmonitor')
-  const globalNewPath = pathfs.resolve(require('os').homedir(), '.runeya-global')
-  if(existsSync(globalLegacyPath) && !existsSync(globalNewPath)) {
-    console.log('Legacy path found, move to new path')
-    await rename(globalLegacyPath, globalNewPath)
-  }
   await EncryptionKey.init();
   if (!EncryptionKey.encryptionKey) {
     await EncryptionKey.saveKey(await EncryptionKey.generateKey());
