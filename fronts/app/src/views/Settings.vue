@@ -8,7 +8,7 @@
             @update:selectionKeys="navigate"
             selectionMode="single"
             size="small"
-            class="w-full md:w-[30rem]"
+            class="w-full"
           />
         </SplitterPanel>
         <SplitterPanel :size="75" class="rightPanel">

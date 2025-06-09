@@ -7,7 +7,7 @@
     </div>
     <Splitter style="height: 100%">
       <SplitterPanel :size="1" :style="{minWidth: '160px'}" class="leftPanel"> 
-          <Tree :value="tree" class="w-full md:w-[30rem] treeLeft" v-if="tree.length" :key="resync">
+          <Tree :value="tree" class="w-full treeLeft" v-if="tree.length" :key="resync">
             <template #default="slot">
               <div class="line" :class="{active: slot.node?.id === currentNode?.id}">
                 <Leaf :key="slot.node.id" :node="slot.node" @select="select(slot.node)" :tree="tree" @updateDoc="updateDoc($event)" @deleteDoc="deleteDoc($event)"/>

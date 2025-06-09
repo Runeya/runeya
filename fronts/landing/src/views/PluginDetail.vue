@@ -107,29 +107,6 @@
         </Card>
       </div>
 
-      <!-- Installation Instructions -->
-      <Card class="plugin-install-card">
-        <template #title>
-          <i class="fas fa-terminal"></i>
-          {{ $t('plugins.installInstructions') || 'Installation Instructions' }}
-        </template>
-        <template #content>
-          <div class="install-commands">
-            <div class="command-block">
-              <label>Download plugin:</label>
-              <div class="command-line">
-                <code>curl -O {{ getDownloadUrl() }}</code>
-                <Button 
-                  icon="fas fa-copy" 
-                  class="p-button-text p-button-sm copy-btn"
-                  @click="copyToClipboard(getDownloadUrl())"
-                  v-tooltip="'Copy'"
-                />
-              </div>
-            </div>
-          </div>
-        </template>
-      </Card>
 
       <Card class="plugin-readme-card" v-if="plugin.readme">
         <template #title>

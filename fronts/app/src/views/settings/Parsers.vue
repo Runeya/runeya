@@ -2,7 +2,7 @@
   <Splitter height="100%" style="height: 100%">
     <SplitterPanel :size="1" :style="{minWidth: '160px'}" class="left-panel">
       <Button fluid icon="fas fa-plus" label="Add new" size="small" class="add-button" variant="text" @click="add"></Button>
-      <Tree :value="nodes" v-model:selectionKeys="currentScriptKey" selectionMode="single" size="small" class="w-full md:w-[30rem]">
+      <Tree :value="nodes" v-model:selectionKeys="currentScriptKey" selectionMode="single" size="small" class="w-full">
         <template #default="slotProps">
           <div class="line">
             <div class="label">
