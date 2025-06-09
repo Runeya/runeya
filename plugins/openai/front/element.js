@@ -29,12 +29,6 @@ const callback = (params) => {
         icon: 'fas fa-brain',
         text: 'OpenAI',
       },
-      {
-        location: 'sidebar',
-        component: MySidebar,
-        icon: 'fas fa-brain',
-        text: 'OpenAI',
-      }
     ]
   }
 }
