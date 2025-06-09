@@ -96,8 +96,6 @@ const integrateWebApp = {
       if(existsSync(publicPath)) await rm(publicPath, {recursive: true, force: true})
       await cp(path.resolve(__dirname, '../../fronts/app/dist'), publicPath, {recursive: true})
       console.log('integrate extension')
-      execSync('yarn turbo build --filter=@runeya/modules-vscode-extension', {cwd: path.resolve(__dirname, '../..'), stdio: 'inherit'})
-      await cp(path.resolve(__dirname, '../../modules/vscode/extension/out/runeya.vsix'), path.resolve(distPath, 'runeya.vsix'), {recursive: true})
       const modulePath = path.resolve(__dirname, '../../modules/workflows/backend/nodes')
       const packageJSON = JSON.parse(await readFile(path.resolve(modulePath, 'package.json'), 'utf-8'))
       await compressing.tar.compressDir(

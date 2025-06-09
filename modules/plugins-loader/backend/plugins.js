@@ -10,7 +10,6 @@ const plugins = {
   toolbox: require('@runeya/modules-toolbox-backend'),
   help: require('@runeya/modules-help-backend'),
   openapi: require('@runeya/modules-openapi-backend'),
-  vscode: require('@runeya/modules-vscode-backend'),
   docker: require('@runeya/modules-docker-backend'),
   nodered: require('@runeya/modules-workflows-backend'),
 };

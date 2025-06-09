@@ -10,7 +10,6 @@ import Github from '@runeya/modules-github-front/src/Index.vue';
 import OpenApi from '@runeya/modules-openapi-front/src/Index.vue';
 import Finder from '@runeya/modules-finder-front/src/Index.vue';
 import Help from '@runeya/modules-help-front/src/Index.vue';
-import Vscode from '@runeya/modules-vscode-front/src/Index.vue';
 import Docker from '@runeya/modules-docker-front/src/Index.vue';
 import Workflows from '@runeya/modules-workflows-front/src/Index.vue';
 import WorkflowsModals from '@runeya/modules-workflows-front/src/modals/Modals.vue';
@@ -32,7 +31,6 @@ const toolboxPlugins = [
   { name: 'Git-NotUpToDate', component: NotUpToDate },
   { name: 'Help', component: Help },
   { name: 'Workflows', component: Workflows },
-  { name: 'Vscode', component: Vscode },
   { name: 'Docker', component: Docker },
   {
     name: 'Toolbox',
@@ -255,6 +253,9 @@ axios.get('/plugins').then(async (res) => {
           },
           callServer: (method, ...args) => {
             return axios.post(`/plugins/${encodeURIComponent(pluginName)}/call/${encodeURIComponent(method)}`, {args});
+          },
+          customCallServer: (options) => {
+            return (method, ...args) => axios.post(`/plugins/${encodeURIComponent(pluginName)}/call/${encodeURIComponent(method)}`, { args }, options);
           },
           socket: {
             emit: (event, ...args) => {

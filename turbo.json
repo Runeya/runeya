@@ -21,6 +21,7 @@
       "outputs": [
         ".next/**",
         ".vitepress/dist/**",
+        "**/dist/**",
         "dist/**",
         "out/**",
         "build/**",

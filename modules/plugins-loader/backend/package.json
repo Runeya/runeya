@@ -22,7 +22,6 @@
     "@runeya/modules-npm-backend": "workspace:*",
     "@runeya/modules-openapi-backend": "workspace:*",
     "@runeya/modules-toolbox-backend": "workspace:*",
-    "@runeya/modules-vscode-backend": "workspace:*",
     "@runeya/modules-workflows-backend": "workspace:*"
   },
   "devDependencies": {

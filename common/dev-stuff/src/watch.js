@@ -145,6 +145,7 @@ function getWatchableDeps(path) {
 
 function getDependencies(packageName, ignoreDependencies = [], recursiveAggr = []) {
   if(!packageName) return recursiveAggr;
+  console.log('getDependencies', packageName);
   const dependencies = (getPackageInfos(rootPath)[packageName].dependencies || {});
   const devDependencies = (getPackageInfos(rootPath)[packageName].devDependencies || {});
   const deps = [

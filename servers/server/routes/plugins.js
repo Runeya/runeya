@@ -57,7 +57,11 @@ router.get('/:plugin/js', async (req, res) => {
 });
 router.post('/:plugin/call/:method', async (req, res) => {
   const result = await plugins.call(req.params.plugin, req.params.method, req.body?.args || []);
-  res.json(result);
+  if(typeof result === 'function') {
+    await result(req, res);
+  } else {
+    res.json(result);
+  }
 });
 
 

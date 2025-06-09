@@ -1,4 +1,5 @@
 import {VueElementConstructor} from 'vue'
+import { AxiosRequestConfig } from 'axios';
 export type FunctionPropertyNames<T> = {
   [K in keyof T]: T[K] extends Function ? K : never;
 }[keyof T];
@@ -181,6 +182,7 @@ export type PluginCallback = (
     router: import('../../../fronts/app/src/router/router').default,
     notification: import('../../../fronts/app/src/helpers/notification').default,
     callServer: (path: string, ...args: any[]) => Promise<any>,
+    customCallServer: (options: AxiosRequestConfig) => (method: string, ...args: any[]) => Promise<any>,
     socket: {
       emit: (event: string, ...args: any[]) => void,
       on: (event: string, callback: (...args: any[]) => void) => void,
@@ -201,6 +203,7 @@ export type PluginCallback = (
     component: VueElementConstructor,
     icon?: string,
     text: string,
+    img?: string,
     iconText?: string,
   }[]
 }

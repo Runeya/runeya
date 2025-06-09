@@ -85,13 +85,16 @@
 
 <script setup>
 import { ref } from 'vue';
-import axios from '../../../../fronts/app/src/helpers/axios';
+import args from './helpers/args'
+
+const callServer = args.params.callServer;
+const customCallServer = args.params.customCallServer;
 
 const view = ref('default');
 const error = ref('');
 
 async function udpate() {
-  await axios.post('/vscode/install')
+  await callServer('install')
     .then(() => {
       view.value = 'reload';
     })
@@ -100,8 +103,9 @@ async function udpate() {
       view.value = 'error';
     });
 }
+
 async function uninstall() {
-  await axios.delete('/vscode/uninstall')
+  await callServer('uninstall')
     .then(() => {
       view.value = 'reload';
     })
@@ -112,7 +116,19 @@ async function uninstall() {
 }
 
 async function downloadVSIX() {
-  window.location.href = window.location.origin + '/vscode/download';
+  await customCallServer({responseType: 'blob', responseEncoding: 'binary'})('download')
+    .then(({data: blob}) => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'runeya.vsix';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch((err) => {
+      error.value = err?.response?.data?.message || err?.message || err;
+      view.value = 'error';
+    });
 }
 </script>
 
