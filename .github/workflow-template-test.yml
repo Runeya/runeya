@@ -9,7 +9,7 @@ on:
 
 jobs:
   checks:
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
       TURBO_TEAM: ${{ vars.TURBO_TEAM }}
@@ -21,7 +21,7 @@ jobs:
         fetch-depth: 0
 
     - name: Setup Node.js environment
-      uses: actions/setup-node@v3
+      uses: useblacksmith/setup-node@v5
       with:
         node-version: 18
         registry-url: 'https://npm.pkg.github.com/'

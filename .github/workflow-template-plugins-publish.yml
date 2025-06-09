@@ -1,6 +1,6 @@
   publish-plugins:
     needs: webhook
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: always() && !failure() && !cancelled()
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
@@ -16,7 +16,7 @@
           git pull origin ${{ github.ref_name }}
 
       - name: Setup Node.js environment
-        uses: actions/setup-node@v4
+        uses: useblacksmith/setup-node@v5
         with:
           node-version: 18
           cache: 'yarn'

@@ -1,7 +1,7 @@
 
   {{NAME_ROUTE_SANITIZED}}-docker:
     needs: [publish]
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: contains(needs.publish.outputs.changed, '{{NAME_ROUTE}}')
     env:
       TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}

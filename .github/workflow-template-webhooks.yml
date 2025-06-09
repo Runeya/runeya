@@ -1,6 +1,6 @@
   webhook:
     needs: [NEEDS_DOCKER]
-    runs-on: ubuntu-latest
+    runs-on: blacksmith-4vcpu-ubuntu-2404
     if: always() && !failure() && !cancelled()
     steps:
       - name: Webhook master
