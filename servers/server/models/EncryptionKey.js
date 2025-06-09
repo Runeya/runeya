@@ -23,13 +23,12 @@ class EncryptionKey {
     const dirname = path.dirname(await dbs.getDb('encryption-key', { encrypted: false }).getPath());
     const gitignorePath = path.resolve(dirname, '.gitignore');
     if (!existsSync(gitignorePath)) {
-      writeFile(gitignorePath, 'encryption-key.json');
-    } else {
-      const gitignoreFile = (await readFile(gitignorePath, 'utf-8')).split('\n');
-      const gitignoreHasKey = (key) => gitignoreFile.some((line) => line.trim() === key);
-      if (!gitignoreHasKey('encryption-key.json')) await appendFile(gitignorePath, '\nencryption-key.json');
-      if (!gitignoreHasKey('overrides')) await appendFile(gitignorePath, '\noverrides');
+      await writeFile(gitignorePath, 'encryption-key.json');
     }
+    const gitignoreFile = (await readFile(gitignorePath, 'utf-8')).split('\n');
+    const gitignoreHasKey = (key) => gitignoreFile.some((line) => line.trim() === key);
+    if (!gitignoreHasKey('encryption-key.json')) await appendFile(gitignorePath, '\nencryption-key.json');
+    if (!gitignoreHasKey('overrides')) await appendFile(gitignorePath, '\noverrides');
   }
 
   async update() {

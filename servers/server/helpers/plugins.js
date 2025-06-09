@@ -4,7 +4,7 @@ const { default: axios } = require('axios');
 const { tmpdir } = require('node:os');
 const path = require('node:path');
 const { existsSync } = require('node:fs');
-const { writeFile, mkdir, readFile, cp, rm, readdir } = require('node:fs/promises');
+const { writeFile, mkdir, readFile, cp, rm, readdir, appendFile } = require('node:fs/promises');
 const { spawn } = require('node:child_process');
 const dbs = require('./dbs');
 const HTTPError = require('@runeya/common-express-http-error');
@@ -35,6 +35,16 @@ const loadedPlugins = {};
 
 /** @type {Record<string, any>} */
 const themes = {};
+
+(async () => {
+  const gitignorePath = path.resolve(args.runeyaConfigPath, '.gitignore');
+  if(!existsSync(gitignorePath)) await writeFile(gitignorePath, '');
+  const gitignoreFile = (await readFile(gitignorePath, 'utf-8')).split('\n');
+  const gitignoreHasKey = (key) => gitignoreFile.some((line) => line.trim() === key);
+  if (!gitignoreHasKey('plugins.json')) await appendFile(gitignorePath, '\nplugins.json');
+  if (!gitignoreHasKey('plugins')) await appendFile(gitignorePath, '\nplugins');
+})();
+  
 
 Object.keys(plugins)
   .map((key) => plugins[/** @type {keyof (typeof plugins)} */(key)])
