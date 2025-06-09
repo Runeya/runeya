@@ -71,7 +71,7 @@ export default {
       backgroundColor: 'var(--system-backgroundColor100)',
     },
     sidebarMain: {
-      color: 'var(--system-color400)',
+      color: 'var(--system-color600)',
       backgroundColor: 'var(--system-backgroundColor0)',
     },
     sidebar: {
