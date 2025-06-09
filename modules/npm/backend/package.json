@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-npm-backend",
-  "version": "1.33.22",
+  "version": "1.33.24",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {

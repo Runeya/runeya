@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.24](https://github.com/runeya/runeya/compare/v1.33.23...v1.33.24) (2025-06-09)
+
+### Bug Fixes
+
+* **environments:** improve colors on environment variables tab ([8cd8df9](https://github.com/runeya/runeya/commit/8cd8df9fd5b8f051bb9ad1a939c2c40b7aaf103e))
+
 ## [1.33.23](https://github.com/runeya/runeya/compare/v1.33.22...v1.33.23) (2025-06-09)
 
 ### Bug Fixes
