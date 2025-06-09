@@ -88,6 +88,7 @@ import axios from '../../../../fronts/app/src/helpers/axios';
 import ModalEditEnvs from './ModalEditEnvs.vue';
 import stack from '../../../../fronts/app/src/models/stack';
 import Socket from '../../../../fronts/app/src/helpers/Socket';
+import notification from '../../../../fronts/app/src/helpers/notification';
 
 const props = defineProps({
   service: {
@@ -184,8 +185,7 @@ async function exportEnv() {
 function copyValue(value) {
   navigator.clipboard.writeText(value)
     .then(() => {
-      // Future enhancement: Show toast
-      console.log('Copied to clipboard');
+      notification.next('success', 'Copied to clipboard');
     })
     .catch(err => {
       console.error('Failed to copy: ', err);
@@ -313,7 +313,6 @@ function openEditModal() {
 }
 
 .env-item {
-  background-color: var(--system-backgroundColor600);
   border-radius: 4px;
   padding: 0.75rem;
   border: 1px solid var(--system-backgroundColor300);
@@ -349,7 +348,7 @@ function openEditModal() {
 }
 
 .env-value-container {
-  background-color: var(--system-backgroundColor300);
+  background-color: var(--system-backgroundColor200);
   border-radius: 3px;
   padding: 0.5rem;
   overflow-x: auto;
@@ -369,9 +368,8 @@ function openEditModal() {
 }
 
 .action-btn {
-  width: 28px;
-  height: 28px;
   padding: 0;
+  margin: 0;
   border-radius: 4px;
   
   &:hover {
