@@ -28,7 +28,7 @@ module.exports = {
     },
 
     'plugins/*': {
-      ignore: ['node_modules/**/*'],
+      ignore: ['node_modules/**/*', '**/dist/**/*'],
       ignoreDependencies: [
       ],
       entry: ['backend/{index,cli,server}.js!', 'backend/{index,cli,server}.ts!', '**/*.spec.(js|ts)', '**/*.test.(js|ts)', 'backend/tsup.config.ts', 'front/vite.config.js', 'scripts/package.js', 'front/element.js', '**/*.js'],

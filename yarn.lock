@@ -6391,14 +6391,18 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@runeya/plugins-vscode-extension@workspace:plugins/vscode-extension"
   dependencies:
+    "@runeya/common-express-http-error": "workspace:*"
     "@runeya/common-plugin-packager": "workspace:*"
     "@runeya/common-retrigger-all-build": "workspace:*"
     "@runeya/common-tsup-config": "workspace:*"
     "@runeya/modules-vscode-extension": "workspace:*"
+    "@vitejs/plugin-vue": "npm:^5.2.4"
+    open: "npm:^10.1.2"
     primevue: "npm:^4.3.4"
     tsup: "npm:^8.5.0"
     vite: "npm:^6.3.5"
     vue: "npm:^3.5.13"
+    workspace-tools: "npm:^0.38.4"
   languageName: unknown
   linkType: soft
 
@@ -19328,7 +19332,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"open@npm:^10.1.0":
+"open@npm:^10.1.0, open@npm:^10.1.2":
   version: 10.1.2
   resolution: "open@npm:10.1.2"
   dependencies:
