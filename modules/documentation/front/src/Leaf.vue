@@ -1,6 +1,6 @@
 <template>
-  <div class="leaf-root" @click.stop="$emit('select')">
-    <input v-model="node.label" v-if="edit" @change="emitEdit()" @blur="emitEdit()"/>
+  <div class="leaf-root" :class="{active: active}" @click.stop="$emit('select')">
+    <input v-model="node.label" v-if="edit" @change="emitEdit()" @blur="emitEdit()" @click.stop/>
     <div v-else>{{ node.label }}</div>
     <div class="actions" v-if="!edit">
       <i class="fas fa-edit" @click.stop="edit = true"></i>
@@ -27,7 +27,11 @@ const props = defineProps({
   tree: {
     /**@type {import('primevue/treenode').TreeNode[]} */
     default: []
-  }
+  },
+  active: { 
+    type: Boolean,
+    default: false
+  } 
 })
 
 const emit = defineEmits(['updateDoc'])
@@ -56,12 +60,28 @@ function deleteChild(_node) {
 <style lang="scss" scoped>
 
 .leaf-root {
+  transition: 300ms;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+  &:hover {
+    background-color: var(--system-primary100);
+    .actions {
+      opacity: 1;
+      right: 0;
+      cursor: pointer;
+    }
+  }
+  &.active {
+    background-color: var(--p-tree-node-selected-background);
+    color: var(--p-tree-node-selected-color);
+  }
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
   width: 100%;
+  padding: 3px 10px;
   input {
     width: 100%
   }
@@ -77,13 +97,6 @@ function deleteChild(_node) {
     background-color: var(--system-primary500);
     color: white;
     right: -100%;
-  }
-  &:hover {
-    .actions {
-      opacity: 1;
-      right: 0;
-      cursor: pointer;
-    }
   }
 }
 </style>

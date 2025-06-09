@@ -72,6 +72,7 @@ const plugins = [
   { name: 'Npm', cmp: () => import('@runeya/modules-npm-front/src/Npm.vue') },
   { name: 'Bugs', cmp: () => import('@runeya/modules-bugs-front/src/Bugs.vue') },
   { name: 'Configuration', cmp: () => import('@runeya/modules-configuration-front/src/Configs.vue') },
+  { name: 'Documentation', cmp: () => import('@runeya/modules-documentation-front/src/Index.vue') },
 ];
 
 /**

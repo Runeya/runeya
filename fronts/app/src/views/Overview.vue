@@ -19,12 +19,15 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, onMounted, ref, defineAsyncComponent } from 'vue'
 import SectionCmp from '../components/Section.vue'
 import stack from '../models/stack'
 import StackChooser from '../components/StackChooser.vue'
 import Spinner from '../components/Spinner.vue';
 import axios from '../helpers/axios';
+import views from '@runeya/modules-plugins-loader-front/src/views';
+
+const Documentation = defineAsyncComponent(() => views.find(v => v.name === 'Documentation')?.cmp())
 
 /** @type {import('vue').Ref<import('../models/service').default[]>} */
 const services = computed(() => {

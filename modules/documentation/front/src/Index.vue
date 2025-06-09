@@ -10,7 +10,7 @@
           <Tree :value="tree" class="w-full treeLeft" v-if="tree.length" :key="resync">
             <template #default="slot">
               <div class="line" :class="{active: slot.node?.id === currentNode?.id}">
-                <Leaf :key="slot.node.id" :node="slot.node" @select="select(slot.node)" :tree="tree" @updateDoc="updateDoc($event)" @deleteDoc="deleteDoc($event)"/>
+                <Leaf :key="slot.node.id" :node="slot.node" @select="select(slot.node)" :active="slot.node?.id === currentNode?.id" :tree="tree" @updateDoc="updateDoc($event)" @deleteDoc="deleteDoc($event)"/>
               </div>
             </template>
             <template #url="slotProps">
@@ -166,14 +166,8 @@ h2 {
 }
 .line {
   position: relative;
-
   display: flex;
   transition: 300ms;
-  padding: 10px;
-  &.active {
-    background-color:var(--system-primary400);
-    color:white;
-  }
 }
 .p-tree {
   padding: 0;
@@ -192,6 +186,10 @@ h2 {
   padding: 0 30px
 }
 .button-add {
+  margin: 0;
+  margin-top: 10px;
+}
+.treeLeft {
   flex-grow: 1;
 }
 </style>
