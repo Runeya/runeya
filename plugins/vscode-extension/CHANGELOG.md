@@ -7,9 +7,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ### Bug Fixes
 
-* some fix for dev watcher ([99ebd82](https://github.com/runeya/runeya/commit/99ebd82e1383caed7927dd227514968744750a4e))
 * **vscode:** externalize vscode plugin ([6dfcccc](https://github.com/runeya/runeya/commit/6dfcccc046a42e153c2348bee0a5d207e75e3c3a))
-
-## [1.33.11](https://github.com/runeya/runeya/compare/v1.33.10...v1.33.11) (2025-06-07)
-
-**Note:** Version bump only for package @runeya/common-dev-stuff

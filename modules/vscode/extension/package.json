@@ -6,7 +6,7 @@
   "repository": "https://github.com/runeya/runeya",
   "publisher": "runeya",
   "license": "ISC",
-  "version": "1.0.1",
+  "version": "1.33.20",
   "icon": "./resources/rocket.png",
   "engines": {
     "vscode": "^1.86.0"

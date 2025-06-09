@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.20](https://github.com/runeya/runeya/compare/v1.33.19...v1.33.20) (2025-06-09)
+
+### Bug Fixes
+
+* some fix for dev watcher ([99ebd82](https://github.com/runeya/runeya/commit/99ebd82e1383caed7927dd227514968744750a4e))
+
 ## [1.33.19](https://github.com/runeya/runeya/compare/v1.33.18...v1.33.19) (2025-06-08)
 
 **Note:** Version bump only for package @runeya/servers-plugins
