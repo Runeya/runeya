@@ -7,11 +7,12 @@ import Section from '../../../../fronts/app/src/components/Section.vue';
 import router from '../../../../fronts/app/src/router/router';
 import notification from '../../../../fronts/app/src/helpers/notification';
 import PrimeVueAura from '@primevue/themes/aura';
+import Finder from '@runeya/modules-finder-front/src/Index.vue'
 
 
 const toolboxPlugins = [
   { name: 'OpenApi', component: () => import('@runeya/modules-openapi-front/src/Index.vue') },
-  { name: 'Finder', component: () => import('@runeya/modules-finder-front/src/Index.vue') },
+  { name: 'Finder', component: Finder },
   { name: 'Git-NotUpToDate', component: () => import('@runeya/modules-git-front/src/NotUpToDate.vue') },
   { name: 'Help', component: () => import('@runeya/modules-help-front/src/Index.vue') },
   { name: 'Workflows', component: () => import('@runeya/modules-workflows-front/src/Index.vue') },
