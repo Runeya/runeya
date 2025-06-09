@@ -1010,9 +1010,3 @@ h1 {
   line-height: 2rem;
   font-weight: 700;
 }
-
-@media (min-width: 768px) {
-  .md\:w-\[30rem\] {
-    width: 30rem;
-  }
-}

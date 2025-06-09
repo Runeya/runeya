@@ -134,7 +134,6 @@ export default {
     },
     expandedKeys: {
       type: Object,
-      required: true
     }
   },
   setup(props) {

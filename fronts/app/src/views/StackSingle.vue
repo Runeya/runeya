@@ -59,7 +59,23 @@
         <tabs class="tabs" :tabs="tabs" :showLabels="false" direction="left" :contentCss="{height: '100%'}">
           <template #default="{tab}">
             <div class="tab">
-              <component :is="tab.id" :service="currentService" :key="currentService.label"></component>
+              <Suspense>
+                <template #default>
+                  <component 
+                    :is="dynamicComponents[tab.id] || tab.id" 
+                    :service="currentService" 
+                    :key="currentService.label"
+                  ></component>
+                </template>
+                <template #fallback>
+                  <div class="dynamic-loader">
+                    <div class="loader-content">
+                      <i class="fas fa-spinner fa-spin loader-icon"></i>
+                      <span>Loading component...</span>
+                    </div>
+                  </div>
+                </template>
+              </Suspense>
             </div>
           </template>
         </tabs>
@@ -68,12 +84,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Stack from '../models/stack'
 import System from '../models/system'
-import ProgressVue from '../components/Progress.vue';
-import SectionVue from '../components/Section.vue'
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import ProgressCmp from '../components/Progress.vue';
+import SectionCmp from '../components/Section.vue'
+import { onBeforeUnmount, onMounted, ref, watch, defineAsyncComponent, resolveComponent, shallowRef } from 'vue'
 import Tabs from '../components/Tabs.vue';
 import Card from '../components/Card.vue';
 import NotificationBell from '../components/NotificationBell.vue';
@@ -82,114 +98,113 @@ import Socket from '../helpers/Socket';
 import { useRouter } from 'vue-router';
 import Popover from '../../../../fronts/app/src/components/Popover.vue';
 import CurrentEditor from '../components/CurrentEditor.vue';
-export default {
-  name: 'StackSingle',
-  components: {
-    progressCmp: ProgressVue,
-    sectionCmp: SectionVue,
-    Tabs,
-    Card,
-    CurrentEditor,
-    Popover,
-    NotificationBell,
-  },
-  setup() {
-    const router = useRouter(); 
-    /** @type {import('vue').Ref<import('../models/service').default[]>} */
-    const stack = ref([])
-      /** @type {import('vue').Ref<import('../models/service').default | undefined>}*/
-    const currentService = ref()
-    const cpu = ref(0)
-    const mem = ref(0)
-    const restartInProgress = ref(false)
-    watch(() => router.currentRoute.value.params.label, async () => {
-      await reload()
-    })
-    const onConfUpdate = (/**@type {string[]}*/data) => {
-      if (data.includes(router.currentRoute.value.params.label.toString())) {
-        reload()
-      }
-    }
-    onMounted(() => {
-      Socket.on('conf:update', onConfUpdate)
-    })
-    onBeforeUnmount(() => {
-      Socket.off('conf:update', onConfUpdate)
-    })
+import views from '@runeya/modules-plugins-loader-front/src/views';
 
-    /** @type {number} */
-    let interval
-    const tabs = ref([])
-
-    async function reload() {
-      await Stack.loadServices()
-      currentService.value = await Stack.getService(router.currentRoute.value.params.label?.toString())
-      if(currentService.value) {
-        const {data: plugins} = await axios.get('/plugins/services/' + currentService.value.label)
-        tabs.value = plugins
-          .sort((
-            /** @type {any} */ a,
-            /** @type {any} */ b
-          ) => a.order - b.order)
-          .map((/** @type {{ name: any; icon: any; hidden: any; }} */ plugin) => {
-            const tab = {
-              label: plugin.name,
-              id: plugin.name,
-              icon:plugin.icon,
-              hidden: plugin.hidden,
-              warning: 0
-            }
-            if(plugin.name === "Configuration") {
-              const overrideEnvs = Object.keys(currentService.value?.spawnOptions?.overrideEnvs || {})
-              const envs = Object.keys(currentService.value?.spawnOptions?.env || {})
-              if(envs.some((key => overrideEnvs.includes(key)))) {
-                tab.warning = 1   
-              }
-            }
-            return tab
-          })
-      }
-    }
-
-    onMounted(async () => {
-      await reload()
-      // @ts-ignore
-      interval = setInterval(async () => {
-        if(!currentService.value?.label) return
-        const {cpu: _cpu, mem: _mem} = await System.getInfos(currentService.value.label.toString())
-        cpu.value = _cpu
-        mem.value = _mem
-      }, 1000);
-    })
-    onBeforeUnmount(()=> {
-      if(interval) clearInterval(interval)
-    })
-    return {
-      stack,
-      System,
-      currentService,
-      cpu, mem,
-      tabs,
-      restartInProgress,
-      async openInVsCode(path, editor) {
-        currentService.value?.openInVsCode(path, editor)
-      },
-      async openFolder(path) {
-        currentService.value?.openFolder(path)
-      },
-      async restart() {
-        restartInProgress.value = true
-        await currentService.value?.restart()
-          .finally(() => restartInProgress.value = false)
-      },
-      async stop() {
-        await currentService.value?.stop()
-      },
-      async start() {
-        await currentService.value?.start()
-      },
-    }
+// Register dynamic components
+const dynamicComponents = shallowRef({})
+views.forEach(v => {
+  if (v.cmp && typeof v.cmp === 'function') {
+    // @ts-ignore
+    dynamicComponents.value[v.name] = defineAsyncComponent(() => v.cmp())
   }
+})
+
+const router = useRouter(); 
+/** @type {import('vue').Ref<import('../models/service').default | undefined>}*/
+const currentService = ref()
+const cpu = ref(0)
+const mem = ref(0)
+const restartInProgress = ref(false)
+
+watch(() => router.currentRoute.value.params.label, async () => {
+  await reload()
+})
+
+const onConfUpdate = (/**@type {string[]}*/data) => {
+  if (data.includes(router.currentRoute.value.params.label.toString())) {
+    reload()
+  }
+}
+
+onMounted(() => {
+  Socket.on('conf:update', onConfUpdate)
+})
+
+onBeforeUnmount(() => {
+  Socket.off('conf:update', onConfUpdate)
+})
+
+/** @type {number} */
+let interval
+const tabs = ref([])
+
+async function reload() {
+  await Stack.loadServices()
+  currentService.value = await Stack.getService(router.currentRoute.value.params.label?.toString())
+  if(currentService.value) {
+    const {data: plugins} = await axios.get('/plugins/services/' + currentService.value.label)
+    tabs.value = plugins
+      .sort((
+        /** @type {any} */ a,
+        /** @type {any} */ b
+      ) => a.order - b.order)
+      .map((/** @type {{ name: any; icon: any; hidden: any; }} */ plugin) => {
+        const tab = {
+          label: plugin.name,
+          id: plugin.name,
+          icon:plugin.icon,
+          hidden: plugin.hidden,
+          warning: 0
+        }
+        if(plugin.name === "Configuration") {
+          const overrideEnvs = Object.keys(currentService.value?.spawnOptions?.overrideEnvs || {})
+          const envs = Object.keys(currentService.value?.spawnOptions?.env || {})
+          if(envs.some((key => overrideEnvs.includes(key)))) {
+            tab.warning = 1   
+          }
+        }
+        return tab
+      })
+  }
+}
+
+onMounted(async () => {
+  await reload()
+  // @ts-ignore
+  interval = setInterval(async () => {
+    if(!currentService.value?.label) return
+    const {cpu: _cpu, mem: _mem} = await System.getInfos(currentService.value.label.toString())
+    cpu.value = _cpu
+    mem.value = _mem
+  }, 1000);
+})
+
+onBeforeUnmount(()=> {
+  if(interval) clearInterval(interval)
+})
+
+const loadComponent = ref(false)
+
+async function openInVsCode(path, editor) {
+  currentService.value?.openInVsCode(path, editor)
+}
+
+async function openFolder(path) {
+  currentService.value?.openFolder(path)
+}
+
+async function restart() {
+  restartInProgress.value = true
+  await currentService.value?.restart()
+    .finally(() => restartInProgress.value = false)
+}
+
+async function stop() {
+  await currentService.value?.stop()
+}
+
+async function start() {
+  await currentService.value?.start()
 }
 </script>
 
@@ -386,6 +401,33 @@ export default {
   }
   100% {
     transform: rotateZ(360deg);
+  }
+}
+
+.dynamic-loader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  width: 100%;
+  
+  .loader-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--system-primary600);
+    font-weight: 500;
+    
+    .loader-icon {
+      font-size: 24px;
+      animation: rotation 1s linear infinite;
+    }
+    
+    span {
+      font-size: 14px;
+      opacity: 0.8;
+    }
   }
 }
 </style>

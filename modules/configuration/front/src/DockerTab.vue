@@ -214,7 +214,6 @@ const props = defineProps({
   },
   expandedKeys: {
     type: Object,
-    required: true
   }
 });
 

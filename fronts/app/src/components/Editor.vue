@@ -70,7 +70,7 @@ onMounted(async() => {
   }
   // @ts-ignore
   monaco.editor.defineTheme("monokai", monokai);
-  monaco.editor.setTheme("myTheme");
+  monaco.editor.setTheme("monokai");
 
   if(props.diff) {
     const _editor = monaco.editor.createDiffEditor(monacoRef.value, options)

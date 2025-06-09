@@ -4,7 +4,7 @@
   }">
     <div class="buttons" :class="{invert:invertColor}">
       <template v-for="tab of availableTabs" :key="tab.label" >
-        <Popover appendTo="self" trigger="mouseenter" placement="right" :fullWidth="true">
+        <Popover appendTo="parent" trigger="mouseenter" placement="right" :fullWidth="true">
           <template #trigger>
             <button @click="currentTab = tab;save()" :class="{active: tab?.id === currentTab?.id}">
               <div v-if="tab.label && !tab.icon">{{tab.label}}</div>

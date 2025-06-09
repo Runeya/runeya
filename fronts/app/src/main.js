@@ -10,7 +10,6 @@ import * as Vue from 'vue'
 import PluginManager from './models/pluginManager.js';
 import { i18n } from './i18n';
 import config from './config';
-import axios from 'axios';
 
 window.Vue = Vue;
 window.PrimeVueConfig = PrimeVueConfig;

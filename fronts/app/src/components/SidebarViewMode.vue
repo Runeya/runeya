@@ -189,6 +189,7 @@ export default {
           group: key,
           themes: groupsObj[key].themes
         }))
+        console.log(groups.sort((a, b) => a.group.localeCompare(b.group)))
         return groups.sort((a, b) => a.group.localeCompare(b.group))
       }),
       buttons:computed(() => ([

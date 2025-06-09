@@ -1,19 +1,3 @@
-import LogsVue from '@runeya/modules-logs-front/src/Logs.vue';
-import GitVue from '@runeya/modules-git-front/src/Git.vue';
-import NotUpToDate from '@runeya/modules-git-front/src/NotUpToDate.vue';
-import NpmVue from '@runeya/modules-npm-front/src/Npm.vue';
-import BugsVue from '@runeya/modules-bugs-front/src/Bugs.vue';
-import ConfigsVue from '@runeya/modules-configuration-front/src/Configs.vue';
-import Toolbox from '@runeya/modules-toolbox-front/src/Toolbox.vue';
-import Documentation from '@runeya/modules-documentation-front/src/Index.vue';
-import Github from '@runeya/modules-github-front/src/Index.vue';
-import OpenApi from '@runeya/modules-openapi-front/src/Index.vue';
-import Finder from '@runeya/modules-finder-front/src/Index.vue';
-import Help from '@runeya/modules-help-front/src/Index.vue';
-import Docker from '@runeya/modules-docker-front/src/Index.vue';
-import Workflows from '@runeya/modules-workflows-front/src/Index.vue';
-import WorkflowsModals from '@runeya/modules-workflows-front/src/modals/Modals.vue';
-import DynamicComponent from './DynamicComponent.vue';
 import { ref } from 'vue';
 import axios from '../../../../fronts/app/src/helpers/axios';
 import PromiseB from 'bluebird';
@@ -26,19 +10,19 @@ import PrimeVueAura from '@primevue/themes/aura';
 
 
 const toolboxPlugins = [
-  { name: 'OpenApi', component: OpenApi },
-  { name: 'Finder', component: Finder },
-  { name: 'Git-NotUpToDate', component: NotUpToDate },
-  { name: 'Help', component: Help },
-  { name: 'Workflows', component: Workflows },
-  { name: 'Docker', component: Docker },
+  { name: 'OpenApi', component: () => import('@runeya/modules-openapi-front/src/Index.vue') },
+  { name: 'Finder', component: () => import('@runeya/modules-finder-front/src/Index.vue') },
+  { name: 'Git-NotUpToDate', component: () => import('@runeya/modules-git-front/src/NotUpToDate.vue') },
+  { name: 'Help', component: () => import('@runeya/modules-help-front/src/Index.vue') },
+  { name: 'Workflows', component: () => import('@runeya/modules-workflows-front/src/Index.vue') },
+  { name: 'Docker', component: () => import('@runeya/modules-docker-front/src/Index.vue') },
   {
     name: 'Toolbox',
-    component: Toolbox,
+    component: () => import('@runeya/modules-toolbox-front/src/Toolbox.vue'),
     children: [
       {
         path: ':plugin',
-        component: DynamicComponent,
+        component: () => import('./DynamicComponent.vue'),
         props: {
           context: 'toolbox',
         },
@@ -54,8 +38,8 @@ const toolboxPlugins = [
  * }[]}
  * */
 const plugins = [
-  { name: 'WorkflowsModals', cmp: WorkflowsModals, load: true },
-  { name: 'DynamicComponent', cmp: DynamicComponent },
+  { name: 'WorkflowsModals', cmp: () => import('@runeya/modules-workflows-front/src/modals/Modals.vue'), load: true },
+  { name: 'DynamicComponent', cmp: () => import('./DynamicComponent.vue') },
   ...toolboxPlugins.map(({ name, component, children }) => ({
     name,
     cmp: component,
@@ -70,25 +54,24 @@ const plugins = [
   })),
   {
     name: 'Dynamic',
-    component: DynamicComponent,
+    component: () => import('./DynamicComponent.vue'),
     routes: [
       {
         path: `/dynamic/:plugin`,
         name: 'dynamic',
-        component: DynamicComponent,
+        component: () => import('./DynamicComponent.vue'),
         props: {
           context: 'sidebar',
         }
       },
     ],
   },
-  { name: 'Logs', cmp: LogsVue },
-  { name: 'Git', cmp: GitVue },
-  { name: 'Github', cmp: Github },
-  { name: 'Documentation', cmp: Documentation },
-  { name: 'Npm', cmp: NpmVue },
-  { name: 'Bugs', cmp: BugsVue },
-  { name: 'Configuration', cmp: ConfigsVue },
+  { name: 'Logs', cmp: () => import('@runeya/modules-logs-front/src/Logs.vue') },
+  { name: 'Git', cmp: () => import('@runeya/modules-git-front/src/Git.vue') },
+  { name: 'Github', cmp: () => import('@runeya/modules-github-front/src/Index.vue') },
+  { name: 'Npm', cmp: () => import('@runeya/modules-npm-front/src/Npm.vue') },
+  { name: 'Bugs', cmp: () => import('@runeya/modules-bugs-front/src/Bugs.vue') },
+  { name: 'Configuration', cmp: () => import('@runeya/modules-configuration-front/src/Configs.vue') },
 ];
 
 /**
