@@ -3,6 +3,7 @@
 const { sockets } = require('@runeya/common-socket-server');
 const migrateStackMonitor  = require('../helpers/migrateStackMonitor');
 const createDefaultFiles = require('../helpers/createDefaultFiles');
+const plugins = require('../helpers/plugins');
 
 process.title = 'runeya';
 const args = require('../helpers/args');
@@ -12,6 +13,7 @@ require('dotenv').config();
 (async () => {
   await migrateStackMonitor();
   await createDefaultFiles();
+  await plugins.init();
   if(args['pull-env']) {
     await require('../models/stack').selectConf();
     const service = require('../models/stack').findService(args.s)

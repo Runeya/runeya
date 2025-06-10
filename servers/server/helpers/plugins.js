@@ -11,6 +11,7 @@ const HTTPError = require('@runeya/common-express-http-error');
 const args = require('./args');
 const tar = require('tar');
 const dbConfig = dbs.getDb('plugins', {encrypted: false, defaultData: []});
+const dbPublicPlugins = dbs.getDb('public-plugins', {encrypted: false, defaultData: []});
 const { sockets } = require('@runeya/common-socket-server');
 const stack = require('../models/stack');
 const debounce = require('debounce');
@@ -60,12 +61,10 @@ Object.keys(plugins)
     return plugin;
   });
 
-async function install(remotePath, force = false) {
+async function install(remotePath, force = false, insert = true) {
   const rootPath = args.rootPath;
   if(!existsSync(rootPath)) await mkdir(rootPath, { recursive: true });
-  const runeyaPath = path.resolve(rootPath, '.runeya');
-  if(!existsSync(runeyaPath)) await mkdir(runeyaPath, { recursive: true });
-  const pluginsPath = path.resolve(runeyaPath, 'plugins');
+  const pluginsPath = path.resolve(args.runeyaConfigPath, 'plugins');
   if(!existsSync(pluginsPath)) await mkdir(pluginsPath, { recursive: true });
   const packageTmpPath = path.resolve(tmpdir(), `runeya-plugin-${Date.now()}`);
   if(!existsSync(packageTmpPath)) await mkdir(packageTmpPath, { recursive: true });
@@ -81,17 +80,18 @@ async function install(remotePath, force = false) {
   if(plugin && !force) {
     throw new HTTPError('Plugin already installed', '400.68746854743512');
   }
-  await dbConfig.alasql.delete(`name='${config.name}'`);
+  if(insert) await dbConfig.alasql.delete(`name='${config.name}'`);
   const diskPath = path.resolve(pluginsPath, config.name);
   if(existsSync(diskPath)) await rm(diskPath, { recursive: true, force: true });
   await cp(path.resolve(packageTmpPath), diskPath, { recursive: true });
-  await dbConfig.alasql.insertOne({
-    name: config.name,
-    version: config.version,
-    diskPath,
-    config,
-    remotePath,
-  });
+  if(insert) {
+    await dbConfig.alasql.insertOne({
+      name: config.name,
+      version: config.version,
+      config,
+      remotePath,
+    });
+  }
   if(config.runeya.entries.backend) {
     try {
       const child = await spawn('npm i --omit=dev', {cwd: path.dirname(path.resolve(diskPath, config.runeya.entries.backend)), shell: true})
@@ -124,10 +124,20 @@ async function install(remotePath, force = false) {
   sockets.emit('plugins:installed', {
     name: config.name,
     version: config.version,
-    diskPath,
     config,
     remotePath,
   });
+}
+
+async function init() {
+  const plugins = await getInstalledPlugins();
+  await Promise.all(plugins.map(async (plugin) => {
+    try {
+      await loadPlugin(plugin.name);
+    } catch (error) {
+      console.error(error)
+    }
+  }));
 }
 
 async function getInstalledPlugins() {
@@ -143,7 +153,6 @@ async function getInstalledPlugins() {
       installedPlugins.push( {
         "name": config.name,
         "version": "development",
-        "diskPath": pluginPath,
         "config": {
           ...config,
           runeya: {
@@ -161,7 +170,12 @@ async function getInstalledPlugins() {
       })
     }))
   } else {
-    installedPlugins = await dbConfig.alasql.simpleSelect({});
+    const privatePlugins = await dbConfig.alasql.simpleSelect({});
+    const publicPlugins = await dbPublicPlugins.alasql.simpleSelect({});
+    installedPlugins = [...privatePlugins, ...publicPlugins.map((plugin) => ({
+      ...plugin,
+      availableForAll: true,
+    }))];
     installedPlugins = installedPlugins.filter((plugin) => plugin.version !== 'development');
   }
 
@@ -176,18 +190,42 @@ async function getInstalledPlugin(name, version) {
 
 async function uninstall(name) {
   const [plugin] = await dbConfig.alasql.simpleSelect({where: `name='${name}'`});
+  const [publicPlugin] = await dbPublicPlugins.alasql.simpleSelect({where: `name='${name}'`});
   
-  if (!plugin) {
+  if (!plugin && !publicPlugin) {
     throw new HTTPError('Plugin not found', '404.plugin.not.found');
   }
-  if (plugin.diskPath && existsSync(plugin.diskPath)) {
-    await rm(plugin.diskPath, { recursive: true, force: true });
+  const diskPath = path.resolve(args.runeyaConfigPath, 'plugins', name);
+  if (diskPath && existsSync(diskPath)) {
+    await rm(diskPath, { recursive: true, force: true });
   }
-  await dbConfig.alasql.delete(`name='${name}'`);
+  if(plugin) {
+    await dbConfig.alasql.delete(`name='${name}'`);
+  } else {
+    await dbPublicPlugins.alasql.delete(`name='${name}'`);
+  }
   sockets.emit('plugins:uninstalled', {
     name,
   });
   return { success: true, message: 'Plugin uninstalled successfully' };
+}
+
+async function changeAvailability(name, availableForAll) {
+  let [plugin] = await dbConfig.alasql.simpleSelect({where: `name='${name}'`});
+  if(!plugin) {
+    [plugin] = await dbPublicPlugins.alasql.simpleSelect({where: `name='${name}'`});
+  }
+  if (!plugin) {
+    throw new HTTPError('Plugin not found', '404.plugin.not.found');
+  }
+  if(availableForAll) {
+    await dbPublicPlugins.alasql.insertOne(plugin);
+    await dbConfig.alasql.delete(`name='${name}'`);
+  } else {
+    await dbPublicPlugins.alasql.delete(`name='${name}'`);
+    await dbConfig.alasql.insertOne(plugin);
+  }
+  return { success: true, message: 'Plugin availability changed successfully' };
 }
 
 async function registerRoutes(router) {
@@ -229,6 +267,12 @@ async function loadPlugin(pluginName) {
     const plugin = await getInstalledPlugin(pluginName);
     let backendPath;
     let themePath;
+
+    const diskPath = path.join(args.runeyaConfigPath, 'plugins', pluginName);
+    if(!existsSync(diskPath)) {
+      console.error('Plugin not found on disk, reinstalling', pluginName, '...')
+      await install(plugin.remotePath, true, false);
+    }
 
     if(process.env.NODE_ENV === 'HFBXdZMJxLyJoua28asEaxRixJ6LriR7FnRzX6pwA7pFjZ' && process.env.PLUGIN_ONLY_PRODUCTION !== 'true' && pluginName.startsWith('@runeya/')) {
       const pluginPath = path.resolve(__dirname,`../../../plugins/${pluginName.replace('@runeya/plugins-', '')}`)
@@ -354,19 +398,8 @@ function safeRequire(path) {
 
 async function frontFile(pluginName) {
   const plugin = await getInstalledPlugin(pluginName);
-  return await readFile(path.join(plugin.diskPath,  plugin.config.runeya.entries.front.js), 'utf8');
+  return await readFile(path.join(args.runeyaConfigPath, 'plugins', pluginName,  plugin.config.runeya.entries.front.js), 'utf8');
 }
-;(async () => {
-  const plugins = await getInstalledPlugins();
-  await Promise.all(plugins.map(async (plugin) => {
-    try {
-      await loadPlugin(plugin.name);
-      console.log('loadedPlugin', plugin.name)
-    } catch (error) {
-      console.error(error)
-    }
-  }));
-})();
 
 module.exports = {
   install,
@@ -376,6 +409,8 @@ module.exports = {
   getInstalledPlugins,
   getInstalledPlugin,
   registerRoutes,
+  changeAvailability,
+  init,
   forService,
   ...allPlugins,
   routes,

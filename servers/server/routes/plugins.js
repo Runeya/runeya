@@ -24,6 +24,12 @@ router.post('/install', async (req, res) => {
   res.send(plugin);
 });
 
+router.post('/:plugin/change-availability', async (req, res) => {
+  const { availableForAll } = req.body;
+  const result = await plugins.changeAvailability(req.params.plugin, availableForAll);
+  res.send(result);
+});
+
 router.delete('/delete', async (req, res) => {
   const { name } = req.body;
   const result = await plugins.uninstall(name);

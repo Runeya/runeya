@@ -3,7 +3,7 @@
     <!-- PrimeVue TabView for navigation -->
     <TabView v-model:activeIndex="activeTabIndex" class="plugins-tabs">
       <!-- Installed Plugins Tab -->
-      <TabPanel :header="$t('plugins.myPlugins') || 'Mes Plugins'" value="0">
+      <TabPanel :header="'My Plugins'" value="0">
         <div class="installed-plugins">
           <!-- Plugins Table using PrimeVue DataTable -->
           <DataTable
@@ -16,7 +16,7 @@
             :loading="false"
           >
             <!-- Plugin Icon and Name Column -->
-            <Column :header="$t('plugins.plugin') || 'Plugin'" style="width: 35%">
+            <Column :header="'Plugin'" style="width: 35%">
               <template #body="slotProps">
                 <div class="flex items-center gap-3">
                   <div class="font-medium">
@@ -27,7 +27,7 @@
             </Column>
 
             <!-- Description Column -->
-            <Column :header="$t('plugins.description') || 'Description'" style="width: 40%">
+            <Column :header="'Description'" style="width: 40%">
               <template #body="slotProps">
                 <p class="text-sm">
                   {{ slotProps.data?.description || 'No description available' }}
@@ -36,7 +36,7 @@
             </Column>
 
             <!-- Version Column -->
-            <Column :header="$t('plugins.version') || 'Version'" style="width: 10%">
+            <Column :header="'Version'" style="width: 10%">
               <template #body="slotProps">
                 <Badge 
                   :value="slotProps.data?.version || '1.0.0'" 
@@ -45,8 +45,17 @@
               </template>
             </Column>
 
+            <!-- Version Column -->
+            <Column :header="'Available for all'" style="width: 10%">
+              <template #body="slotProps">
+                <div>
+                  <Checkbox v-model="slotProps.data.availableForAll" binary @change="handleAvailableForAllChange($event, slotProps.data)" />
+                </div>
+              </template>
+            </Column>
+
             <!-- Actions Column -->
-            <Column :header="$t('plugins.actions') || 'Actions'" style="width: 15%">
+            <Column :header="'Actions'" style="width: 15%">
               <template #body="slotProps">
                 <div class="flex items-center gap-1">
                 <Button
@@ -56,7 +65,7 @@
                     text 
                     rounded 
                     size="small"
-                    :title="$t('plugins.uninstall') || 'Désinstaller'"
+                    :title="'Uninstall'"
                     @click="openDeleteConfirmation(slotProps.data)"
                     :loading="deletingPlugin === slotProps.data?.name"
                   />
@@ -71,13 +80,13 @@
                   <i class="fas fa-puzzle-piece text-2xl"></i>
                 </div>
                 <h3 class="text-lg font-medium mb-2">
-                  {{ $t('plugins.noPlugins') || 'Aucun plugin installé' }}
+                  {{ 'No plugins installed' }}
                 </h3>
                 <p class="mb-4">
-                  {{ $t('plugins.noPluginsDescription') || 'Explorez le store pour découvrir des plugins utiles' }}
+                  {{ 'Explore the store to discover useful plugins' }}
                 </p>
                 <Button 
-                  :label="$t('plugins.browseStore') || 'Parcourir le Store'"
+                  :label="'Browse the Store'"
                   icon="fas fa-shopping-cart"
                   @click="activeTabIndex = 1"
                 />
@@ -88,7 +97,7 @@
       </TabPanel>
 
       <!-- Store Tab -->
-      <TabPanel :header="$t('plugins.store') || 'Store'" value="1">
+      <TabPanel :header="'Store'" value="1">
         <div class="plugin-store">
           <iframe ref="storeIframe" v-if="config.pluginsUrl && activeTabIndex === 1" class="store-placeholder w-full h-full" :src="`${config.pluginsUrl}`" :style="{height: '90vh'}"></iframe>
         </div>
@@ -98,7 +107,7 @@
     <!-- Delete Confirmation Dialog -->
     <Dialog 
       v-model:visible="showDeleteDialog" 
-      :header="$t('plugins.confirmDelete') || 'Confirmer la suppression'"
+      :header="'Confirm deletion'"
       modal 
       :closable="false"
       class="delete-confirmation-dialog"
@@ -110,13 +119,13 @@
         </div>
         <div class="flex-1">
           <p class=" mb-2">
-            {{ $t('plugins.deleteConfirmMessage') || 'Êtes-vous sûr de vouloir supprimer ce plugin ?' }}
+            {{'Are you sure you want to delete this plugin ?' }}
           </p>
           <p class="text-sm">
             <strong>{{ pluginToDelete?.displayName || pluginToDelete?.name }}</strong>
           </p>
           <p class="text-stone-500 text-xs mt-1">
-            {{ $t('plugins.deleteWarning') || 'Cette action est irréversible.' }}
+            {{ 'This action is irreversible.' }}
           </p>
         </div>
       </div>
@@ -124,14 +133,14 @@
       <template #footer>
         <div class="flex justify-end gap-2">
           <Button 
-            :label="$t('plugins.cancel') || 'Annuler'"
+            :label="'Cancel'"
             severity="secondary"
             @click="closeDeleteConfirmation"
             :disabled="loadingDelete"
           />
           <Button 
             v-if="pluginToDelete?.version !== 'development'"
-            :label="$t('plugins.delete') || 'Supprimer'"
+            :label="'Delete'"
             severity="danger"
             @click="confirmDelete"
             :loading="loadingDelete"
@@ -147,7 +156,6 @@
 import { onBeforeUnmount, onMounted, ref } from 'vue';
 import pluginManager from '../../models/pluginManager';
 import axios from 'axios';
-import { useI18n } from 'vue-i18n';
 
 // PrimeVue components
 import TabView from 'primevue/tabview';
@@ -159,13 +167,14 @@ import Column from 'primevue/column';
 import Dialog from 'primevue/dialog';
 import config from '../../config';
 import notification from '../../helpers/notification';
+import Checkbox from 'primevue/checkbox';
 
-const { t } = useI18n();
 const activeTabIndex = ref(0);
 const showDeleteDialog = ref(false);
 const pluginToDelete = ref(null);
 const deletingPlugin = ref('');
 const loadingDelete = ref(false);
+const availableForAll = ref(false);
 
 /** @type {import('vue').Ref<HTMLIFrameElement | null>} */
 const storeIframe = ref(null);
@@ -194,12 +203,12 @@ const confirmDelete = async () => {
     // Refresh plugins list
     await pluginManager.init();
     
-    notification.next('success', t('plugins.deleteSuccess') || 'Plugin supprimé avec succès');
+    notification.next('success', 'Plugin deleted successfully');
     closeDeleteConfirmation();
   } catch (err) {
     console.error('Delete plugin error:', err);
     const error = err;
-    const errorMessage = error.response?.data?.message || t('plugins.deleteError') || 'Erreur lors de la suppression du plugin';
+    const errorMessage = error.response?.data?.message || 'Error deleting plugin';
     notification.next('error', errorMessage);
     deletingPlugin.value = '';
   } finally {
@@ -217,7 +226,7 @@ const handleMessage = (event) => {
   if(event.data.type === 'download-plugin') {
     pluginManager.installPlugin(event.data.url)
       .then(() => {
-        notification.next('success', t('plugins.installSuccess') || 'Plugin installé avec succès');
+        notification.next('success', 'Plugin installed successfully');
       })
       .catch((e) => {
         console.log(e.response.data.code)
@@ -226,6 +235,10 @@ const handleMessage = (event) => {
         }
       });
   }
+};
+
+const handleAvailableForAllChange = (event, plugin) => {
+  pluginManager.changePluginAvailability(plugin.name, event.target.checked);
 };
 
 onMounted(async () => {
