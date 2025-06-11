@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.25](https://github.com/runeya/runeya/compare/v1.33.24...v1.33.25) (2025-06-11)
+
+### Bug Fixes
+
+* **plugin:** add an global availability ([c2fca92](https://github.com/runeya/runeya/commit/c2fca928f1d526624674dc81c953be5752c92891))
+* **plugin:** reinstall plugin on start if global or not found on disk ([51c4d81](https://github.com/runeya/runeya/commit/51c4d81ffc03f42ccb5d28a84ecb576f6993e221))
+
 ## [1.33.24](https://github.com/runeya/runeya/compare/v1.33.23...v1.33.24) (2025-06-09)
 
 ### Bug Fixes
