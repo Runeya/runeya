@@ -112,6 +112,7 @@ onMounted(async () => {
   }
   
   .stack-chooser {
+    max-height: 50vh;
     grid-column: 2 / span 2;
     grid-row: 1;
   }

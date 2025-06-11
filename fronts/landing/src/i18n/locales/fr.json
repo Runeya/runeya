@@ -467,6 +467,10 @@
     "installInstructions": "Instructions d'Installation",
     "downloadLatest": "Télécharger la Dernière Version",
     "viewOnRegistry": "Voir sur le Registre",
-    "readme": "README"
+    "readme": "README",
+    "installed": "Installé",
+    "updateAvailable": "Mise à jour disponible",
+    "reinstall": "Réinstaller",
+    "updateToLatest": "Mettre à jour"
   }
 } 

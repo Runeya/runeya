@@ -46,7 +46,7 @@
             </Column>
 
             <!-- Version Column -->
-            <Column :header="'Available for all'" style="width: 10%">
+            <Column :header="'Global'" style="width: 10%">
               <template #body="slotProps">
                 <div>
                   <Checkbox v-model="slotProps.data.availableForAll" binary @change="handleAvailableForAllChange($event, slotProps.data)" />
@@ -99,7 +99,7 @@
       <!-- Store Tab -->
       <TabPanel :header="'Store'" value="1">
         <div class="plugin-store">
-          <iframe ref="storeIframe" v-if="config.pluginsUrl && activeTabIndex === 1" class="store-placeholder w-full h-full" :src="`${config.pluginsUrl}`" :style="{height: '90vh'}"></iframe>
+          <iframe ref="storeIframe" v-if="config.pluginsUrl && activeTabIndex === 1" class="store-placeholder w-full h-full" :src="`${config.pluginsUrl}`" :style="{height: '90vh'}"/>
         </div>
       </TabPanel>
     </TabView>
@@ -219,8 +219,12 @@ const confirmDelete = async () => {
 const handleMessage = (event) => {
   if (event.data.type === 'plugin-loaded') {
     console.log('plugin loaded');
-    storeIframe.value?.contentWindow?.postMessage({
+    storeIframe.value.contentWindow.postMessage({
       type: 'iframed',
+      plugins: pluginManager.plugins.value.map((plugin) => ({
+        name: plugin.name,
+        version: plugin.version,
+      })),
     }, '*');
   }
   if(event.data.type === 'download-plugin') {

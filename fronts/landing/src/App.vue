@@ -150,6 +150,7 @@ import InvitationModal from './components/InvitationModal.vue';
 import { useRouter, useRoute } from 'vue-router';
 import authStore from './stores/authStore';
 import iframe from './helpers/iframe';
+import pluginsInstalled from './stores/pluginsInstalled';
 const router = useRouter();
 const route = useRoute();
 const docsUrl = process.env.VUE_APP_DOCS_URL;
@@ -159,6 +160,11 @@ const hideHeader = ref(iframe.isIframed);
 window.top?.postMessage({
   type: 'plugin-loaded',
 }, '*');
+window.addEventListener('message', (event) => {
+  if(event.data.type === 'iframed') {
+    pluginsInstalled.plugins.value = event.data.plugins;
+  }
+});
 authStore.getSession()
   
 // Vérifier si l'utilisateur est sur la page d'accueil

@@ -79,6 +79,13 @@
               <span class="versions-count">
                 {{ plugin.versions?.length || 0 }} {{ $t('plugins.versions') || 'versions' }}
               </span>
+              <div class="plugin-installation-status" v-if="getPluginInstallationStatus(plugin)">
+                <Badge 
+                  :value="getPluginInstallationStatusLabel(plugin)" 
+                  :severity="getPluginInstallationStatus(plugin)?.severity"
+                  class="installation-status-badge"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -94,8 +101,10 @@ import { useI18n } from 'vue-i18n';
 import ProgressSpinner from 'primevue/progressspinner';
 import Message from 'primevue/message';
 import Tag from 'primevue/tag';
+import Badge from 'primevue/badge';
 import InputText from 'primevue/inputtext';
 import axios from '../helpers/axios';
+import pluginsInstalled from '../stores/pluginsInstalled';
 
 const router = useRouter();
 const { t } = useI18n();
@@ -105,15 +114,52 @@ const isLoading = ref(false);
 const error = ref('');
 
 const filteredPlugins = computed(() => {
-  if (!searchQuery.value) return plugins.value;
+  const pluginsList = plugins.value || [];
+  
+  if (!searchQuery.value) {
+    return [...pluginsList].sort((a, b) => {
+      // Sort installed plugins first
+      const aInstalled = getPluginInstallationStatus(a);
+      const bInstalled = getPluginInstallationStatus(b);
+      
+      // If one is installed and the other isn't, prioritize the installed one
+      if (aInstalled && !bInstalled) return -1;
+      if (!aInstalled && bInstalled) return 1;
+      
+      // If both are installed or both are not installed, sort alphabetically by name
+      const aName = a?.name || '';
+      const bName = b?.name || '';
+      return aName.localeCompare(bName);
+    });
+  }
   
   const query = searchQuery.value.toLowerCase();
-  return plugins.value.filter(plugin => 
-    plugin.name.toLowerCase().includes(query) ||
-    plugin.namespace?.toLowerCase().includes(query) ||
-    plugin.description?.toLowerCase().includes(query) ||
-    plugin.config?.description?.toLowerCase().includes(query)
-  );
+  return pluginsList.filter(plugin => {
+    if (!plugin) return false;
+    
+    const name = plugin.name || '';
+    const namespace = plugin.namespace || '';
+    const description = plugin.description || '';
+    const configDescription = plugin.config?.description || '';
+    
+    return name.toLowerCase().includes(query) ||
+           namespace.toLowerCase().includes(query) ||
+           description.toLowerCase().includes(query) ||
+           configDescription.toLowerCase().includes(query);
+  }).sort((a, b) => {
+    // Sort installed plugins first
+    const aInstalled = getPluginInstallationStatus(a);
+    const bInstalled = getPluginInstallationStatus(b);
+    
+    // If one is installed and the other isn't, prioritize the installed one
+    if (aInstalled && !bInstalled) return -1;
+    if (!aInstalled && bInstalled) return 1;
+    
+    // If both are installed or both are not installed, sort alphabetically by name
+    const aName = a?.name || '';
+    const bName = b?.name || '';
+    return aName.localeCompare(bName);
+  });
 });
 
 const loadPlugins = async () => {
@@ -140,6 +186,52 @@ const formatDate = (dateString) => {
   if (!dateString) return '-';
   const date = new Date(dateString);
   return date.toLocaleDateString();
+};
+
+const getPluginInstallationStatus = (plugin) => {
+  if (!plugin || !plugin.name || !pluginsInstalled.plugins.value) {
+    return null;
+  }
+  
+  const installedPlugin = pluginsInstalled.plugins.value.find(installed => 
+    installed && installed.name && (
+      installed.name === plugin.name || 
+      installed.name === plugin.name.replace(`${plugin.namespace || ''}/`, '')
+    )
+  );
+  
+  if (!installedPlugin) {
+    return null;
+  }
+  
+  const latestVersion = plugin.latestVersion || plugin.versions?.[0]?.version;
+  const installedVersion = installedPlugin.version;
+  
+  if (!installedVersion) {
+    return null;
+  }
+  
+  // Compare versions to determine if update is available
+  const isUpToDate = installedVersion === latestVersion;
+  
+  return {
+    label: isUpToDate ? (t('plugins.installed') || 'Installed') : (t('plugins.updateAvailable') || 'Update Available'),
+    severity: isUpToDate ? 'success' : 'warning',
+    installedVersion: installedVersion,
+    latestVersion: latestVersion,
+    isUpToDate: isUpToDate
+  };
+};
+
+const getPluginInstallationStatusLabel = (plugin) => {
+  const status = getPluginInstallationStatus(plugin);
+  if (!status) return '';
+  
+  const baseLabel = status.isUpToDate 
+    ? (t('plugins.installed') || 'Installed')
+    : (t('plugins.updateAvailable') || 'Update Available');
+    
+  return `${baseLabel} v${status.installedVersion}`;
 };
 
 const filterPlugins = () => {
@@ -291,6 +383,8 @@ onMounted(() => {
       overflow: hidden;
     }
     
+
+    
     .plugin-meta {
       display: flex;
       gap: 1rem;
@@ -315,9 +409,20 @@ onMounted(() => {
     border-top: 1px solid var(--surface-border);
     
     .plugin-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      
       .versions-count {
         font-size: 0.875rem;
         color: var(--text-color-secondary);
+      }
+      
+      .plugin-installation-status {
+        .installation-status-badge {
+          font-size: 0.75rem;
+          font-weight: 500;
+        }
       }
     }
   }

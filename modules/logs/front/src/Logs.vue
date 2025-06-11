@@ -163,11 +163,6 @@
                       <h2 class="section-header">Debug</h2>
                       <div class="section-actions">
                         <button class="small" @click.stop="copy(JSON.stringify(line.debug))">Copy</button>
-                        <button class="small">
-                          <router-link :to="{ name: 'JSONFormatter', query: { json: JSON.stringify(line.debug) } }">
-                            Open in json-viewer
-                          </router-link>
-                        </button>
                         <button class="small" @click.stop="findSolution(/**@type {any}*/(line.debug))">
                           Find a solution
                         </button>
@@ -182,11 +177,6 @@
                       <h2 >JSON</h2>
                       <div class="section-actions">
                         <button class="small" @click.stop="copy(JSON.stringify(line.json))">Copy</button>
-                        <button class="small">
-                          <router-link :to="{ name: 'JSONFormatter', query: { json: JSON.stringify(line.json) } }">
-                            Open in json-viewer
-                          </router-link>
-                        </button>
                         <button class="small" @click.stop="findSolution(/**@type {any}*/(line.json))">
                           Find a solution
                         </button>
@@ -368,7 +358,7 @@ const selectedLine = ref(null);
 const jsonPathSearch = ref('');
 const findSolutionModal = ref();
 const simplifiedMode = ref(false);
-const numberToDisplay = ref(100);
+const numberToDisplay = ref(500);
 const findSolutionResultModal = ref();
 const mode = ref('');
 const scenarios = ref([]);

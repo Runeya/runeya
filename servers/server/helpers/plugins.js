@@ -15,6 +15,22 @@ const dbPublicPlugins = dbs.getDb('public-plugins', {encrypted: false, defaultDa
 const { sockets } = require('@runeya/common-socket-server');
 const stack = require('../models/stack');
 const debounce = require('debounce');
+const PromiseB = require('bluebird');
+
+
+const pluginsState = new Proxy({}, {
+  get(target, prop) {
+    return target[prop];
+  },
+  set(target, prop, value) {
+    sockets.emit('plugins:loading:progress', {
+      ...value,
+      plugin: prop,
+    });
+    target[prop] = value;
+    return true;
+  }
+});
 
 /** @type {import('chokidar')}  This is just a development depency*/
 // @ts-ignore
@@ -61,12 +77,12 @@ Object.keys(plugins)
     return plugin;
   });
 
-async function install(remotePath, force = false, insert = true) {
+async function install(remotePath, force = false, insert = true, shouldLoadPlugin = true) {
   const rootPath = args.rootPath;
   if(!existsSync(rootPath)) await mkdir(rootPath, { recursive: true });
   const pluginsPath = path.resolve(args.runeyaConfigPath, 'plugins');
   if(!existsSync(pluginsPath)) await mkdir(pluginsPath, { recursive: true });
-  const packageTmpPath = path.resolve(tmpdir(), `runeya-plugin-${Date.now()}`);
+  const packageTmpPath = path.resolve(tmpdir(), `runeya-plugin-${crypto.randomUUID()}`);
   if(!existsSync(packageTmpPath)) await mkdir(packageTmpPath, { recursive: true });
   const packageTmpFilePath = `${packageTmpPath}.tar.gz`;
 
@@ -74,16 +90,21 @@ async function install(remotePath, force = false, insert = true) {
   await writeFile(packageTmpFilePath, data);
   await tar.extract({ file: packageTmpFilePath, cwd: packageTmpPath });
   const config = JSON.parse(await readFile(path.join(packageTmpPath, 'package.json'), 'utf8'));
+  pluginsState[config.name] = {step: 'INSTALL_START'};
   const plugin = await getInstalledPlugin(config.name, config.version);
   console.log('Installing', config.name + '@' + config.version)
-
   if(plugin && !force) {
+    sockets.emit('plugins:install:error', config.name, 'Plugin already installed')
+    pluginsState[config.name] = undefined;
     throw new HTTPError('Plugin already installed', '400.68746854743512');
   }
   if(insert) await dbConfig.alasql.delete(`name='${config.name}'`);
   const diskPath = path.resolve(pluginsPath, config.name);
   if(existsSync(diskPath)) await rm(diskPath, { recursive: true, force: true });
+
+  console.log('Copying plugin to', diskPath, plugin.name)
   await cp(path.resolve(packageTmpPath), diskPath, { recursive: true });
+  console.log('Copying done', diskPath, plugin.name)
   if(insert) {
     await dbConfig.alasql.insertOne({
       name: config.name,
@@ -94,6 +115,7 @@ async function install(remotePath, force = false, insert = true) {
   }
   if(config.runeya.entries.backend) {
     try {
+      pluginsState[config.name] = {step: 'INSTALL_BACKEND_START'};
       const child = await spawn('npm i --omit=dev', {cwd: path.dirname(path.resolve(diskPath, config.runeya.entries.backend)), shell: true})
       const installPromise = new Promise((resolve, reject) => {
         const installLog = []
@@ -118,9 +140,11 @@ async function install(remotePath, force = false, insert = true) {
       console.error(error)
       sockets.emit('plugins:install:error', config.name, error)
       return null;
+    } finally {
+      pluginsState[config.name] = undefined;
     }
   }
-  await loadPlugin(config.name);
+  if(shouldLoadPlugin)await loadPlugin(config.name);
   sockets.emit('plugins:installed', {
     name: config.name,
     version: config.version,
@@ -131,13 +155,13 @@ async function install(remotePath, force = false, insert = true) {
 
 async function init() {
   const plugins = await getInstalledPlugins();
-  await Promise.all(plugins.map(async (plugin) => {
+  await PromiseB.map(plugins, async (plugin) => {
     try {
       await loadPlugin(plugin.name);
     } catch (error) {
       console.error(error)
     }
-  }));
+  }, {concurrency: 10});
 }
 
 async function getInstalledPlugins() {
@@ -172,10 +196,10 @@ async function getInstalledPlugins() {
   } else {
     const privatePlugins = await dbConfig.alasql.simpleSelect({});
     const publicPlugins = await dbPublicPlugins.alasql.simpleSelect({});
-    installedPlugins = [...privatePlugins, ...publicPlugins.map((plugin) => ({
-      ...plugin,
-      availableForAll: true,
-    }))];
+    const map = new Map();
+    publicPlugins.forEach(plugin => map.set(plugin.name, {...plugin, availableForAll: true}));
+    privatePlugins.forEach(plugin => map.set(plugin.name, plugin));
+    installedPlugins = [...map.values()];
     installedPlugins = installedPlugins.filter((plugin) => plugin.version !== 'development');
   }
 
@@ -257,12 +281,13 @@ function clearPluginCache(pluginPath) {
   // Find all cached modules that belong to this plugin directory
   Object.keys(require.cache).forEach(cachedPath => {
     if (cachedPath.startsWith(pluginDir)) {
-      console.log('Clearing cache for:', cachedPath);
       delete require.cache[cachedPath];
     }
   });
 }
+
 async function loadPlugin(pluginName) {
+  pluginsState[pluginName] = {step: 'LOAD_START'};
   try {
     const plugin = await getInstalledPlugin(pluginName);
     let backendPath;
@@ -271,7 +296,7 @@ async function loadPlugin(pluginName) {
     const diskPath = path.join(args.runeyaConfigPath, 'plugins', pluginName);
     if(!existsSync(diskPath)) {
       console.error('Plugin not found on disk, reinstalling', pluginName, '...')
-      await install(plugin.remotePath, true, false);
+      return install(plugin.remotePath, true, false, false);
     }
 
     if(process.env.NODE_ENV === 'HFBXdZMJxLyJoua28asEaxRixJ6LriR7FnRzX6pwA7pFjZ' && process.env.PLUGIN_ONLY_PRODUCTION !== 'true' && pluginName.startsWith('@runeya/')) {
@@ -335,10 +360,14 @@ async function loadPlugin(pluginName) {
       }
     }
 
+
     if(backendPath) {
+      pluginsState[pluginName] = {step: 'CLEAR_CACHE'};
       clearPluginCache(backendPath);
       try {
+        pluginsState[pluginName] = {step: 'REQUIRE_BACKEND'};
         const loadedPlugin = safeRequire(backendPath)
+        pluginsState[pluginName] = {step: 'LOAD_BACKEND_START'};
         loadedPlugins[pluginName] = await loadedPlugin(stack, {
           socket: {
             emit: (event, ...args) => {
@@ -354,7 +383,6 @@ async function loadPlugin(pluginName) {
         });
       } catch (/** @type {any} */ error) {
         console.error(`[${plugin.name}@${plugin.version}]`, error)
-        console.log(Object.getOwnPropertyNames(error))
         setTimeout(() => {
           sockets.emit('plugins:loading:error', pluginName, {...error, message: error?.message?.split('\n')?.[0]})
         }, 1000);
@@ -363,8 +391,11 @@ async function loadPlugin(pluginName) {
     }
 
     if(themePath) {
+      pluginsState[pluginName] = {step: 'CLEAR_CACHE'};
       clearPluginCache(themePath);
+      pluginsState[pluginName] = {step: 'REQUIRE_BACKEND'};
       const loadedTheme = require(themePath)
+      pluginsState[pluginName] = {step: 'LOAD_BACKEND_START'};
       themes[pluginName] = await loadedTheme(stack, {
         socket: {
           emit: (event, ...args) => {
@@ -379,12 +410,12 @@ async function loadPlugin(pluginName) {
         },
       });
     }
-
     return loadedPlugins[pluginName];
-    } catch (error) {
-      console.error(error?.message || error)
-    }
-  
+  } catch (error) {
+    console.error(error?.message || error)
+  } finally {
+    pluginsState[pluginName] = undefined;
+  } 
 }
 
 function safeRequire(path) {

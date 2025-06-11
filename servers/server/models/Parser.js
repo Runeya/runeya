@@ -6,6 +6,9 @@ const nativeParsers = {
   [require('../parser/debug').id]: require('../parser/debug'),
   [require('../parser/json').id]: require('../parser/json'),
   [require('../parser/link').id]: require('../parser/link'),
+  'stack-monitor-parser-debug': {...require('../parser/debug'), id: 'stack-monitor-parser-debug'},
+  'stack-monitor-parser-jsons': {...require('../parser/json'), id: 'stack-monitor-parser-jsons'},
+  'stack-monitor-parser-links': {...require('../parser/link'), id: 'stack-monitor-parser-links'},
 };
 class Parser {
   /**

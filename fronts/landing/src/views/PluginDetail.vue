@@ -40,11 +40,18 @@
             <h1 class="plugin-title">{{ plugin.name.split(plugin.namespace+'/')[1] }}</h1>
           </div>
         </div>
-        
         <div class="plugin-actions">
+          <div class="plugin-status" v-if="getPluginInstallationStatus()">
+            <Badge 
+              :value="getPluginInstallationStatusLabel()" 
+              :severity="getPluginInstallationStatus().severity"
+              class="status-badge"
+            />
+          </div>
           <Button 
-            :label="$t('plugins.downloadLatest') || 'Download Latest'"
-            icon="fas fa-download"
+            :label="getActionButtonLabel()"
+            :icon="getActionButtonIcon()"
+            :severity="getActionButtonSeverity()"
             @click="downloadPlugin"
           />
         </div>
@@ -129,6 +136,7 @@ import ProgressSpinner from 'primevue/progressspinner';
 import Button from 'primevue/button';
 import Card from 'primevue/card';
 import Tag from 'primevue/tag';
+import Badge from 'primevue/badge';
 import { useToast } from 'primevue/usetoast';
 import axios from '../helpers/axios';
 import hljs from 'highlight.js'
@@ -136,6 +144,7 @@ import 'highlight.js/styles/monokai.min.css'
 import markdownIt from 'markdown-it'
 import githubMarkdown from '../helpers/github-markdown-css'
 import iframe from '../helpers/iframe';
+import pluginsInstalled from '../stores/pluginsInstalled';
 
 const route = useRoute();
 const router = useRouter();
@@ -224,6 +233,94 @@ const downloadPlugin = () => {
   } else {
     window.open(getDownloadUrl(), '_blank');
   }
+};
+
+const getPluginInstallationStatus = () => {
+  if (!plugin.value || !plugin.value.name || !pluginsInstalled.plugins.value) {
+    return null;
+  }
+  
+  const installedPlugin = pluginsInstalled.plugins.value.find(installed => 
+    installed && installed.name && (
+      installed.name === plugin.value.name || 
+      installed.name === plugin.value.name.replace(`${plugin.value.namespace || ''}/`, '')
+    )
+  );
+  
+  if (!installedPlugin) {
+    return null;
+  }
+  
+  const latestVersion = plugin.value.versions?.[0]?.version;
+  const installedVersion = installedPlugin.version;
+  
+  if (!installedVersion) {
+    return null;
+  }
+  
+  // Compare versions to determine if update is available
+  const isUpToDate = installedVersion === latestVersion;
+  
+  return {
+    label: isUpToDate ? (t('plugins.installed') || 'Installed') : (t('plugins.updateAvailable') || 'Update Available'),
+    severity: isUpToDate ? 'success' : 'warning',
+    installedVersion: installedVersion,
+    latestVersion: latestVersion,
+    isUpToDate: isUpToDate
+  };
+};
+
+const getPluginInstallationStatusLabel = () => {
+  const status = getPluginInstallationStatus();
+  if (!status) return '';
+  
+  const baseLabel = status.isUpToDate 
+    ? (t('plugins.installed') || 'Installed')
+    : (t('plugins.updateAvailable') || 'Update Available');
+    
+  return `${baseLabel} v${status.installedVersion}`;
+};
+
+const getActionButtonLabel = () => {
+  const status = getPluginInstallationStatus();
+  
+  if (!status) {
+    return t('plugins.downloadLatest') || 'Download Latest';
+  }
+  
+  if (status.isUpToDate) {
+    return t('plugins.reinstall') || 'Reinstall';
+  }
+  
+  return t('plugins.updateToLatest') || 'Update to Latest';
+};
+
+const getActionButtonIcon = () => {
+  const status = getPluginInstallationStatus();
+  
+  if (!status) {
+    return 'fas fa-download';
+  }
+  
+  if (status.isUpToDate) {
+    return 'fas fa-sync-alt';
+  }
+  
+  return 'fas fa-arrow-up';
+};
+
+const getActionButtonSeverity = () => {
+  const status = getPluginInstallationStatus();
+  
+  if (!status) {
+    return 'primary';
+  }
+  
+  if (status.isUpToDate) {
+    return 'secondary';
+  }
+  
+  return 'warning';
 };
 
 const copyToClipboard = async (text) => {
@@ -338,6 +435,17 @@ onMounted(() => {
       flex-shrink: 0;
       height: 100%;
       align-self: flex-end;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 1rem;
+      
+      .plugin-status {
+        .status-badge {
+          font-size: 0.875rem;
+          font-weight: 500;
+        }
+      }
     }
   }
   

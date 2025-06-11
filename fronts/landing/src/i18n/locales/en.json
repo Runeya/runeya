@@ -460,6 +460,10 @@
     "loadError": "Failed to load plugins",
     "installInstructions": "Installation Instructions",
     "downloadLatest": "Download Latest Version",
-    "viewOnRegistry": "View on Registry"
+    "viewOnRegistry": "View on Registry",
+    "installed": "Installed",
+    "updateAvailable": "Update Available",
+    "reinstall": "Reinstall",
+    "updateToLatest": "Update to Latest"
   }
 } 
