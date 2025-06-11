@@ -102,9 +102,7 @@ async function install(remotePath, force = false, insert = true, shouldLoadPlugi
   const diskPath = path.resolve(pluginsPath, config.name);
   if(existsSync(diskPath)) await rm(diskPath, { recursive: true, force: true });
 
-  console.log('Copying plugin to', diskPath, plugin.name)
   await cp(path.resolve(packageTmpPath), diskPath, { recursive: true });
-  console.log('Copying done', diskPath, plugin.name)
   if(insert) {
     await dbConfig.alasql.insertOne({
       name: config.name,
