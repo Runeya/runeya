@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-finder-backend",
-  "version": "1.33.25",
+  "version": "1.33.27",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {

@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.27](https://github.com/runeya/runeya/compare/v1.33.26...v1.33.27) (2025-06-15)
+
+### Bug Fixes
+
+* **app:** make async components to load correctly in gui ([d4f2999](https://github.com/runeya/runeya/commit/d4f29997014f40d674b5ac353f1820c77b23019c))
+
 ## [1.33.26](https://github.com/runeya/runeya/compare/v1.33.25...v1.33.26) (2025-06-11)
 
 ### Bug Fixes
