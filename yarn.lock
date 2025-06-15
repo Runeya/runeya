@@ -6746,8 +6746,8 @@ __metadata:
   linkType: soft
 
 "@runeya/runeya@npm:*":
-  version: 1.33.22
-  resolution: "@runeya/runeya@npm:1.33.22"
+  version: 1.33.26
+  resolution: "@runeya/runeya@npm:1.33.26"
   dependencies:
     "@babel/preset-env": "npm:^7.26.0"
     "@octokit/core": "npm:^6.1.2"
@@ -6789,7 +6789,7 @@ __metadata:
     yargs: "npm:^17.7.2"
   bin:
     runeya: www.js
-  checksum: 10/c1dddf172aabb0b3290f8b723d6aaeedf9901bd1ecf3524f92a4c05d5bd73da2b775928ef1abdc8030df5162b9b98f6865671b2fbd941b014e4b823c6e630748
+  checksum: 10/44b3a6647f2b32318b60847bba50fe0eb34a8af67acc3cbaef6361c0e4d6a6191050975be33412d72fb49952c06526ddce0240e1bed1b3849b3de525b8342596
   languageName: node
   linkType: hard
 

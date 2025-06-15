@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { defineAsyncComponent, ref } from 'vue';
 import axios from '../../../../fronts/app/src/helpers/axios';
 import PromiseB from 'bluebird';
 import sockets from '../../../../fronts/app/src/helpers/Socket';
@@ -11,19 +11,19 @@ import Finder from '@runeya/modules-finder-front/src/Index.vue'
 
 
 const toolboxPlugins = [
-  { name: 'OpenApi', component: () => import('@runeya/modules-openapi-front/src/Index.vue') },
-  { name: 'Finder', component: Finder },
-  { name: 'Git-NotUpToDate', component: () => import('@runeya/modules-git-front/src/NotUpToDate.vue') },
-  { name: 'Help', component: () => import('@runeya/modules-help-front/src/Index.vue') },
-  { name: 'Workflows', component: () => import('@runeya/modules-workflows-front/src/Index.vue') },
-  { name: 'Docker', component: () => import('@runeya/modules-docker-front/src/Index.vue') },
+  { name: 'OpenApi', component: defineAsyncComponent(() => import('@runeya/modules-openapi-front/src/Index.vue')) },
+  { name: 'Finder', component: defineAsyncComponent(() => import('@runeya/modules-finder-front/src/Index.vue')) },
+  { name: 'Git-NotUpToDate', component: defineAsyncComponent(() => import('@runeya/modules-git-front/src/NotUpToDate.vue')) },
+  { name: 'Help', component: defineAsyncComponent(() => import('@runeya/modules-help-front/src/Index.vue')) },
+  { name: 'Workflows', component: defineAsyncComponent(() => import('@runeya/modules-workflows-front/src/Index.vue')) },
+  { name: 'Docker', component: defineAsyncComponent(() => import('@runeya/modules-docker-front/src/Index.vue')) },
   {
     name: 'Toolbox',
-    component: () => import('@runeya/modules-toolbox-front/src/Toolbox.vue'),
+    component: defineAsyncComponent(() => import('@runeya/modules-toolbox-front/src/Toolbox.vue')),
     children: [
       {
         path: ':plugin',
-        component: () => import('./DynamicComponent.vue'),
+        component: defineAsyncComponent(() => import('./DynamicComponent.vue')),
         props: {
           context: 'toolbox',
         },
@@ -39,8 +39,8 @@ const toolboxPlugins = [
  * }[]}
  * */
 const plugins = [
-  { name: 'WorkflowsModals', cmp: () => import('@runeya/modules-workflows-front/src/modals/Modals.vue'), load: true },
-  { name: 'DynamicComponent', cmp: () => import('./DynamicComponent.vue') },
+  { name: 'WorkflowsModals', cmp: defineAsyncComponent(() => import('@runeya/modules-workflows-front/src/modals/Modals.vue')), load: true },
+  { name: 'DynamicComponent', cmp: defineAsyncComponent(() => import('./DynamicComponent.vue')) },
   ...toolboxPlugins.map(({ name, component, children }) => ({
     name,
     cmp: component,
@@ -55,25 +55,25 @@ const plugins = [
   })),
   {
     name: 'Dynamic',
-    component: () => import('./DynamicComponent.vue'),
+    component: defineAsyncComponent(() => import('./DynamicComponent.vue')),
     routes: [
       {
         path: `/dynamic/:plugin`,
         name: 'dynamic',
-        component: () => import('./DynamicComponent.vue'),
+        component: defineAsyncComponent(() => import('./DynamicComponent.vue')),
         props: {
           context: 'sidebar',
         }
       },
     ],
   },
-  { name: 'Logs', cmp: () => import('@runeya/modules-logs-front/src/Logs.vue') },
-  { name: 'Git', cmp: () => import('@runeya/modules-git-front/src/Git.vue') },
-  { name: 'Github', cmp: () => import('@runeya/modules-github-front/src/Index.vue') },
-  { name: 'Npm', cmp: () => import('@runeya/modules-npm-front/src/Npm.vue') },
-  { name: 'Bugs', cmp: () => import('@runeya/modules-bugs-front/src/Bugs.vue') },
-  { name: 'Configuration', cmp: () => import('@runeya/modules-configuration-front/src/Configs.vue') },
-  { name: 'Documentation', cmp: () => import('@runeya/modules-documentation-front/src/Index.vue') },
+  { name: 'Logs', cmp: defineAsyncComponent(() => import('@runeya/modules-logs-front/src/Logs.vue')) },
+  { name: 'Git', cmp: defineAsyncComponent(() => import('@runeya/modules-git-front/src/Git.vue')) },
+  { name: 'Github', cmp: defineAsyncComponent(() => import('@runeya/modules-github-front/src/Index.vue')) },
+  { name: 'Npm', cmp: defineAsyncComponent(() => import('@runeya/modules-npm-front/src/Npm.vue')) },
+  { name: 'Bugs', cmp: defineAsyncComponent(() => import('@runeya/modules-bugs-front/src/Bugs.vue')) },
+  { name: 'Configuration', cmp: defineAsyncComponent(() => import('@runeya/modules-configuration-front/src/Configs.vue')) },
+  { name: 'Documentation', cmp: defineAsyncComponent(() => import('@runeya/modules-documentation-front/src/Index.vue')) },
 ];
 
 /**
