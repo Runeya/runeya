@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.31](https://github.com/runeya/runeya/compare/v1.33.30...v1.33.31) (2025-06-16)
+
+### Bug Fixes
+
+* **server:** remove a debug log ([f689d17](https://github.com/runeya/runeya/commit/f689d175bf63da0114d178d3af7400cd2aec1284))
+
 ## [1.33.30](https://github.com/runeya/runeya/compare/v1.33.29...v1.33.30) (2025-06-16)
 
 ### Bug Fixes
