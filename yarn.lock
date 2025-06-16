@@ -6745,9 +6745,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@runeya/runeya@npm:*":
-  version: 1.33.26
-  resolution: "@runeya/runeya@npm:1.33.26"
+"@runeya/runeya@npm:^1.33.27":
+  version: 1.33.27
+  resolution: "@runeya/runeya@npm:1.33.27"
   dependencies:
     "@babel/preset-env": "npm:^7.26.0"
     "@octokit/core": "npm:^6.1.2"
@@ -6789,7 +6789,7 @@ __metadata:
     yargs: "npm:^17.7.2"
   bin:
     runeya: www.js
-  checksum: 10/44b3a6647f2b32318b60847bba50fe0eb34a8af67acc3cbaef6361c0e4d6a6191050975be33412d72fb49952c06526ddce0240e1bed1b3849b3de525b8342596
+  checksum: 10/bfe3318bcc8debecdf90a195b442d3dbf8b0522f28026f5c07618f67c3b5f443207bdc7087f87eecd312df7b3fc1ffc3deba28b53017332cdb1028ab627a6472
   languageName: node
   linkType: hard
 
@@ -6810,7 +6810,7 @@ __metadata:
     "@lerna-lite/version": "npm:^2.5.0"
     "@runeya/common-retrigger-all-build": "workspace:*"
     "@runeya/common-typings": "workspace:^"
-    "@runeya/runeya": "npm:*"
+    "@runeya/runeya": "npm:^1.33.27"
     "@types/bluebird": "npm:^3.5.38"
     "@types/debounce": "npm:^1"
     "@types/lodash": "npm:^4.14.201"

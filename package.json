@@ -56,7 +56,7 @@
     "@lerna-lite/version": "^2.5.0",
     "@runeya/common-retrigger-all-build": "workspace:*",
     "@runeya/common-typings": "workspace:^",
-    "@runeya/runeya": "*",
+    "@runeya/runeya": "^1.33.27",
     "@types/bluebird": "^3.5.38",
     "@types/debounce": "^1",
     "@types/lodash": "^4.14.201",

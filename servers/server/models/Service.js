@@ -173,6 +173,7 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
     const overrides = await dbs.getDb(`overrides/${this.label}-envs`).read();
     // Load variables from db and envs
     if (!isUpdate) {
+      let shouldMigrateOverrides = false;
       environments.forEach((environment) => {
         const envs = this.envs[environment.label] || {}
         Object.keys(envs).forEach((key) => {
@@ -181,9 +182,11 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
           if (tag) envs[key].override = `{{${tag}_RUNEYA_OVERRIDE}}`;
           const override = overrides[environment.label]?.[key];
           if (!env || !override) return
-          envs[key].override = override
+          if (override.includes('STACK_MONITOR_OVERRIDE')) shouldMigrateOverrides = true
+          envs[key].override = override.replace('STACK_MONITOR_OVERRIDE', 'RUNEYA_OVERRIDE')
         });
       });
+      if(shouldMigrateOverrides) await this.save()
     }
     /** @type {Record<string, string>} */
     this.meta = service.meta || {};
@@ -232,7 +235,8 @@ Service.prototype.delete = async function () {
 };
 
 Service.load = async function (label, Stack) {
-  return new Service(await dbs.getDb(`services/${label}`).read(), Stack);
+  const db = await dbs.getDb(`services/${label}`).read()
+  return new Service(db, Stack);
 };
 
 /** @param {string} path */

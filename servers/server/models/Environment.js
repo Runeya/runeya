@@ -29,8 +29,31 @@ class Environment {
     const overridesDB = dbs.getDb(`overrides/${label}-environment`)
     if(!existsSync(await overridesDB.getPath())) await new Environment(environmentDB).save()
     const overrides = await dbs.getDb(`overrides/${label}-environment`).read();
+
+    // Ensure there is no overrides in the environmentDB
+    let shouldMigrateOverrides = false;
+    Object.keys(environmentDB?.envs || {}).forEach((key) => {
+      if (key.endsWith('_STACK_MONITOR_OVERRIDE')) {
+        shouldMigrateOverrides = true;
+        overrides.envs[key.replace('_STACK_MONITOR_OVERRIDE', '_RUNEYA_OVERRIDE')] = environmentDB.envs[key];
+        delete environmentDB.envs[key];
+      }
+      if (key.endsWith('_RUNEYA_OVERRIDE')) {
+        shouldMigrateOverrides = true;
+        overrides.envs[key] = environmentDB.envs[key];
+        delete environmentDB.envs[key];
+      }
+    });
+
+
     merge(environmentDB?.envs || {}, overrides?.envs || {});
-    return new Environment(environmentDB, Stack);
+    
+    const env = new Environment(environmentDB, Stack);
+
+    if(shouldMigrateOverrides) {
+      await env.save();
+    }
+    return env;
   }
 
   static async all() {
