@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.32](https://github.com/runeya/runeya/compare/v1.33.31...v1.33.32) (2025-06-16)
+
+### Bug Fixes
+
+* **server:** dont load an empty labelled service ([010ffec](https://github.com/runeya/runeya/commit/010ffec7a95cc220cdaafe8801fa959c331afe2a))
+
 ## [1.33.31](https://github.com/runeya/runeya/compare/v1.33.30...v1.33.31) (2025-06-16)
 
 ### Bug Fixes
