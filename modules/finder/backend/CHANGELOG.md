@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.29](https://github.com/runeya/runeya/compare/v1.33.28...v1.33.29) (2025-06-16)
+
+**Note:** Version bump only for package @runeya/modules-finder-backend
+
 ## [1.33.27](https://github.com/runeya/runeya/compare/v1.33.26...v1.33.27) (2025-06-15)
 
 **Note:** Version bump only for package @runeya/modules-finder-backend
