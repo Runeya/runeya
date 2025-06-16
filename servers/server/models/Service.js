@@ -181,7 +181,6 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
           if (tag) envs[key].override = `{{${tag}_RUNEYA_OVERRIDE}}`;
           const override = overrides[environment.label]?.[key];
           if (!env || !override) return
-          if(override)console.log(JSON.stringify(['runeya', envs[key].override],(_, v) => (typeof v === 'function' ? `[func]` : v)));
           envs[key].override = override.replace('STACK_MONITOR_OVERRIDE', 'RUNEYA_OVERRIDE')
         });
       });
