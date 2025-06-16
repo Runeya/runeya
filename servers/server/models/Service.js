@@ -173,7 +173,6 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
     const overrides = await dbs.getDb(`overrides/${this.label}-envs`).read();
     // Load variables from db and envs
     if (!isUpdate) {
-      let shouldMigrateOverrides = false;
       environments.forEach((environment) => {
         const envs = this.envs[environment.label] || {}
         Object.keys(envs).forEach((key) => {
@@ -182,11 +181,10 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
           if (tag) envs[key].override = `{{${tag}_RUNEYA_OVERRIDE}}`;
           const override = overrides[environment.label]?.[key];
           if (!env || !override) return
-          if (override.includes('STACK_MONITOR_OVERRIDE')) shouldMigrateOverrides = true
+          if(override)console.log(JSON.stringify(['runeya', envs[key].override],(_, v) => (typeof v === 'function' ? `[func]` : v)));
           envs[key].override = override.replace('STACK_MONITOR_OVERRIDE', 'RUNEYA_OVERRIDE')
         });
       });
-      if(shouldMigrateOverrides) await this.save()
     }
     /** @type {Record<string, string>} */
     this.meta = service.meta || {};
@@ -197,6 +195,7 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
         ...(command.parsers || []),
       ], (parserId) => ParserModel.find(parserId)).filter((a) => !!a);
     });
+    await this.save() // migration stuff
     return this;
   })();
 }
