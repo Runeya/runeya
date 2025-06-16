@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.28](https://github.com/runeya/runeya/compare/v1.33.27...v1.33.28) (2025-06-16)
+
+### Bug Fixes
+
+* **environments:** migrate overrides from stackmonitor ([6f3be1d](https://github.com/runeya/runeya/commit/6f3be1dd7b6b900c9e355a8185ee0a18776892e5))
+
 ## [1.33.27](https://github.com/runeya/runeya/compare/v1.33.26...v1.33.27) (2025-06-15)
 
 ### Bug Fixes
