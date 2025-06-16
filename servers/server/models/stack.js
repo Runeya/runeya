@@ -115,6 +115,7 @@ Stack.parse = async function () {
   let environments = [];
   try {
     services = await PromiseB.map(dbsRootPath, (id) => Service.load(id, Stack));
+    services = services.filter((service) => service.label);
     environments = await EnvironmentModel.all();
   } catch (error) {
     console.error(error);
