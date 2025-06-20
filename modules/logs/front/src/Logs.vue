@@ -1,328 +1,447 @@
 <template>
-  <div  v-if="service.enabled" class="logs-root">
-    <div class="main-content">
-      <div class="pids-container" v-if="pids">
-        <div class="pid" :class="{active: !currentPidView}" @click="currentPidView = null; scroll(true)">All</div>
-        <Popover placement="bottom-end" appendTo="parent" max-width="50vh">
-          <template #trigger>
-            <div class="pid" :class="{active: currentPidView}" >
-              Commands {{ currentPidView?.raw ? `: ${currentPidView?.raw?.substring(0, 20)}...` : ''}}
-              <i class="fas fa-chevron-down"></i>
-            </div>
-          </template>
+  <Teleport to="body" :disabled="!isFullscreen">
+    <div v-if="service.enabled" class="logs-container" :class="{ 'fullscreen': isFullscreen }" ref="logsContainer">
+    
+    <!-- Header with service info and controls -->
+    <div class="logs-header">
+      <div class="service-info">
+        <div class="service-title">
+          <i class="fas fa-terminal"></i>
+          <h3>{{ service.label }}</h3>
+          <div class="service-status" :class="serviceStatusClass">
+            <div class="status-dot"></div>
+            <span>{{ serviceStatusText }}</span>
+          </div>
+        </div>
+        <div class="current-context" v-if="currentPidView">
+          <i class="fas fa-play-circle"></i>
+          <span>{{ currentPidView.raw?.substring(0, 40) }}...</span>
+        </div>
+      </div>
+      
+              <!-- Process selector -->
+        <div class="process-selector" v-if="pids.length > 0">
+          <button 
+            class="process-btn" 
+            :class="{ active: !currentPidView }" 
+            @click="currentPidView = null; scroll(true)"
+            v-tooltip.top="'View logs from all processes'"
+          >
+            <i class="fas fa-globe"></i>
+            All Processes
+          </button>
+          <Popover placement="bottom-end" appendTo="parent">
+            <template #trigger>
+                <button class="process-btn" :class="{ active: currentPidView }" v-tooltip="'Select a specific process to view'">
+                  <i class="fas fa-list"></i>
+                  Commands ({{ pids.length }})
+                  <i class="fas fa-chevron-down"></i>
+                </button>
+            </template>
           <template #content>
-            <div class="pids">
-              <div v-for="pid of pids.slice().reverse().filter(a => a.raw?.trim())" :key="pid.pid" class="pid"
+            <div class="process-list">
+              <div 
+                v-for="pid of pids.slice().reverse().filter(a => a.raw?.trim())" 
+                :key="`pid-${pid.pid || 'unknown'}`"
+                class="process-item"
                 @click="currentPidView = pid; scroll(true)"
-                :class="{active: currentPidView?.pid === pid.pid}">
-                {{ pid.raw }}
+                :class="{ active: currentPidView?.pid === pid.pid }"
+              >
+                <div class="process-cmd">{{ pid.raw }}</div>
+                <div class="process-id">PID: {{ pid.pid }}</div>
               </div>
             </div>
           </template>
         </Popover>
       </div>
-      <sectionCmp :noStyle="noStyle" :noRadius="true"
-        :actions="[
-          { icon: 'fas fa-list', label: `${countLine}`, small: true, hidden: !countLine, active: !mode, click: () => mode = '' },
-          { icon: 'fas fa-bug', label: `${countDebug}`, small: true, hidden: !countDebug, active: mode === 'debug', click: () => mode = 'debug' },
-          { label: `{} ${countJSON}`, small: true, hidden: !countJSON, active: mode === 'json', click: () => mode = 'json' },
-          { icon: 'fas fa-chevron-down', click: () => scroll(true) },
-          { icon: 'fas fa-trash', click: () => clear() },
-        ]" class="terminal-container">
-          <template #header>
-            <h4 class="header-title">{{ 'Logs' + (currentPidView?.raw ? `: ${currentPidView?.raw}` : '') }}</h4>
-          </template>
-          <template #actions>
-            <div class="header">
-              <Popover appendTo="parent" placement="bottom-start" trigger="mouseenter">
-                <template #trigger>
-                  <button class="small config"><i class="fas fa-cog"></i></button>
-                </template>
-                <template #content>
-                  <template v-if="countJSON || countDebug">
-                    <div class="input-container">
+    </div>
+
+    <!-- Main logs content -->
+    <div class="logs-content">
+      <!-- Filters and controls bar -->
+      <div class="controls-bar">
+        <div class="filter-tabs">
+          <button 
+            class="filter-tab" 
+            :class="{ active: !mode }"
+            @click="mode = ''"
+            v-if="countLine > 0"
+            v-tooltip.bottom="`All logs (${countLine})`"
+          >
+            <i class="fas fa-list"></i>
+          </button>
+          <button 
+            class="filter-tab" 
+            :class="{ active: mode === 'debug' }"
+            @click="mode = 'debug'"
+            v-if="countDebug > 0"
+            v-tooltip.bottom="`Debug logs (${countDebug})`"
+          >
+            <i class="fas fa-bug"></i>
+          </button>
+          <button 
+            class="filter-tab" 
+            :class="{ active: mode === 'json' }"
+            @click="mode = 'json'"
+            v-if="countJSON > 0"
+            v-tooltip.bottom="`JSON logs (${countJSON})`"
+          >
+            <i class="fas fa-code"></i>
+          </button>
+          <button 
+            class="filter-tab" 
+            :class="{ active: mode === 'errors' }"
+            @click="mode = 'errors'"
+            v-if="countErrors > 0"
+            v-tooltip.bottom="`Error logs (${countErrors})`"
+          >
+            <i class="fas fa-exclamation-triangle"></i>
+          </button>
+        </div>
+
+        <div class="controls-actions">
+          <Popover appendTo="parent" placement="bottom-end" trigger="click">
+            <template #trigger>
+              <button class="control-btn" v-tooltip.bottom="'Open filters panel'">
+                <i class="fas fa-filter"></i>
+              </button>
+            </template>
+            <template #content>
+              <div class="filters-panel">
+                <div class="filter-group">
+                  <label>Search in logs</label>
+                  <div class="search-input">
                       <i class="fas fa-search"></i>
-                      <input type="text" v-model="jsonPathSearch" placeholder="JSON path...">
-                    </div>
-                    <hr>
-                  </template>
-                  <div class="input-container">
                     <input
-                      type="text" v-model="filterSearch"
-                      :placeholder="isInclude ? 'Include...' : 'Exclude...'">
-                    <div class="radios">
-                      <div>
-                        <input type="radio" id="include" :checked="isInclude" :value="isInclude"
-                          @input="isInclude = true">
-                        <label for="include">Include</label>
+                      type="text" 
+                      v-model="filterSearch" 
+                      :placeholder="isInclude ? 'Include...' : 'Exclude...'"
+                    >
                       </div>
-                      <div>
-                        <input type="radio" id="exclude" :checked="!isInclude" :value="!isInclude"
-                          @input="isInclude = false">
-                        <label for="exclude">Exclude</label>
+                  <div class="radio-group">
+                    <label class="radio-item">
+                      <input type="radio" :checked="isInclude" @input="isInclude = true">
+                      <span>Include</span>
+                    </label>
+                    <label class="radio-item">
+                      <input type="radio" :checked="!isInclude" @input="isInclude = false">
+                      <span>Exclude</span>
+                    </label>
                       </div>
                     </div>
+
+                <div class="filter-group" v-if="countJSON || countDebug">
+                  <label>JSON Path</label>
+                  <div class="search-input">
+                    <i class="fas fa-code"></i>
+                    <input type="text" v-model="jsonPathSearch" placeholder="JSON path...">
                   </div>
-                  <hr>
-                  <div class="input-container">
-                    <div class="radios">
-                      <div>
-                        <div>Display</div>
-                        <select v-model="numberToDisplay">
+                </div>
+
+                <div class="filter-group">
+                  <label>Display lines</label>
+                  <select v-model="numberToDisplay" class="select-input">
                           <option :value="10">10</option>
                           <option :value="50">50</option>
                           <option :value="100">100</option>
-                          <option :value="150">150</option>
                           <option :value="200">200</option>
                           <option :value="500">500</option>
-                          <option :value="800">800</option>
                           <option :value="1000">1000</option>
-                          <option :value="1500">1500</option>
-                          <option :value="2000">2000</option>
                         </select>
-                        <div>lines</div>
                       </div>
-                    </div>
-                  </div>
-                  <hr>
-                  <div>
-                    <input id="simplified" type="checkbox" :checked="simplifiedMode" v-model="simplifiedMode">
-                    <label for="simplified">Simplified mode</label>
-                  </div>
-                </template>
-              </Popover>
-            </div>
-          </template>
-          <Transition name="slide-fade">
-          <div class="terminal-panel" v-if="selectedLine">
-            <div class="terminal-panel-bg" @click="selectedLine = null"></div>
-            <div class="terminal-panel-content">
-              <h3>
-                Type:
-                <template v-if="selectedLine.debug">Debug</template>
-                <template v-else-if="selectedLine.json">JSON</template>
-                <template v-else-if="selectedLine.cmd">Command</template>
-                <template v-else>Text</template>
-              </h3>
-              <div class="more-info-container">
-                <div class="more-info-label">Raw message:</div>
-                <div class="more-info-content"><pre>{{ selectedLine.msg }}</pre></div>
-              </div>
-              <div class="more-info-container pid-box" v-if="selectedLine.pid" @click="setPid(selectedLine)">
-                <div class="more-info-label">Issued from pid: </div>
-                <div class="more-info-content">
-                  {{ selectedLine.pid }}
-                  <button class="small"><i class="fas fa-chevron-right"></i></button>
-                </div>
-              </div>
-              <div class="more-info-container">
-                <div class="more-info-label">Emitted date:</div>
-                <div class="more-info-content">{{ dayjs(selectedLine.timestamp).format('YYYY-MM-DD HH:mm:ss') }}</div>
-              </div>
-              <div v-if="selectedLine.cmd" class="more-info-container">
-                <div class="more-info-label">Options:</div>
-                <div class="more-info-content">
-                  <JsonTreeView :maxDepth="1" :json="transformerJSON(selectedLine.cmd)" :copyable="true" :expand-depth="1" :show-double-quotes="true"/>
-                </div>
-              </div>
-            </div>
-          </div>
-          </Transition>
-          <div class="terminal" ref="jsonsRef">
-            <div class="line" :class="{
-              simplifiedMode,
-              stderr: line.source === 'stderr' || (line.cmd && line.cmd.status === 'error'),
-              success: (line.cmd && line.cmd.status === 'exited'),
-              separator: line.isSeparator != null,
-              json: line.json != null && !simplifiedMode,
-              debug: line.debug != null && !simplifiedMode,
-              cmd: line.cmd != null && !simplifiedMode,
-              prompt: line.prompt && !simplifiedMode,
-            }" v-for="line of displayedLines" :key="line.id" @click="setSelectedLine(line)" >
-                  <div v-if="simplifiedMode">{{ line.msg }}</div>
-                  <div v-else-if="line.cmd != null" >
-                    <template v-if="line.cmd.cmd.trim()">
-                      <h2 class="section-header" v-if="line.cmd.cmd.trim()">
-                        Command
-                        <template v-if="line.cmd.status === 'running'"><Spinner style="display: inline-flex;" :no-color="true" size="20"></Spinner></template>
-                      </h2>
-                      <div class="section-content">
-                        {{ line.msg }}
-                      </div>
-                    </template>
-                    <template v-else>
-                      <br/>
-                    </template>
-                  </div>
-                  <div v-else-if="line.prompt">
-                    <h2 class="section-header">Prompt</h2>
-                    <div class="section-content" v-html="line.msg.trim() || '<br/>'"/>
-                  </div>
-                  <div v-else-if="line.debug  != null" >
-                    <div class="section-header">
-                      <h2 class="section-header">Debug</h2>
-                      <div class="section-actions">
-                        <button class="small" @click.stop="copy(JSON.stringify(line.debug))">Copy</button>
-                        <button class="small" @click.stop="findSolution(/**@type {any}*/(line.debug))">
-                          Find a solution
-                        </button>
-                      </div>
-                    </div>
-                    <div class="section-content">
-                      <JsonTreeView :maxDepth="1" :json="transformerJSON(line.debug)" :copyable="true" :expand-depth="1" :show-double-quotes="true"/>
-                    </div>
-                  </div>
-                  <div v-else-if="line.json != null"  >
-                    <div class="section-header">
-                      <h2 >JSON</h2>
-                      <div class="section-actions">
-                        <button class="small" @click.stop="copy(JSON.stringify(line.json))">Copy</button>
-                        <button class="small" @click.stop="findSolution(/**@type {any}*/(line.json))">
-                          Find a solution
-                        </button>
-                      </div>
-                    </div>
-                    <div class="section-content">
-                      <JsonTreeView :maxDepth="1" :json="transformerJSON(line.json)" :copyable="true" :expand-depth="1" :show-double-quotes="true"/>
-                    </div>
-                  </div>
-                  <div v-html="line.msg" v-else></div>
-            </div>
-          </div>
 
-          <div class="input-container-terminal" v-if="!currentPidView || currentPidView.cmd?.status == 'running'">
-            <div class="shortcuts">
-              <Tag class="shortcut" v-for="shortcut of service.shortcuts" severity="info" @click="sendShortcut(shortcut)">
-                <i class="fas fa-terminal"/>{{shortcut.label || shortcut.spawnCmd + ' ' + (shortcut.spawnArgs?.join(' ') || '')}}
-              </Tag>
-              <Tag class="shortcut" v-for="scenario of scenarios" severity="warn" @click="sendScenario(scenario)">
-                <i class="fas fa-sitemap"/>{{scenario.name}}
-              </Tag>
-            </div>
-            <div class="histories" v-if="histories?.length">
-              <div
-                class="history" :class="{active: history.active}"
-                @click="messageToSend = history.cmd; histories = []; textareaRef?.focus()"
-                v-for="(history, i) of histories" :key="i + 'history'">
-                <div>
-                  {{ history.cmd }}
-                </div>
-                <div class="right">
-                  <div>Used: {{history.timestamps?.length || 0}}</div>
-                  <div>Last used: {{history.timestamp
-                    ? dayjs(history.timestamp).format('YYYY-MM-DD HH:mm:ss')
-                    : '???'
-                  }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="histories" v-else-if="autocompleteInProgress">
-              <div class="history">
-                <Spinner size="20"></Spinner>
-              </div>
-            </div>
-            <div class="bar-terminal">
-              <div class="left">
-                <div class="blue">
-                  <template v-if="service.container?.enabled">
-                    <i class="fab fa-docker"/>
-                  </template>
-                  <template v-else>
-                  <i class="icon fas fa-folder"></i>
-                    <Select
-                      size="small"
-                      v-model="cwd"
-                      :options="cwds"
-                    >
-                      <option v-for="cwd of cwds">{{ getShortPath(cwd) }}</option>
-                    </Select>
-                  </template>
-                </div>
-                <div :class="gitChanges?.length ? 'yellow': 'green'" v-if="currentBranch">
-                  <i class="icon fas fa-code-branch"></i>
-                  <label>
-                    {{ currentBranch }}
-                    <div v-if="+gitRemoteDelta > 0">
-                      <i class="fas fa-long-arrow-alt-up"></i>{{ +gitRemoteDelta }}
-                    </div>
-                    <div v-if="+gitRemoteDelta < 0">
-                      <i class="fas fa-long-arrow-alt-down"></i>{{ Math.abs(+gitRemoteDelta) }}
-                    </div>
+                <div class="filter-group">
+                  <label class="checkbox-item">
+                    <input type="checkbox" v-model="simplifiedMode">
+                    <span>Simplified mode</span>
                   </label>
-                </div>
-              </div>
+                    </div>
+                  </div>
+            </template>
+          </Popover>
+
+          <button class="control-btn" @click="toggleScrollPause()" v-tooltip.bottom="isScrollPaused ? 'Resume auto-scroll' : 'Pause auto-scroll'" :class="{ active: isScrollPaused }">
+            <i :class="isScrollPaused ? 'fas fa-play' : 'fas fa-pause'"></i>
+          </button>
+
+          <button class="control-btn" @click="scroll(true)" v-tooltip.bottom="'Scroll to the bottom of logs'">
+            <i class="fas fa-arrow-down"></i>
+          </button>
+
+          <button class="control-btn" @click="exportLogs()" v-tooltip.bottom="'Export logs to file'">
+            <i class="fas fa-download"></i>
+          </button>
+
+          <button class="control-btn" @click="toggleFullscreen()" v-tooltip.bottom="isFullscreen ? 'Exit fullscreen mode' : 'Enter fullscreen mode'">
+            <i :class="isFullscreen ? 'fas fa-compress' : 'fas fa-expand'"></i>
+          </button>
+          
+          <button class="control-btn danger" @click="clear()" v-tooltip.bottom="'Clear all logs'">
+            <i class="fas fa-trash"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Logs display area -->
+      <div class="logs-display" ref="jsonsRef" @scroll="handleScroll">
+        <!-- Indicateur de pause -->
+        <div v-if="isScrollPaused" class="scroll-pause-indicator">
+          <i class="fas fa-pause"></i>
+          <span>Auto-scroll paused</span>
+          <div v-if="pausedLogsBuffer.length > 0" class="pending-logs">
+            <i class="fas fa-clock"></i>
+            <span>{{ pausedLogsBuffer.length }} new log{{ pausedLogsBuffer.length > 1 ? 's' : '' }} pending</span>
+          </div>
+          <button @click="toggleScrollPause()" class="resume-btn">
+            <i class="fas fa-play"></i>
+            Resume
+          </button>
+        </div>
+        
+        <LogsLine 
+          v-for="line of displayedLines" :key="line.id"
+          @click="setSelectedLine"
+          :line="line"
+          :simplifiedMode="simplifiedMode"
+          :jsonPathSearch="jsonPathSearch"
+        />
+      </div>
+
+            <!-- Command input area -->
+      <div class="command-input" v-if="!currentPidView || currentPidView.cmd?.status == 'running'">
+        <!-- Shortcuts in a simple horizontal line -->
+        <div class="shortcuts-line" v-if="service.shortcuts?.length || scenarios?.length">
+          <Tag 
+            v-for="shortcut of service.shortcuts" 
+            :key="shortcut.label || shortcut.spawnCmd"
+            class="shortcut-tag" 
+            severity="info" 
+            @click="sendShortcut(shortcut)"
+          >
+            <i class="fas fa-terminal"></i>
+            {{ shortcut.label || `${shortcut.spawnCmd} ${(shortcut.spawnArgs?.join(' ') || '')}` }}
+              </Tag>
+          <Tag 
+            v-for="(scenario, index) of scenarios" 
+            :key="scenario.id || scenario.name || `scenario-${index}`"
+            class="shortcut-tag" 
+            severity="warn" 
+            @click="sendScenario(scenario)"
+          >
+            <i class="fas fa-sitemap"></i>
+            {{ scenario.name || 'Scenario' }}
+              </Tag>
             </div>
-            <div class="input-content-terminal">
-              <div class="badge" v-if="currentPidView?.pid">Pid: {{ currentPidView.pid }}</div>
-              <i class="fas fa-chevron-right"></i>
-              <PassThrough>
-                <textarea ref="textareaRef"
+
+        <!-- Loading indicator -->
+        <div class="command-loading" v-if="autocompleteInProgress">
+          <Spinner size="16"></Spinner>
+          <span>Loading suggestions...</span>
+            </div>
+
+        <!-- Main command line -->
+        <div class="main-command-line">
+          <!-- Command history -->
+          <div class="command-history" v-if="histories?.length">
+                <div
+              v-for="(history, i) of histories" 
+              :key="`history-${i}`"
+              class="history-item" 
+              :class="{ active: history.active }"
+                  @click="messageToSend = history.cmd; histories = []; textareaRef?.focus()"
+            >
+              <div class="history-cmd">{{ history.cmd }}</div>
+              <div class="history-meta">
+                <span>Used: {{ history.timestamps?.length || 0 }}</span>
+                <span>{{ history.timestamp ? dayjs(history.timestamp).format('HH:mm:ss') : '???' }}</span>
+                  </div>
+                  </div>
+                </div>
+          <!-- Context badges inline with input -->
+          <div class="context-badges">
+            <div class="path-selector" v-if="!service.container?.enabled && cwds?.length > 1">
+              <i class="fas fa-folder"></i>
+              <Select
+                v-model="cwd"
+                :options="cwds"
+                :optionLabel="getShortPath"
+                :optionValue="(option) => option"
+                placeholder="Select path..."
+                class="path-select"
+              />
+                </div>
+            <span class="context-badge" v-else-if="!service.container?.enabled">
+              <i class="fas fa-folder"></i>
+              {{ getShortPath(cwd) }}
+            </span>
+            <span class="context-badge" v-else>
+              <i class="fab fa-docker"></i>
+              Docker
+            </span>
+            <span class="context-badge git-badge" v-if="currentBranch" :class="{ changes: gitChanges?.length }">
+              <i class="fas fa-code-branch"></i>
+                    {{ currentBranch }}
+              <span v-if="Number(gitRemoteDelta) !== 0" class="git-delta">
+                <i :class="Number(gitRemoteDelta) > 0 ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i>
+                {{ Math.abs(Number(gitRemoteDelta)) }}
+              </span>
+            </span>
+            <span class="context-badge pid-badge" v-if="currentPidView?.pid" :class="`status-${currentPidView.cmd?.status || 'unknown'}`">
+              <i v-if="currentPidView.cmd?.status === 'running'" class="fas fa-circle status-indicator running"></i>
+              <i v-else-if="currentPidView.cmd?.status === 'exited'" class="fas fa-check status-indicator exited"></i>
+              <i v-else-if="currentPidView.cmd?.status === 'error'" class="fas fa-times status-indicator error"></i>
+              <i v-else-if="currentPidView.cmd?.status === 'killed' || currentPidView.cmd?.status === 'stopped'" class="fas fa-exclamation status-indicator terminated"></i>
+              <i v-else class="fas fa-circle status-indicator unknown"></i>
+              PID: {{ currentPidView.pid }}
+              <span class="status-text">{{ getStatusLabel(currentPidView.cmd?.status || 'unknown') }}</span>
+            </span>
+                    </div>
+
+          <!-- Command input -->
+          <div class="input-row">
+            <i class="fas fa-chevron-right prompt-icon"></i>
+            <textarea 
+              ref="textareaRef"
                   v-model="messageToSend"
                   @keypress.enter="sendEnter"
                   @keyup="keyup"
                   @keydown="keydown"
                   @input="inputTerminal"
-                  :placeholder="currentPidView ? `Send command to ${currentPidView.pid}...` : 'Send new command...'"
+              :placeholder="currentPidView ? `Send to PID ${currentPidView.pid}...` : 'Enter command...'"
+              class="command-textarea"
                 />
-              </PassThrough>
             </div>
           </div>
-          <div class="input-container-terminal" v-else-if="currentPidView">
-            Your command no longer accepts further response
-            <button @click="currentPidView = null">Go to all processes view</button>
-            <button class="danger" @click="sendTerminate(true)">Or try to force kill</button>
           </div>
-      </sectionCmp>
+
+      <!-- Terminated process message -->
+      <div class="terminated-process" v-else-if="currentPidView">
+        <div class="terminated-message">
+          <i class="fas fa-exclamation-triangle"></i>
+          <span>This process no longer accepts commands</span>
     </div>
+        <div class="terminated-actions">
+          <button class="action-btn" @click="currentPidView = null" v-tooltip="'Switch back to viewing all processes'">
+            <i class="fas fa-globe"></i>
+          </button>
+          <button class="action-btn danger" @click="sendTerminate(true)" v-tooltip="'Force kill this process'">
+            <i class="fas fa-skull"></i>
+          </button>
   </div>
-  <sectionCmp v-else>
-    <div class="not-launch">
-      <div class="shortcuts">
-        <Tag class="shortcut" v-for="shortcut of service.shortcuts" severity="info" @click="sendShortcut(shortcut)">
-          <i class="fas fa-terminal"/>{{shortcut.label || shortcut.spawnCmd + ' ' + (shortcut.spawnArgs?.join(' ') || '')}}
+      </div>
+    </div>
+
+    <!-- Line details drawer -->
+    <Sidebar 
+      v-model:visible="showLineDetails" 
+      position="right"
+      :style="{ width: '500px' }"
+      appendTo="body"
+      class="line-details-drawer"
+    >
+      <template #header>
+        <div class="drawer-header">
+          <i class="fas fa-info-circle"></i>
+          <h3>Log Details</h3>
+        </div>
+      </template>
+
+      <div class="drawer-content">
+        <div class="detail-section">
+          <label>Type</label>
+          <div class="detail-value">
+            <template v-if="selectedLine?.debug">Debug</template>
+            <template v-else-if="selectedLine?.json">JSON</template>
+            <template v-else-if="selectedLine?.cmd">Command</template>
+            <template v-else>Text</template>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <label>Raw Message</label>
+          <div class="detail-value code">
+            <pre>{{ selectedLine?.msg }}</pre>
+          </div>
+        </div>
+
+        <div class="detail-section" v-if="selectedLine?.pid">
+          <label>Process ID</label>
+          <div class="detail-value clickable" @click="setPid(selectedLine)">
+            {{ selectedLine.pid }}
+            <button class="link-btn">
+              <i class="fas fa-external-link-alt"></i>
+              View Process
+            </button>
+          </div>
+        </div>
+
+        <div class="detail-section">
+          <label>Timestamp</label>
+          <div class="detail-value">
+            {{ selectedLine ? dayjs(selectedLine.timestamp).format('YYYY-MM-DD HH:mm:ss') : '' }}
+          </div>
+        </div>
+
+        <div class="detail-section" v-if="selectedLine?.cmd">
+          <label>Command Options</label>
+          <div class="detail-value">
+            <JsonTreeView 
+              :maxDepth="1" 
+              :json="transformerJSON(selectedLine.cmd)" 
+              :copyable="true" 
+              :expand-depth="1" 
+              :show-double-quotes="true"
+            />
+          </div>
+        </div>
+      </div>
+    </Sidebar>
+  </div>
+
+  <!-- Service not enabled state -->
+  <div v-else class="service-disabled">
+    <div class="disabled-content">
+      <i class="fas fa-power-off"></i>
+      <h3>Service Not Running</h3>
+      <p>Start this service to view logs</p>
+      
+      <div class="shortcuts" v-if="service.shortcuts?.length || scenarios?.length">
+        <Tag 
+          v-for="shortcut of service.shortcuts" 
+          :key="shortcut.label || shortcut.spawnCmd"
+          class="shortcut-tag" 
+          severity="info" 
+          @click="sendShortcut(shortcut)"
+        >
+          <i class="fas fa-terminal"></i>
+          {{ shortcut.label || `${shortcut.spawnCmd} ${(shortcut.spawnArgs?.join(' ') || '')}` }}
         </Tag>
-        <Tag class="shortcut" v-for="scenario of scenarios" severity="warn" @click="sendScenario(scenario)">
-          <i class="fas fa-sitemap"/>{{scenario.name}}
+        <Tag 
+          v-for="(scenario, index) of scenarios" 
+          :key="scenario.id || scenario.name || `scenario-${index}`"
+          class="shortcut-tag" 
+          severity="warn" 
+          @click="sendScenario(scenario)"
+        >
+          <i class="fas fa-sitemap"></i>
+          {{ scenario.name || 'Scenario' }}
         </Tag>
       </div>
-      <i class="fas fa-ban"></i>
-      Launch this service to view logs
     </div>
-  </sectionCmp>
+  </div>
 
-  <Modal ref="findSolutionModal" cancelString="No" validateString="Yes">
-    <template #header>
-      Find solution from AI
-    </template>
-    <template #body="{data: tokens}">
-      Are you sure ? This have a cost of ~{{ tokens.price }}$
-    </template>
-  </Modal>
-
-  <Modal ref="findSolutionResultModal" cancelString="OK" :noValidate="true">
-    <template #header>
-      Find solution from AI
-    </template>
-    <template #body="{data: result}">
-      <pre>
-        {{result?.trim()}}
-      </pre>
-    </template>
-  </Modal>
+  </Teleport>
 </template>
 
 <script setup>
-import { JsonTreeView } from 'json-tree-view-vue3';
-import 'json-tree-view-vue3/dist/style.css';
 import jsonpath from 'jsonpath';
 import {
   computed, onMounted, ref, nextTick, onBeforeUnmount,
-  onUnmounted,
+  onUnmounted, Teleport,
 } from 'vue';
 import dayjs from 'dayjs';
 import debounce from 'debounce';
 import Socket from '../../../../fronts/app/src/helpers/Socket';
-import sectionCmp from '../../../../fronts/app/src/components/Section.vue';
 import Modal from '../../../../fronts/app/src/components/Modal.vue';
 import Service from '../../../../fronts/app/src/models/service';
 import notification from '../../../../fronts/app/src/helpers/notification';
@@ -330,9 +449,12 @@ import Popover from '../../../../fronts/app/src/components/Popover.vue';
 import fs from '../../../../fronts/app/src/models/fs';
 import Spinner from '../../../../fronts/app/src/components/Spinner.vue';
 import Tag from 'primevue/tag';
-import PassThrough from './PassThrough.vue';
 import Select from 'primevue/select';
+import Sidebar from 'primevue/sidebar';
 import Stack from '../../../../fronts/app/src/models/stack'
+import LogsLine from './LogsLine.vue';
+import { JsonTreeView } from 'json-tree-view-vue3';
+import 'json-tree-view-vue3/dist/style.css';
 
 const props = defineProps({
   service: {
@@ -355,21 +477,16 @@ const isInclude = ref(false);
 const logs = ref([]);
 /** @type {import('vue').Ref<LogMessage | null>} */
 const selectedLine = ref(null);
+const showLineDetails = ref(false);
 const jsonPathSearch = ref('');
-const findSolutionModal = ref();
 const simplifiedMode = ref(false);
 const numberToDisplay = ref(200);
-const findSolutionResultModal = ref();
 const mode = ref('');
+/** @type {import('vue').Ref<any[]>} */
 const scenarios = ref([]);
 /** @type {import('vue').Ref<{active: boolean, cmd: string, args: string, raw: string, timestamp: number,timestamps: number[]}[]>} */
 const histories = ref([]);
 
-/** @param {string} data */
-function copy(data) {
-  navigator.clipboard.writeText(data)
-    .then(() => notification.next('success', 'Data copied to clipboard'));
-}
 
 const countJSON = computed(() => {
   let count = logs.value.reduce((count, line) => (line.json && !line.debug ? count + 1 : count), 0);
@@ -381,10 +498,48 @@ const countDebug = computed(() => {
   if (count > numberToDisplay.value) count = numberToDisplay.value;
   return count;
 });
+const countErrors = computed(() => {
+  let count = logs.value.reduce((count, line) => (line.source === 'stderr' || (line.cmd && line.cmd.status === 'error') ? count + 1 : count), 0);
+  if (count > numberToDisplay.value) count = numberToDisplay.value;
+  return count;
+});
 const countLine = computed(() => {
   let count = logs.value.length;
   if (count > numberToDisplay.value) count = numberToDisplay.value;
   return count;
+});
+
+// Détermine le statut réel du service basé sur les processus
+const serviceStatusClass = computed(() => {
+  if (!props.service.enabled) return { stopped: true };
+  
+  const runningProcesses = pids.value.filter(p => p.cmd?.status === 'running');
+  const errorProcesses = pids.value.filter(p => p.cmd?.status === 'error');
+  
+  if (runningProcesses.length > 0) return { running: true };
+  if (errorProcesses.length > 0) return { error: true };
+  if (pids.value.length > 0) return { idle: true };
+  
+  return { running: true }; // Service enabled mais pas de processus = running
+});
+
+const serviceStatusText = computed(() => {
+  if (!props.service.enabled) return 'Stopped';
+  
+  const runningProcesses = pids.value.filter(p => p.cmd?.status === 'running');
+  const errorProcesses = pids.value.filter(p => p.cmd?.status === 'error');
+  
+  if (runningProcesses.length > 0) {
+    return `Running (${runningProcesses.length} active)`;
+  }
+  if (errorProcesses.length > 0) {
+    return `Error (${errorProcesses.length} failed)`;
+  }
+  if (pids.value.length > 0) {
+    return 'Idle';
+  }
+  
+  return 'Running';
 });
 
 /** @param {any} json */
@@ -422,6 +577,14 @@ const displayedLines = computed(() => {
         return false;
       })
       .slice(-numberToDisplay.value);
+  } else if (mode.value === 'errors') {
+    lines = logs.value
+      .filter((line) => {
+        if (line.isSeparator) return isLineIncluded(line);
+        if ((line.source === 'stderr' || (line.cmd && line.cmd.status === 'error')) && isLineIncluded(line)) return true;
+        return false;
+      })
+      .slice(-numberToDisplay.value);
   } else {
     lines = logs.value
       .filter((line) => {
@@ -438,15 +601,6 @@ const displayedLines = computed(() => {
   });
 });
 
-/** @param {Record<string, string>} data */
-async function findSolution(data) {
-  const tokens = await Service.getTokens(JSON.stringify(data));
-  const res = await findSolutionModal.value.open(tokens).promise;
-  if (res) {
-    const review = await Service.findSolutionFromAi(JSON.stringify(data));
-    await findSolutionResultModal.value.open(review).promise;
-  }
-}
 
 /**
  * @param {LogMessage} line
@@ -480,6 +634,31 @@ const onConfUpdate = () => {
 };
 onMounted(() => {
   Socket.on('conf:update', onConfUpdate);
+  
+  // Close history when clicking outside
+  const handleClickOutside = (event) => {
+    const historyContainer = document.querySelector('.command-history');
+    const mainCommandLine = document.querySelector('.main-command-line');
+    const textarea = document.querySelector('.command-textarea');
+    
+    if (histories.value.length > 0 && historyContainer && mainCommandLine) {
+      // If click is outside the main command line or not on textarea
+      if (!mainCommandLine.contains(event.target) || event.target === textarea) {
+        // Only close if not clicking on textarea (to allow typing)
+        if (event.target !== textarea) {
+          histories.value = [];
+        }
+      }
+    }
+  };
+  
+
+  
+  document.addEventListener('click', handleClickOutside);
+  
+  onBeforeUnmount(() => {
+    document.removeEventListener('click', handleClickOutside);
+  });
 });
 onBeforeUnmount(() => {
   Socket.off('conf:update', onConfUpdate);
@@ -506,16 +685,35 @@ const clearEventCB = (data) => {
 const logsUpdateEventCB = (/** @type {LogMessage[]} */datas) => {
   datas.forEach((data) => {
     if (data.label !== props.service.label) return;
-    logs.value.push(data);
-    scroll();
+    
+    if (isScrollPaused.value) {
+      // Si en pause, stocker dans le buffer (limité à 500 lignes)
+      pausedLogsBuffer.value.push(data);
+      if (pausedLogsBuffer.value.length > 500) {
+        pausedLogsBuffer.value.shift(); // Supprimer les plus anciennes
+      }
+    } else {
+      // Si pas en pause, ajouter normalement
+      logs.value.push(data);
+      if(logs.value.length > 1100) logs.value.splice(0, 100);
+      scroll();
+    }
   });
 };
 const logsUpdateLineEventCB = (/** @type {LogMessage[]} */lines) => {
   lines.forEach((line) => {
     if (line.label !== props.service.label) return;
+    
+    // Mettre à jour dans les logs principaux
     const index = logs.value.findIndex((a) => a.id === line.id);
     if (index >= 0) {
       logs.value.splice(index, 1, line);
+    }
+    
+    // Mettre à jour aussi dans le buffer des logs en pause
+    const bufferIndex = pausedLogsBuffer.value.findIndex((a) => a.id === line.id);
+    if (bufferIndex >= 0) {
+      pausedLogsBuffer.value.splice(bufferIndex, 1, line);
     }
   });
 };
@@ -558,9 +756,89 @@ function escapeRegExp(text) {
 async function scroll(force = false, customElement = null) {
   const container = customElement || jsonsRef.value;
   if (!container) return;
+  
   const shouldScroll = container.scrollTop + container.clientHeight === container.scrollHeight;
   await nextTick();
-  if (shouldScroll || force) container.scrollTop = container.scrollHeight;
+  
+  // Si c'est un scroll forcé ou si on devrait scroller naturellement et qu'on n'est pas en pause
+  if (force || (shouldScroll && !isScrollPaused.value)) {
+    container.scrollTop = container.scrollHeight;
+    
+    // Pour les scrolls forcés, s'assurer qu'on arrive vraiment en bas
+    if (force) {
+      await nextTick();
+      container.scrollTop = container.scrollHeight;
+    }
+  }
+}
+
+function toggleScrollPause() {
+  isScrollPaused.value = !isScrollPaused.value;
+  
+  // Si on reprend le scroll, ajouter toutes les lignes en attente et aller en bas
+  if (!isScrollPaused.value) {
+    resumeScrollAndFlush();
+  }
+}
+
+async function resumeScrollAndFlush() {
+  isScrollingProgrammatically = true;
+  
+  // Désactiver la pause
+  isScrollPaused.value = false;
+  
+  // Ajouter les logs en attente
+  flushPausedLogs();
+  
+  // Attendre le prochain tick pour que le DOM soit mis à jour
+  await nextTick();
+  
+  // Forcer le scroll vers le bas
+  await scroll(true);
+  
+  // Attendre un peu avant de réactiver la détection
+  setTimeout(() => {
+    isScrollingProgrammatically = false;
+  }, 100);
+}
+
+function flushPausedLogs() {
+  // Ajouter toutes les lignes du buffer
+  if (pausedLogsBuffer.value.length > 0) {
+    logs.value.push(...pausedLogsBuffer.value);
+    
+    // Nettoyer les logs trop anciens
+    if(logs.value.length > 1100) {
+      const toRemove = logs.value.length - 1000; // Garder 1000 lignes
+      logs.value.splice(0, toRemove);
+    }
+    
+    // Vider le buffer
+    pausedLogsBuffer.value = [];
+  }
+}
+
+// Flag pour éviter les détections de scroll pendant les opérations automatiques
+let isScrollingProgrammatically = false;
+
+// Détecte si l'utilisateur fait défiler manuellement vers le haut
+function handleScroll(event) {
+  // Ignorer les scrolls automatiques
+  if (isScrollingProgrammatically) return;
+  
+  const container = event.target;
+  const isAtBottom = container.scrollTop + container.clientHeight >= container.scrollHeight - 10;
+  
+  // Si l'utilisateur n'est pas en bas et que le scroll n'est pas déjà en pause, 
+  // activer automatiquement la pause
+  if (!isAtBottom && !isScrollPaused.value) {
+    isScrollPaused.value = true;
+  }
+  // Si l'utilisateur revient en bas et que le scroll est en pause,
+  // reprendre automatiquement le scroll et vider le buffer
+  else if (isAtBottom && isScrollPaused.value) {
+    resumeScrollAndFlush();
+  }
 }
 
 const messageToSend = ref('');
@@ -695,6 +973,18 @@ async function changeActive($event, offset) {
     if (next) next.active = true;
     else changeActive($event, offset);
   }
+  
+  // Scroll to active item
+  await nextTick();
+  const historyContainer = document.querySelector('.command-history');
+  const activeItem = document.querySelector('.history-item.active');
+  if (historyContainer && activeItem) {
+    activeItem.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'nearest'
+    });
+  }
 }
 /** @type {import('vue').Ref<LogMessage | null | undefined>} */
 const currentPidView = ref(null);
@@ -707,32 +997,59 @@ const currentBranch = ref('');
 const gitChanges = ref('');
 const homedir = ref('');
 const gitRemoteDelta = ref('');
-const interval = setInterval(() => {
-  reloadBarInfos();
-}, 1000);
-const longInterval = setInterval(() => {
-  reloadBarInfos(true);
-}, 20000);
+
+// Optimized intervals to prevent unnecessary re-renders
+let interval = null;
+let longInterval = null;
+
 onBeforeUnmount(() => {
-  clearInterval(interval);
-  clearInterval(longInterval);
+  if (interval) clearInterval(interval);
+  if (longInterval) clearInterval(longInterval);
 });
+
 onMounted(async () => {
   homedir.value = await fs.homeDir();
-  reloadBarInfos(true);
+  await reloadBarInfos(true);
+  
+  // Only start intervals if git is configured
+  if (props.service.git?.remote) {
+    interval = setInterval(() => {
+      reloadBarInfos();
+    }, 1000); // Reduced frequency from 1s to 5s
+    
+    longInterval = setInterval(() => {
+      reloadBarInfos(true);
+    }, 20000); // Reduced frequency from 20s to 60s
+  }
 });
 
 const reloadBarInfos = debounce(async (reloadCostingInfos = false) => {
   if (!props.service.git?.remote) return;
-  if (reloadCostingInfos) {
-    if (gitRemoteDelta.value) gitRemoteDelta.value = '';
+  
+  try {
+    // Get new values first
+    const newGitChanges = await props.service.getStatus();
+    const newCurrentBranch = await props.service.getCurrentBranch();
+    
+    // Only update refs if values actually changed to prevent unnecessary re-renders
+    if (JSON.stringify(newGitChanges) !== JSON.stringify(gitChanges.value)) {
+      gitChanges.value = newGitChanges;
+    }
+    
+    if (newCurrentBranch !== currentBranch.value) {
+      currentBranch.value = newCurrentBranch;
+    }
+    
+    if (reloadCostingInfos) {
+      const newGitRemoteDelta = await props.service.gitRemoteDelta(currentBranch.value);
+      if (newGitRemoteDelta !== gitRemoteDelta.value) {
+        gitRemoteDelta.value = newGitRemoteDelta;
+      }
+    }
+  } catch (error) {
+    console.error('Error reloading git info:', error);
   }
-  gitChanges.value = await props.service.getStatus();
-  currentBranch.value = await props.service.getCurrentBranch();
-  if (reloadCostingInfos) {
-    gitRemoteDelta.value = await props.service.gitRemoteDelta(currentBranch.value);
-  }
-}, 100);
+}, 300); // Increased debounce from 100ms to 300ms
 const cwds = ref(
   [
     props.service?.rootPath,
@@ -757,6 +1074,7 @@ function setPid(line) {
   const command = logs.value.find((l) => l.cmd && l.pid === line?.pid);
   currentPidView.value = command || null;
   selectedLine.value = null;
+  showLineDetails.value = false;
 }
 
 /**
@@ -766,6 +1084,7 @@ function setPid(line) {
 function setSelectedLine(line) {
   if (window.getSelection()?.toString()) return;
   selectedLine.value = line;
+  showLineDetails.value = true;
 }
 async function sendShortcut(shortcut) {
   return send(shortcut)
@@ -773,172 +1092,1051 @@ async function sendShortcut(shortcut) {
 async function sendScenario(scenario) {
   Socket.emit(scenario.id, scenario, props.service.label)
 }
+
+// New features functions
+const isFullscreen = ref(false);
+const isScrollPaused = ref(false);
+/** @type {import('vue').Ref<LogMessage[]>} */
+const pausedLogsBuffer = ref([]);
+
+
+
+function exportLogs() {
+  const logsData = displayedLines.value
+    .map(line => `[${dayjs(line.timestamp).format('YYYY-MM-DD HH:mm:ss')}] ${line.msg}`)
+    .join('\n');
+  
+  const blob = new Blob([logsData], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${props.service.label}-logs-${dayjs().format('YYYY-MM-DD-HH-mm-ss')}.txt`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  notification.next('success', 'Logs exported successfully');
+}
+
+function toggleFullscreen() {
+  // Save current scroll position before toggling
+  const logsDisplay = document.querySelector('.logs-display');
+  const currentScrollTop = logsDisplay?.scrollTop || 0;
+  
+  isFullscreen.value = !isFullscreen.value;
+  
+  // Restore scroll position after DOM update
+  nextTick(() => {
+    const newLogsDisplay = document.querySelector('.logs-display');
+    if (newLogsDisplay) {
+      newLogsDisplay.scrollTop = currentScrollTop;
+    }
+  });
+}
+
+/** @param {string} status */
+function getStatusLabel(status) {
+  switch (status) {
+    case 'running': return 'Running';
+    case 'exited': return 'Completed';
+    case 'error': return 'Failed';
+    case 'killed': return 'Terminated';
+    case 'stopped': return 'Stopped';
+    default: return status.charAt(0).toUpperCase() + status.slice(1);
+  }
+}
+
 /**
  * @typedef {import('../../../../servers/server/models/Service').LogMessage} LogMessage
  */
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
-.logs-root {
+
+// Modern Logs Component Styling
+.logs-container {
   height: 100%;
-}
-#terminal {
-  width: 100%;
-  position: relative;
-}
-.not-launch {
+  min-height: 400px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-size: 2em;
-  color: #777
+  background: var(--system-backgroundColor0);
+  color: var(--system-color0);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow: hidden;
+  border-radius: 10px;
+
+  &.fullscreen {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 100vh !important;
+    min-height: unset !important;
+    z-index: 9999 !important;
+    border-radius: 0 !important;
+    margin: 0 !important;
+  }
 }
 
-.header-title {
+// Header Section
+.logs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--system-backgroundColor50);
+  border-bottom: 1px solid var(--system-backgroundColor300);
+  flex-shrink: 0;
+  z-index: 2;
+
+  .service-info {
+  display: flex;
+  flex-direction: column;
+    gap: 0.5rem;
+
+    .service-title {
+      display: flex;
+  align-items: center;
+      gap: 0.75rem;
+
+      i {
+        color: var(--system-primary500);
+      }
+
+      h3 {
   margin: 0;
-  max-width: 50vh;
-  text-overflow: ellipsis;
+        font-size: 1.25rem;
+        font-weight: 600;
+        color: var(--system-color0);
+      }
+
+      .service-status {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: 1rem;
+        background: var(--system-backgroundColor200);
+        font-size: 0.75rem;
+        font-weight: 500;
+
+        .status-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: var(--system-backgroundColor500);
+        }
+
+        &.running .status-dot {
+          background: #10b981;
+          animation: pulse 2s infinite;
+        }
+
+        &.error .status-dot {
+          background: #ef4444;
+        }
+
+        &.idle .status-dot {
+          background: #f59e0b;
+        }
+
+        &.stopped .status-dot {
+          background: var(--system-backgroundColor500);
+        }
+      }
+    }
+
+    .current-context {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      color: var(--system-color400);
+
+      i {
+        color: var(--system-primary500);
+      }
+    }
+  }
+
+  .process-selector {
+    display: flex;
+    gap: 0.5rem;
+
+    .process-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: var(--system-backgroundColor100);
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.5rem;
+      color: var(--system-color200);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: var(--system-backgroundColor200);
+        border-color: var(--system-primary500);
+      }
+
+      &.active {
+        background: var(--system-primary500);
+        border-color: var(--system-primary500);
+        color: white;
+      }
+
+      i {
+        font-size: 0.75rem;
+      }
+    }
+  }
+}
+
+// Process List Popover
+.process-list {
+  max-height: 300px;
+  overflow-y: auto;
+  padding: 0.5rem 0;
+
+  .process-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background: var(--system-backgroundColor100);
+    }
+
+    &.active {
+      background: var(--system-primary50);
+      color: var(--system-primary700);
+    }
+
+    .process-cmd {
+      font-weight: 500;
+      font-size: 0.875rem;
   white-space: nowrap;
   overflow: hidden;
-}
-.header {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  font-weight: normal !important;
-  position: relative;
-  z-index: 1;
-  margin: 0;
-  font-size: 0.7em !important;
-  &>.separator {
-    border-left: 1px solid lightgrey;
-    height: 40px;
-  }
-}
-.terminal-container {
-  width: 100%;
-  margin: auto;
-  position: relative;
-  border-left: none;
-  border-right: none;
-  border-bottom: none;
-  box-sizing: border-box;
-  overflow: auto;
-  flex-grow: 1;
-  border-top-left-radius: 0 !important;
-  border-top-right-radius: 0 !important;
-  .terminal-panel {
-    position: absolute;
-    z-index: 2;
-    right: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    .terminal-panel-bg {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      left: 0;
-      top: 0;
+      text-overflow: ellipsis;
+      max-width: 250px;
     }
-    .terminal-panel-content {
-      max-width: calc(100% - 40px);
-      background-color: var(--system-backgroundColor50);
-      color: var(--system-color);
-      z-index: 2;
-      position: absolute;
-      right: 0;
-      top: 0;
-      height: 100%;
-      padding: 10px;
-      box-sizing: border-box;
+
+    .process-id {
+      font-size: 0.75rem;
+      color: var(--system-color400);
     }
   }
 }
 
-.input-container {
-  margin-bottom: 10px;
+// Main Content Area
+.logs-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  position: relative;
+}
+
+// Controls Bar
+.controls-bar {
   display: flex;
   align-items: center;
-  gap: 10px;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  background: var(--system-backgroundColor0);
+  border-bottom: 1px solid var(--system-backgroundColor300);
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex-shrink: 0;
+  z-index: 1;
 
-  input {
-    border-radius: 10px;
-    padding: 5px;
+  // Responsive adjustments for mobile
+  @media (max-width: 768px) {
+    padding: 0.75rem 1rem;
+    gap: 0.5rem;
+    
+    .filter-tabs {
+      gap: 0.125rem;
+      
+      .filter-tab {
+        padding: 0.375rem;
+        min-width: 2rem;
+        height: 2rem;
+        
+        i {
+          font-size: 0.75rem;
+        }
+      }
+    }
+    
+    .controls-actions {
+      gap: 0.25rem;
+    }
   }
 
-  button {
-    height: auto;
-    padding: 5px 10px;
-  }
-}
-.main-content {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  .pids-container {
+  .filter-tabs {
     display: flex;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 1;
-    background-color: var(--system-sections-backgroundColor100);
-    color: var(--system-sections-color);
-    .pids {
-      max-height: 400px;
-      overflow: auto;
-      .pid {
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        &:hover {
-          background-color: rgba(0,0,0,0.05);
-          cursor: pointer;
-        }
-        &.active {
-          border-left-color: #0076bc;
-          border-bottom-color: transparent;
-        }
-      }
-    }
-    .pid {
-      padding: 5px 10px;
-      border: 2px solid transparent;
+    gap: 0.25rem;
+
+    .filter-tab {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      background: var(--system-backgroundColor100);
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.5rem;
+      color: var(--system-color300);
+      font-size: 0.875rem;
       cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 2.5rem;
+      height: 2.5rem;
+
+      &:hover {
+        background: var(--system-backgroundColor200);
+        transform: translateY(-1px);
+      }
+
       &.active {
-        border-bottom-color:#0076bc
+        background: var(--system-primary500);
+        border-color: var(--system-primary500);
+        color: white;
+        transform: none;
+      }
+
+      i {
+        font-size: 0.875rem;
       }
     }
   }
 
+  .controls-actions {
+    display: flex;
+    gap: 0.5rem;
+
+    .control-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      background: var(--system-backgroundColor100);
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.5rem;
+      color: var(--system-color200);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 2.5rem;
+      height: 2.5rem;
+
+      &:hover {
+        background: var(--system-backgroundColor200);
+        border-color: var(--system-primary400);
+        transform: translateY(-1px);
+      }
+
+      &.danger {
+        color: #ef4444;
+        border-color: #fee2e2;
+
+        &:hover {
+          background: #fef2f2;
+          border-color: #ef4444;
+        }
+      }
+
+      &.active {
+        background: var(--system-primary500);
+        border-color: var(--system-primary500);
+        color: white;
+        transform: none;
+
+        &:hover {
+          background: var(--system-primary600);
+          border-color: var(--system-primary600);
+        }
+      }
+
+      i {
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+// Filters Panel
+.filters-panel {
+  padding: 1rem;
+  background: var(--system-backgroundColor0);
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  min-width: 280px;
+
+  .filter-group {
+    margin-bottom: 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--system-color200);
+      margin-bottom: 0.5rem;
+    }
+
+    .search-input {
+  position: relative;
+      display: flex;
+      align-items: center;
+
+      i {
+    position: absolute;
+        left: 0.75rem;
+        color: var(--system-color400);
+        font-size: 0.875rem;
+      }
+
+      input {
+    width: 100%;
+        padding: 0.5rem 0.75rem 0.5rem 2.25rem;
+        border: 1px solid var(--system-backgroundColor300);
+        border-radius: 0.375rem;
+        background: var(--system-backgroundColor50);
+        color: var(--system-color0);
+        font-size: 0.875rem;
+
+        &:focus {
+          outline: none;
+          border-color: var(--system-primary500);
+          box-shadow: 0 0 0 3px rgba(167, 139, 250, 0.1);
+        }
+      }
+    }
+
+    .select-input {
+      width: 100%;
+      padding: 0.5rem 0.75rem;
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.375rem;
+      background: var(--system-backgroundColor50);
+      color: var(--system-color0);
+      font-size: 0.875rem;
+
+      &:focus {
+        outline: none;
+        border-color: var(--system-primary500);
+      }
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 1rem;
+
+      .radio-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+
+        input[type="radio"] {
+          margin: 0;
+        }
+
+        span {
+          font-size: 0.875rem;
+          color: var(--system-color200);
+        }
+      }
+    }
+
+    .checkbox-item {
+  display: flex;
+  align-items: center;
+      gap: 0.5rem;
+      cursor: pointer;
+
+      input[type="checkbox"] {
+        margin: 0;
+      }
+
+      span {
+        font-size: 0.875rem;
+        color: var(--system-color200);
+      }
+    }
+  }
 }
 
-.radios {
-  display: flex;
-  flex-direction: column;
-  &>div {
+// Logs Display Area
+.logs-display {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 1rem;
+  background: var(--system-backgroundColor50);
+  height: 0;
+  position: relative;
+
+  .scroll-pause-indicator {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: var(--system-warning500);
+    color: var(--system-backgroundColor900);
+    padding: 0.75rem 1rem;
+    margin: -0.75rem -1rem 1rem -1rem;
     display: flex;
     align-items: center;
-    gap: 5px;
-    input {
-      margin: 0;
+    gap: 0.75rem;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    border-bottom: 2px solid var(--system-warning600);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+
+    i {
+      font-size: 0.875rem;
+      opacity: 0.9;
+    }
+
+    span {
+      flex: 1;
+      font-size: 0.875rem;
+      font-weight: 500;
+    }
+
+    .pending-logs {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: var(--system-backgroundColor0);
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.5rem;
+      padding: 0.375rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      color: var(--system-color0);
+      opacity: 0.9;
+
+      i {
+        font-size: 0.625rem;
+        opacity: 0.8;
+      }
+    }
+
+    .resume-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.375rem;
+      background: var(--system-backgroundColor0);
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.5rem;
+      color: var(--system-primary600);
+      padding: 0.375rem 0.75rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      &:hover {
+        background: var(--system-backgroundColor100);
+        border-color: var(--system-primary400);
+        transform: translateY(-1px);
+      }
+
+      i {
+        font-size: 0.625rem;
+      }
     }
   }
 }
 
-.main-content  {
-  background: none;
-  right: 3px;
-  top: 0;
-  border: 1px solid var(--system-backgroundColor300 );
-  box-sizing: border-box;
-  margin: 0;
-  z-index: 100;
-  .section {
+// Command Input Area
+.command-input {
+  padding: 1rem;
+  background: var(--system-backgroundColor50);
+  flex-shrink: 0;
+  max-height: 20vh;
+  overflow-y: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .shortcuts-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.375rem;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+
+    .shortcut-tag {
+          cursor: pointer;
+      transition: all 0.2s ease;
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem !important;
+      border-radius: 1rem !important;
+      border: 1px solid transparent !important;
+      
+      &[severity="info"] {
+        background: #3b82f6 !important;
+        color: white !important;
+        
+        &:hover {
+          background: #1d4ed8 !important;
+          transform: translateY(-1px);
+        }
+      }
+
+      &[severity="warn"] {
+        background: #f59e0b !important;
+        color: white !important;
+        
+        &:hover {
+          background: #d97706 !important;
+          transform: translateY(-1px);
+        }
+      }
+
+      i {
+        margin-right: 0.375rem;
+        font-size: 0.625rem;
+      }
+    }
+  }
+
+  .command-history {
+    position: absolute;
+    bottom: 100%;
+    left: 0;
+    right: 0;
+    width: 100%;
+    background: var(--system-backgroundColor0);
+    border: 1px solid var(--system-backgroundColor300);
+    border-radius: 1rem 1rem 0 0;
+    box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1);
+    max-height: 150px;
+    overflow-y: auto;
+    z-index: 1000;
     margin: 0;
+
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--system-backgroundColor200);
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background: var(--system-backgroundColor100);
+      }
+
+      &.active {
+        background: var(--system-primary50);
+        color: var(--system-primary700);
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      .history-cmd {
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        font-size: 0.875rem;
+        flex: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 1rem;
+      }
+
+      .history-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.125rem;
+        font-size: 0.75rem;
+        color: var(--system-color400);
+      }
+    }
+  }
+
+    .command-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.375rem;
+    padding: 0.5rem;
+    color: var(--system-color400);
+    font-size: 0.75rem;
+  }
+
+  .main-command-line {
+  display: flex;
+  flex-direction: column;
+    gap: 0.75rem;
+    background: var(--system-backgroundColor0);
+    border: 1px solid var(--system-backgroundColor300);
+    border-radius: 1rem;
+    padding: 1rem;
+    width: 100%;
+    max-width: 100%;
+    margin: 0 auto;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    backdrop-filter: blur(8px);
+    border-color: var(--system-backgroundColor200);
+    position: relative;
+
+    .context-badges {
+    display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+
+              .context-badge {
+          display: inline-flex;
+    align-items: center;
+          gap: 0.375rem;
+          padding: 0.25rem 0.75rem;
+          background: var(--system-primary100);
+          border: 1px solid var(--system-primary200);
+          border-radius: 1rem;
+          font-size: 0.75rem;
+          font-weight: 500;
+          color: var(--system-primary700);
+
+          i {
+            font-size: 0.625rem;
+            color: var(--system-primary600);
+          }
+        }
+
+        .path-selector {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.375rem;
+          padding: 0.25rem 0.5rem;
+          background: var(--system-backgroundColor300);
+          border: 1px solid var(--system-backgroundColor400);
+          border-radius: 1rem;
+          font-size: 0.75rem;
+          font-weight: 500;
+          color: var(--system-color100);
+
+          :deep(.p-select svg) {
+            color: var(--system-color200);
+          }
+
+          i {
+            font-size: 0.625rem;
+            color: var(--system-color200);
+          }
+
+          .path-select {
+            max-width: 200px;
+
+            :deep(.p-select) {
+              background: transparent;
+              border: none;
+              padding: 0;
+              font-size: 0.75rem;
+              font-weight: 500;
+              color: var(--system-color100);
+              min-height: auto;
+              height: auto;
+
+              .p-select-label {
+                padding: 0 0.25rem;
+                font-size: inherit;
+                font-weight: inherit;
+                color: inherit;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+              }
+
+              .p-select-dropdown {
+                width: 1rem;
+                height: 1rem;
+                color: var(--system-color200) !important;
+              }
+            }
+
+            :deep(.p-select-overlay) {
+              .p-select-option {
+                font-size: 0.75rem;
+                padding: 0.5rem 0.75rem;
+                
+                &:hover {
+                  background: var(--system-backgroundColor100);
+                }
+              }
+            }
+          }
+
+        &.git-badge {
+          background: #dcfce7;
+          color: #166534;
+          border-color: #bbf7d0;
+
+          &.changes {
+            background: #fef3c7;
+            color: #92400e;
+            border-color: #fde68a;
+          }
+
+          .git-delta {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-left: 0.25rem;
+            font-size: 0.625rem;
+          }
+        }
+
+        &.pid-badge {
+          background: #e0e7ff;
+          color: #3730a3;
+          border-color: #c7d2fe;
+          
+          .status-indicator {
+            margin-right: 0.25rem;
+            font-size: 0.5rem;
+            animation: none;
+            
+            &.running {
+              color: #10b981;
+              animation: pulse 2s infinite;
+            }
+            
+            &.exited {
+              color: #10b981;
+            }
+            
+            &.error {
+              color: #ef4444;
+            }
+            
+            &.terminated {
+              color: #f59e0b;
+            }
+            
+            &.unknown {
+              color: #6b7280;
+            }
+          }
+          
+          .status-text {
+            margin-left: 0.25rem;
+            font-size: 0.625rem;
+            opacity: 0.8;
+          }
+          
+          &.status-running {
+            background: #d1fae5;
+            color: #065f46;
+            border-color: #a7f3d0;
+          }
+          
+          &.status-exited {
+            background: #d1fae5;
+            color: #065f46;
+            border-color: #a7f3d0;
+          }
+          
+          &.status-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-color: #fecaca;
+          }
+          
+          &.status-killed,
+          &.status-stopped {
+            background: #fef3c7;
+            color: #92400e;
+            border-color: #fde68a;
+          }
+        }
+      }
+    }
+
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+
+      .prompt-icon {
+        color: var(--system-primary500);
+        font-size: 0.875rem;
+        margin-top: 0.125rem;
+        flex-shrink: 0;
+      }
+
+      .command-textarea {
+        flex: 1;
+        background: var(--system-backgroundColor0);
+        border: 1px solid var(--system-backgroundColor300);
+        border-radius: 0.375rem;
+        padding: 0.5rem 0.75rem;
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        font-size: 0.875rem;
+        line-height: 1.4;
+        color: var(--system-color0);
+        resize: none;
+        min-height: 2.5rem;
+        max-height: 80px;
+        overflow-y: auto;
+        transition: border-color 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: var(--system-primary500);
+          box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1);
+        }
+
+        &::placeholder {
+          color: var(--system-color400);
+          font-style: italic;
+        }
+      }
+    }
+  }
+}
+
+// Terminated Process
+.terminated-process {
+  padding: 1.5rem;
+  background: var(--system-backgroundColor100);
+  border-top: 1px solid var(--system-backgroundColor300);
+  text-align: center;
+  flex-shrink: 0;
+
+  .terminated-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+    color: var(--system-color300);
+    font-size: 0.875rem;
+
+    i {
+      color: #f59e0b;
+      font-size: 1rem;
+    }
+  }
+
+  .terminated-actions {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+
+    .action-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.5rem;
+      background: var(--system-backgroundColor0);
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.5rem;
+      color: var(--system-color200);
+      font-size: 0.875rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 2.5rem;
+      height: 2.5rem;
+
+      &:hover {
+        background: var(--system-backgroundColor200);
+        border-color: var(--system-primary400);
+        transform: translateY(-1px);
+      }
+
+      &.danger {
+        color: #ef4444;
+        border-color: #fee2e2;
+
+        &:hover {
+          background: #fef2f2;
+          border-color: #ef4444;
+        }
+      }
+
+      i {
+        font-size: 0.875rem;
+      }
+    }
+  }
+}
+
+// Service Disabled State
+.service-disabled {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 2rem;
+  background: var(--system-backgroundColor50);
+
+  .disabled-content {
+    text-align: center;
+    max-width: 400px;
+
+    i {
+      font-size: 4rem;
+      color: var(--system-color400);
+      margin-bottom: 1rem;
+    }
+
+    h3 {
+      margin: 0 0 0.5rem 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--system-color200);
+    }
+
+    p {
+      margin: 0 0 2rem 0;
+      color: var(--system-color400);
+      font-size: 1rem;
+    }
+
+    .shortcuts {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+
+      .shortcut-tag {
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: 0.75rem;
+        
+        &:hover {
+          transform: translateY(-1px);
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        i {
+          margin-right: 0.25rem;
+          font-size: 0.625rem;
+        }
+      }
+    }
   }
 }
 
@@ -948,6 +2146,27 @@ async function sendScenario(scenario) {
   line-break: anywhere;
   overflow: auto;
   flex-grow: 1;
+
+
+// AI Result Modal
+.ai-result {
+  background: var(--system-backgroundColor100);
+  border: 1px solid var(--system-backgroundColor300);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  max-height: 400px;
+  overflow-y: auto;
+
+  pre {
+    margin: 0;
+    white-space: pre-wrap;
+    color: var(--system-color0);
+  }
+}
+
   .line {
     border-left: 2px solid #ccc;
     border-top-left-radius: 4px;
@@ -1014,81 +2233,7 @@ async function sendScenario(scenario) {
         position: relative;
       }
     }
-    &.json {
-      padding: 0;
-      margin: 10px 0;
-      border: none;
-      .section-header {
-        background-color: #d1b37a;
-      }
-      .section-content {
-        border-color: #d1b37a
-      }
-    }
 
-    &.debug {
-      padding: 0;
-      margin: 10px 0;
-      border: none;
-      .section-header {
-        background-color: #ac32c4;
-      }
-      .section-content {
-        border-color: #ac32c4
-      }
-    }
-    &.cmd {
-      padding: 0;
-      margin: 10px 0;
-      border: none;
-      .section-header {
-        background-color: #0076bc;
-      }
-      .section-content {
-        border-color: #0076bc
-      }
-    }
-    &.prompt {
-      padding: 0;
-      margin: 10px 0;
-      border: none;
-      align-self: flex-end;
-      margin-right: 10px;
-      .section-header {
-        background-color: #5800bc;
-        margin-left: auto;
-      }
-      .section-content {
-        border-left: none;
-        text-align: right;
-        border-right: 4px solid #5800bc;
-      }
-    }
-    &.separator {
-      border-left: none;
-      margin: 20px auto;
-      display: inline-block;
-      width: max-content;
-      font-weight: bold;
-    }
-    &.stderr {
-      border-left-color: #ac1010;
-      .section-header {
-        background-color: #ac1010;
-      }
-      .section-content {
-        border-color: #ac1010
-      }
-    }
-    &.success {
-      border-left-color: #0c9913;
-      .section-header {
-        background-color: #0c9913;
-      }
-      .section-content {
-        border-color: #0c9913
-      }
-    }
 
   }
 }
@@ -1249,6 +2394,16 @@ async function sendScenario(scenario) {
   color: white;
   padding: 0;
 }
+
+// Animation pour l'indicateur running
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
 </style>
 
 <style lang="scss">
@@ -1256,6 +2411,125 @@ async function sendScenario(scenario) {
 .xterm-decoration-top {
   background-color: orange;
   color: white;
+}
+
+// PrimeVue Sidebar customization for line details
+.line-details-drawer {
+  :deep(.p-sidebar-content) {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+  }
+
+  :deep(.p-sidebar-header) {
+    padding: 1.5rem;
+    border-bottom: 1px solid var(--system-backgroundColor300);
+    background: var(--system-backgroundColor50);
+  }
+
+  .drawer-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    i {
+      color: var(--system-primary600);
+      font-size: 1.25rem;
+    }
+
+    h3 {
+      margin: 0;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--system-color0);
+    }
+  }
+
+  .drawer-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1.5rem;
+  }
+
+  .detail-section {
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background: var(--system-backgroundColor50);
+    border-radius: 0.75rem;
+    border: 1px solid var(--system-backgroundColor300);
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--system-primary600);
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+    }
+
+    .detail-value {
+      background: var(--system-backgroundColor0);
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.5rem;
+      padding: 0.75rem;
+      font-size: 0.875rem;
+      color: var(--system-color0);
+      line-height: 1.5;
+
+      &.code {
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        background: var(--system-backgroundColor100);
+
+        pre {
+          margin: 0;
+          white-space: pre-wrap;
+          word-break: break-all;
+        }
+      }
+
+      &.clickable {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &:hover {
+          background: var(--system-primary50);
+          border-color: var(--system-primary300);
+        }
+
+        .link-btn {
+          display: flex;
+          align-items: center;
+          gap: 0.375rem;
+          color: var(--system-primary600);
+          font-size: 0.75rem;
+          font-weight: 500;
+          background: var(--system-primary100);
+          border: none;
+          padding: 0.375rem 0.75rem;
+          border-radius: 1rem;
+          cursor: pointer;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: var(--system-primary200);
+          }
+
+          i {
+            font-size: 0.625rem;
+          }
+        }
+      }
+    }
+  }
 }
 
 .json-view-item {

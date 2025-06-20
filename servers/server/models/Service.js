@@ -208,7 +208,7 @@ Service.prototype.processQueue = function() {
     sockets.emit('logs:update', messages);
   }
   if(this.stopQueue) return
-  setTimeout(() => {this.processQueue()}, 100);
+  setTimeout(() => {this.processQueue()}, 25);
 }
 
 Service.prototype.save = async function () {
@@ -401,6 +401,7 @@ Service.prototype.add = async function (data, logMessageOverride, {
 
   if (line.msg.length > 100000 && !line.msg.startsWith('["runeya"')) line.msg = line.msg.slice(0, 10000);
   this.store.push(line);
+  if(this.store.length > 1000) this.store.shift();
   this.queue.push(line);
 };
 

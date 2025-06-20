@@ -1,8 +1,9 @@
 import PrimeVueConfig from 'primevue/config';
 import Socket from './helpers/Socket';
-import Tooltip from 'primevue/tooltip';
+import tooltipDirective from './directives/tooltip.js';
 
 import './assets/css/tailwind.output.css';
+import './assets/css/tooltip.css';
 import './assets/theme/index.scss';
 import PrimeVueAura from '@primevue/themes/aura';
 
@@ -52,7 +53,7 @@ window.PrimeVueAura = PrimeVueAura;
       },
     })
     .use(router)
-    .directive('tooltip', Tooltip);
+    .directive('tooltip', tooltipDirective);
   views.forEach((cmp) => app.component(cmp.name, cmp.cmp));
   app.mount('#app');
 })();
