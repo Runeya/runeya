@@ -253,10 +253,10 @@ function getStatusLabel(status) {
   // JSON logs
   &.json {
     background: var(--system-backgroundColor0);
-    border-left: 3px solid #10b981;
+    border-left: 3px solid #cfcc11;
 
     .log-header {
-      background: linear-gradient(135deg, #10b981, #059669);
+      background: linear-gradient(135deg, #cfcc11, #b4b10a);
       color: white;
       padding: 0.375rem 0.75rem;
       display: flex;
