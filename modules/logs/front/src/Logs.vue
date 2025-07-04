@@ -259,7 +259,18 @@
                 </div>
           <!-- Context badges inline with input -->
           <div class="context-badges">
-            <div class="path-selector" v-if="!service.container?.enabled && cwds?.length > 1">
+            <div class="context-selector">
+              <i class="fas fa-terminal"></i>
+              <Select
+                v-model="useHost"
+                :options="contextOptions"
+                :optionLabel="(option) => option.label"
+                :optionValue="(option) => option.value"
+                placeholder="Select context..."
+                class="context-select"
+              />
+            </div>
+            <div class="path-selector" v-if="useHost && cwds?.length > 1">
               <i class="fas fa-folder"></i>
               <Select
                 v-model="cwd"
@@ -269,18 +280,14 @@
                 placeholder="Select path..."
                 class="path-select"
               />
-                </div>
-            <span class="context-badge" v-else-if="!service.container?.enabled">
+            </div>
+            <span class="context-badge" v-else-if="useHost">
               <i class="fas fa-folder"></i>
               {{ getShortPath(cwd) }}
             </span>
-            <span class="context-badge" v-else>
-              <i class="fab fa-docker"></i>
-              Docker
-            </span>
             <span class="context-badge git-badge" v-if="currentBranch" :class="{ changes: gitChanges?.length }">
               <i class="fas fa-code-branch"></i>
-                    {{ currentBranch }}
+              {{ currentBranch }}
               <span v-if="Number(gitRemoteDelta) !== 0" class="git-delta">
                 <i :class="Number(gitRemoteDelta) > 0 ? 'fas fa-arrow-up' : 'fas fa-arrow-down'"></i>
                 {{ Math.abs(Number(gitRemoteDelta)) }}
@@ -487,6 +494,23 @@ const scenarios = ref([]);
 /** @type {import('vue').Ref<{active: boolean, cmd: string, args: string, raw: string, timestamp: number,timestamps: number[]}[]>} */
 const histories = ref([]);
 
+// Context selector
+const useHost = ref(false);
+const contextOptions = ref([
+  { value: false, label: 'Docker', icon: 'fab fa-docker' },
+  { value: true, label: 'Host', icon: 'fas fa-folder' }
+]);
+
+// Initialize useHost based on service container state
+onMounted(() => {
+  // If service has container enabled, default to Docker (useHost = false)
+  // If service doesn't have container, default to Host (useHost = true)
+  if (props.service.container?.enabled) {
+    useHost.value = false; // Use Docker by default
+  } else {
+    useHost.value = true; // Use Host by default
+  }
+});
 
 const countJSON = computed(() => {
   let count = logs.value.reduce((count, line) => (line.json && !line.debug ? count + 1 : count), 0);
@@ -883,12 +907,24 @@ async function sendEnter(ev) {
     });
     return;
   }
-  if (!ev.shiftKey) await send({
-    spawnCmd: messageToSend.value.trim(),
-    spawnOptions: {
-      cwd: cwd.value
+  if (!ev.shiftKey) {
+    // Prepare spawn options based on execution context
+    const spawnOptions = {};
+    
+    if (useHost.value) {
+      // Use Host: add cwd and set useHost flag
+      spawnOptions.cwd = cwd.value;
+      spawnOptions.useHost = true;
+    } else {
+      // Use Docker: don't set useHost (defaults to container if enabled)
+      spawnOptions.useHost = false;
     }
-  }, ev);
+    
+    await send({
+      spawnCmd: messageToSend.value.trim(),
+      spawnOptions
+    }, ev);
+  }
   else messageToSend.value += '\n';
 }
 /** @param {Event} ev */
@@ -1063,8 +1099,8 @@ const cwd = ref(cwds.value[0] || '.');
  * @param {string | undefined} path
  */
 function getShortPath(path) {
-  return path
-    ?.replace(homedir.value, '~');
+  if (!path) return '';
+  return path.replace(homedir.value, '~');
 }
 
 /**
@@ -1803,90 +1839,80 @@ function getStatusLabel(status) {
     position: relative;
 
     .context-badges {
-    display: flex;
+      display: flex;
       flex-wrap: wrap;
       gap: 0.5rem;
+      align-items: center;
+      margin-bottom: 0.75rem;
 
-              .context-badge {
-          display: inline-flex;
-    align-items: center;
-          gap: 0.375rem;
-          padding: 0.25rem 0.75rem;
-          background: var(--system-primary100);
-          border: 1px solid var(--system-primary200);
-          border-radius: 1rem;
-          font-size: 0.75rem;
-          font-weight: 500;
-          color: var(--system-primary700);
+      .context-selector {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        background: var(--system-primary50);
+        border: 1px solid var(--system-primary200);
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--system-primary700);
 
-          i {
-            font-size: 0.625rem;
-            color: var(--system-primary600);
-          }
+        i {
+          font-size: 0.625rem;
         }
 
-        .path-selector {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.375rem;
-          padding: 0.25rem 0.5rem;
-          background: var(--system-backgroundColor300);
-          border: 1px solid var(--system-backgroundColor400);
-          border-radius: 1rem;
+        .context-select {
+          background: transparent;
+          border: none;
+          color: var(--system-primary700);
           font-size: 0.75rem;
-          font-weight: 500;
-          color: var(--system-color100);
+          min-width: 100px;
+        }
+        :deep(.p-select-label) {
+          padding: 0;
+        }
+      }
 
-          :deep(.p-select svg) {
-            color: var(--system-color200);
-          }
+      .path-selector {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        background: var(--system-backgroundColor100);
+        border: 1px solid var(--system-backgroundColor300);
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--system-color300);
 
-          i {
-            font-size: 0.625rem;
-            color: var(--system-color200);
-          }
+        i {
+          font-size: 0.625rem;
+        }
 
-          .path-select {
-            max-width: 200px;
+        .path-select {
+          background: transparent;
+          border: none;
+          color: var(--system-color300);
+          font-size: 0.75rem;
+          min-width: 120px;
+        }
+      }
 
-            :deep(.p-select) {
-              background: transparent;
-              border: none;
-              padding: 0;
-              font-size: 0.75rem;
-              font-weight: 500;
-              color: var(--system-color100);
-              min-height: auto;
-              height: auto;
+      .context-badge {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.25rem 0.75rem;
+        background: var(--system-backgroundColor100);
+        border: 1px solid var(--system-backgroundColor300);
+        border-radius: 1rem;
+        font-size: 0.75rem;
+        font-weight: 500;
+        color: var(--system-color300);
 
-              .p-select-label {
-                padding: 0 0.25rem;
-                font-size: inherit;
-                font-weight: inherit;
-                color: inherit;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-              }
-
-              .p-select-dropdown {
-                width: 1rem;
-                height: 1rem;
-                color: var(--system-color200) !important;
-              }
-            }
-
-            :deep(.p-select-overlay) {
-              .p-select-option {
-                font-size: 0.75rem;
-                padding: 0.5rem 0.75rem;
-                
-                &:hover {
-                  background: var(--system-backgroundColor100);
-                }
-              }
-            }
-          }
+        i {
+          font-size: 0.625rem;
+        }
 
         &.git-badge {
           background: #dcfce7;

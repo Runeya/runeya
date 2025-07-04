@@ -411,9 +411,14 @@ Service.prototype.launchProcess = async function (command, isMainProcess = true)
     this.sendHasBeenModified();
     this.crashed = false;
     this.exited = false;
-    let { cmd, args, options } = this.container.enabled
-      ? await this.parseIncomingCommandDocker(command)
-      : await this.parseIncomingCommand(command);
+    
+    // Check if user explicitly wants to use host, or if container is not enabled
+    const shouldUseHost = command.spawnOptions?.useHost === true || !this.container?.enabled;
+    
+    let { cmd, args, options } = shouldUseHost
+      ? await this.parseIncomingCommand(command)
+      : await this.parseIncomingCommandDocker(command);
+      
     if (!existsSync(options.cwd)) {
       this.crashed = true;
       this.exited = true;
