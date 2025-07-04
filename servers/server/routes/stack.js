@@ -183,8 +183,71 @@ router.get('/:service/open-folder', (req, res) => {
 
 router.get('/:service/restart', async (req, res) => {
   const service = findService(req.params.service);
-  await service.restart();
+  const debug = req.query.debug; // Support debug parameter
+  await service.restart({ debug });
   res.send();
+});
+
+router.post('/:service/debug-resume', async (req, res) => {
+  try {
+    const service = findService(req.params.service);
+    const debugPort = req.body.debugPort || 9229;
+    
+    console.log(`[DEBUG] Attempting to resume debug session for ${service.label} on port ${debugPort}`);
+    
+    // Use chrome-remote-interface for proper Node.js debugging
+    const CDP = require('chrome-remote-interface');
+    
+    const client = await CDP({ port: debugPort });
+    const { Debugger } = client;
+    
+    try {
+      console.log('[DEBUG] Connected to debug session via chrome-remote-interface');
+      
+      await Debugger.on('breakpointResolved', (params) => {
+        console.log('[DEBUG] Breakpoindddddddddddddddddddddddddddddddddddt resolved:', params);
+      });
+      // Resume to next breakpoint (this will go to next debugger; statement)
+      await Debugger.resume();
+
+      console.log('[DEBUG] Resume command sent successfully');
+      
+      // Notify frontend that debugger has resumed
+      sockets.emit('debug:resumed', {
+        service: service.label
+      });
+      
+    } catch (err) {
+      console.error('[DEBUG] CDP error:', err);
+      throw err;
+    } finally {
+      await client.close();
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Debug execution resumed successfully',
+      target: 'Node.js process'
+    });
+    
+  } catch (error) {
+    console.error('Error resuming debug:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    
+    // Notify frontend that debugger is disconnected if connection failed
+    if (errorMessage.includes('ECONNREFUSED') || errorMessage.includes('connect')) {
+      const serviceName = req.params.service;
+      sockets.emit('debug:disconnected', {
+        service: serviceName,
+        reason: 'Cannot connect to debugger (connection failed)'
+      });
+    }
+    
+    res.status(500).json({ 
+      success: false, 
+      error: errorMessage 
+    });
+  }
 });
 router.get('/:service/start', async (req, res) => {
   const service = findService(req.params.service);
@@ -197,5 +260,7 @@ router.get('/:service/stop', async (req, res) => {
   await service.kill();
   res.send();
 });
+
+
 
 module.exports = router;

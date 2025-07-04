@@ -295,10 +295,21 @@ class Service {
     return axios.get(`/stack/${this.label}/open-folder`, { params: { path } });
   }
 
-  async restart() {
+  async restart(options = {}) {
     this.enabled = true;
     localStorage.setItem(`automatic-toggle-${this.label}`, this.enabled.toString());
-    return axios.get(`/stack/${this.label}/restart`);
+    
+    const params = new URLSearchParams();
+    if (options.debug) {
+      params.append('debug', options.debug);
+    }
+    const url = `/stack/${this.label}/restart${params.toString() ? '?' + params.toString() : ''}`;
+    return axios.get(url);
+  }
+
+  async resumeDebug(debugPort = 9229) {
+    const { data } = await axios.post(`/stack/${this.label}/debug-resume`, { debugPort });
+    return data;
   }
 
   async start() {
@@ -490,6 +501,8 @@ class Service {
     const { data: path } = await axios.post('/fs/homedir');
     return path || '';
   }
+
+
 }
 
 export default Service;

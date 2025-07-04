@@ -97,9 +97,54 @@
           >
             <i class="fas fa-exclamation-triangle"></i>
           </button>
+
+          <!-- Debug Node.js button in filter tabs for better visibility -->
+          <button 
+            class="filter-tab debug-launch-btn" :class="{ active: true }"
+            @click="launchNodeDebug()"
+            v-tooltip.bottom="'🐛 Launch Node.js Debug Mode'"
+            style="background: #8b5cf6 !important; border-color: #8b5cf6 !important; color: white !important; margin-left: 10px;"
+          >
+            <i class="fas fa-bug"></i>
+          </button>
+
+          <!-- Next Debug button -->
+          <button 
+            v-if="isDebuggerConnected"
+            class="filter-tab next-debug-btn" 
+            @click="nextDebugStep()"
+            :disabled="isResumingDebug"
+            v-tooltip.bottom="'▶️ Continue to Next debugger; statement'"
+            style="background: #10b981 !important; border-color: #10b981 !important; color: white !important; margin-left: 5px;"
+          >
+            <i class="fas fa-step-forward" :class="{ 'fa-spin': isResumingDebug }"></i>
+          </button>
+
+          <!-- Test Modal button -->
+          <button 
+            class="filter-tab test-modal-btn" 
+            @click="testModal()"
+            v-tooltip.bottom="'🧪 Test Modal (debug)'"
+            style="background: #f59e0b !important; border-color: #f59e0b !important; color: white !important; margin-left: 5px;"
+          >
+            <i class="fas fa-flask"></i>
+          </button>
         </div>
 
         <div class="controls-actions">
+          <!-- Debug Node.js button -->
+          <button 
+            class="control-btn debug-nodejs-btn" 
+            @click="launchNodeDebug()"
+            :disabled="isLaunchingDebug"
+            v-tooltip.bottom="isLaunchingDebug ? 'Launching debug mode...' : 'Launch Node.js Debug Mode'"
+            style="background: #8b5cf6 !important; border-color: #8b5cf6 !important; color: white !important;"
+          >
+            <i class="fas fa-bug" :class="{ 'fa-spin': isLaunchingDebug }"></i>
+            <span v-if="!isLaunchingDebug">🐛</span>
+            <span v-if="isLaunchingDebug" class="debug-text">Debug</span>
+          </button>
+
           <Popover appendTo="parent" placement="bottom-end" trigger="click">
             <template #trigger>
               <button class="control-btn" v-tooltip.bottom="'Open filters panel'">
@@ -201,6 +246,7 @@
         <LogsLine 
           v-for="line of displayedLines" :key="line.id"
           @click="setSelectedLine"
+          @debug-open="openDebugModalFromLog"
           :line="line"
           :simplifiedMode="simplifiedMode"
           :jsonPathSearch="jsonPathSearch"
@@ -430,6 +476,103 @@
     </div>
   </div>
 
+  <!-- Debug Breakpoint Modal - outside conditional structure -->
+  <Dialog 
+    v-model:visible="showDebugModal" 
+    :closable="true"
+    :modal="true"
+    header="🐛 Node.js Debugger Paused"
+    class="debug-modal"
+    style="width: 80vw; max-width: 1200px; height: 80vh;"
+  >
+    <!-- Quick actions in header -->
+    <template #header>
+      <div class="debug-modal-header">
+        <div class="header-title">
+          <i class="fas fa-bug"></i>
+          <span>Node.js Debugger Paused</span>
+        </div>
+        <div class="header-actions">
+          <button 
+            v-if="isDebuggerConnected"
+            class="quick-action-btn continue-btn" 
+            @click="nextDebugStep()"
+            :disabled="isResumingDebug"
+            v-tooltip.bottom="'Continue to next debugger; statement'"
+          >
+            <i class="fas fa-step-forward" :class="{ 'fa-spin': isResumingDebug }"></i>
+            <span>Continue</span>
+          </button>
+        </div>
+      </div>
+    </template>
+    <div v-if="debugInfo" class="debug-content">
+      <!-- Scrollable Content -->
+      <div class="debug-scrollable">
+        <!-- Location Info -->
+        <div class="debug-section">
+          <h4><i class="fas fa-map-marker-alt"></i> Current Location</h4>
+          <div class="location-info">
+            <div class="location-item">
+              <label>File:</label>
+              <span class="location-value">{{ debugInfo.location?.url || 'Unknown' }}</span>
+            </div>
+            <div class="location-item">
+              <label>Function:</label>
+              <span class="location-value">{{ debugInfo.location?.functionName || 'Unknown' }}</span>
+            </div>
+            <div class="location-item">
+              <label>Line:</label>
+              <span class="location-value">{{ debugInfo.location?.line || 0 }}:{{ debugInfo.location?.column || 0 }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Source Code Context -->
+        <div class="debug-section" v-if="debugInfo.sourceContext?.length">
+          <h4><i class="fas fa-code"></i> Source Code</h4>
+          <div class="source-context">
+            <div 
+              v-for="line in debugInfo.sourceContext" 
+              :key="line.number"
+              class="source-line"
+              :class="{ current: line.current }"
+            >
+              <span class="line-number">{{ line.number }}</span>
+              <span class="line-content">{{ line.content }}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Variables -->
+        <div class="debug-section" v-if="debugInfo.variables">
+          <h4><i class="fas fa-database"></i> Variables</h4>
+          <div class="variables-container">
+            <div v-for="(vars, scope) in debugInfo.variables" :key="scope" class="scope-section">
+              <h5>{{ String(scope).charAt(0).toUpperCase() + String(scope).slice(1) }} Variables</h5>
+              <div class="variables-list">
+                <div v-for="variable in vars" :key="variable.name" class="variable-item">
+                  <span class="var-name">{{ variable.name }}</span>
+                  <span class="var-type" :class="`var-${variable.type}`">{{ variable.type }}</span>
+                  <div class="var-value">
+                    <JsonTreeView 
+                      v-if="variable.type === 'object' && variable.value" 
+                      :json="variable.value" 
+                      :maxDepth="2"
+                      :copyable="true"
+                    />
+                    <span v-else :class="`var-${variable.type}`">{{ variable.description || variable.value }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </Dialog>
+
   </Teleport>
 </template>
 
@@ -442,7 +585,6 @@ import {
 import dayjs from 'dayjs';
 import debounce from 'debounce';
 import Socket from '../../../../fronts/app/src/helpers/Socket';
-import Modal from '../../../../fronts/app/src/components/Modal.vue';
 import Service from '../../../../fronts/app/src/models/service';
 import notification from '../../../../fronts/app/src/helpers/notification';
 import Popover from '../../../../fronts/app/src/components/Popover.vue';
@@ -451,6 +593,7 @@ import Spinner from '../../../../fronts/app/src/components/Spinner.vue';
 import Tag from 'primevue/tag';
 import Select from 'primevue/select';
 import Sidebar from 'primevue/sidebar';
+import Dialog from 'primevue/dialog';
 import Stack from '../../../../fronts/app/src/models/stack'
 import LogsLine from './LogsLine.vue';
 import { JsonTreeView } from 'json-tree-view-vue3';
@@ -486,6 +629,13 @@ const mode = ref('');
 const scenarios = ref([]);
 /** @type {import('vue').Ref<{active: boolean, cmd: string, args: string, raw: string, timestamp: number,timestamps: number[]}[]>} */
 const histories = ref([]);
+
+// Debug state
+const isLaunchingDebug = ref(false);
+const isResumingDebug = ref(false);
+const showDebugModal = ref(false);
+const debugInfo = ref({});
+const isDebuggerConnected = ref(false);
 
 
 const countJSON = computed(() => {
@@ -731,12 +881,72 @@ Socket.on('logs:update:lines', logsUpdateLineEventCB);
 Socket.on('service:exit', exitEventCB);
 Socket.on('service:crash', crashEventCB);
 Socket.on('logs:clear', clearEventCB);
+
+// Debug event listener
+const debugPausedEventCB = (data) => {
+  if (data.service !== props.service.label) return;
+  
+  console.log('🐛 Debug paused event received:', data);
+  console.log('🐛 Current showDebugModal value:', showDebugModal.value);
+  console.log('🐛 Setting debugInfo to:', data.debugInfo);
+  
+  debugInfo.value = data.debugInfo;
+  showDebugModal.value = true;
+  
+  console.log('🐛 showDebugModal set to:', showDebugModal.value);
+  console.log('🐛 debugInfo is now:', debugInfo.value);
+  
+  notification.next('success', `🐛 Script paused at ${data.debugInfo.location.functionName || 'line'} (${data.debugInfo.location.line})`);
+};
+
+// Debug connected event callback
+const debugConnectedEventCB = (data) => {
+  if (data.service === props.service.label) {
+    isDebuggerConnected.value = true;
+    console.log('[DEBUG] Debugger connected for service:', data.service);
+  }
+};
+
+// Debug disconnected event callback
+const debugDisconnectedEventCB = (data) => {
+  if (data.service === props.service.label) {
+    isDebuggerConnected.value = false;
+    showDebugModal.value = false;
+    console.log('[DEBUG] Debugger disconnected for service:', data.service, 'Reason:', data.reason);
+    
+    // Show notification to user about disconnection
+    if (data.reason && data.reason.includes('ECONNREFUSED')) {
+      notification.next('error', '🐛 Debugger connection lost - process may have ended');
+    } else if (data.reason && data.reason.includes('cannot connect')) {
+      notification.next('error', '🐛 Cannot connect to debugger - check if Node.js process is running');
+    } else if (data.reason) {
+      notification.next('success', `🐛 Debugger disconnected: ${data.reason}`);
+    }
+  }
+};
+
+// Debug resumed event callback
+const debugResumedEventCB = (data) => {
+  if (data.service === props.service.label) {
+    isResumingDebug.value = false;
+    console.log('[DEBUG] Debugger resumed for service:', data.service);
+  }
+};
+
+Socket.on('debug:paused', debugPausedEventCB);
+Socket.on('debug:connected', debugConnectedEventCB);
+Socket.on('debug:disconnected', debugDisconnectedEventCB);
+Socket.on('debug:resumed', debugResumedEventCB);
 onUnmounted(() => {
   Socket.socket.off('logs:update', logsUpdateEventCB);
   Socket.socket.off('logs:update:lines', logsUpdateLineEventCB);
   Socket.socket.off('service:exit', exitEventCB);
   Socket.socket.off('service:crash', crashEventCB);
   Socket.socket.off('logs:clear', clearEventCB);
+  Socket.socket.off('debug:paused', debugPausedEventCB);
+  Socket.socket.off('debug:connected', debugConnectedEventCB);
+  Socket.socket.off('debug:disconnected', debugDisconnectedEventCB);
+  Socket.socket.off('debug:resumed', debugResumedEventCB);
 });
 
 async function clear() {
@@ -1064,7 +1274,7 @@ const cwd = ref(cwds.value[0] || '.');
  */
 function getShortPath(path) {
   return path
-    ?.replace(homedir.value, '~');
+    ?.replace(homedir.value, '~') || '';
 }
 
 /**
@@ -1091,6 +1301,99 @@ async function sendShortcut(shortcut) {
 }
 async function sendScenario(scenario) {
   Socket.emit(scenario.id, scenario, props.service.label)
+}
+
+// Debug Node.js function - simplified approach using restart with debug flag
+async function launchNodeDebug() {
+  if (isLaunchingDebug.value) return;
+  
+  isLaunchingDebug.value = true;
+  
+  try {
+    console.log('🐛 Launching Node.js debug mode for service:', props.service.label);
+    
+    // Use the simplified approach: restart with debug flag
+    await props.service.restart({ debug: 'node' });
+    
+    notification.next('success', 'Node.js debug mode launched! 🐛 Add debugger; statements in your code, then use Next button');
+    
+  } catch (error) {
+    console.error('Failed to launch debug mode:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    notification.next('error', `Failed to launch debug mode: ${errorMessage}`);
+  } finally {
+    isLaunchingDebug.value = false;
+  }
+}
+
+// Continue to next breakpoint/debugger statement - using backend to avoid CORS
+async function nextDebugStep() {
+  if (isResumingDebug.value) return;
+  
+  isResumingDebug.value = true;
+  
+  try {
+    console.log('▶️ Continuing to next breakpoint via backend...');
+    
+    // Call backend route to continue debug (avoiding CORS issues)
+    const result = await props.service.resumeDebug(9229);
+    
+    console.log('✅ Debug continue result:', result);
+    
+    if (result.success) {
+      notification.next('success', `Continued to next debugger; statement! ▶️ (${result.target || 'script continuing'})`);
+    } else {
+      notification.next('error', result.error || 'Failed to continue debug session - make sure you have debugger; statements in your code');
+    }
+    
+  } catch (error) {
+    console.error('Failed to continue debug:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    notification.next('error', `Failed to continue debug: ${errorMessage}`);
+  } finally {
+    isResumingDebug.value = false;
+  }
+}
+
+// Test function to manually open modal
+function testModal() {
+  console.log('🧪 Testing modal with fake data...');
+  
+  debugInfo.value = {
+    reason: 'debugCommand',
+    hitBreakpoints: [],
+    location: {
+      scriptId: '123',
+      line: 42,
+      column: 10,
+      functionName: 'testFunction',
+      url: 'file:///test.js'
+    },
+    sourceContext: [
+      { number: 40, content: 'console.log("test");', current: false },
+      { number: 41, content: 'const x = 123;', current: false },
+      { number: 42, content: 'debugger;', current: true },
+      { number: 43, content: 'console.log(x);', current: false }
+    ],
+    variables: {
+      local: [
+        { name: 'x', type: 'number', value: 123, description: '123' },
+        { name: 'message', type: 'string', value: 'hello', description: '"hello"' }
+      ]
+    }
+  };
+  
+  showDebugModal.value = true;
+  console.log('🧪 Modal should be visible now:', showDebugModal.value);
+}
+
+// Function to handle debug-open event from LogsLine
+function openDebugModalFromLog(debugInfoData) {
+  console.log('🐛 Opening debug modal from log click:', debugInfoData);
+  debugInfo.value = debugInfoData;
+  showDebugModal.value = true;
+  
+  notification.next('success', `🐛 Debug modal opened from log`);
 }
 
 // New features functions
@@ -1468,6 +1771,38 @@ function getStatusLabel(status) {
 
       i {
         font-size: 0.875rem;
+      }
+    }
+
+    .debug-nodejs-btn {
+      background: #8b5cf6;
+      border-color: #8b5cf6;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      min-width: 2.5rem;
+
+      &:hover:not(:disabled) {
+        background: #7c3aed;
+        border-color: #7c3aed;
+        transform: translateY(-1px);
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .fa-spin {
+        animation: spin 1s linear infinite;
+      }
+
+      .debug-text {
+        font-size: 0.75rem;
+        white-space: nowrap;
+        animation: pulse 1.5s ease-in-out infinite;
       }
     }
   }
@@ -2404,6 +2739,15 @@ function getStatusLabel(status) {
     opacity: 0.5;
   }
 }
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 </style>
 
 <style lang="scss">
@@ -2665,5 +3009,284 @@ button.config {
 }
 .shortcut {
   cursor: pointer;
+}
+
+// Debug Modal Styles
+.debug-modal {
+  .debug-content {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    
+    .debug-section {
+      margin-bottom: 1.5rem;
+      
+      h4 {
+        margin: 0 0 1rem 0;
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--system-primary600);
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        
+        i {
+          color: var(--system-primary500);
+        }
+      }
+      
+      h5 {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: var(--system-color0);
+        text-transform: uppercase;
+        letter-spacing: 0.025em;
+      }
+    }
+    
+    .location-info {
+      background: var(--system-backgroundColor100);
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.5rem;
+      padding: 1rem;
+      
+      .location-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        label {
+          font-weight: 600;
+          color: var(--system-color600);
+          min-width: 80px;
+        }
+        
+        .location-value {
+          font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+          background: var(--system-backgroundColor0);
+          padding: 0.25rem 0.5rem;
+          border-radius: 0.25rem;
+          border: 1px solid var(--system-backgroundColor300);
+          color: var(--system-color0);
+        }
+      }
+    }
+    
+    .source-context {
+      background: var(--system-backgroundColor200);
+      border: 1px solid var(--system-backgroundColor300);
+      border-radius: 0.5rem;
+      overflow: hidden;
+      
+      .source-line {
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+        font-size: 0.875rem;
+        border-bottom: 1px solid var(--system-backgroundColor300);
+        
+        &:last-child {
+          border-bottom: none;
+        }
+        
+        &.current {
+          background: var(--system-primary100);
+          border-color: var(--system-primary300);
+          
+          .line-number {
+            background: var(--system-primary600);
+            color: white;
+          }
+          
+          .line-content {
+            font-weight: 600;
+            color: var(--system-primary700);
+          }
+        }
+        
+        .line-number {
+          min-width: 3rem;
+          text-align: right;
+          margin-right: 1rem;
+          padding: 0.25rem 0.5rem;
+          background: var(--system-backgroundColor400);
+          color: var(--system-color600);
+          border-radius: 0.25rem;
+          font-size: 0.75rem;
+        }
+        
+        .line-content {
+          flex: 1;
+          color: var(--system-color0);
+          white-space: pre;
+        }
+      }
+    }
+    
+    .variables-container {
+      .scope-section {
+        margin-bottom: 1rem;
+        
+        &:last-child {
+          margin-bottom: 0;
+        }
+        
+        .variables-list {
+          background: var(--system-backgroundColor100);
+          border: 1px solid var(--system-backgroundColor300);
+          border-radius: 0.5rem;
+          overflow: hidden;
+          
+          .variable-item {
+            display: grid;
+            grid-template-columns: 200px 80px 1fr;
+            align-items: start;
+            gap: 1rem;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--system-backgroundColor300);
+            
+            &:last-child {
+              border-bottom: none;
+            }
+            
+            .var-name {
+              font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+              font-weight: 600;
+              color: var(--system-primary600);
+              word-break: break-all;
+            }
+            
+            .var-type {
+              font-size: 0.75rem;
+              padding: 0.25rem 0.5rem;
+              border-radius: 1rem;
+              text-align: center;
+              text-transform: uppercase;
+              letter-spacing: 0.025em;
+              font-weight: 600;
+              
+              &.var-string {
+                background: var(--system-success100);
+                color: var(--system-success700);
+              }
+              
+              &.var-number {
+                background: var(--system-warning100);
+                color: var(--system-warning700);
+              }
+              
+              &.var-boolean {
+                background: var(--system-info100);
+                color: var(--system-info700);
+              }
+              
+              &.var-object {
+                background: var(--system-primary100);
+                color: var(--system-primary700);
+              }
+              
+              &.var-undefined {
+                background: var(--system-color200);
+                color: var(--system-color600);
+              }
+            }
+            
+            .var-value {
+              font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+              font-size: 0.875rem;
+              word-break: break-all;
+              
+              .var-string {
+                color: var(--system-success600);
+                &::before,
+                &::after {
+                  content: '"';
+                  opacity: 0.6;
+                }
+              }
+              
+              .var-number {
+                color: var(--system-warning600);
+              }
+              
+              .var-boolean {
+                color: var(--system-info600);
+                font-weight: 600;
+              }
+              
+              .var-undefined {
+                color: var(--system-color400);
+                font-style: italic;
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    /* Custom Header */
+    .debug-modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #dc2626;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 8px;
+    }
+
+    .quick-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: #059669;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .quick-action-btn:hover:not(:disabled) {
+      background: #047857;
+      transform: translateY(-1px);
+    }
+
+    .quick-action-btn:disabled {
+      background: #9ca3af;
+      cursor: not-allowed;
+    }
+
+    .quick-action-btn i.fa-spin {
+      animation: spin 1s linear infinite;
+    }
+
+    /* Scrollable Content */
+    .debug-scrollable {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.5rem;
+      margin-bottom: 80px; /* Space for sticky footer */
+    }
+  }
 }
 </style>

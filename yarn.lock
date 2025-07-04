@@ -6919,12 +6919,15 @@ __metadata:
     "@runeya/modules-plugins-loader-backend": "workspace:*"
     "@runeya/modules-plugins-loader-front": "workspace:*"
     "@types/babel__preset-env": "npm:^7"
+    "@types/chrome-remote-interface": "npm:^0"
     "@types/http-proxy": "npm:^1"
     "@types/libsodium-wrappers": "npm:^0"
+    "@types/ws": "npm:^8"
     alasql: "npm:^4.6.2"
     ansi-to-html: "npm:^0.7.2"
     axios: "npm:^1.7.9"
     bluebird: "npm:^3.7.2"
+    chrome-remote-interface: "npm:^0.33.3"
     command-exists: "npm:^1.2.9"
     dayjs: "npm:^1.11.10"
     debounce: "npm:^2.0.0"
@@ -6950,6 +6953,7 @@ __metadata:
     tree-kill: "npm:^1.2.2"
     tsup: "npm:^8.5.0"
     uuid: "npm:^9.0.1"
+    ws: "npm:^8.18.3"
     xlsx: "npm:^0.18.5"
     yargs: "npm:^17.7.2"
   bin:
@@ -8772,6 +8776,15 @@ __metadata:
     "@types/connect": "npm:*"
     "@types/node": "npm:*"
   checksum: 10/1e251118c4b2f61029cc43b0dc028495f2d1957fe8ee49a707fb940f86a9bd2f9754230805598278fe99958b49e9b7e66eec8ef6a50ab5c1f6b93e1ba2aaba82
+  languageName: node
+  linkType: hard
+
+"@types/chrome-remote-interface@npm:^0":
+  version: 0.31.14
+  resolution: "@types/chrome-remote-interface@npm:0.31.14"
+  dependencies:
+    devtools-protocol: "npm:0.0.927104"
+  checksum: 10/86e2c13c7451e56a3b59e3c4f74b7dc15669e5ced0681d97454ed197c057b0d50450c468249472eb78ecadaf8ef9d9a83a7ce48f9e94f318d5a6b0b5ffe6e03b
   languageName: node
   linkType: hard
 
@@ -11564,6 +11577,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"chrome-remote-interface@npm:^0.33.3":
+  version: 0.33.3
+  resolution: "chrome-remote-interface@npm:0.33.3"
+  dependencies:
+    commander: "npm:2.11.x"
+    ws: "npm:^7.2.0"
+  bin:
+    chrome-remote-interface: bin/client.js
+  checksum: 10/65d07afc8f97fad6326bd94f0c4ef004d76b16841015c72d09aefbfa4df62b47407067a01c886535a706c36b23070b40fc3edb96444665438efa1d4f65cc3db8
+  languageName: node
+  linkType: hard
+
 "ci-info@npm:^3.2.0":
   version: 3.9.0
   resolution: "ci-info@npm:3.9.0"
@@ -11829,6 +11854,13 @@ __metadata:
   version: 1.2.9
   resolution: "command-exists@npm:1.2.9"
   checksum: 10/46fb3c4d626ca5a9d274f8fe241230817496abc34d12911505370b7411999e183c11adff7078dd8a03ec4cf1391290facda40c6a4faac8203ae38c985eaedd63
+  languageName: node
+  linkType: hard
+
+"commander@npm:2.11.x":
+  version: 2.11.0
+  resolution: "commander@npm:2.11.0"
+  checksum: 10/d8940de4ce2886aa32ae27a1533d10ce46da8c6dcd965075462a6b8d17b01f596ec329e1430f84a123e52675403f0c2b11a6a5d144eb46146da9ae974edbc2c0
   languageName: node
   linkType: hard
 
@@ -12820,6 +12852,13 @@ __metadata:
   dependencies:
     dequal: "npm:^2.0.0"
   checksum: 10/3cc5f903d02d279d6dc4aa71ab6ed9898b9f4d1f861cc5421ce7357893c21b9520de78afb203c92bd650a6977ad0ca98195453a0707a39958cf5fea3b0a8ddd8
+  languageName: node
+  linkType: hard
+
+"devtools-protocol@npm:0.0.927104":
+  version: 0.0.927104
+  resolution: "devtools-protocol@npm:0.0.927104"
+  checksum: 10/2f645d5d8f8df8d520c7162264ad37caed40de6c57456febb42e22cc54d527a349d05ab16f4d9f9bbd715ce425b00232b6baa66ad339bb3caa077528684ce8ca
   languageName: node
   linkType: hard
 
@@ -25396,7 +25435,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ws@npm:7.5.10":
+"ws@npm:7.5.10, ws@npm:^7.2.0":
   version: 7.5.10
   resolution: "ws@npm:7.5.10"
   peerDependencies:
@@ -25423,6 +25462,21 @@ __metadata:
     utf-8-validate:
       optional: true
   checksum: 10/018e04ec95561d88248d53a2eaf094b4ae131e9b062f2679e6e8a62f04649bc543448f1e038125225ac6bbb25f54c1e65d7a2cc9dbc1e28b43e5e6b7162ad88e
+  languageName: node
+  linkType: hard
+
+"ws@npm:^8.18.3":
+  version: 8.18.3
+  resolution: "ws@npm:8.18.3"
+  peerDependencies:
+    bufferutil: ^4.0.1
+    utf-8-validate: ">=5.0.2"
+  peerDependenciesMeta:
+    bufferutil:
+      optional: true
+    utf-8-validate:
+      optional: true
+  checksum: 10/725964438d752f0ab0de582cd48d6eeada58d1511c3f613485b5598a83680bedac6187c765b0fe082e2d8cc4341fc57707c813ae780feee82d0c5efe6a4c61b6
   languageName: node
   linkType: hard
 

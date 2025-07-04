@@ -39,20 +39,40 @@
       </template>
     </div>
 
-    <div v-else-if="line.debug != null" class="log-debug">
+    <div v-else-if="line.debug != null" class="log-debug" :class="{ 'debugger-log': isDebuggerLog }">
       <div class="log-header">
         <div class="log-type">
           <i class="fas fa-bug"></i>
-          <span>Debug</span>
+          <span>{{ isDebuggerLog ? 'Debugger Breakpoint' : 'Debug' }}</span>
         </div>
         <div class="log-actions">
+          <button 
+            v-if="isDebuggerLog" 
+            class="action-btn debug-open-btn" 
+            @click.stop="openDebugModal()" 
+            v-tooltip="'🐛 Open Debug Modal'"
+          >
+            <i class="fas fa-external-link-alt"></i>
+            <span>Open Debug</span>
+          </button>
           <button class="action-btn" @click.stop="copy(JSON.stringify(line.debug))" v-tooltip="'Copy debug data to clipboard'">
             <i class="fas fa-copy"></i>
           </button>
         </div>
       </div>
       <div class="log-content">
+        <div v-if="isDebuggerLog" class="debugger-preview">
+          <div class="debug-location">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>{{ getDebugLocationText() }}</span>
+          </div>
+          <div class="debug-hint">
+            <i class="fas fa-cursor-pointer"></i>
+            <span>Click "Open Debug" or double-click this log to view full debugger details</span>
+          </div>
+        </div>
         <JsonTreeView 
+          v-else
           :maxDepth="1" 
           :json="transformerJSON(line.debug)" 
           :copyable="true" 
@@ -100,6 +120,7 @@
 </template>
 
 <script setup>
+import { computed } from 'vue';
 import { JsonTreeView } from 'json-tree-view-vue3';
 import 'json-tree-view-vue3/dist/style.css';
 import jsonpath from 'jsonpath';
@@ -120,10 +141,36 @@ const props = defineProps({
     required: false
   }
 })
-const emit = defineEmits(['click'])
+const emit = defineEmits(['click', 'debug-open'])
 
 function emitClick() {
-  emit('click', props.line)
+  // Si c'est un log de debugger et qu'on double-clique, ouvrir directement la modal
+  if (isDebuggerLog.value) {
+    openDebugModal();
+  } else {
+    emit('click', props.line);
+  }
+}
+
+// Détecte si c'est un log de debugger breakpoint avec debugInfo
+const isDebuggerLog = computed(() => {
+  return props.line.debug && 
+         props.line.debugType === 'node';
+});
+
+function openDebugModal() {
+  console.log(props.line)
+  if (isDebuggerLog.value) {
+    emit('debug-open', props.line.debug);
+  }
+}
+
+function getDebugLocationText() {
+  if (isDebuggerLog.value && props.line.debug?.location) {
+    const loc = props.line.debug.location;
+    return `${loc.functionName || '<global>'} at line ${loc.line}:${loc.column} (${loc.url || 'eval'})`;
+  }
+  return 'Unknown location';
 }
 
 /** @param {any} json */
@@ -369,6 +416,92 @@ function getStatusLabel(status) {
       padding: 0.625rem 0.75rem;
       background: var(--system-backgroundColor0);
     }
+
+    // Special styling for debugger breakpoint logs
+    &.debugger-log {
+      border-left: 3px solid #ef4444 !important;
+      background: linear-gradient(135deg, #fef2f2, #fee2e2);
+      cursor: pointer;
+      position: relative;
+
+      &:hover {
+        background: linear-gradient(135deg, #fee2e2, #fecaca);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(239, 68, 68, 0.15);
+      }
+
+      .log-header {
+        background: linear-gradient(135deg, #ef4444, #dc2626) !important;
+        
+        .debug-open-btn {
+          background: rgba(255, 255, 255, 0.2);
+          color: white;
+          border: 1px solid rgba(255, 255, 255, 0.3);
+          padding: 0.25rem 0.75rem;
+          border-radius: 0.375rem;
+          font-size: 0.75rem;
+          font-weight: 500;
+          display: flex;
+          align-items: center;
+          gap: 0.375rem;
+          transition: all 0.2s ease;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+          }
+        }
+      }
+
+      .debugger-preview {
+        padding: 0.75rem;
+        background: white;
+        border-radius: 0.5rem;
+        margin: 0.5rem;
+
+        .debug-location {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          margin-bottom: 0.5rem;
+          font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+          font-size: 0.875rem;
+          color: #374151;
+
+          i {
+            color: #ef4444;
+          }
+        }
+
+        .debug-hint {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          font-size: 0.75rem;
+          color: #6b7280;
+          font-style: italic;
+
+          i {
+            color: #8b5cf6;
+          }
+        }
+      }
+
+      // Pulse animation pour attirer l'attention
+      &::before {
+        content: '';
+        position: absolute;
+        top: -2px;
+        left: -3px;
+        right: -2px;
+        bottom: -2px;
+        background: linear-gradient(135deg, #ef4444, #dc2626);
+        border-radius: inherit;
+        z-index: -1;
+        opacity: 0;
+        animation: debugPulse 2s infinite;
+      }
+    }
   }
 
   // Prompt logs
@@ -463,6 +596,36 @@ function getStatusLabel(status) {
   i {
     font-size: 0.75rem;
     opacity: 0.9;
+  }
+}
+
+// Animation for debugger log pulse
+@keyframes debugPulse {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+// Action button styles
+.action-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: currentColor;
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
   }
 }
 </style> 
