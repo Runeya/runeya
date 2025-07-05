@@ -1635,7 +1635,6 @@ function getStatusLabel(status) {
     display: flex;
     align-items: center;
     gap: 0.75rem;
-    z-index: 10;
     backdrop-filter: blur(8px);
     border-bottom: 2px solid var(--system-warning600);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
