@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.33](https://github.com/runeya/runeya/compare/v1.33.32...v1.33.33) (2025-07-07)
+
+### Bug Fixes
+
+* **logs:** can execute command on host when docker is configured ([9a4295b](https://github.com/runeya/runeya/commit/9a4295baf55f35adc6c3496e176ffa3869a9ca84))
+* **logs:** change color of json to yellow ([a1215b5](https://github.com/runeya/runeya/commit/a1215b5c8c6fbe66aa5178077f0feca3bd7a71ab))
+* **logs:** refactor all logs ([f559d16](https://github.com/runeya/runeya/commit/f559d1612ba8e545e442f79d14474872b90d1db7))
+* **logs:** z-index on scroll-pause-indicator to allow tippyjs to be on top of it ([368623f](https://github.com/runeya/runeya/commit/368623fe16df1bd925908240a1c263f4d60494f8))
+
 ## [1.33.32](https://github.com/runeya/runeya/compare/v1.33.31...v1.33.32) (2025-06-16)
 
 ### Bug Fixes

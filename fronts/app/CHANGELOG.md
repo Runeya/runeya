@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.33](https://github.com/runeya/runeya/compare/v1.33.32...v1.33.33) (2025-07-07)
+
+### Bug Fixes
+
+* **logs:** refactor all logs ([f559d16](https://github.com/runeya/runeya/commit/f559d1612ba8e545e442f79d14474872b90d1db7))
+
 ## [1.33.29](https://github.com/runeya/runeya/compare/v1.33.28...v1.33.29) (2025-06-16)
 
 **Note:** Version bump only for package @runeya/fronts-app

@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.33](https://github.com/runeya/runeya/compare/v1.33.32...v1.33.33) (2025-07-07)
+
+**Note:** Version bump only for package @runeya/modules-workflows-backend
+
 ## [1.33.29](https://github.com/runeya/runeya/compare/v1.33.28...v1.33.29) (2025-06-16)
 
 **Note:** Version bump only for package @runeya/modules-workflows-backend
