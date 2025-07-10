@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.34](https://github.com/runeya/runeya/compare/v1.33.33...v1.33.34) (2025-07-10)
+
+### Bug Fixes
+
+* **editors:** add support for windsurf ([9a6f5de](https://github.com/runeya/runeya/commit/9a6f5deda8f14b5b5e838c1bd8a9a618fddd96b2))
+
 ## [1.33.33](https://github.com/runeya/runeya/compare/v1.33.32...v1.33.33) (2025-07-07)
 
 ### Bug Fixes
