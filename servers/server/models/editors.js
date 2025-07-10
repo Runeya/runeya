@@ -15,6 +15,10 @@ const editors = {
     commands: ['cursor'],
     args: codeArgsBuilder
   },
+  windsurf: {
+    commands: ['windsurf'],
+    args: codeArgsBuilder
+  },
   intellij: {
     commands: ['idea'],
     args: intellijArgsBuilder

@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import vscodeIcon from '@/assets/vscode-icon.svg'
 import intellijIcon from '@/assets/intellij.svg'
+import windsurf from '@/assets/windsurf.svg'
 import androidstudioIcon from '@/assets/androidstudio.svg'
 import cursorIcon from '@/assets/cursor.svg'
 import sublimeIcon from '@/assets/sublimetext.svg'
@@ -20,6 +21,10 @@ function useCurrentEditor(service) {
     intellij: {
       icon: intellijIcon,
       title: 'Open in Intellij'
+    },
+    windsurf: {
+      icon: windsurf,
+      title: 'Open in Windsurf'
     },
     androidstudio: {
       icon: androidstudioIcon,
