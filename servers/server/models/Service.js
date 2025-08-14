@@ -97,6 +97,8 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
      *  noHostUser: true
      *  noChangeWorkDir: true,
      *  customPid?: ({cmd, args, pid})=> Promise<number | null>
+     *  command: string,
+     *  image?: string,
      *  bootstrap: {commands: Array<{user: string, cmd: string, entrypoint:string}>}
      * }}
      */
@@ -106,6 +108,7 @@ function Service(service, Stack, { isUpdate } = { isUpdate: false }) {
       this.container.name = humanStringToKey(this.label);
       if (!this.container.volumes?.length) this.container.volumes = [];
       if (!this.container.build) this.container.build = '';
+      if (!this.container.command) this.container.command = '';
       this.container.ports = this.container.ports || [];
       this.container.sharedVolume = this.container.sharedVolume || '~/.runeya';
       this.container.ignoreVolumes = this.container.ignoreVolumes?.length
@@ -339,6 +342,8 @@ Service.prototype.launch = async function () {
         await this.launchProcess(command);
       }
     });
+  } else if (this.container?.enabled) {
+    await this.launchProcess()
   }
   this.enabled = true;
   this.sendHasBeenModified();
@@ -368,7 +373,7 @@ Service.prototype.add = async function (data, logMessageOverride, {
     ...logMessageOverride,
     id: v4(),
   };
-  line = await PromiseB.reduce(command.effectiveParsers || [], async (line, parser) => {
+  line = await PromiseB.reduce(command?.effectiveParsers || [], async (line, parser) => {
     try {
       const result = await parser.transformFunction(line, this);
       if (!result?.id) {
@@ -413,7 +418,7 @@ Service.prototype.launchProcess = async function (command, isMainProcess = true)
     this.exited = false;
     
     // Check if user explicitly wants to use host, or if container is not enabled
-    const shouldUseHost = command.spawnOptions?.useHost === true || !this.container?.enabled;
+    const shouldUseHost = command?.spawnOptions?.useHost === true || !this.container?.enabled;
     
     let { cmd, args, options } = shouldUseHost
       ? await this.parseIncomingCommand(command)
@@ -538,9 +543,9 @@ Service.prototype.launchProcess = async function (command, isMainProcess = true)
       msg: `ERROR: ${error?.message || error}`,
       raw: `ERROR: ${error?.message || error}`,
       cmd: {
-        cmd: command.spawnCmd,
-        args: command.spawnArgs,
-        options: command.spawnOptions,
+        cmd: command?.spawnCmd,
+        args: command?.spawnArgs,
+        options: command?.spawnOptions,
         status: 'exited',
       },
     };
@@ -686,7 +691,11 @@ Service.prototype.extractTag = function (field) {
 };
 
 Service.prototype.parseIncomingCommandDocker = async function (command) {
-  let { spawnCmd, spawnArgs = [], spawnOptions = { envs: [] } } = command;
+  let { spawnCmd, spawnArgs = [], spawnOptions = { envs: [] } } = command = {
+    spawnCmd: '',
+    spawnArgs: [],
+    spawnOptions: { envs: [] },
+  };
   const isAlive = await execAsync(`docker inspect --format {{.State.Pid}}  ${this.container.name}`, {})
     .then((pid) => pid.trim() !== '0')
     .catch(() => false);
@@ -700,7 +709,9 @@ Service.prototype.parseIncomingCommandDocker = async function (command) {
       '--network', 'host',
       '--name', this.container.name,
       this.container.name,
-      'sh', `-c '${spawnCmd} ${spawnArgs.join(' ')}'`
+      ...spawnCmd 
+        ? ['sh', `-c '${spawnCmd} ${spawnArgs.join(' ')}'`] 
+        : this.container?.command ? [this.container.command] : []
     ]
   const cwd = pathfs.resolve(replaceEnvs(spawnOptions.cwd || this.getRootPath() || '.'));
   const options = {

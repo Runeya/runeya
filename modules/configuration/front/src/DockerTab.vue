@@ -42,6 +42,22 @@
       </div>
     </div>
 
+    <!-- Command section -->
+    <div class="section">
+      <div class="section-header">
+        <i class="fas fa-user mr-2"></i>
+        <span>Command</span>
+        <i v-tooltip="'Set the command to run in the container'" class="fas fa-question-circle ml-2 hint-icon"></i>
+      </div>
+      <div class="section-content">
+        <EditableField
+          v-model="service.container.command"
+          placeholder="Command to run in the container"
+          @save="service.save()"
+        />
+      </div>
+    </div>
+
     <!-- User section -->
     <div class="section">
       <div class="section-header">

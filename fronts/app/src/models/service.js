@@ -112,6 +112,7 @@ class Service {
       
       if (!this.container.volumes) this.container.volumes = [];
       if (!this.container.ignoreVolumes) this.container.ignoreVolumes = [];
+      if (!this.container.command) this.container.command = '';
     } else {
       this.container = service.container;
     }
