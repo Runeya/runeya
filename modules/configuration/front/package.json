@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-configuration-front",
-  "version": "1.33.24",
+  "version": "1.33.35",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {

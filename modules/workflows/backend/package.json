@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-workflows-backend",
-  "version": "1.33.33",
+  "version": "1.33.35",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "scripts": {

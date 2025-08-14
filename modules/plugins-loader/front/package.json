@@ -1,6 +1,6 @@
 {
   "name": "@runeya/modules-plugins-loader-front",
-  "version": "1.33.33",
+  "version": "1.33.35",
   "repository": "https://github.com/runeya/runeya",
   "private": true,
   "main": "./plugins.js",

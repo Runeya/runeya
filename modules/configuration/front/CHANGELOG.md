@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.35](https://github.com/runeya/runeya/compare/v1.33.34...v1.33.35) (2025-08-14)
+
+### Bug Fixes
+
+* **docker:** support for custom command ([92e0a24](https://github.com/runeya/runeya/commit/92e0a2497e01bc62d2d0d8c2a3d5afd5e2ec04ff))
+
 ## [1.33.24](https://github.com/runeya/runeya/compare/v1.33.23...v1.33.24) (2025-06-09)
 
 ### Bug Fixes
