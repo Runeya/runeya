@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.36](https://github.com/runeya/runeya/compare/v1.33.35...v1.33.36) (2025-11-04)
+
+**Note:** Version bump only for package @runeya/modules-logs-front
+
 ## [1.33.33](https://github.com/runeya/runeya/compare/v1.33.32...v1.33.33) (2025-07-07)
 
 ### Bug Fixes

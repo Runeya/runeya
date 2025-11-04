@@ -3,6 +3,10 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.33.36](https://github.com/runeya/runeya/compare/v1.33.35...v1.33.36) (2025-11-04)
+
+**Note:** Version bump only for package @runeya/common-express-http-error
+
 ## [1.0.14](https://github.com/runeya/runeya/compare/v1.0.13...v1.0.14) (2025-06-06)
 
 ### Bug Fixes

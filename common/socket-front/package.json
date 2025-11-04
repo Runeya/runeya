@@ -1,7 +1,7 @@
 {
   "name": "@runeya/common-socket-front",
   "private": true,
-  "version": "1.0.8",
+  "version": "1.33.36",
   "description": "",
   "repository": "https://github.com/runeya/runeya",
   "main": "src/index.js",

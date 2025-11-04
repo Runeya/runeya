@@ -1,6 +1,6 @@
 {
   "name": "@runeya/fronts-docs",
-  "version": "1.0.10",
+  "version": "1.33.36",
   "private": true,
   "type": "module",
   "description": "Monitor processes as a stack",
